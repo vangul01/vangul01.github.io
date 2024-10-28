@@ -1,0 +1,389 @@
+/* CSS */ /* font fam Russ Russo*/
+/* grid code = https://codepen.io/tutsplus/pen/zBgypg*/
+/*https://www.freecodecamp.org/news/how-to-create-an-image-gallery-with-css-grid-e0f0fd666a5c/*/
+/*https://www.w3schools.com/howto/howto_css_center_button.asp*/
+/*https://www.w3schools.com/html/html_css.asp*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/*font*/
+/*.bakbak-one-regular {
+  font-family: "Bakbak One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}*/
+
+.russo-one-regular {
+  font-family: "Russo One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Bakbak One", sans-serif;
+  background-color: lightblue;
+} */
+
+body {
+    /* background-color: #000033; */
+    background-color: rgb(158, 209, 243);
+    margin: 0;
+    padding: 0;
+    font-family: "Bakbak One", sans-serif;
+  }
+
+h1 {
+/*  font-family: "Open Sans", Arial; */
+/*  font-family: "Bakbak One", sans-serif;*/
+    font-family: "Russo One", sans-serif;
+
+    font-size: 36px;
+    line-height: 150%;
+    text-transform: uppercase;
+     /* color: darkslategray; */
+     color: whitesmoke;
+    letter-spacing: 0.1rem;
+    text-align: center;
+    position: relative;
+}
+
+h2 {
+    /*  font-family: "Open Sans", Arial; */
+    /*  font-family: "Bakbak One", sans-serif;*/
+    font-family: "Russo One", sans-serif;
+    /* font-size: 10px; */
+    line-height: 150%;
+    text-transform: uppercase;
+        /* color: darkslategray; */
+        color: whitesmoke;
+    letter-spacing: 0.1rem;
+    text-align: center;
+    position: relative;
+    }
+
+p {
+  font-family: "Open Sans", Arial;
+  font-size: 20px;
+  line-height: 100%;
+  color: slategray;
+  letter-spacing: 0.1rem;
+  text-align: center;
+}
+
+ul{
+  list-style-type: none;
+}
+
+.portal {
+    background: #ff00ead8 url('images/temp_rainbow.jpg');
+  /* background-image: url('images/temp_rainbow.jpg'); */
+  /* background-color: #000; */
+  /* background-color: 0; */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+
+/*  ul{
+    list-style-type: none;
+  }*/
+
+  a{
+    margin: 0;
+    position: absolute;
+    /* top: 80%; */
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.nav-bar {
+  position: relative;
+  z-index: 1;
+
+  ul{
+/*    list-style-type: none;*/
+    margin: 0;
+    padding: 0;
+    display: inline;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  li{
+    display: inline;
+/*    margin-right: 20px;*/
+/*    float: left;*/
+  }
+
+/*  a {
+  display: block;
+  padding: 8px;
+  background-color: #dddddd;
+}*/
+}
+
+.center-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.hor-center {
+    text-align: center;
+    position: relative;
+    padding: 30px;
+}
+
+/*.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}*/
+
+.button-54 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-54:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.index-welcome {
+    padding-top: 0px;
+    padding-bottom: 50px;
+
+    h1 {
+        font-size: 46px;
+        /* color: whitesmoke; */
+    }
+
+    /* p {
+        color: slategray;
+    } */
+
+
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #000020;
+  opacity: 100%;
+  color: whitesmoke;
+  padding: 10px 20px;
+  font-size: 20px;
+  text-align: center;
+/*  border: 10px solid powderblue;*/
+}
+
+.index-gallery {
+    padding-bottom: 50px;
+}
+
+.image-grid div {
+  width: 33.33%;
+  height: 240px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image01 { background-image: url('artwork/Bio\ Blitz.jpg'); }
+.image02 { background-image: url('artwork/Blislandia.jpg'); }
+.image03 { background-image: url('artwork/Skelli.jpg'); }
+.image04 { background-image: url('artwork/The\ Butts.jpg'); }
+.image05 { background-image: url('artwork/AllADream.png'); }
+.image06 { background-image: url('artwork/Frida.jpg'); }
+/* .image07 { background-image: url('artwork/AllADream.png'); }
+.image08 { background-image: url('artwork/Weird\ Dreams.jpg'); }
+.image09 { background-image: url('artwork/Frida.jpg'); } */
+
+@media screen and (max-width: 400px) {
+  .image-grid {
+    flex-direction: column;
+    flex-wrap: no-wrap;
+  }
+  .image-grid div { width: 100%; }
+}
+
+
+.sidebyside {
+    display: inline-block;
+    background-color: fuchsia;
+}
+
+.aboutMe {
+    max-width: 65%
+}
+
+
+.index-links {
+    font-family: "Open Sans", Arial;
+    /* padding: 45px 7%; */
+    padding: 10px 10%;
+    position: relative;
+    /* background-color: #fffefe; */
+
+    .gray {
+        background-color: #a0a0a0;
+    }
+
+    .socials {
+        /* list-style-type: none;
+        padding-left: 10px; */
+    }
+
+    /* Has to be with a for some reason... */
+    .socials a{
+        text-decoration: none;
+        color: black;
+    }
+
+    .socials a:hover{
+        color: rgb(255, 0, 230)
+    }
+
+    .linkIcon {
+        padding-right: 10px;
+    }
+
+    .socialsDiv {
+        /* margin-left: 30px; */
+        /* margin-right: 100px; */
+        /* font-size: large; */
+        /* padding-left: 0px; */
+    }
+
+    .linksDiv {
+        /* margin-left: 100px; */
+        /* padding-right: 200px; */
+        padding-left: 0px;
+
+        /* margin-right: 100px; */
+        /* font-size: large; */
+    }
+
+    .contactDiv {
+        /* margin-left: 120px;
+        margin-right: 30px; */
+        /* font-size: large; */
+        padding-block: 50px;
+    }
+
+}
+
+
+
+
+
+
+
+/* GALLERY AND ABOUT */
+
+.gallery-artwork {
+    padding: 2rem;
+    text-align: center;
+
+    /* .artwork { */
+        display: inline-block;
+        margin: 1rem;
+        text-align: center;
+    /* } */
+}
+
+.gallery, .about {
+    padding: 2rem;
+    text-align: center;
+}
+
+/* About Section Styles */
+.about {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+}
+
+.about-image {
+    flex: 1;
+    max-width: 50%;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px; /* Optional: Add some styling to the image */
+}
+
+.about-text {
+    flex: 1;
+    padding: 0 2rem;
+}
+
+.about-text h2 {
+    margin-top: 0;
+}
+
+.about-text p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* FOOTER */
+
+footer {
+    background-color: rgba(51, 51, 51, 0.0);;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    /* position: fixed; */
+    /* position: sticky; */
+    margin-top: auto;
+    width: 100%;
+    bottom: 0;
+}
