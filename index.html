@@ -1,4 +1,9 @@
 <!-- https://getcssscan.com/css-buttons-examples !-->
+
+<!--
+need responsive top nav
+
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,7 +13,7 @@
         <meta name="description" content="Vangular: Art and design brand for the existential and absurd.">
         <meta name="keywords" content="art, design, portfolio, creative, vibrant, spiritual">
         <!-- <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet"> -->
-        <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> -->
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
@@ -23,7 +28,7 @@
             <nav class="nav-bar">
                 <ul>
                     <li><a href="enter.html"><button class="button-54" role="button" aria-label="Portal">
-                        <img src="images/eyecon.png" alt="Portal" width="22px">
+                        <img src="images/eyecon.png" alt="Portal" width="26px">
                     </button></a></li>
 
                     <li><a href="index.html">
@@ -64,8 +69,10 @@
 
             <!-- Gallery Section -->
             <section class="index-gallery" id="gallery">
-                <h1>Featured Art</h1>
-                <p>Explore high quality paintings and collages that are ready for purchase!</p>
+                <div class = "section-title">
+                    <h1>Featured Art</h1>
+                    <p>Explore high quality paintings and collages that are ready for purchase!</p>
+                </div>
 
                 <div class="image-grid">
                     <div class="image01"></div>
@@ -79,7 +86,7 @@
                     <div class="image09"></div> -->
                 </div>
 
-                <div class="hor-center">
+                <div class="button-formating">
                     <a href="gallery.html"><button class="button-54" role="button">View All Art</button></a>
                 </div>
 
@@ -87,8 +94,10 @@
 
 
             <section class="index-merch" id="merch">
-                <h1>Featured Merch</h1>
-                <p>Check out my inventory of stickers, shirts, cards, tattoos, pins, prints and more!</p>
+                <div class = "section-title">
+                    <h1>Featured Merch</h1>
+                    <p>Check out my inventory of stickers, shirts, cards, tattoos, pins, prints and more!</p>
+                </div>
 
                 <div class="image-grid">
                     <div class="image01"></div>
@@ -102,7 +111,7 @@
                     <div class="image09"></div> -->
                 </div>
 
-                <div class="hor-center">
+                <div class="button-formating">
                     <a href="#"><button class="button-54" role="button">Shop All Merch</button></a>
                 </div>
 
@@ -114,19 +123,19 @@
                 <!-- <h1>Links</h1> -->
 
                 <div class="gray">
-                    <div class="sidebyside socialsDiv">
+                    <div class="sidebyside">
                         <h2>Socials</h2>
                         <ul class="socials">
                             <a href="https://www.etsy.com/shop/vangular/" target="_blank"><li><i class="fa fa-etsy linkIcon" aria-hidden="true"></i>Etsy</li></a>
                             <a href="https://www.instagram.com/vangular/" target="_blank"><li><i class="fa fa-instagram linkIcon" aria-hidden="true"></i>Instagram</li></a>
-                            <a href="#" target="_blank"><li><i class="fa fa-facebook linkIcon" aria-hidden="true"></i>Facebook</li></a>
-                            <a href="#" target="_blank"><li><i class="tiktok linkIcon" aria-hidden="true"><img src="images/tiktok.svg" alt="TikTok" style="width: 4%;"></i>TikTok</li></a>
+                            <a href="#" target="_blank"><li><i class="tiktok linkIcon" aria-hidden="true"><img src="images/tiktok.svg" alt="TikTok" width="12px"></i>TikTok</li></a>
                             <a href="#" target="_blank"><li><i class="fa fa-youtube linkIcon"></i>Youtube</li></a>
+                            <a href="#" target="_blank"><li><i class="fa fa-facebook linkIcon" aria-hidden="true"></i>Facebook</li></a>
                             <a href="#" target="_blank"><li><i class="fa fa-linkedin linkIcon"></i>LinkedIn</li></a>
                         </ul>
                     </div>
 
-                    <div class="sidebyside linksDiv">
+                    <div class="sidebyside">
                         <h2>Links</h2>
                         <ul class="socials">
                             <!-- <a href="#" target="_blank"><li class="etsy"><i class="fa fa-etsy linkIcon" aria-hidden="true"></i>Portal</li></a> -->
@@ -139,25 +148,22 @@
                         </ul>
                     </div>
 
-                    <div class="sidebyside contactDiv">
-                        <h2>Sign Up For My Newsletter</h2>
+                    <div class="sidebyside newsletter">
+                        <h2>Newsletter</h2>
+                        <h5>A monthly newsletter with memes and updates!</h5>
 
                         <form action="/submit" method="POST">
-
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-
-                        <button type="submit" class="button-54">Subscribe</button>
+                            <label for="email" class="visually-hidden"></label> <!-- Optional: hide the label for accessibility -->
+                            <input type="email" id="email" name="email" placeholder="Email (ex: zorgborg@aol.com)" required>
+                            <button type="submit" class="button-54">Subscribe</button>
                         </form>
-
-                        <h5>Learn about discount codes and new releases!</h5>
                     </div>
                 </div>
             </section>
         </main>
 
         <footer>
-            <p>&copy; 2024 VANGULAR/Valerie Angulo. All rights reserved.</p>
+            <em>&copy; 2024 VANGULAR/Valerie Angulo. All rights reserved.</em>
         </footer>
     </body>
 </html>
