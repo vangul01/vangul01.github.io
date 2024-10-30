@@ -18,7 +18,34 @@
     font-style: normal;
 } */
 
-/* ----------------NATIVE ELEMENTS---------------- */
+/* ----------------UNIVERSAL ELEMENTS---------------- */
+
+nav {
+    position: relative;
+    z-index: 3;
+
+    ul{
+        margin: 0;
+        padding: 0;
+        display: inline;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    li{
+        display: inline;
+    /*    margin-right: 20px;*/
+    /*    float: left;*/
+    }
+
+    /*  a {
+        display: block;
+        padding: 8px;
+        background-color: #dddddd;
+    }*/
+  }
 
 body {
     /* background-color: #000033; */
@@ -26,20 +53,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Bakbak One", sans-serif;
-}
-
-footer {
-    background-color: rgba(51, 51, 51, 0.0);;
-    color: slategray;
-    text-align: center;
-    padding: 1rem 0;
-    /* position: fixed; */
-    /* position: sticky; */
-    margin-top: auto;
-    width: 100%;
-    bottom: 0;
-    font-size: smaller;
-    font-family: "Open Sans", Arial;
 }
 
 ul {
@@ -86,19 +99,37 @@ p {
     color: slategray;
     letter-spacing: 0.1rem;
     text-align: center;
-    margin-top: 0;
-
+    margin: 10px 0;
+    line-height: normal;
+    /* margin-top: 0em;
+    margin-bottom: 0em; */
+    /* padding: 5px 5px 0 5px; */
 }
 
-/* ----------------CREATED ELEMENTS---------------- */
+footer {
+    /* background-color: rgba(51, 51, 51, 0.0);; */
+    /* color: slategray; */
+    /* text-align: center; */
+    padding: 1rem 0;
+    margin-top: auto;
+    width: 100%;
+    bottom: 0;
+    /* font-size: smaller; */
+    font-family: "Open Sans", Arial;
+}
 
-.button-formating {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    padding: 30px;
+em {
+    /* font-size: smaller; */
+    text-align: center;
+    position: center;
+    color: slategray;
+}
 
+/* ----------------UNIVERSAL CLASSES---------------- */
+
+.section-title {
+    padding: 20px;
+    background-color: limegreen;
 }
 
 .button-54 {
@@ -116,6 +147,11 @@ p {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    transition: opacity .15s;
+}
+
+.button-54:hover {
+    opacity: .9;
 }
 
 .button-54:active {
@@ -130,32 +166,27 @@ p {
     }
 }
 
-.nav-bar {
-    position: relative;
-    z-index: 3;
+.button-formating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 30px;
+}
 
-    ul{
-        margin: 0;
-        padding: 0;
-        display: inline;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        width: 100%;
-    }
+.image01 { background-image: url('artwork/Bio\ Blitz.jpg'); }
+.image02 { background-image: url('artwork/Blislandia.jpg'); }
+.image03 { background-image: url('artwork/Skelli.jpg'); }
+.image04 { background-image: url('artwork/The\ Butts.jpg'); }
+.image05 { background-image: url('artwork/AllADream.png'); }
+.image06 { background-image: url('artwork/Frida.jpg'); }
 
-    li{
-        display: inline;
-    /*    margin-right: 20px;*/
-    /*    float: left;*/
-    }
-
-    /*  a {
-        display: block;
-        padding: 8px;
-        background-color: #dddddd;
-    }*/
-  }
+.image07 { background-image: url('merch/cheugy_mug.png'); }
+.image08 { background-image: url('merch/hayy_pillow.png'); }
+.image09 { background-image: url('merch/nirvana_sticker.png'); }
+.image10 { background-image: url('merch/nirvana_tote.png'); }
+.image11 { background-image: url('merch/rainbows_cloud_tote.png'); }
+.image12 { background-image: url('merch/starmii_poster.png'); }
 
 /* ----------------PORTAL---------------- */
 
@@ -184,11 +215,6 @@ p {
 
 /* ----------------HOME---------------- */
 
-.section-title {
-    padding: 20px;
-    background-color: #a0a0a0;
-}
-
 .index-welcome {
     padding-top: 0px;
     padding-bottom: 60px;
@@ -200,9 +226,17 @@ p {
         /* color: whitesmoke; */
     }
 
+    /* img { */
+        /* position: absolute; */
+        /* z-index: -1; */
+    /* } */
     /* p {
         color: slategray;
     } */
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .overlay-text {
@@ -217,6 +251,7 @@ p {
     font-size: 20px;
     text-align: center;
     /*  border: 10px solid powderblue;*/
+    /* line-height: 1.5em; */
     z-index: 2;
 }
 
@@ -236,16 +271,6 @@ p {
     display: flex;
     flex-wrap: wrap;
 }
-
-.image01 { background-image: url('artwork/Bio\ Blitz.jpg'); }
-.image02 { background-image: url('artwork/Blislandia.jpg'); }
-.image03 { background-image: url('artwork/Skelli.jpg'); }
-.image04 { background-image: url('artwork/The\ Butts.jpg'); }
-.image05 { background-image: url('artwork/AllADream.png'); }
-.image06 { background-image: url('artwork/Frida.jpg'); }
-/* .image07 { background-image: url('artwork/AllADream.png'); }
-.image08 { background-image: url('artwork/Weird\ Dreams.jpg'); }
-.image09 { background-image: url('artwork/Frida.jpg'); } */
 
 @media screen and (max-width: 400px) {
     .image-grid {
