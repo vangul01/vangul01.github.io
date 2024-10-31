@@ -180,13 +180,23 @@ em {
 .image04 { background-image: url('artwork/The\ Butts.jpg'); }
 .image05 { background-image: url('artwork/AllADream.png'); }
 .image06 { background-image: url('artwork/Frida.jpg'); }
+.image07 { background-image: url('artwork/Buddha.jpg'); }
+.image08 { background-image: url('artwork/cheugyprint.png'); }
+.image09 { background-image: url('artwork/drippyprint.png'); }
+.image10 { background-image: url('artwork/eatmorerainbows.png'); }
+.image11 { background-image: url('artwork/Finding\ Voice.jpg'); }
+.image12 { background-image: url('artwork/greetingsprint.png'); }
+.image13 { background-image: url('artwork/nirvanadudesticker.png'); }
+.image14 { background-image: url('artwork/Starmi.jpg'); }
+.image15 { background-image: url('artwork/Weird\ Dreams.jpg'); }
 
-.image07 { background-image: url('merch/cheugy_mug.png'); }
-.image08 { background-image: url('merch/hayy_pillow.png'); }
-.image09 { background-image: url('merch/nirvana_sticker.png'); }
-.image10 { background-image: url('merch/nirvana_tote.png'); }
-.image11 { background-image: url('merch/rainbows_cloud_tote.png'); }
-.image12 { background-image: url('merch/starmii_poster.png'); }
+
+.image-A { background-image: url('merch/cheugy_mug.png'); }
+.image-E { background-image: url('merch/rainbows_cloud_tote.png'); }
+.image-B { background-image: url('merch/hayy_card1.png'); }
+.image-C { background-image: url('merch/hayy_card2.png'); }
+.image-D { background-image: url('merch/nirvana_tote.png'); }
+.image-F { background-image: url('merch/drippy_print.png'); }
 
 /* ----------------PORTAL---------------- */
 
@@ -219,6 +229,10 @@ em {
     padding-top: 0px;
     padding-bottom: 60px;
     /* position: absolute; */
+    position: relative;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Hide any overflow to prevent scrollbars */
 
     h1 {
         font-size: 46px;
@@ -234,10 +248,18 @@ em {
         color: slategray;
     } */
 
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    div.img {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        /* background-size: cover; */
+        background-size: contain;
+        width: 100vw;
+        height: 100vh;
+    }
 }
+
+/* Fullscreen background image */
 
 .overlay-text {
     position: absolute;
