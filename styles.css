@@ -198,6 +198,15 @@ em {
 .image-D { background-image: url('merch/nirvana_tote.png'); }
 .image-F { background-image: url('merch/drippy_print.png'); }
 
+
+.pretty_picture {
+    border: 10px solid black;
+    max-width: 30%;
+    /* width: 100%; */
+    /* max-width: 500px; */
+    height: auto;
+  }
+
 /* ----------------PORTAL---------------- */
 
 .portal {
