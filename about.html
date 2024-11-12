@@ -30,7 +30,7 @@
                         <button class="button-54" role="button">Originals</button>
                     </a></li>
 
-                    <li><a href="#">
+                    <li><a href="merch.html">
                         <button class="button-54" role="button">Merch</button>
                     </a></li>
 
@@ -38,7 +38,7 @@
                         <button class="button-54" role="button">About</button>
                     </a></li>
 
-                    <li><a href="#">
+                    <li><a href="projects.html">
                         <button class="button-54" role="button">Projects</button>
                     </a></li>
                 </ul>
@@ -46,16 +46,18 @@
         </header>
 
         <main>
-            <section class="about-main">
-                <h1>About</h1>
+            <!-- <section class="about-main">
+                <div class = "section-title">
+                    <h1>About</h1>
+                </div>
 
-                <!-- <div class="about-content"> -->
+                <div class="about-container">
                     <div class="about-image">
                         <img src="images/square_me.png" alt="Image of the artist VANGULAR aka Valerie Angulo" class="about-image">
                     </div>
 
                     <div class="about-text">
-                        <p class="about-text">
+                        <p>
                             Hello, I’m Valerie and welcome to my vAnGuLaR world!
                             <br><br>
                             I like to create fun and colorful things! I currently
@@ -69,12 +71,81 @@
                             Val!
                         </p>
                     </div>
-                <!-- </div> -->
+                </div>
+            </section> -->
+            <section>
+                <div class = "section-title">
+                    <h1>About</h1>
+                </div>
+
+                <div class="about-container">
+                    <div class="about-image">
+                        <img src="images/square_me.png" alt="Image of the artist VANGULAR aka Valerie Angulo">
+                    </div>
+
+                    <div class="about-text">
+                        <p>
+                            Hello, I’m Valerie and welcome to VANGULAR!
+                            <br><br>
+                            I love creating fun colorful things and enjoy making spiritual and nature themed art.
+                            Some of my other hobbies include studying the esoteric, writing poetry and coding.
+                            <br><br>
+                            Thanks for visiting my site I hope you see something here that makes you smile :)
+                            <br><br>
+                            Lots of love,
+                            <br>
+                            Val
+                        </p>
+                    </div>
+                </div>
             </section>
+
         </main>
 
         <footer>
-            <p>&copy; 2024 VANGULAR / Valerie Angulo</p>
+            <section class="index-links" id="links">
+                <!-- <img src="images/temp_rainbow.jpg" alt="an image of psychedelic color swirls. https://stockcake.com/i/psychedelic-color-swirls_760917_982276" width="100%" height="200"> -->
+                <!-- <h1>Links</h1> -->
+
+                <div class="gray">
+                    <div class="threecolumn">
+                        <h2>Socials</h2>
+                        <ul class="socials">
+                            <a href="https://www.etsy.com/shop/vangular/" target="_blank"><li><i class="fa fa-etsy linkIcon" aria-hidden="true"></i>Etsy</li></a>
+                            <a href="https://www.instagram.com/vangular/" target="_blank"><li><i class="fa fa-instagram linkIcon" aria-hidden="true"></i>Instagram</li></a>
+                            <!-- <a href="#" target="_blank"><li><i class="tiktok linkIcon" aria-hidden="true"><img src="images/tiktok.svg" alt="TikTok" width="12px"></i>TikTok</li></a> -->
+                            <!-- <a href="#" target="_blank"><li><i class="fa fa-youtube linkIcon"></i>Youtube</li></a> -->
+                            <!-- <a href="#" target="_blank"><li><i class="fa fa-facebook linkIcon" aria-hidden="true"></i>Facebook</li></a> -->
+                            <a href="https://www.linkedin.com/company/vangular/" target="_blank"><li><i class="fa fa-linkedin linkIcon"></i>LinkedIn</li></a>
+                        </ul>
+                    </div>
+
+                    <div class="threecolumn">
+                        <h2>Links</h2>
+                        <ul class="socials">
+                            <!-- <a href="#" target="_blank"><li class="etsy"><i class="fa fa-etsy linkIcon" aria-hidden="true"></i>Portal</li></a> -->
+                            <a href="index.html"><li><i class="linkIcon"></i>Home</li></a>
+                            <a href="gallery.html"><li><i class="linkIcon"></i>Originals</li></a>
+                            <a href="merch.html"><li><i class="linkIcon"></i>Merch</li></a>
+                            <a href="about.html"><li><i class="linkIcon"></i>About</li></a>
+                            <a href="projects.html"><li><i class="linkIcon"></i>Projects</li></a>
+                            <a href="#"><li><i class="linkIcon"></i>Contact Me</li></a>
+                        </ul>
+                    </div>
+
+                    <div class="threecolumn newsletter">
+                        <h2>Newsletter</h2>
+                        <h5>A monthly newsletter with memes and updates!</h5>
+
+                        <form action="/submit" method="POST">
+                            <label for="email" class="visually-hidden"></label> <!-- Optional: hide the label for accessibility -->
+                            <input type="email" id="email" name="email" placeholder="Email (ex: zorgborg@aol.com)" required>
+                            <button type="submit" class="button-54">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <em>Copyright &copy; 2024 VANGULAR. All rights reserved.</em>
         </footer>
     </body>
 </html>
