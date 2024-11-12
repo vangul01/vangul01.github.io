@@ -107,22 +107,29 @@ p {
 }
 
 footer {
-    /* background-color: rgba(51, 51, 51, 0.0);; */
+    background-color: rgba(51, 51, 51, 0.0);;
     /* color: slategray; */
     /* text-align: center; */
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     margin-top: auto;
     width: 100%;
     bottom: 0;
     /* font-size: smaller; */
     font-family: "Open Sans", Arial;
+    /* margin: auto 0; */
+    /* text-align: center; */
+
+
 }
 
 em {
     font-size: smaller;
     font-family: "Open Sans", Arial;
-    text-align: inherit;
-    position: center;
+    text-align: center;
+    /* justify-content: center;
+    align-items: center; */
+    margin: auto 0;
+    /* padding: 40rem; */
     color: rgb(0, 255, 191);
 }
 
@@ -185,12 +192,15 @@ em {
 .index-links {
     font-family: "Open Sans", Arial;
     /* padding: 45px 7%; */
-    padding: 10px 10%;
+    /* padding: 10px 10%; */
     position: relative;
+    margin: 1rem;
     /* background-color: #fffefe; */
 
     .gray {
-        background-color: #000020;
+        background: #000020 url('images/temp_rainbow.jpg');
+        border: 5px outset #000020;
+        border-radius: 20px;
         display: flex;
         justify-content: space-around; /* Or space-between for more separation */
         flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
@@ -199,20 +209,26 @@ em {
     .threecolumn {
         background-color: fuchsia;
         display: inline-block;
+        opacity: 95%;
+        border-radius: 20px;
+        border: 5px outset #000020;
         flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
-        margin: 10px; /* Adds spacing around each div */
+        margin: 0.5rem; /* Adds spacing around each div */
         min-width: 200px; /* Ensures a minimum width for responsiveness */
-        /* text-align: center; */
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        justify-content: space-evenly;
     }
 
     .newsletter {
         text-align: center;
-        /* padding: 2rem; */
     }
 
     .socials {
-        /* list-style-type: none;
-        padding-left: 10px; */
+        /* padding: 1rem; */
+        /* text-align: center; */
+        /* align-items: center; */
+
     }
 
     /* Has to be with a for some reason... */
@@ -220,10 +236,11 @@ em {
         text-decoration: none;
         color: black;
         /* color: inherit; */
+
     }
 
     .socials a:hover{
-        color: rgb(255, 0, 230)
+        color: whitesmoke;
     }
 
     .linkIcon {
@@ -400,7 +417,7 @@ input[type="email"]:hover {
 
 /* ----------------ABOUT---------------- */
 
-.about-container {
+.two-column-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -409,6 +426,7 @@ input[type="email"]:hover {
     gap: 1rem; /* Optional, adds space between elements */
     margin-top: 2rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
     /* background-color: aquamarine; */
 }
 
@@ -446,8 +464,41 @@ or if it's a block-level element, ensuring that the
 
 /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
 @media (max-width: 768px) {
-    .about-container {
+    .two-column-container {
         flex-direction: column;
         align-items: flex-start; /* Aligns items at the start when stacked vertically */
     }
+}
+
+/* ----------------PROJECTS---------------- */
+
+/* margin works if the .about-container has a specified width,
+or if it's a block-level element, ensuring that the
+.about-image centers itself. */
+.project-image {
+    display: inline-block;
+    margin: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /* background-color: fuchsia; */
+}
+
+.project-image img {
+    width: 15rem; /* Adjust as necessary */
+    max-width: 100%; /* Ensures the image scales properly */
+    height: auto; /* Maintains aspect ratio */
+    border: 5px solid black;
+    border-radius: 20%;
+}
+
+.project-text {
+    flex: 1; /* Allows the text container to take up remaining space */
+    display: inline-block;
+    justify-content: center;
+    text-align: left;
+    max-width: 35rem;
+    margin: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /* background-color: blue; */
 }
