@@ -119,10 +119,11 @@ footer {
 }
 
 em {
-    /* font-size: smaller; */
-    text-align: center;
+    font-size: smaller;
+    font-family: "Open Sans", Arial;
+    text-align: inherit;
     position: center;
-    color: slategray;
+    color: rgb(0, 255, 191);
 }
 
 /* ----------------UNIVERSAL CLASSES---------------- */
@@ -130,6 +131,7 @@ em {
 .section-title {
     padding: 20px;
     background-color: limegreen;
+    background: #00009d url('images/temp_rainbow.jpg');
 }
 
 .button-54 {
@@ -174,143 +176,6 @@ em {
     padding: 30px;
 }
 
-.image01 { background-image: url('artwork/Bio\ Blitz.jpg'); }
-.image02 { background-image: url('artwork/Blislandia.jpg'); }
-.image03 { background-image: url('artwork/Skelli.jpg'); }
-.image04 { background-image: url('artwork/The\ Butts.jpg'); }
-.image05 { background-image: url('artwork/AllADream.png'); }
-.image06 { background-image: url('artwork/Frida.jpg'); }
-.image07 { background-image: url('artwork/Buddha.jpg'); }
-.image08 { background-image: url('artwork/cheugyprint.png'); }
-.image09 { background-image: url('artwork/drippyprint.png'); }
-.image10 { background-image: url('artwork/eatmorerainbows.png'); }
-.image11 { background-image: url('artwork/Finding\ Voice.jpg'); }
-.image12 { background-image: url('artwork/greetingsprint.png'); }
-.image13 { background-image: url('artwork/nirvanadudesticker.png'); }
-.image14 { background-image: url('artwork/Starmi.jpg'); }
-.image15 { background-image: url('artwork/Weird\ Dreams.jpg'); }
-
-
-.image-A { background-image: url('merch/cheugy_mug.png'); }
-.image-E { background-image: url('merch/rainbows_cloud_tote.png'); }
-.image-B { background-image: url('merch/hayy_card1.png'); }
-.image-C { background-image: url('merch/hayy_card2.png'); }
-.image-D { background-image: url('merch/nirvana_tote.png'); }
-.image-F { background-image: url('merch/drippy_print.png'); }
-
-
-.pretty_picture {
-    border: 10px solid black;
-    max-width: 30%;
-    /* width: 100%; */
-    /* max-width: 500px; */
-    height: auto;
-  }
-
-/* ----------------PORTAL---------------- */
-
-.portal {
-    background: #00009d url('images/temp_rainbow.jpg');
-    /* background-image: url('images/temp_rainbow.jpg'); */
-    /* background-color: #000; */
-    /* background-color: s0; */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    color: white;
-
-    a {
-        margin: 0;
-        position: absolute;
-        /* top: 80%; */
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        /* width: 200%; */
-        /* position: fixed; */
-    }
-}
-
-/* ----------------HOME---------------- */
-
-.index-welcome {
-    padding-top: 0px;
-    padding-bottom: 60px;
-    /* position: absolute; */
-    position: relative;
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    overflow: hidden; /* Hide any overflow to prevent scrollbars */
-
-    h1 {
-        font-size: 46px;
-        margin: 20px;
-        /* color: whitesmoke; */
-    }
-
-    /* img { */
-        /* position: absolute; */
-        /* z-index: -1; */
-    /* } */
-    /* p {
-        color: slategray;
-    } */
-
-    div.img {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        /* background-size: cover; */
-        background-size: contain;
-        width: 100vw;
-        height: 100vh;
-    }
-}
-
-/* Fullscreen background image */
-
-.overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #000020;
-    opacity: 100%;
-    color: whitesmoke;
-    padding: 50px 50px;
-    font-size: 20px;
-    text-align: center;
-    /*  border: 10px solid powderblue;*/
-    /* line-height: 1.5em; */
-    z-index: 2;
-}
-
-.index-gallery {
-    padding-bottom: 50px;
-}
-
-.image-grid div {
-    width: 33.33%;
-    height: 240px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-}
-
-.image-grid {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-@media screen and (max-width: 400px) {
-    .image-grid {
-        flex-direction: column;
-        flex-wrap: no-wrap;
-    }
-    .image-grid div { width: 100%; }
-}
-
 .index-links {
     font-family: "Open Sans", Arial;
     /* padding: 45px 7%; */
@@ -325,7 +190,7 @@ em {
         flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
     }
 
-    .sidebyside {
+    .threecolumn {
         background-color: fuchsia;
         display: inline-block;
         flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
@@ -386,6 +251,133 @@ input[type="email"]:hover {
     background-color: #444; /* Darker on hover */
 }
 
+.image01 { background-image: url('artwork/Bio\ Blitz.jpg'); }
+.image02 { background-image: url('artwork/Blislandia.jpg'); }
+.image03 { background-image: url('artwork/Skelli.jpg'); }
+.image04 { background-image: url('artwork/The\ Butts.jpg'); }
+.image05 { background-image: url('artwork/AllADream.png'); }
+.image06 { background-image: url('artwork/Frida.jpg'); }
+.image07 { background-image: url('artwork/Buddha.jpg'); }
+.image08 { background-image: url('artwork/cheugyprint.png'); }
+.image09 { background-image: url('artwork/drippyprint.png'); }
+.image10 { background-image: url('artwork/eatmorerainbows.png'); }
+.image11 { background-image: url('artwork/Finding\ Voice.jpg'); }
+.image12 { background-image: url('artwork/greetingsprint.png'); }
+.image13 { background-image: url('artwork/nirvanadudesticker.png'); }
+.image14 { background-image: url('artwork/Starmi.jpg'); }
+.image15 { background-image: url('artwork/Weird\ Dreams.jpg'); }
+
+
+.image-A { background-image: url('merch/cheugy_mug.png'); }
+.image-E { background-image: url('merch/rainbows_cloud_tote.png'); }
+.image-B { background-image: url('merch/hayy_card1.png'); }
+.image-C { background-image: url('merch/hayy_card2.png'); }
+.image-D { background-image: url('merch/nirvana_tote.png'); }
+.image-F { background-image: url('merch/drippy_print.png'); }
+
+
+.pretty_picture {
+    border: 10px solid black;
+    max-width: 30%;
+    /* width: 100%; */
+    /* max-width: 500px; */
+    height: auto;
+}
+
+/* ----------------PORTAL---------------- */
+
+.portal {
+    background: #00009d url('images/temp_rainbow.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* .overlay-image {
+    width: 100%;
+    opacity: 100%;
+    color: whitesmoke;
+    padding: 50px 50px;
+    overflow: hidden;
+} */
+
+.overlay-image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ----------------HOME---------------- */
+
+.index-welcome {
+    padding-top: 0px;
+    padding-bottom: 60px;
+    /* position: absolute; */
+    position: relative;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Hide any overflow to prevent scrollbars */
+
+    h1 {
+        font-size: 46px;
+        margin: 20px;
+        /* color: whitesmoke; */
+    }
+
+    /* Fullscreen background image */
+    div.img {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        /* background-size: cover; */
+        background-size: contain;
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000020;
+    opacity: 100%;
+    color: whitesmoke;
+    padding: 50px 50px;
+    font-size: 20px;
+    text-align: center;
+    /*  border: 10px solid powderblue;*/
+    /* line-height: 1.5em; */
+    z-index: 2;
+}
+
+.index-gallery {
+    padding-bottom: 50px;
+}
+
+.image-grid div {
+    width: 33.33%;
+    height: 240px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 400px) {
+    .image-grid {
+        flex-direction: column;
+        flex-wrap: no-wrap;
+    }
+    .image-grid div { width: 100%; }
+}
+
 /* ----------------GALLERY---------------- */
 
 .gallery-artwork {
@@ -402,45 +394,49 @@ input[type="email"]:hover {
 
 /* ----------------ABOUT---------------- */
 
-.about-main {
-    padding: 2rem;
-    display: inline-block;
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-}
-
 .about-container {
     display: flex;
+    align-items: center; /* Center the items vertically */
+    justify-content: space-between; /* Optional, adds space between items */
+    gap: 0px; /* Optional, adds space between elements */
     max-width: 1200px;
     width: 100%;
-    align-items: center;
+    background-color: aquamarine;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
+/* margin works if the .about-container has a specified width,
+or if it's a block-level element, ensuring that the
+.about-image centers itself. */
 .about-image {
-    flex: 1;
-    max-width: 50%;
+    background-color: fuchsia;
+    margin: 0 auto;
 }
 
 .about-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px; /* Optional: Add some styling to the image */
+    max-width: 100%; /* Ensures the image scales properly */
+    height: auto; /* Maintains aspect ratio */
+    width: 400px; /* Adjust as necessary */
+    background-color: fuchsia;
+    border-radius: 50%;
+    border: 6px outset aquamarine;
+    /* border-width: 1500px; */
+    /* align-items: center; */
+    padding: 0px;
+
 }
 
 .about-text {
-    flex: 1;
-    padding: 0 2rem;
-    text-align: justify;
-    color: fuchsia;
+    flex: 1; /* Allows the text container to take up remaining space */
+    background-color: blue;
+    padding: 0px;
 }
 
-.about-text h2 {
-    margin-top: 0;
-}
-
-.about-text p {
-    margin: 0;
-    line-height: 1.6;
+/* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+        align-items: flex-start; /* Aligns items at the start when stacked vertically */
+    }
 }
