@@ -307,6 +307,46 @@ input[type="email"]:hover {
     height: auto;
 }
 
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background-color: purple;
+  }
+
+  /* Create four equal columns that sits next to each other */
+  .column {
+    flex: 50%;
+    max-width: 50%;
+    /* padding: 0 1rem; */
+    /* gap: 1rem; */
+    background-color: fuchsia;
+    margin: auto;
+  }
+
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 50%;
+    max-width: 100%;
+  }
+
+  /* Responsive layout - makes a two column-layout instead of four columns */
+  /* @media screen and (max-width: 800px) {
+    .column {
+      flex: 50%;
+      max-width: 50%;
+    }
+  } */
+
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+  /* @media screen and (max-width: 600px) {
+    .column {
+      flex: 100%;
+      max-width: 100%;
+    }
+  } */
+
 /* ----------------PORTAL---------------- */
 
 .portal {
@@ -401,6 +441,18 @@ input[type="email"]:hover {
     .image-grid div { width: 100%; }
 }
 
+div.scroll-container {
+    background-color: fuchsia;
+    overflow: auto;
+    white-space: nowrap;
+    padding: 10px;
+    /* max-height: 3rem; */
+  }
+
+  div.scroll-container img {
+    padding: 10px;
+    max-height: 20rem;
+  }
 /* ----------------GALLERY---------------- */
 
 .gallery-artwork {
