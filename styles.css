@@ -320,7 +320,7 @@ input[type="email"]:hover {
     max-width: 50%;
     /* padding: 0 1rem; */
     /* gap: 1rem; */
-    background-color: fuchsia;
+    background-color: blueviolet;
     margin: auto;
   }
 
@@ -442,7 +442,7 @@ input[type="email"]:hover {
 }
 
 div.scroll-container {
-    background-color: fuchsia;
+    /* background-color: fuchsia; */
     overflow: auto;
     white-space: nowrap;
     padding: 10px;
