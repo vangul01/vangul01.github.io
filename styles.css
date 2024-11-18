@@ -527,6 +527,8 @@ or if it's a block-level element, ensuring that the
 /* margin works if the .about-container has a specified width,
 or if it's a block-level element, ensuring that the
 .about-image centers itself. */
+
+
 .project-image {
     display: inline-block;
     margin: auto;
@@ -546,11 +548,15 @@ or if it's a block-level element, ensuring that the
 .project-text {
     flex: 1; /* Allows the text container to take up remaining space */
     display: inline-block;
-    justify-content: center;
+    /* justify-content: left; */
     text-align: left;
     max-width: 35rem;
     margin: auto;
     padding-left: 1rem;
     padding-right: 1rem;
     /* background-color: blue; */
+
+    h2 {
+        text-align: left;
+    }
 }
