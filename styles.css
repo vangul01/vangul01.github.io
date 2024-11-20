@@ -228,7 +228,7 @@ em {
 /* Style for the email input */
 input[type="email"] {
     width: 70%; /* Full width of the container */
-    max-width: 70%;
+    max-width: fit-content;
     padding: 10px 20px; /* Padding for a button-like look */
     border: none; /* Remove border */
     border-radius: 8px; /* Rounded corners */
@@ -403,11 +403,11 @@ or if it's a block-level element, ensuring that the
     margin: auto;
     padding-left: 1rem;
     padding-right: 1rem;
-    /* background-color: fuchsia; */
+    padding-bottom: 1rem;
 }
 
 .about-image img {
-    width: 25rem; /* Adjust as necessary */
+    width: 22rem; /* Adjust as necessary */
     max-width: 100%; /* Ensures the image scales properly */
     height: auto; /* Maintains aspect ratio */
     border: 5px outset aquamarine;
