@@ -18,6 +18,14 @@
     font-style: normal;
 } */
 
+/* ----------------VARIABLES---------------- */
+/* home-page-title
+art-page-title
+merch-page-title
+about-page-title
+project-page-title */
+/* header-textbox-color */
+
 /* ----------------UNIVERSAL ELEMENTS---------------- */
 
 nav {
@@ -72,7 +80,8 @@ h1 {
     letter-spacing: 0.1rem;
     text-align: center;
     position: relative;
-    margin-bottom: 0;
+    /* margin-bottom: 0; */
+    margin: 0;
 
 }
 
@@ -135,16 +144,25 @@ em {
 
 /* ----------------UNIVERSAL CLASSES---------------- */
 
-.section-title {
-    display: block;
-    padding: 1rem;
-    /* text-align: center;
-    vertical-align: middle; */
-    /* line-height: 1rem; */
-    /* margin: 20px; */
-    /* background-color: limegreen; */
-    background: limegreen url('images/temp_rainbow.jpg');
-    text-align: center;
+.header-container {
+    display: flex; /* Change display to flex */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background: limegreen url('images/temp_rainbow.jpg') no-repeat center center;
+    background-size: cover; /* Ensures the background image covers the container */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 18rem;
+    padding: 0;
+
+    .header-textbox {
+        text-align: center; /* Center text inside the box */
+        background-color: #000020;
+        color: whitesmoke;
+        padding: 50px 50px; /* Adjust padding as needed */
+        min-width: 15rem;
+        opacity: 100%;
+    }
 }
 
 .button-54 {
@@ -189,44 +207,51 @@ em {
     padding: 30px;
 }
 
-.index-links {
+.navigation-container {
     font-family: "Open Sans", Arial;
     /* padding: 45px 7%; */
     /* padding: 10px 10%; */
-    position: relative;
-    margin: 1rem;
-    /* background-color: #fffefe; */
+    /* position: relative; */
+    /* margin: 1rem; */
+    margin: auto;
 
-    .gray {
-        background: #000020 url('images/temp_rainbow.jpg');
-        border: 5px outset #000020;
-        border-radius: 20px;
-        display: flex;
-        justify-content: space-around; /* Or space-between for more separation */
-        flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
-    }
+    background: #000020 url('images/temp_rainbow.jpg');
+    /* background-color: #4032db; */
+    border: 5px outset #000020;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+    justify-content: space-around; /* Or space-between for more separation */
+    /* height: 10rem; */
+    /* width: 70rem; */
 
     .threecolumn {
-        background-color: fuchsia;
-        display: inline-block;
+        background-color: #4032db;
+        /* display: inline-block; */
+        display: flex;
         opacity: 95%;
         border-radius: 20px;
         border: 5px outset #000020;
         flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
         margin: 0.5rem; /* Adds spacing around each div */
         min-width: 200px; /* Ensures a minimum width for responsiveness */
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        /* padding-top: 1rem;
+        padding-bottom: 1rem; */
         justify-content: space-evenly;
+        height: 8rem;
     }
 
     .newsletter {
         text-align: center;
+        /* max-width: fit-content;
+        margin-inline: auto; */
     }
 
     .socials {
-        /* padding: 1rem; */
-        /* text-align: center; */
+        display: flex;
+        flex-wrap: wrap; /* Allows items to wrap onto a new line */
+        gap: 10px; /* Optional: Adds spacing between items */
+        justify-content: space-between;
         /* align-items: center; */
 
     }
@@ -236,6 +261,9 @@ em {
         text-decoration: none;
         color: black;
         /* color: inherit; */
+        flex: 1 1 45%; /* Each link takes up approximately 45% of the container's width */
+        box-sizing: border-box; /* Ensures padding and borders don't increase width */
+        text-align: left; /* Aligns text inside the links */
 
     }
 
@@ -246,6 +274,10 @@ em {
     .linkIcon {
         padding-right: 10px;
     }
+
+    /* h2 {
+        text-align: right;
+    } */
 }
 
 /* Style for the email input */
@@ -512,6 +544,10 @@ or if it's a block-level element, ensuring that the
     padding-left: 1rem;
     padding-right: 1rem;
     /* background-color: blue; */
+
+    h2 {
+        text-align: left;
+    }
 }
 
 /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
@@ -534,15 +570,17 @@ or if it's a block-level element, ensuring that the
     margin: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 1rem;
     /* background-color: fuchsia; */
 }
 
 .project-image img {
-    width: 15rem; /* Adjust as necessary */
+    width: 13rem; /* Adjust as necessary */
     max-width: 100%; /* Ensures the image scales properly */
     height: auto; /* Maintains aspect ratio */
-    border: 5px solid black;
-    border-radius: 20%;
+    /* border: 5px solid black; */
+    border-radius: 10%;
+    background-color: black;
 }
 
 .project-text {
@@ -550,13 +588,15 @@ or if it's a block-level element, ensuring that the
     display: inline-block;
     /* justify-content: left; */
     text-align: left;
-    max-width: 35rem;
+    /* max-width: 35rem; */
     margin: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 1rem;
     /* background-color: blue; */
 
     h2 {
         text-align: left;
     }
 }
+
