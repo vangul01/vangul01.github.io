@@ -44,24 +44,17 @@ nav {
 
     li{
         display: inline;
-    /*    margin-right: 20px;*/
-    /*    float: left;*/
     }
-
-    /*  a {
-        display: block;
-        padding: 8px;
-        background-color: #dddddd;
-    }*/
   }
 
 body {
-    /* background-color: #000033; */
-    background-color: #00009d;
+    background-image: url('images/temp_rainbow.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover; /* Ensures the background covers the entire viewport */
+    background-position: center center;
     margin: 0;
     padding: 0;
-    font-family: "Bakbak One", sans-serif;
-
 }
 
 ul {
@@ -72,33 +65,28 @@ h1 {
 /*  font-family: "Open Sans", Arial; */
 /*  font-family: "Bakbak One", sans-serif;*/
     font-family: "Russo One", sans-serif;
-
     font-size: 36px;
     line-height: 150%;
     text-transform: uppercase;
-    /* color: darkslategray; */
     color: whitesmoke;
     letter-spacing: 0.1rem;
     text-align: center;
     position: relative;
-    /* margin-bottom: 0; */
     margin: 0;
-
+    padding: 0;
 }
 
 h2 {
     /*  font-family: "Open Sans", Arial; */
     /*  font-family: "Bakbak One", sans-serif;*/
     font-family: "Russo One", sans-serif;
-    /* font-size: 10px; */
+    letter-spacing: 0.1rem;
     line-height: 150%;
     text-transform: uppercase;
-        /* color: darkslategray; */
-        color: whitesmoke;
-    letter-spacing: 0.1rem;
+    color: whitesmoke;
     text-align: center;
     position: relative;
-    margin-top: 0;
+    margin: 0;
 
 }
 
@@ -108,38 +96,20 @@ p {
     line-height: 100%;
     color: slategray;
     letter-spacing: 0.1rem;
-    /* text-align: center;  */
-    /* margin: 10px 0; */
     line-height: normal;
-    /* margin-top: 0em;
-    margin-bottom: 0em; */
-    /* padding: 5px 5px 0 5px; */
 }
 
 footer {
-    background-color: rgba(51, 51, 51, 0.0);;
-    /* color: slategray; */
-    /* text-align: center; */
-    /* padding: 1rem 0; */
-    margin-top: auto;
     width: 100%;
     bottom: 0;
-    /* font-size: smaller; */
     font-family: "Open Sans", Arial;
-    /* margin: auto 0; */
-    /* text-align: center; */
-
-
 }
 
 em {
     font-size: smaller;
     font-family: "Open Sans", Arial;
     text-align: center;
-    /* justify-content: center;
-    align-items: center; */
     margin: auto 0;
-    /* padding: 40rem; */
     color: rgb(0, 255, 191);
 }
 
@@ -149,21 +119,137 @@ em {
     display: flex; /* Change display to flex */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    background: limegreen url('images/temp_rainbow.jpg') no-repeat center center;
-    background-size: cover; /* Ensures the background image covers the container */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     height: 18rem;
     padding: 0;
 
     .header-textbox {
         text-align: center; /* Center text inside the box */
-        background-color: #000020;
+        /* background-color: #000020; */
+        background-color: #190a2a;
         color: whitesmoke;
         padding: 50px 50px; /* Adjust padding as needed */
         min-width: 15rem;
         opacity: 100%;
     }
+}
+
+.content-container {
+    background-color: #190a2a;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.two-column-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    gap: 1rem; /* Optional, adds space between elements */
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+    /* background-color: aquamarine; */
+}
+
+/* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+@media (max-width: 768px) {
+    .two-column-container {
+        flex-direction: column;
+        align-items: flex-start; /* Aligns items at the start when stacked vertically */
+    }
+}
+
+.nav-footer-container {
+    font-family: "Open Sans", Arial;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+    justify-content: space-around; /* Or space-between for more separation */
+    /* height: 10rem; */
+    /* width: 70rem; */
+
+    .threecolumn {
+        background-color: #4032db;
+        /* display: inline-block; */
+        display: flex;
+        opacity: 95%;
+        border-radius: 20px;
+        border: 5px outset #000020;
+        flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
+        margin: 0.5rem; /* Adds spacing around each div */
+        min-width: 200px; /* Ensures a minimum width for responsiveness */
+        /* padding-top: 1rem;
+        padding-bottom: 1rem; */
+        justify-content: space-evenly;
+        height: 8rem;
+    }
+
+    .newsletter {
+        text-align: center;
+        /* max-width: fit-content;
+        margin-inline: auto; */
+    }
+
+    .socials {
+        display: flex;
+        flex-wrap: wrap; /* Allows items to wrap onto a new line */
+        gap: 0px; /* Optional: Adds spacing between items */
+        justify-content: space-between;
+        padding: 15px;
+        /* margin: 30px; */
+    }
+
+    /* Has to be with a for some reason... */
+    .socials a{
+        text-decoration: none;
+        color: black;
+        /* color: inherit; */
+        flex: 1 1 45%; /* Each link takes up approximately 45% of the container's width */
+        box-sizing: border-box; /* Ensures padding and borders don't increase width */
+        text-align: left; /* Aligns text inside the links */
+
+    }
+
+    .socials a:hover{
+        color: whitesmoke;
+    }
+
+    .linkIcon {
+        padding-right: 10px;
+    }
+
+    h2 {
+        text-align: center;
+        padding: 15px;
+    }
+}
+
+/* Style for the email input */
+input[type="email"] {
+    width: 70%; /* Full width of the container */
+    max-width: 70%;
+    padding: 10px 20px; /* Padding for a button-like look */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #190a2a; /* Background color */
+    color: #fff; /* Text color */
+    font-size: 16px; /* Font size */
+    font-family: inherit; /* Use same font as the rest */
+    outline: none; /* Remove outline on focus */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    margin-bottom: 10px; /* Spacing below input */
+}
+
+/* Placeholder text styling */
+input[type="email"]::placeholder {
+    color: #bbb; /* Placeholder color */
+    opacity: 0.8; /* Slightly lighter opacity */
+}
+
+/* Add a hover effect like the button */
+input[type="email"]:hover {
+    background-color: #444; /* Darker on hover */
 }
 
 .button-54 {
@@ -208,105 +294,6 @@ em {
     padding: 30px;
 }
 
-.navigation-container {
-    font-family: "Open Sans", Arial;
-    /* padding: 45px 7%; */
-    /* padding: 10px 10%; */
-    /* position: relative; */
-    /* margin: 1rem; */
-    margin: auto;
-
-    background: #000020 url('images/temp_rainbow.jpg');
-    /* background-color: #4032db; */
-    border: 5px outset #000020;
-    border-radius: 20px;
-    display: flex;
-    flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
-    justify-content: space-around; /* Or space-between for more separation */
-    /* height: 10rem; */
-    /* width: 70rem; */
-
-    .threecolumn {
-        background-color: #4032db;
-        /* display: inline-block; */
-        display: flex;
-        opacity: 95%;
-        border-radius: 20px;
-        border: 5px outset #000020;
-        flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
-        margin: 0.5rem; /* Adds spacing around each div */
-        min-width: 200px; /* Ensures a minimum width for responsiveness */
-        /* padding-top: 1rem;
-        padding-bottom: 1rem; */
-        justify-content: space-evenly;
-        height: 8rem;
-    }
-
-    .newsletter {
-        text-align: center;
-        /* max-width: fit-content;
-        margin-inline: auto; */
-    }
-
-    .socials {
-        display: flex;
-        flex-wrap: wrap; /* Allows items to wrap onto a new line */
-        gap: 10px; /* Optional: Adds spacing between items */
-        justify-content: space-between;
-        /* align-items: center; */
-
-    }
-
-    /* Has to be with a for some reason... */
-    .socials a{
-        text-decoration: none;
-        color: black;
-        /* color: inherit; */
-        flex: 1 1 45%; /* Each link takes up approximately 45% of the container's width */
-        box-sizing: border-box; /* Ensures padding and borders don't increase width */
-        text-align: left; /* Aligns text inside the links */
-
-    }
-
-    .socials a:hover{
-        color: whitesmoke;
-    }
-
-    .linkIcon {
-        padding-right: 10px;
-    }
-
-    /* h2 {
-        text-align: right;
-    } */
-}
-
-/* Style for the email input */
-input[type="email"] {
-    width: 70%; /* Full width of the container */
-    padding: 12px 20px; /* Padding for a button-like look */
-    border: none; /* Remove border */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #333; /* Background color */
-    color: #fff; /* Text color */
-    font-size: 16px; /* Font size */
-    font-family: inherit; /* Use same font as the rest */
-    outline: none; /* Remove outline on focus */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    margin-bottom: 10px; /* Spacing below input */
-}
-
-/* Placeholder text styling */
-input[type="email"]::placeholder {
-    color: #bbb; /* Placeholder color */
-    opacity: 0.8; /* Slightly lighter opacity */
-}
-
-/* Add a hover effect like the button */
-input[type="email"]:hover {
-    background-color: #444; /* Darker on hover */
-}
-
 .image01 { background-image: url('artwork/Bio\ Blitz.jpg'); }
 .image02 { background-image: url('artwork/Blislandia.jpg'); }
 .image03 { background-image: url('artwork/Skelli.jpg'); }
@@ -331,74 +318,7 @@ input[type="email"]:hover {
 .image-D { background-image: url('merch/nirvana_tote.png'); }
 .image-F { background-image: url('merch/drippy_print.png'); }
 
-
-.pretty_picture {
-    border: 10px solid black;
-    max-width: 30%;
-    /* width: 100%; */
-    /* max-width: 500px; */
-    height: auto;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-    background-color: purple;
-  }
-
-  /* Create four equal columns that sits next to each other */
-  .column {
-    flex: 50%;
-    max-width: 50%;
-    /* padding: 0 1rem; */
-    /* gap: 1rem; */
-    background-color: blueviolet;
-    margin: auto;
-  }
-
-  .column img {
-    margin-top: 8px;
-    vertical-align: middle;
-    width: 50%;
-    max-width: 100%;
-  }
-
-  /* Responsive layout - makes a two column-layout instead of four columns */
-  /* @media screen and (max-width: 800px) {
-    .column {
-      flex: 50%;
-      max-width: 50%;
-    }
-  } */
-
-  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-  /* @media screen and (max-width: 600px) {
-    .column {
-      flex: 100%;
-      max-width: 100%;
-    }
-  } */
-
 /* ----------------PORTAL---------------- */
-
-.portal {
-    background-image: url('images/temp_rainbow.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-}
-
-
-/* .overlay-image {
-    width: 100%;
-    opacity: 100%;
-    color: whitesmoke;
-    padding: 50px 50px;
-    overflow: hidden;
-} */
-
 .overlay-image img {
     position: absolute;
     top: 50%;
@@ -407,11 +327,9 @@ input[type="email"]:hover {
 }
 
 /* ----------------HOME---------------- */
-
-.index-welcome {
+.fullscreen-background {
     padding-top: 0px;
     padding-bottom: 60px;
-    /* position: absolute; */
     position: relative;
     width: 100vw; /* Full viewport width */
     height: 100vh; /* Full viewport height */
@@ -420,18 +338,6 @@ input[type="email"]:hover {
     h1 {
         font-size: 46px;
         margin: 20px;
-        /* color: whitesmoke; */
-    }
-
-    /* Fullscreen background image */
-    div.img {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        /* background-size: cover; */
-        background-size: contain;
-        width: 100vw;
-        height: 100vh;
     }
 }
 
@@ -451,9 +357,20 @@ input[type="email"]:hover {
     z-index: 2;
 }
 
-.index-gallery {
-    padding-bottom: 50px;
-}
+div.scroll-container {
+    /* background-color: fuchsia; */
+    overflow: auto;
+    white-space: nowrap;
+    padding: 10px;
+    /* max-height: 3rem; */
+  }
+
+  div.scroll-container img {
+    padding: 10px;
+    max-height: 20rem;
+  }
+
+/* ----------------GALLERY---------------- */
 
 .image-grid div {
     width: 33.33%;
@@ -476,46 +393,7 @@ input[type="email"]:hover {
     .image-grid div { width: 100%; }
 }
 
-div.scroll-container {
-    /* background-color: fuchsia; */
-    overflow: auto;
-    white-space: nowrap;
-    padding: 10px;
-    /* max-height: 3rem; */
-  }
-
-  div.scroll-container img {
-    padding: 10px;
-    max-height: 20rem;
-  }
-/* ----------------GALLERY---------------- */
-
-.gallery-artwork {
-    padding: 2rem;
-    text-align: center;
-    display: inline-block;
-    margin: 1rem;
-}
-
-.gallery {
-    padding: 2rem;
-    text-align: center;
-}
-
 /* ----------------ABOUT---------------- */
-
-.two-column-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    width: 100%;
-    gap: 1rem; /* Optional, adds space between elements */
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
-    /* background-color: aquamarine; */
-}
 
 /* margin works if the .about-container has a specified width,
 or if it's a block-level element, ensuring that the
@@ -547,17 +425,11 @@ or if it's a block-level element, ensuring that the
     padding-left: 1rem;
     padding-right: 1rem;
     /* background-color: blue; */
+    text-align: justify;
+    text-justify: auto;
 
     h2 {
         text-align: left;
-    }
-}
-
-/* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
-@media (max-width: 768px) {
-    .two-column-container {
-        flex-direction: column;
-        align-items: flex-start; /* Aligns items at the start when stacked vertically */
     }
 }
 
@@ -566,9 +438,6 @@ or if it's a block-level element, ensuring that the
 /* margin works if the .about-container has a specified width,
 or if it's a block-level element, ensuring that the
 .about-image centers itself. */
-
-
-
 
 .project-image {
     display: inline-block;
@@ -585,7 +454,7 @@ or if it's a block-level element, ensuring that the
     height: auto; /* Maintains aspect ratio */
     /* border: 5px solid black; */
     border-radius: 10%;
-    background-color: black;
+    background-color: grey;
 }
 
 .project-text {
@@ -599,9 +468,10 @@ or if it's a block-level element, ensuring that the
     padding-right: 1rem;
     padding-bottom: 1rem;
     /* background-color: blue; */
+    text-align: justify;
+    text-justify: auto;
 
     h2 {
         text-align: left;
     }
 }
-
