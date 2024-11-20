@@ -61,6 +61,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Bakbak One", sans-serif;
+
 }
 
 ul {
@@ -382,11 +383,13 @@ input[type="email"]:hover {
 /* ----------------PORTAL---------------- */
 
 .portal {
-    background: #00009d url('images/temp_rainbow.jpg');
+    background-image: url('images/temp_rainbow.jpg');
+    background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
 }
+
 
 /* .overlay-image {
     width: 100%;
@@ -563,6 +566,8 @@ or if it's a block-level element, ensuring that the
 /* margin works if the .about-container has a specified width,
 or if it's a block-level element, ensuring that the
 .about-image centers itself. */
+
+
 
 
 .project-image {
