@@ -121,35 +121,59 @@ em {
     align-items: center; /* Center vertically */
     height: 18rem;
     padding: 0;
+    flex-shrink: 0;
+    min-width: 200px; /* For responsiveness */
 
     .header-textbox {
-        text-align: center; /* Center text inside the box */
-        /* background-color: #000020; */
         background-color: #190a2a;
         color: whitesmoke;
         padding: 50px 50px; /* Adjust padding as needed */
-        min-width: 15rem;
+        width: 15rem;
+        max-width: 100%; /* For screen size < 15rem */
         opacity: 100%;
+        overflow: auto; /* To cut off header if width is very small */
+        /* display: flex; */
+        /* flex-shrink: 0; */
+        /* To still get header if width is very small */
+        /* padding-left: min(50px, 100%);
+        padding-right: min(50px, 100%); */
+        /* min-width: 100px; */
+
     }
 }
 
 .content-container {
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+
     background-color: #190a2a;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+    /* min-width: 100%; */
+    /* margin:0px; */
+    min-width: 200px;
+
+
 }
 
 .two-column-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     width: 100%;
+    /* min-width: 100%; */
     gap: 1rem; /* Optional, adds space between elements */
     margin-top: 2rem;
     margin-bottom: 2rem;
     flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
     /* background-color: aquamarine; */
+    /* min-width: 200px; */
+
 }
 
 /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
@@ -177,13 +201,19 @@ em {
         border-radius: 20px;
         border: 5px outset #000020;
         flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
-        margin: 0.5rem; /* Adds spacing around each div */
+        margin: .2rem; /* Adds spacing around each div */
         min-width: 200px; /* Ensures a minimum width for responsiveness */
         /* padding-top: 1rem;
         padding-bottom: 1rem; */
         justify-content: space-evenly;
+        align-items:normal;
+
         height: 8rem;
+        flex-shrink: 0;
+        flex-direction: column;
+
     }
+
 
     .newsletter {
         text-align: center;
@@ -195,9 +225,11 @@ em {
         display: flex;
         flex-wrap: wrap; /* Allows items to wrap onto a new line */
         gap: 0px; /* Optional: Adds spacing between items */
-        justify-content: space-between;
-        padding: 15px;
-        /* margin: 30px; */
+        justify-content: space-evenly;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 5px;
+        padding-top: 0px;
     }
 
     /* Has to be with a for some reason... */
@@ -205,7 +237,8 @@ em {
         text-decoration: none;
         color: black;
         /* color: inherit; */
-        flex: 1 1 45%; /* Each link takes up approximately 45% of the container's width */
+        flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+        flex-basis: auto;
         box-sizing: border-box; /* Ensures padding and borders don't increase width */
         text-align: left; /* Aligns text inside the links */
 
@@ -216,12 +249,12 @@ em {
     }
 
     .linkIcon {
-        padding-right: 10px;
+        padding-right: 5px;
     }
 
     h2 {
         text-align: center;
-        padding: 15px;
+        padding-top: 5px;
     }
 }
 
@@ -399,11 +432,18 @@ div.scroll-container {
 or if it's a block-level element, ensuring that the
 .about-image centers itself. */
 .about-image {
-    display: inline-block;
-    margin: auto;
+    display: flex;
+    /* margin: auto; */
     padding-left: 1rem;
     padding-right: 1rem;
     padding-bottom: 1rem;
+    /* object-fit: contain; */
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    margin-left:auto;
+    margin-right:auto;
+
 }
 
 .about-image img {
@@ -475,3 +515,4 @@ or if it's a block-level element, ensuring that the
         text-align: left;
     }
 }
+
