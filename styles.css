@@ -108,8 +108,8 @@ footer {
 em {
     font-size: smaller;
     font-family: "Open Sans", Arial;
-    text-align: center;
-    margin: auto 0;
+    text-align: right;
+    margin: auto;
     color: rgb(0, 255, 191);
 }
 
@@ -190,8 +190,10 @@ em {
     display: flex;
     flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
     justify-content: space-around; /* Or space-between for more separation */
-    /* height: 10rem; */
-    /* width: 70rem; */
+    padding-top: 1rem;
+    padding-left: 5px;
+    padding-right: 5px;
+    gap: 5px;
 
     .threecolumn {
         background-color: #4032db;
@@ -200,20 +202,18 @@ em {
         opacity: 95%;
         border-radius: 20px;
         border: 5px outset #000020;
-        flex: 1 1 30%; /* Each .sidebyside div will take up about 30% of the width */
-        margin: .2rem; /* Adds spacing around each div */
-        min-width: 200px; /* Ensures a minimum width for responsiveness */
-        /* padding-top: 1rem;
-        padding-bottom: 1rem; */
+        flex: 1 1 30%; /* Each div will take up about 30% of the width */
+        margin: auto;
+        min-width: 180px; /* Min width for responsiveness - this plus padding and border*/
         justify-content: space-evenly;
         align-items:normal;
-
-        height: 8rem;
+        min-height: 8rem;
+        height: 9rem;
         flex-shrink: 0;
         flex-direction: column;
 
-    }
 
+    }
 
     .newsletter {
         text-align: center;
@@ -232,8 +232,7 @@ em {
         padding-top: 0px;
     }
 
-    /* Has to be with a for some reason... */
-    .socials a{
+    .socials a {
         text-decoration: none;
         color: black;
         /* color: inherit; */
@@ -271,7 +270,7 @@ input[type="email"] {
     font-family: inherit; /* Use same font as the rest */
     outline: none; /* Remove outline on focus */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    margin-bottom: 10px; /* Spacing below input */
+    margin-bottom: 5px; /* Spacing below input */
 }
 
 /* Placeholder text styling */
