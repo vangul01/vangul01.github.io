@@ -1,0 +1,15 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="../web-images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <meta name="description" content="Vangular: Art and design brand for the existential and absurd.">
+    <meta name="keywords" content="art, design, portfolio, creative, vibrant, spiritual">
+    <!-- <title>{{ product.name }}</title> -->
+    <title>{% block title %}VANGULAR{% endblock %}</title>
+</head>
