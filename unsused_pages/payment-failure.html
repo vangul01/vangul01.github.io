@@ -4,23 +4,22 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="color-scheme" content="light dark">
-        <link rel="icon" href="web-images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="{% static 'images/web/favicon.ico' %}" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Catamaran&family=Shadows+Into+Light&display=swap" rel="stylesheet">
         <meta name="description" content="Vangular: Art and design brand for the existential and absurd.">
-        <meta name="keywords" content="404 page not found, error">
-        <title>404 Page Not Found</title>
+        <meta name="keywords" content="Payment completion success">
+        <title>Payment Cancelled</title>
     </head>
 
     <body>
         <header>
-            <!-- Main Navigation -->
             <nav>
                 <ul>
-                    <li><a href="enter.html"><button class="button-54" role="button" aria-label="Portal">
-                        <img src="web-images/eyecon.png" alt="Portal" width="26px">
+                    <li><a href="enter.html"><button class="button-54" role="button">
+                        <img src="images/web/eyecon.png" alt="Portal" width="26px">
                     </button></a></li>
 
                     <li><a href="index.html">
@@ -46,9 +45,9 @@
             <!-- Welcome/Hero Section -->
             <section class="fullscreen-background">
                 <div class="overlay-text">
-                    <p>404 Error</p>
-                    <h1>Page Not Found</h1>
-                    <p>Blasted broken link!</p>
+                    <h1>Payment Was Cancelled</h1>
+                    <p>Go back to re-try payment</p>
+                    <button class="button-54" type="button" onclick="javascript:history.back()">Back</button>
                 </div>
             </section>
         </main>

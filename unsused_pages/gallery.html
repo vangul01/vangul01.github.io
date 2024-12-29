@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="color-scheme" content="light dark">
-        <link rel="icon" href="web-images/favicon.ico" type="image/x-icon">
+        <meta name="description" content="Vangular: Art and design brand for the existential and absurd.">
+        <meta name="keywords" content="art, design, portfolio, creative, vibrant, spiritual, gallery, merchandise">
+        <link rel="icon" href="{% static 'images/web/favicon.ico' %}" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Catamaran&family=Shadows+Into+Light&display=swap" rel="stylesheet">
-        <meta name="description" content="Vangular: Art and design brand for the existential and absurd.">
-        <meta name="keywords" content="art, design, past work, projects, commission, creative, logos, tshirt, cover art">
-        <title>VANGULAR | Collabs</title>
+        <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+        <title>VANGULAR | Art</title>
     </head>
 
     <body>
         <header>
-            <!-- Main Navigation -->
-            <nav>
-                <ul>
-                    <li><a href="enter.html"><button class="button-54" role="button" aria-label="Portal">
-                        <img src="web-images/eyecon.png" alt="Portal" width="26px">
+            <nav aria-labelledby="primary-navigation">
+                <ul id="primary-navigation">
+                    <li><a href="enter.html"><button class="button-54" role="button">
+                        <img src="images/web/eyecon.png" alt="Portal" width="26px">
                     </button></a></li>
 
                     <li><a href="index.html">
@@ -45,52 +45,52 @@
                 </ul>
             </nav>
 
-            <div class="header-container">
+            <div class = "header-container">
                 <div class="header-textbox">
-                    <h1>Collabs</h1>
+                    <h1>Art</h1>
                 </div>
             </div>
         </header>
 
-
         <main>
-            <section class="content-container">
-                <div class="two-column-container">
-                    <div class="project-image">
-                        <img src="web-images/logo.png" alt="Vangular colorful eye logo">
-                    </div>
 
-                    <div class="project-text">
-                        <h2>Cover art for EmmaLee & The Dream</h2>
-                        <p>
-                            Digital collage styled artwork for no-man band EmmaLee & The Dream.
-                            <br><br>
-                            <!-- "Really sick review!!" -EmmaLee, Frontwoman of E&D
-                            <br><br> -->
-                            <a href="https://emmaleekidwell.com/emmalee-%26-the-dream/" target="_blank">
-                                Check out the band's website here!
-                            </a>
-                        </p>
-                    </div>
+            <section class="content-container" id="gallery">
+                <h1>Paintings & Collages</h1>
+                <!-- <p>One-of-a-kind collages, paintings and drawings all sold in their original formats.</p> -->
+                <div class="image-grid">
+                    <img src="images/products/a-skelli.jpg" alt="Colorful skull">
+                    <img src="images/products/a-alladream.png" alt="Pink collage">
+                    <img src="images/products/a-bioblitz.jpg" alt="Colorful abstract designs">
+                    <img src="images/products/a-weirddreams.jpg" alt="Abstract absurd painting">
+                    <img src="images/products/a-findingvoice.jpg" alt="Vibrant person with flame">
+                    <img src="images/products/a-starmi.jpg" alt="Dancing star">
+                    <img src="images/products/a-butts.jpg" alt="Buttocks with flowers and plants">
+                    <img src="images/products/a-buddha.jpg" alt="Buddha">
+                    <img src="images/products/a-blislandia.jpg" alt="Colorful collage">
                 </div>
 
-                <div class="two-column-container">
-                    <div class="project-image">
-                        <img src="web-images/logo.png" alt="Vangular colorful eye logo">
-                    </div>
+                <h1>Digital Art</h1>
+                <!-- <p>Fun, high-quality images designed in Procreate and sold as prints.</p> -->
+                <div class="image-grid">
+                    <a href="product.html">
+                        <img src="images/products/d-cheugy-clear.png" style="object-fit:contain" alt="Mouth saying 'Cheugy'">
+                    </a>
 
-                    <div class="project-text">
-                        <h2>Logos for The Crew Rowing Co.</h2>
-                        <p>
-                            Main logo for The Crew and secondary logo for advertising.
-                            <br><br>
-                            <!-- "Really sick review!!" -Brynly, Founder of The Crew
-                            <br><br> -->
-                            <a href="https://www.inthecrew.com/" target="_blank">
-                                Check out The Crew's website here!
-                            </a>
-                        </p>
-                    </div>
+                    <a href="product.html">
+                        <img src="images/products/d-drippy-clear.png" style="object-fit:contain" alt="Mouth eating a strawberry">
+                    </a>
+
+                    <a href="product.html">
+                        <img src="images/products/d-eatmorerainbows-clear.png" style="object-fit:contain" alt="Frog eating rainbow flies">
+                    </a>
+
+                    <a href="product.html">
+                        <img src="images/products/d-hayyv2-clear.png" style="object-fit:contain" alt="Naked man on a beach">
+                    </a>
+
+                    <a href="product.html">
+                        <img src="images/products/d-nirvana-clear.png" style="object-fit:contain" alt="Nirvana fan">
+                    </a>
                 </div>
             </section>
         </main>
@@ -103,7 +103,7 @@
                         <a href="https://www.etsy.com/shop/vangular/" target="_blank"><li><i class="fa fa-etsy linkIcon" aria-hidden="true"></i>Etsy</li></a>
                         <a href="https://www.instagram.com/vangular/" target="_blank"><li><i class="fa fa-instagram linkIcon" aria-hidden="true"></i>Instagram</li></a>
                         <a href="https://www.linkedin.com/company/vangular/" target="_blank"><li><i class="fa fa-linkedin linkIcon"></i>LinkedIn</li></a>
-                        <a href="#" target="_blank"><li><i class="tiktok linkIcon" aria-hidden="true"><img src="web-images/tiktok.svg" alt="TikTok" width="12px"></i>TikTok</li></a>
+                        <a href="#" target="_blank"><li><i class="tiktok linkIcon" aria-hidden="true"><img src="images/web/tiktok.svg" alt="TikTok" width="12px"></i>TikTok</li></a>
                         <a href="#" target="_blank"><li><i class="fa fa-youtube linkIcon"></i>Youtube</li></a>
                         <a href="#" target="_blank"><li><i class="fa fa-facebook linkIcon" aria-hidden="true"></i>Facebook</li></a>
                     </ul>
