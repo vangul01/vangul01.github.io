@@ -37,6 +37,11 @@ line-width: 60-80; */
 
 :root {
   --black: #000;
+  --black-purple: #000020;
+  --dark-purple: #190a2a;
+  --primary-font-color: #190a2a;
+  --secondary-font-color: whitesmoke;
+  /* --background: linear-gradient(180deg, #faba76 0%, #F75590 100%) */
   --fsize: 20px;
   --bshadow: 0 5px 10px var(--black);
   --primary-font: "Russo One";
@@ -69,15 +74,34 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
+    /* background-color: var(--dark-purple); */
   }
 
   li {
-    display: inline;
+    float: right;
+  }
+
+  li a {
+    display: block;
+    color: var(--secondary-font-color);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: var(--secondary-font), var(--backup-font2);
+    font-size: calc(12px + 0.5rem);
+  }
+
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: var(--secondary-font-color);
+    color: var(--dark-purple);
+    font-weight: bolder;
   }
 }
 
 body {
-  background-image: url("images/web/temp_rainbow.jpg");
+  /* background-image: url("images/web/temp_rainbow.jpg"); */
+  background: linear-gradient(180deg, #faba76 0%, #ff8a79 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover; /* Ensures the background covers the entire viewport */
@@ -92,10 +116,10 @@ ul {
 
 h1 {
   font-family: var(--primary-font), var(--backup-font1);
-  font-size: 36px;
+  font-size: calc(16px + 10vw);
   line-height: 150%;
   text-transform: uppercase;
-  color: whitesmoke;
+  color: var(--primary-font-color);
   letter-spacing: 0.1rem;
   text-align: center;
   position: relative;
@@ -105,10 +129,11 @@ h1 {
 
 h2 {
   font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(16px + 3.5vw);
   letter-spacing: 0.1rem;
   line-height: 150%;
   text-transform: uppercase;
-  color: whitesmoke;
+  color: var(--secondary-font-color);
   text-align: center;
   position: relative;
   margin: 0;
@@ -116,16 +141,18 @@ h2 {
 
 h3 {
   font-family: var(--primary-font), var(--backup-font1);
-  text-align: center;
+  font-size: calc(16px + 2rem);
+  text-align: left;
 }
 
 h4 {
   font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(16px + 1rem);
 }
 
 p {
   font-family: var(--secondary-font), var(--backup-font2);
-  font-size: 20px;
+  font-size: calc(16px + 0.5rem);
   line-height: 100%;
   color: slategray;
   letter-spacing: 0.1rem;
@@ -141,41 +168,38 @@ footer {
 em {
   font-family: var(--secondary-font), var(--backup-font2);
   font-size: smaller;
-  text-align: right;
+  text-align: center;
   margin: auto;
-  color: rgb(0, 255, 191);
+  color: var(--secondary-font-color);
 }
 
 /* ----------------UNIVERSAL CLASSES---------------- */
 
 .header-container {
-  display: flex; /* Change display to flex */
+  max-width: 100%;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  height: 18rem;
-  padding: 0;
-  flex-shrink: 0;
-  min-width: 200px; /* For responsiveness */
 
-  .header-textbox {
-    background-color: #190a2a;
-    color: whitesmoke;
-    padding: 50px 50px; /* Adjust padding as needed */
-    width: 15rem;
-    max-width: 100%; /* For screen size < 15rem */
-    opacity: 100%;
-    overflow: auto; /* To cut off header if width is very small */
-  }
+  padding: 3rem 3rem;
+  margin-bottom: 2rem;
+  /* max-width: 100vw;  */
+  /* For screen size < 15rem */
+  overflow: auto; /* To cut off header if width is very small */
 }
 
 .content-container {
-  background-color: #190a2a;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  background-color: var(--dark-purple);
+  color: var(--secondary-font-color);
+  /* border-color: var(--dark-purple); */
+  border-radius: 100px;
+  padding-top: 100px;
+  padding-bottom: 100px;
   padding-left: 0px;
   padding-right: 0px;
+  margin-bottom: 10%;
   width: 100%;
   min-width: 200px;
+  text-align: center;
 }
 
 .two-column-container {
@@ -207,15 +231,16 @@ em {
   padding-top: 1rem;
   padding-left: 5px;
   padding-right: 5px;
+  padding-bottom: 2rem;
   gap: 5px;
 
   .threecolumn {
-    background-color: #4032db;
+    /* background-color: #4032db; */
     /* display: inline-block; */
     display: flex;
     opacity: 95%;
     border-radius: 20px;
-    border: 5px outset #000020;
+    /* border: 5px outset #000020; */
     flex: 1 1 30%; /* Each div will take up about 30% of the width */
     margin: auto;
     min-width: 180px; /* Min width for responsiveness - this plus padding and border*/
@@ -376,11 +401,6 @@ input[type="email"]:hover {
   width: 100vw; /* Full viewport width */
   height: 100vh; /* Full viewport height */
   overflow: hidden; /* Hide any overflow to prevent scrollbars */
-
-  h1 {
-    font-size: 46px;
-    margin: 20px;
-  }
 }
 
 .overlay-text {
@@ -388,7 +408,7 @@ input[type="email"]:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #000020;
+  /* background-color: #000020; */
   opacity: 100%;
   color: whitesmoke;
   padding: 50px 50px;
@@ -485,28 +505,11 @@ div.scroll-container img {
   div {
     width: 20rem;
     height: 20rem;
-    /* width: 20%;
-        height: 240px;
-        max-height: 20rem;
-        min-width: 20rem; */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
 }
-
-/* .image-grid2 div {
-    width: 33.33%;
-    height: 240px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-}
-
-.image-grid2 {
-    display: flex;
-    flex-wrap: wrap;
-} */
 
 /* ----------------ABOUT---------------- */
 
@@ -527,12 +530,15 @@ or if it's a block-level element, ensuring that the
 }
 
 .about-image img {
-  width: 22rem; /* Adjust as necessary */
+  width: 30rem;
+  /* width: 22rem;  */
+  /* Adjust as necessary */
   max-width: 100%; /* Ensures the image scales properly */
   height: auto; /* Maintains aspect ratio */
-  border: 5px outset aquamarine;
-  border-radius: 50%;
-  padding: 0.5rem;
+  /* border: 5px outset aquamarine; */
+  /* border-radius: 50%; */
+  border-radius: 20%;
+  /* padding: 0.5rem; */
 }
 
 .about-text {
@@ -576,20 +582,14 @@ or if it's a block-level element, ensuring that the
 .project-text {
   flex: 1; /* Allows the text container to take up remaining space */
   display: inline-block;
-  /* justify-content: left; */
   text-align: left;
   /* max-width: 35rem; */
   margin: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   padding-bottom: 1rem;
-  /* background-color: blue; */
   text-align: justify;
   text-justify: auto;
-
-  h2 {
-    text-align: left;
-  }
 }
 
 /* ----------------PRODUCT PAGES---------------- */
