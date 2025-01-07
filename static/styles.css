@@ -49,6 +49,8 @@ line-width: 60-80; */
   --backup-font1: sans-serif;
   --backup-font2: arial;
   --product-title-size: 24px;
+  --background-yellow: #faba76;
+  --background-orange: #ff8a79;
 }
 
 /* Example of variable use */
@@ -101,7 +103,11 @@ nav {
 
 body {
   /* background-image: url("images/web/temp_rainbow.jpg"); */
-  background: linear-gradient(180deg, #faba76 0%, #ff8a79 100%);
+  background: linear-gradient(
+    180deg,
+    var(--background-yellow) 0%,
+    var(--background-orange) 100%
+  );
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover; /* Ensures the background covers the entire viewport */
