@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet"> -->
+    <link rel="icon" href="static/images/web/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Catamaran&family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Vangular: Art and design brand for the existential and absurd."
+    />
+    <meta
+      name="keywords"
+      content="art, design, portfolio, creative, vibrant, spiritual"
+    />
+    <title>VANGULAR | Test Cart JS</title>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <div class="nav-container">
+          <div class="nav-header">
+            <img src="static/images/web/eyecon.png" alt="Portal" width="22px" />
+            <a href="home.html">VANGULAR</a>
+            <button class="nav-toggle" aria-label="toggle navigation">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="collabs.html">Collabs</a></li>
+            <li><a href="merch.html">Merch</a></li>
+            <!-- Cart Icon -->
+            <li>
+              <a href="checkout.html">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div id="cart">
+        <h2>Test Checkout Page</h2>
+        <ul id="checkout-cart-items"></ul>
+        <p id="checkout-total-quantity">Items: 0</p>
+        <p id="checkout-total-price">Total Amount: $0</p>
+      </div>
+
+      <!-- <label for="quantity">Quantity:</label>
+      <input type="number" id="input-quantity" name="input-quantity" min="1" max="10" /> -->
+
+      <br />
+      <button id="proceed-to-payment">Proceed to Payment</button>
+      <button id="clear-cart">Clear my cart!</button>
+    </main>
+  </body>
+  <script src="checkout.js"></script>
+</html>
