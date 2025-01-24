@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet"> -->
+    <link rel="icon" href="static/images/web/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Catamaran&family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Vangular: Art and design brand for the existential and absurd."
+    />
+    <meta
+      name="keywords"
+      content="art, design, portfolio, creative, vibrant, spiritual"
+    />
+    <title>VANGULAR | Test JS</title>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <div class="nav-container">
+          <button class="nav-toggle" aria-label="toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="collabs.html">Collabs</a></li>
+            <li><a href="merch.html">Merch</a></li>
+            <li><a href="test.html">Test JS</a></li>
+            <li><a href="checkout.html">Test JS</a></li>
+          </ul>
+
+          <div class="nav-header">
+            <img src="static/images/web/eyecon.png" alt="Portal" width="22px" />
+            <a href="home.html">VANGULAR</a>
+
+            <a href="checkout.html" class="cart-button">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="header-container">
+        <div class="header-textbox">
+          <h2>Test JS</h2>
+        </div>
+      </div>
+      <div id="products">
+        <div class="product">
+          <h2>Product 1</h2>
+          <p>Price: $10</p>
+          <button
+            class="add-to-cart"
+            data-id="1"
+            data-name="Product 1"
+            data-price="10"
+          >
+            Add to Cart
+          </button>
+        </div>
+        <div class="product">
+          <h2>Product 2</h2>
+          <p>Price: $20</p>
+          <button
+            class="add-to-cart"
+            data-id="2"
+            data-name="Product 2"
+            data-price="20"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+
+      <!-- <div id="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items"></ul>
+        <p id="total-price">Total: $0</p>
+      </div>
+
+      <button id="clear-cart">Clear my cart!</button> -->
+
+      <!--------------------------------------------->
+
+      <button id="contact-button">Contact Me</button>
+
+      <!-- Modal Structure (hidden by default) -->
+      <div id="contactModal" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+
+          <h2>Contact Me</h2>
+          <br />
+
+          <!-- <form method="POST" action="result.php" target="_blank"></form> -->
+          <form>
+            <label for="firstName" class="visually-hidden"></label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              placeholder="First Name"
+              label="First Name"
+              autocomplete="given-name"
+              required
+            />
+
+            <br />
+            <label for="lastName" class="visually-hidden"></label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              placeholder="Last Name"
+              label="Last Name"
+              autocomplete="family-name"
+              required
+            />
+
+            <br />
+            <label for="email" class="visually-hidden"></label>
+            <input
+              class="email"
+              type="email"
+              id="formEmail"
+              placeholder="Email"
+              label="email"
+              name="email"
+              pattern=".+.com"
+              autocomplete="on"
+              required
+            />
+
+            <br />
+            <label for="message" class="visually-hidden"></label>
+            <textarea
+              id="message"
+              placeholder="Message"
+              rows="5"
+              cols="50"
+              value=""
+              autocomplete="off"
+              label="message"
+              name="message"
+              required
+            ></textarea>
+
+            <br />
+            <br />
+            <input
+              class="button-54 submit"
+              type="submit"
+              value="Submit"
+              label="Submit"
+              name="submit"
+            />
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!--
+    <script>
+      const buttonElement = document.querySelector(".button-54");
+      console.log(document.querySelector(".button-54"));
+
+      function newsletterSignup() {
+        buttonElement.addEventListener("click", alertUser);
+      }
+
+      function alertUser() {
+        alert("Thank you for subscribing to the Vangular newsletter!");
+      }
+
+      function scrollImages() {
+        const scrollContainer = document.querySelector(".scroll-container");
+        const images = scrollContainer.querySelectorAll("img");
+        let counter = 0;
+
+        setInterval(() => {
+          images[counter].style.display = "none";
+          counter++;
+          if (counter >= images.length) {
+            counter = 0;
+          }
+          images[counter].style.display = "block";
+        }, 3000);
+      }
+
+      function contactSignup() {
+        const contactButton = document.querySelector(".contact-button");
+        contactButton.addEventListener("click", alertUser);
+      }
+
+      function addCart() {
+        const cartButton = document.querySelector(".cart-button");
+        cartButton.addEventListener("click", alertUser);
+      }
+
+      function search() {
+        const searchButton = document.querySelector(".search-button");
+        searchButton.addEventListener("click", alertUser);
+      }
+
+      function init() {
+        newsletterSignup();
+        scrollImages();
+        contactSignup();
+        addCart();
+        search();
+      }
+    </script> -->
+    <footer>
+      <section class="nav-footer-container" id="links">
+        <div>
+          <h2>Socials & Links</h2>
+          <div class="footer-links">
+            <ul>
+              <li>
+                <a href="https://www.etsy.com/shop/vangular/" target="_blank">
+                  Etsy</a
+                >
+              </li>
+
+              <li>
+                <a href="https://www.instagram.com/vangular/" target="_blank">
+                  Instagram</a
+                >
+              </li>
+
+              <li>
+                <a
+                  href="https://www.linkedin.com/company/vangular/"
+                  target="_blank"
+                >
+                  LinkedIn</a
+                >
+              </li>
+
+              <li>
+                <a href="#" target="_blank"> TikTok</a>
+              </li>
+
+              <li>
+                <a href="#" target="_blank"> Youtube</a>
+              </li>
+
+              <li><a href="home.html">Home</a></li>
+              <li><a href="merch.html">Merch</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="collabs.html">Collabs</a></li>
+              <li><a href="#" id="contact-link">Contact Me</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- <div>
+          <h2>Socials & Links</h2>
+          <ul class="socials">
+            <li class="fa fa-etsy linkIcon" aria-hidden="true">
+              <a href="https://www.etsy.com/shop/vangular/" target="_blank">
+                Etsy</a
+              >
+            </li>
+
+            <li class="fa fa-instagram linkIcon" aria-hidden="true">
+              <a href="https://www.instagram.com/vangular/" target="_blank">
+                Instagram</a
+              >
+            </li>
+
+            <li class="fa fa-linkedin linkIcon" aria-hidden="true">
+              <a
+                href="https://www.linkedin.com/company/vangular/"
+                target="_blank"
+              >
+                LinkedIn</a
+              >
+            </li>
+
+            <li class="tiktok linkIcon" aria-hidden="true">
+              <a href="#" target="_blank"
+                ><img
+                  src="static/images/web/tiktok.svg"
+                  alt="TikTok"
+                  width="12px"
+                />
+                TikTok</a
+              >
+            </li>
+
+            <li class="fa fa-youtube linkIcon" aria-hidden="true">
+              <a href="#" target="_blank"> Youtube</a>
+            </li>
+
+            <li class="fa fa-facebook linkIcon" aria-hidden="true">
+              <a href="#" target="_blank"> Facebook</a>
+            </li>
+          </ul>
+
+          <ol class="socials">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="merch.html">Merch</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="collabs.html">Collabs</a></li>
+            <li><a href="#" id="contactLink">Contact Me</a></li>
+          </ol>
+        </div> -->
+
+        <div class="newsletter">
+          <h2>Newsletter</h2>
+          <ol>
+            <li><h5>Sign up for my monthly newsletter!</h5></li>
+            <li>
+              <form action="/submit" method="POST">
+                <label for="email" class="visually-hidden"></label>
+                <input
+                  type="email"
+                  class="email"
+                  id="newsletterEmail"
+                  name="email"
+                  placeholder="Email"
+                  autocomplete="email"
+                  required
+                />
+                <br />
+                <button type="submit" class="button-54">Subscribe</button>
+              </form>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <p class="copywrite-footer">
+        &copy; <span id="copyright-year"></span> Vangular. All rights reserved.
+      </p>
+    </footer>
+
+    <script src="script.js" ;></script>
+  </body>
+</html>
