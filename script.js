@@ -6,15 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ----------------------MODAL CONTACT FORM----------------------
 // Selecting Elements
-const contactButton = document.getElementById("contact-button");
+// const contactButton = document.getElementById("contact-button");
 const contactLink = document.getElementById("contact-link");
-const contactModal = document.getElementById("contactModal");
+const contactModal = document.getElementById("contact-modal");
 const closeButton = document.querySelector(".close-button");
 
 // Show the modal when the button is clicked
-contactButton.addEventListener("click", () => {
-  contactModal.style.display = "flex";
-});
+// contactButton.addEventListener("click", () => {
+//   contactModal.style.display = "flex";
+// });
 
 contactLink.addEventListener("click", (e) => {
   e.preventDefault();
@@ -34,14 +34,31 @@ window.addEventListener("click", (event) => {
 });
 
 // ----------------------RESPONSIVE NAV BAR----------------------
-
+// Select elements
 const navToggle = document.querySelector(".nav-toggle");
-const navLinks = document.querySelector(".nav-links");
+// const navLinks = document.querySelector(".nav-links");
+const sideNav = document.querySelector(".side-nav"); //
+const navOverlay = document.querySelector(".nav-overlay"); //
+
+// navToggle.addEventListener("click", () => {
+//   navLinks.classList.toggle("show-nav-links");
+//   navToggle.classList.toggle("active");
+// });
 
 navToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("show-nav-links");
+  sideNav.classList.toggle("show-side-nav");
   navToggle.classList.toggle("active");
+  navOverlay.classList.toggle("visible");
 });
+
+// Function to close the sidenav
+function closeSidenav() {
+  sideNav.classList.remove("open");
+  navOverlay.classList.remove("visible");
+}
+
+// Event listeners
+navOverlay.addEventListener("click", closeSidenav);
 
 // ----------------------CART----------------------
 

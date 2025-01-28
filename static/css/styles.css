@@ -1,0 +1,779 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* ----------------VARIABLES---------------- */
+/* Suggested Basic Stylings! */
+/* body{margin:40px
+    auto;max-width:650px;line-height:1.6;font-size:18px;color:#444;padding:0
+    10px;}
+h1,h2,h3{line-height:1.2} */
+/* line-height: 1.4;
+text-size: 16px;
+line-width: 60-80; */
+
+/* button styles:
+primary, secondary, tertiary
+
+spacing and sizing system:
+font sizes: 4,8,12,16,24,32,48,64,96,128,192,256,384,512,640,768
+padding and margins:
+*/
+
+:root {
+  --black: #000;
+  --black-purple: #000020;
+  --dark-purple: #190a2a;
+  --blush: rgb(187, 133, 170);
+  --primary-font-color: #190a2a;
+  --secondary-font-color: whitesmoke;
+  /* --background: linear-gradient(180deg, #faba76 0%, #F75590 100%) */
+  --fsize: 20px;
+  --defaultfsize: 16px;
+  --bshadow: 0 5px 10px var(--black);
+  --primary-font: "Russo One";
+  --secondary-font: "Open Sans";
+  --backup-font1: sans-serif;
+  --backup-font2: arial;
+  --product-title-size: 24px;
+  --background-yellow: #faba76;
+  --background-orange: #ff8a79;
+  --icon-size: 24px;
+}
+
+/* ----------------TEST NAVIGATION ---------------- */
+/* The side navigation menu */
+.sidenav {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: var(--dark-purple);
+  /* color: white; */
+  padding: 1rem;
+  transition: 0.3s ease;
+  z-index: 999;
+  /* box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); */
+}
+
+/* .sidenav ul {
+  list-style: none;
+  padding: 0;
+} */
+
+/* .sidenav li {
+  margin: 1rem 0;
+} */
+
+/* .sidenav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+} */
+
+/* .sidenav a:hover {
+  text-decoration: underline;
+} */
+
+/* Close Button */
+/* .close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  float: right;
+} */
+
+/* Overlay */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+/* Open States */
+.sidenav.open {
+  left: 0;
+}
+
+.nav-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--dark-purple); /* Slightly more opaque */
+  /* backdrop-filter: blur(8px); */
+  z-index: 1000;
+}
+
+/* All links and buttons in the header have unified color*/
+.header-nav a,
+.header-nav button {
+  color: var(--secondary-font-color);
+  text-decoration: none;
+}
+
+.header-nav a:hover,
+.header-nav button:hover {
+  color: var(--blush);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(14px + 0.5rem);
+  font-weight: bold;
+}
+
+.logo-container img {
+  padding-right: 5px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  font-family: var(--secondary-font), var(--backup-font2);
+  font-size: calc(10px + 0.5rem);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1002; /* Ensure toggle is above overlay */
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cart-button i {
+  font-size: 1.5rem;
+}
+
+.side-nav {
+  display: none;
+}
+
+/* toggle class*/
+.show-side-nav {
+  /* left: 0; */
+  display: flex;
+}
+
+.nav-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-font-color);
+  z-index: 1002; /* Ensure toggle is above overlay */
+}
+
+.nav-toggle i {
+  transition: transform 0.3s ease; /* Smooth rotation */
+}
+
+.nav-toggle.active i {
+  transform: rotate(90deg);
+  color: var(--secondary-font-color);
+}
+
+/* Overlay when sidebar is open */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  cursor: pointer; /* Indicates clickable area */
+}
+
+.nav-overlay.active {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .side-nav {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 1.5rem 0;
+    font-size: calc(10px + 0.5rem);
+    font-family: var(--secondary-font), var(--backup-font2);
+    margin-right: 10px;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    text-align: left;
+  }
+
+  .nav-links {
+    position: static;
+    display: flex;
+    /* flex-direction: row; */
+    height: auto;
+    width: auto;
+    padding: 0;
+    background-color: transparent;
+    flex-direction: row;
+    align-items: center;
+    box-shadow: none;
+    max-width: none;
+  }
+
+  .nav-links li,
+  .nav-links a {
+    margin: 0;
+    display: inline;
+    font-size: calc(8px + 0.5rem);
+    align-items: center;
+    justify-content: left;
+    width: auto;
+  }
+
+  .left-nav-container {
+    font-size: calc(8px + 0.5rem);
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-overlay {
+    display: none;
+  }
+}
+
+/* ----------------UNIVERSAL ELEMENT SELECTORS---------------- */
+
+body {
+  background: radial-gradient(whitesmoke, #d68e8e);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; /* Ensures the background covers the entire viewport */
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+ol {
+  list-style-type: none;
+}
+
+/*
+h1 {
+  font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(16px + 10vw);
+  line-height: 150%;
+  text-transform: uppercase;
+  color: var(--primary-font-color);
+  letter-spacing: 0.1rem;
+  text-align: center;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+*/
+
+h2 {
+  font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(16px + 3.5vw);
+  letter-spacing: 0.1rem;
+  line-height: 150%;
+  text-transform: uppercase;
+  color: var(--secondary-font-color);
+  text-align: center;
+  position: relative;
+  margin: 0;
+}
+/*
+h3 {
+  font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(16px + 2rem);
+  text-align: left;
+}
+
+h4 {
+  font-family: var(--primary-font), var(--backup-font1);
+  font-size: calc(16px + 1rem);
+}
+
+p {
+  font-family: var(--secondary-font), var(--backup-font2);
+  font-size: calc(16px + 0.5rem);
+  line-height: 100%;
+  color: slategray;
+  letter-spacing: 0.1rem;
+  line-height: normal;
+}
+
+footer {
+  font-family: var(--secondary-font), var(--backup-font2);
+  width: 100%;
+  bottom: 0;
+}
+
+em {
+  font-family: var(--secondary-font), var(--backup-font2);
+  font-size: smaller;
+  text-align: center;
+  margin: auto;
+  color: var(--secondary-font-color);
+} */
+
+/* ----------------UNIVERSAL CLASSES---------------- */
+
+.header-container {
+  max-width: 100%;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+
+  padding: 3rem 3rem;
+  margin-bottom: 2rem;
+  /* max-width: 100vw;  */
+  /* For screen size < 15rem */
+  overflow: auto; /* To cut off header if width is very small */
+}
+
+.content-container {
+  /* background-color: var(--dark-purple); */
+  color: var(--secondary-font-color);
+  border-color: var(--dark-purple);
+  /* border-radius: 100px; */
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-bottom: 10%;
+  width: 100%;
+  min-width: 200px;
+  text-align: center;
+  /* border: var(--dark-purple); */
+  /* border-width: 5px; */
+  /* border: 1rem solid var(--dark-purple); */
+}
+
+/* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+/* @media (min-width: 768px) { */
+/* .two-column-container { */
+/* flex-direction: column;
+    align-items: flex-start;  */
+/* Aligns items at the start when stacked vertically */
+/* } */
+/* } */
+
+.nav-footer-container {
+  font-family: var(--secondary-font), var(--backup-font2);
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+  justify-content: space-around; /* Or space-between for more separation */
+  padding-top: 1rem;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 2rem;
+  gap: 5px;
+
+  .newsletter {
+    text-align: center;
+  }
+
+  .footer-links {
+    display: inline;
+    flex-wrap: wrap; /* Allows items to wrap onto a new line */
+    gap: 0px; /* Optional: Adds spacing between items */
+    justify-content: space-evenly;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top: 0px;
+
+    height: 300px;
+    border: 1px solid black;
+    column-fill: auto;
+    -webkit-column-fill: auto;
+    -moz-column-fill: auto;
+    column-width: 100px;
+    -webkit-column-width: 150px;
+    -moz-column-width: 150px;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: black;
+    /* color: inherit; */
+    flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+    flex-basis: auto;
+    box-sizing: border-box; /* Ensures padding and borders don't increase width */
+    text-align: left; /* Aligns text inside the links */
+    /* display: inline-block; */
+  }
+
+  .footer-links a:hover {
+    color: whitesmoke;
+  }
+
+  .linkIcon {
+    padding-right: 5px;
+  }
+
+  h2 {
+    text-align: center;
+    padding-top: 5px;
+  }
+}
+
+/* Style for the email input */
+/* input[type="email"] { */
+/*width: 70%; /* Full width of the container */
+/*max-width: fit-content;
+  /*padding: 10px 20px; /* Padding for a button-like look */
+/*border: none; /* Remove border */
+/*border-radius: 8px; /* Rounded corners */
+/*background-color: #190a2a; /* Background color */
+/*color: #fff; /* Text color */
+/*font-size: 16px; /* Font size */
+/*font-family: inherit; /* Use same font as the rest */
+/*outline: none; /* Remove outline on focus */
+/*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+/*margin-bottom: 5px; /* Spacing below input */
+/* } */
+
+/* Placeholder text styling */
+/* input[type="email"]::placeholder {
+  color: #bbb;
+  opacity: 0.8;
+} */
+
+/* Add a hover effect like the button -  Darker on hover */
+/* input[type="email"]:hover {
+  background-color: #444;
+} */
+
+/* .button-54 {
+  font-family: var(--secondary-font), var(--backup-font2);
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+}
+
+.button-54:hover {
+  opacity: 0.9;
+}
+
+.button-54:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.button-formating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 30px;
+} */
+
+/* ----------------PORTAL---------------- */
+.overlay-image img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ----------------HOME---------------- */
+.fullscreen-background {
+  padding-top: 0px;
+  padding-bottom: 60px;
+  position: relative;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Hide any overflow to prevent scrollbars */
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: #000020; */
+  opacity: 100%;
+  color: whitesmoke;
+  padding: 50px 50px;
+  font-size: 20px;
+  text-align: center;
+  z-index: 2;
+}
+
+div.scroll-container {
+  /* background-color: fuchsia; */
+  overflow: auto;
+  white-space: nowrap;
+  padding: 10px;
+  /* max-height: 3rem; */
+}
+
+div.scroll-container img {
+  padding: 10px;
+  max-height: 20rem;
+}
+
+/* ----------------GALLERY / MERCH---------------- */
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    background-color: blanchedalmond;
+  }
+
+  div {
+    width: 20rem;
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* ----------------ABOUT---------------- */
+
+.about-image {
+  display: flex;
+  /* margin: auto; */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  /* object-fit: contain; */
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-image img {
+  width: 30rem;
+  /* width: 22rem;  */
+  /* Adjust as necessary */
+  max-width: 100%; /* Ensures the image scales properly */
+  height: auto; /* Maintains aspect ratio */
+  /* border: 5px outset aquamarine; */
+  /* border-radius: 50%; */
+  border-radius: 20%;
+  /* padding: 0.5rem; */
+}
+
+.about-text {
+  flex: 1; /* Allows the text container to take up remaining space */
+  display: inline-block;
+  justify-content: center;
+  text-align: left;
+  max-width: 35rem;
+  margin: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  /* background-color: blue; */
+  text-align: justify;
+  text-justify: auto;
+
+  h2 {
+    text-align: left;
+  }
+}
+
+/* ----------------PROJECTS---------------- */
+
+.project-image {
+  display: inline-block;
+  margin: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  /* background-color: fuchsia; */
+}
+
+.project-image img {
+  width: 13rem; /* Adjust as necessary */
+  max-width: 100%; /* Ensures the image scales properly */
+  height: auto; /* Maintains aspect ratio */
+  /* border: 5px solid black; */
+  border-radius: 10%;
+  background-color: grey;
+}
+
+.project-text {
+  flex: 1; /* Allows the text container to take up remaining space */
+  display: inline-block;
+  text-align: left;
+  /* max-width: 35rem; */
+  margin: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 1rem;
+  text-align: justify;
+  text-justify: auto;
+}
+
+/* ------------------ MODAL CONTACT FORM ------------------------ */
+
+/* Button Styling */
+/* #contactButton {
+  padding: 10px 20px;
+  background: purple;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+} */
+
+/* Modal Styling */
+.contact-container {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content Box */
+.contact-content {
+  background: linear-gradient(
+    180deg,
+    rgb(227, 181, 241) 0%,
+    rgb(148, 166, 188) 100%
+  );
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  position: relative;
+  text-align: center;
+
+  h2 {
+    color: rgb(88, 58, 118);
+  }
+
+  input,
+  textarea {
+    background: whitesmoke;
+    font-family: var(--secondary-font), var(--backup-font2);
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    color: var(--black-purple);
+    font-size: var(--defaultfsize);
+    resize: none;
+  }
+
+  input::placeholder {
+    /* font-weight: bold; */
+    /* opacity: 0.5; */
+    color: grey;
+  }
+
+  .email-field:hover {
+    background: whitesmoke;
+  }
+
+  .submit {
+    align-items: center;
+    margin-top: 10px;
+    width: 30%;
+    background-color: rgb(118, 79, 156);
+  }
+
+  .close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+}
+
+/* ------------------- CART ----------------------- */
+/* This can be used for featured page to list a bunch of products */
+#products .product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+  text-align: center;
+}
+
+#cart {
+  margin-top: 20px;
+  border-top: 2px solid #000;
+  padding-top: 10px;
+}

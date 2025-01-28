@@ -31,83 +31,71 @@
   </head>
 
   <body>
+    <!------------------------- Header Nav ----------------->
     <header>
-      <nav>
-        <div class="nav-container">
-          <button class="nav-toggle" aria-label="toggle navigation">
-            <i class="fa fa-bars"></i>
-          </button>
+      <nav class="header-nav">
+        <!-- Replace this part with whatever logo image I make -->
+        <div class="logo-container">
+          <img src="static/images/web/favicon.ico" alt="Vangular Logo" />
 
-          <ul class="nav-links">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="collabs.html">Collabs</a></li>
-            <li><a href="merch.html">Merch</a></li>
-            <li><a href="test.html">Test JS</a></li>
-            <li><a href="checkout.html">Test JS</a></li>
-          </ul>
+          <a href="home.html">VANGULAR</a>
+        </div>
 
-          <div class="nav-header">
-            <img src="static/images/web/eyecon.png" alt="Portal" width="22px" />
-            <a href="home.html">VANGULAR</a>
+        <div class="links-container">
+          <div class="nav-links">
+            <ul class="side-nav">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="collabs.html">Collabs</a></li>
+              <li><a href="merch.html">Merch</a></li>
+              <li><a href="test.html">Test JS</a></li>
+              <li><a href="checkout.html">Test Checkout</a></li>
+            </ul>
 
             <a href="checkout.html" class="cart-button">
               <i class="fa fa-shopping-cart"></i>
               <span class="cart-count">0</span>
             </a>
+
+            <button class="nav-toggle" aria-label="toggle navigation">
+              <i class="fa fa-bars"></i>
+            </button>
           </div>
         </div>
+
+        <div class="nav-overlay"></div>
       </nav>
     </header>
 
     <main>
-      <div class="header-container">
-        <div class="header-textbox">
-          <h2>Test JS</h2>
+      <section class="content-container" id="product-page">
+        <div class="two-column-container">
+          <div class="product-image">
+            <img src="static/images/products/a-butts.jpg" alt="product.name" />
+          </div>
+
+          <div class="product-text">
+            <h2>The Butts!</h2>
+            <p>Product.material</p>
+            <p>10 inches x 14 inches</p>
+            <p>Product description lorem ipsum yada yada yada!</p>
+            <p>Price: $20</p>
+
+            <button
+              class="add-to-cart"
+              data-id="1"
+              data-name="The Butts"
+              data-price="20"
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
-      </div>
-      <div id="products">
-        <div class="product">
-          <h2>Product 1</h2>
-          <p>Price: $10</p>
-          <button
-            class="add-to-cart"
-            data-id="1"
-            data-name="Product 1"
-            data-price="10"
-          >
-            Add to Cart
-          </button>
-        </div>
-        <div class="product">
-          <h2>Product 2</h2>
-          <p>Price: $20</p>
-          <button
-            class="add-to-cart"
-            data-id="2"
-            data-name="Product 2"
-            data-price="20"
-          >
-            Add to Cart
-          </button>
-        </div>
-      </div>
+      </section>
 
-      <!-- <div id="cart">
-        <h2>Shopping Cart</h2>
-        <ul id="cart-items"></ul>
-        <p id="total-price">Total: $0</p>
-      </div>
-
-      <button id="clear-cart">Clear my cart!</button> -->
-
-      <!--------------------------------------------->
-
-      <button id="contact-button">Contact Me</button>
-
-      <!-- Modal Structure (hidden by default) -->
-      <div id="contactModal" class="modal">
-        <div class="modal-content">
+      <!------------------------- Modal Structure (hidden by default) ----------------->
+      <div id="contact-modal" class="contact-container">
+        <div class="contact-content">
           <span class="close-button">&times;</span>
 
           <h2>Contact Me</h2>
@@ -115,11 +103,11 @@
 
           <!-- <form method="POST" action="result.php" target="_blank"></form> -->
           <form>
-            <label for="firstName" class="visually-hidden"></label>
+            <label for="first-name" class="visually-hidden"></label>
             <input
               type="text"
-              name="firstName"
-              id="firstName"
+              id="form-first-name"
+              name="First Name"
               placeholder="First Name"
               label="First Name"
               autocomplete="given-name"
@@ -127,11 +115,11 @@
             />
 
             <br />
-            <label for="lastName" class="visually-hidden"></label>
+            <label for="last-name" class="visually-hidden"></label>
             <input
               type="text"
-              name="lastName"
-              id="lastName"
+              id="form-last-name"
+              name="Last Name"
               placeholder="Last Name"
               label="Last Name"
               autocomplete="family-name"
@@ -143,11 +131,10 @@
             <input
               class="email"
               type="email"
-              id="formEmail"
+              id="form-email"
+              name="Email"
               placeholder="Email"
-              label="email"
-              name="email"
-              pattern=".+.com"
+              label="Email"
               autocomplete="on"
               required
             />
@@ -155,14 +142,14 @@
             <br />
             <label for="message" class="visually-hidden"></label>
             <textarea
-              id="message"
+              id="form-message"
+              name="Message"
               placeholder="Message"
+              label="Message"
               rows="5"
               cols="50"
               value=""
               autocomplete="off"
-              label="message"
-              name="message"
               required
             ></textarea>
 
@@ -171,72 +158,60 @@
             <input
               class="button-54 submit"
               type="submit"
+              name="Submit"
               value="Submit"
               label="Submit"
-              name="submit"
             />
+
+            <p>
+              Thanks for contacting us. We'll get back to you as soon as
+              possible.
+            </p>
           </form>
         </div>
       </div>
     </main>
 
-    <!--
-    <script>
-      const buttonElement = document.querySelector(".button-54");
-      console.log(document.querySelector(".button-54"));
-
-      function newsletterSignup() {
-        buttonElement.addEventListener("click", alertUser);
-      }
-
-      function alertUser() {
-        alert("Thank you for subscribing to the Vangular newsletter!");
-      }
-
-      function scrollImages() {
-        const scrollContainer = document.querySelector(".scroll-container");
-        const images = scrollContainer.querySelectorAll("img");
-        let counter = 0;
-
-        setInterval(() => {
-          images[counter].style.display = "none";
-          counter++;
-          if (counter >= images.length) {
-            counter = 0;
-          }
-          images[counter].style.display = "block";
-        }, 3000);
-      }
-
-      function contactSignup() {
-        const contactButton = document.querySelector(".contact-button");
-        contactButton.addEventListener("click", alertUser);
-      }
-
-      function addCart() {
-        const cartButton = document.querySelector(".cart-button");
-        cartButton.addEventListener("click", alertUser);
-      }
-
-      function search() {
-        const searchButton = document.querySelector(".search-button");
-        searchButton.addEventListener("click", alertUser);
-      }
-
-      function init() {
-        newsletterSignup();
-        scrollImages();
-        contactSignup();
-        addCart();
-        search();
-      }
-    </script> -->
+    <!------------------------- Footer Section ----------------->
     <footer>
-      <section class="nav-footer-container" id="links">
-        <div>
-          <h2>Socials & Links</h2>
-          <div class="footer-links">
+      <div class="newsletter">
+        <h3>Newsletter</h3>
+
+        <form action="/submit" method="POST">
+          <label for="email"
+            >Subscribe to my mailing list for insider news, product launches,
+            and more!
+          </label>
+          <br />
+
+          <input
+            class="email"
+            type="email"
+            id="newsletter-email"
+            name="Email"
+            placeholder="Email"
+            label="Email"
+            autocomplete="email"
+            required
+          />
+
+          <br />
+          <button type="submit" class="button-54">Subscribe</button>
+
+          <p>
+            By subscribing, you agree to receive emails from Vangular. Your
+            information will not be shared with any third parties.
+          </p>
+
+          <p>Thanks for subscribing!</p>
+        </form>
+      </div>
+
+      <nav class="footer-nav">
+        <div class="footer-two-col-container">
+          <div class="footer-social-links">
             <ul>
+              <li><h3>Connect With Us</h3></li>
               <li>
                 <a href="https://www.etsy.com/shop/vangular/" target="_blank">
                   Etsy</a
@@ -265,7 +240,12 @@
               <li>
                 <a href="#" target="_blank"> Youtube</a>
               </li>
+            </ul>
+          </div>
 
+          <div class="footer-page-links">
+            <ul>
+              <li><h3>Quick Links</h3></li>
               <li><a href="home.html">Home</a></li>
               <li><a href="merch.html">Merch</a></li>
               <li><a href="about.html">About</a></li>
@@ -274,84 +254,9 @@
             </ul>
           </div>
         </div>
+      </nav>
 
-        <!-- <div>
-          <h2>Socials & Links</h2>
-          <ul class="socials">
-            <li class="fa fa-etsy linkIcon" aria-hidden="true">
-              <a href="https://www.etsy.com/shop/vangular/" target="_blank">
-                Etsy</a
-              >
-            </li>
-
-            <li class="fa fa-instagram linkIcon" aria-hidden="true">
-              <a href="https://www.instagram.com/vangular/" target="_blank">
-                Instagram</a
-              >
-            </li>
-
-            <li class="fa fa-linkedin linkIcon" aria-hidden="true">
-              <a
-                href="https://www.linkedin.com/company/vangular/"
-                target="_blank"
-              >
-                LinkedIn</a
-              >
-            </li>
-
-            <li class="tiktok linkIcon" aria-hidden="true">
-              <a href="#" target="_blank"
-                ><img
-                  src="static/images/web/tiktok.svg"
-                  alt="TikTok"
-                  width="12px"
-                />
-                TikTok</a
-              >
-            </li>
-
-            <li class="fa fa-youtube linkIcon" aria-hidden="true">
-              <a href="#" target="_blank"> Youtube</a>
-            </li>
-
-            <li class="fa fa-facebook linkIcon" aria-hidden="true">
-              <a href="#" target="_blank"> Facebook</a>
-            </li>
-          </ul>
-
-          <ol class="socials">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="merch.html">Merch</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="collabs.html">Collabs</a></li>
-            <li><a href="#" id="contactLink">Contact Me</a></li>
-          </ol>
-        </div> -->
-
-        <div class="newsletter">
-          <h2>Newsletter</h2>
-          <ol>
-            <li><h5>Sign up for my monthly newsletter!</h5></li>
-            <li>
-              <form action="/submit" method="POST">
-                <label for="email" class="visually-hidden"></label>
-                <input
-                  type="email"
-                  class="email"
-                  id="newsletterEmail"
-                  name="email"
-                  placeholder="Email"
-                  autocomplete="email"
-                  required
-                />
-                <br />
-                <button type="submit" class="button-54">Subscribe</button>
-              </form>
-            </li>
-          </ol>
-        </div>
-      </section>
-      <p class="copywrite-footer">
+      <p class="footer-copywrite">
         &copy; <span id="copyright-year"></span> Vangular. All rights reserved.
       </p>
     </footer>
