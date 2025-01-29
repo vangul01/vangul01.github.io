@@ -1,10 +1,4 @@
-// ----------------------COPYWRITE YEAR UPDATE----------------------
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("copyright-year").textContent =
-    new Date().getFullYear();
-});
-
-// ----------------------MODAL CONTACT FORM----------------------
+// ---------------------- BODY: MODAL CONTACT FORM----------------------
 // Selecting Elements
 // const contactButton = document.getElementById("contact-button");
 const contactLink = document.getElementById("contact-link");
@@ -16,51 +10,94 @@ const closeButton = document.querySelector(".close-button");
 //   contactModal.style.display = "flex";
 // });
 
+// Contact Modal
+function openModal() {
+  contactModal.style.display = "flex";
+  document.body.classList.add("no-scroll");
+}
+
+function closeModal() {
+  contactModal.style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+// Prevent scrolling when the modal is open, even on resize
+function maintainScroll() {
+  if (
+    contactModal.style.display === "flex" ||
+    navLinks.classList.contains("show-nav-links")
+  ) {
+    document.body.classList.add("no-scroll");
+  } else {
+    document.body.classList.remove("no-scroll");
+  }
+}
+
+// Add resize event listener
+window.addEventListener("resize", maintainScroll);
+
 contactLink.addEventListener("click", (e) => {
   e.preventDefault();
-  contactModal.style.display = "flex";
+  openModal();
 });
 
-// Close the modal when the close button is clicked
-closeButton.addEventListener("click", () => {
-  contactModal.style.display = "none";
-});
+closeButton.addEventListener("click", closeModal);
 
 // Close the modal when clicking outside the modal content
 window.addEventListener("click", (event) => {
   if (event.target === contactModal) {
-    contactModal.style.display = "none";
+    closeModal();
   }
 });
 
-// ----------------------RESPONSIVE NAV BAR----------------------
+// ----------------------RESPONSIVE NAV HEADER ----------------------
 // Select elements
 const navToggle = document.querySelector(".nav-toggle");
-// const navLinks = document.querySelector(".nav-links");
-const sideNav = document.querySelector(".side-nav"); //
-const navOverlay = document.querySelector(".nav-overlay"); //
+const navLinks = document.querySelector(".nav-links");
+const navOverlay = document.querySelector(".nav-overlay");
+const minWindowWidth = 768;
 
-// navToggle.addEventListener("click", () => {
-//   navLinks.classList.toggle("show-nav-links");
-//   navToggle.classList.toggle("active");
-// });
-
+// Only open the nav when the toggle is clicked
 navToggle.addEventListener("click", () => {
-  sideNav.classList.toggle("show-side-nav");
+  navLinks.classList.toggle("show-nav-links");
   navToggle.classList.toggle("active");
   navOverlay.classList.toggle("visible");
+  document.body.classList.toggle("no-scroll");
+});
+
+// Close the nav when a link is clicked
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("show-nav-links");
+    navToggle.classList.remove("active");
+    navOverlay.classList.remove("visible");
+    document.body.classList.remove("no-scroll");
+  });
 });
 
 // Function to close the sidenav
-function closeSidenav() {
-  sideNav.classList.remove("open");
+function closeNav() {
+  navLinks.classList.remove("show-nav-links");
+  navToggle.classList.remove("active");
   navOverlay.classList.remove("visible");
+  document.body.classList.remove("no-scroll");
 }
 
-// Event listeners
-navOverlay.addEventListener("click", closeSidenav);
+// Event listeners for closing the nav when clicking outside the nav
+navOverlay.addEventListener("click", closeNav);
 
-// ----------------------CART----------------------
+// Close the nav when the window is resized
+window.onresize = function () {
+  var w = window.outerWidth;
+  if (w > minWindowWidth) {
+    navLinks.classList.remove("show-nav-links");
+    navToggle.classList.remove("active");
+    navOverlay.classList.remove("visible");
+    document.body.classList.remove("no-scroll");
+  }
+};
+
+// ----------------------BODY AND NAV HEADER: CART----------------------
 
 // Cart array to store items
 let cart = [];
@@ -135,3 +172,9 @@ function updateCartCount() {
 
   cartCountElement.textContent = totalItems;
 }
+
+// ----------------------FOOTER: COPYWRITE YEAR UPDATE----------------------
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("copyright-year").textContent =
+    new Date().getFullYear();
+});

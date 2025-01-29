@@ -32,41 +32,7 @@
 
   <body>
     <!------------------------- Header Nav ----------------->
-    <header>
-      <nav class="header-nav">
-        <!-- Replace this part with whatever logo image I make -->
-        <div class="logo-container">
-          <img src="static/images/web/favicon.ico" alt="Vangular Logo" />
-
-          <a href="home.html">VANGULAR</a>
-        </div>
-
-        <div class="links-container">
-          <div class="nav-links">
-            <ul class="side-nav">
-              <li><a href="home.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="collabs.html">Collabs</a></li>
-              <li><a href="merch.html">Merch</a></li>
-              <li><a href="test.html">Test JS</a></li>
-              <li><a href="checkout.html">Test Checkout</a></li>
-            </ul>
-
-            <a href="checkout.html" class="cart-button">
-              <i class="fa fa-shopping-cart"></i>
-              <span class="cart-count">0</span>
-            </a>
-
-            <button class="nav-toggle" aria-label="toggle navigation">
-              <i class="fa fa-bars"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="nav-overlay"></div>
-      </nav>
-    </header>
-
+    {% include header.html %}
     <main>
       <section class="content-container" id="product-page">
         <div class="two-column-container">
@@ -103,7 +69,7 @@
 
           <!-- <form method="POST" action="result.php" target="_blank"></form> -->
           <form>
-            <label for="first-name" class="visually-hidden"></label>
+            <label for="form-first-name" class="visually-hidden"></label>
             <input
               type="text"
               id="form-first-name"
@@ -115,7 +81,7 @@
             />
 
             <br />
-            <label for="last-name" class="visually-hidden"></label>
+            <label for="form-last-name" class="visually-hidden"></label>
             <input
               type="text"
               id="form-last-name"
@@ -127,7 +93,7 @@
             />
 
             <br />
-            <label for="email" class="visually-hidden"></label>
+            <label for="form-email" class="visually-hidden"></label>
             <input
               class="email"
               type="email"
@@ -140,7 +106,7 @@
             />
 
             <br />
-            <label for="message" class="visually-hidden"></label>
+            <label for="form-message" class="visually-hidden"></label>
             <textarea
               id="form-message"
               name="Message"
@@ -178,7 +144,7 @@
         <h3>Newsletter</h3>
 
         <form action="/submit" method="POST">
-          <label for="email"
+          <label for="newsletter-email"
             >Subscribe to my mailing list for insider news, product launches,
             and more!
           </label>
@@ -209,7 +175,7 @@
 
       <nav class="footer-nav">
         <div class="footer-two-col-container">
-          <div class="footer-social-links">
+          <div class="footer-links">
             <ul>
               <li><h3>Connect With Us</h3></li>
               <li>
@@ -243,7 +209,7 @@
             </ul>
           </div>
 
-          <div class="footer-page-links">
+          <div class="footer-links">
             <ul>
               <li><h3>Quick Links</h3></li>
               <li><a href="home.html">Home</a></li>
