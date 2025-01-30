@@ -16,7 +16,7 @@ need responsive top nav
     />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet"> -->
     <link rel="icon" href="static/images/web/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -33,6 +33,7 @@ need responsive top nav
       name="keywords"
       content="art, design, portfolio, creative, vibrant, spiritual"
     />
+    <meta name="author" content="Valerie Angulo" />
     <title>VANGULAR | Home</title>
   </head>
 
@@ -211,5 +212,56 @@ need responsive top nav
       </section>
       <em>&copy; 2024 Vangular. All rights reserved.</em>
     </footer>
+
+    <!-- <script>
+      const buttonElement = document.querySelector(".button-54");
+      console.log(document.querySelector(".button-54"));
+
+      function newsletterSignup() {
+        buttonElement.addEventListener("click", alertUser);
+      }
+
+      function alertUser() {
+        alert("Thank you for subscribing to the Vangular newsletter!");
+      }
+
+      function scrollImages() {
+        const scrollContainer = document.querySelector(".scroll-container");
+        const images = scrollContainer.querySelectorAll("img");
+        let counter = 0;
+
+        setInterval(() => {
+          images[counter].style.display = "none";
+          counter++;
+          if (counter >= images.length) {
+            counter = 0;
+          }
+          images[counter].style.display = "block";
+        }, 3000);
+      }
+
+      function contactSignup() {
+        const contactButton = document.querySelector(".contact-button");
+        contactButton.addEventListener("click", alertUser);
+      }
+
+      function addCart() {
+        const cartButton = document.querySelector(".cart-button");
+        cartButton.addEventListener("click", alertUser);
+      }
+
+      function search() {
+        const searchButton = document.querySelector(".search-button");
+        searchButton.addEventListener("click", alertUser);
+      }
+
+      function init() {
+        newsletterSignup();
+        scrollImages();
+        contactSignup();
+        addCart();
+        search();
+      }
+    </script> -->
   </body>
 </html>
