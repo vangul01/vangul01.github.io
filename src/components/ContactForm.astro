@@ -1,0 +1,74 @@
+---
+// Any props or imports needed for the contact form
+---
+
+<div id="contact-modal" class="contact-container">
+  <div class="contact-content">
+    <span class="close-button">&times;</span>
+
+    <h3>Contact Me</h3>
+    <br />
+
+    <!-- <form method="POST" action="result.php" target="_blank"></form> -->
+    <form>
+      <label for="form-first-name" class="visually-hidden"></label>
+      <input
+        type="text"
+        id="form-first-name"
+        name="First Name"
+        placeholder="First Name"
+        autocomplete="given-name"
+        required
+      />
+
+      <br />
+      <label for="form-last-name" class="visually-hidden"></label>
+      <input
+        type="text"
+        id="form-last-name"
+        name="Last Name"
+        placeholder="Last Name"
+        autocomplete="family-name"
+        required
+      />
+
+      <br />
+      <label for="form-email" class="visually-hidden"></label>
+      <input
+        class="email"
+        type="email"
+        id="form-email"
+        name="Email"
+        placeholder="Email"
+        autocomplete="on"
+        required
+      />
+
+      <br />
+      <label for="form-message" class="visually-hidden"></label>
+      <textarea
+        id="form-message"
+        name="Message"
+        placeholder="Message"
+        rows="5"
+        cols="50"
+        value=""
+        autocomplete="off"
+        required
+      ></textarea>
+
+      <br />
+      <br />
+      <input
+        class="button-54 submit"
+        type="submit"
+        name="Submit"
+        value="Submit"
+      />
+
+      <p>
+        Thanks for contacting us. We'll get back to you as soon as possible.
+      </p>
+    </form>
+  </div>
+</div>

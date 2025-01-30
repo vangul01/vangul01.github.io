@@ -1,0 +1,44 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "TestProd | VANGULAR";
+const keywords = "test, js, test js"
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <section class="content-container" id="product-page">
+      <h2>Vangular Merch</h2>
+
+      <div class="two-column-container">
+        <div class="product-image">
+          <img
+            src="/src/assets/images/products/a-butts.jpg"
+            alt="product.name"
+          />
+        </div>
+
+        <div class="product-text">
+          <h2>The Butts!</h2>
+          <p>Product.material</p>
+          <p>10 inches x 14 inches</p>
+          <p>Product description lorem ipsum yada yada yada!</p>
+          <p>Price: $20</p>
+
+          <button
+            class="add-to-cart"
+            data-id="1"
+            data-name="The Butts"
+            data-price="20"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

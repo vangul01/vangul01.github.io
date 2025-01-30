@@ -44,6 +44,7 @@ padding and margins:
   position: fixed;
   width: 100%; /* Changed from 100vw to prevent horizontal scroll */
   height: 70px;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -221,6 +222,16 @@ body {
   background-position: center center;
   margin: 0;
   padding: 0;
+
+  position: relative;
+  min-height: 100vh;
+}
+
+main {
+  /* position: relative;
+  min-height: 100vh; */
+  padding-top: 0;
+  padding-bottom: 2.5; /* Footer height */
 }
 
 body.no-scroll {
@@ -268,8 +279,8 @@ h2 {
   text-transform: uppercase;
   color: var(--secondary-font-color);
   text-align: center;
-  position: relative;
   margin: 0;
+  padding: 0;
 }
 /*
 h3 {
@@ -296,38 +307,47 @@ footer {
   font-family: var(--secondary-font), var(--backup-font2);
   color: var(--secondary-font-color);
   font-size: var(--defaultfsize);
-  background-color: var(--dark-purple);
-  width: 100%;
+  /* background-color: var(--dark-purple); */
+
+  position: absolute;
   bottom: 0;
+  width: 100%;
+  height: 2.5rem;
 }
 
 /* ----------------UNIVERSAL CLASSES---------------- */
 
-.header-container {
+/* .header-container {
   max-width: 100%;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-
+  justify-content: center;
+  align-items: center;
   padding: 3rem 3rem;
   margin-bottom: 2rem;
-  /* max-width: 100vw;  */
-  /* For screen size < 15rem */
-  overflow: auto; /* To cut off header if width is very small */
-}
+  overflow: auto;
+} */
 
 .content-container {
-  /* background-color: var(--dark-purple); */
-  color: var(--secondary-font-color);
-  border-color: var(--dark-purple);
-  /* border-radius: 100px; */
-  padding-top: 100px;
-  padding-bottom: 100px;
-  padding-left: 0px;
-  padding-right: 0px;
-  margin-bottom: 10%;
-  width: 100%;
-  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  /* background-color: var(--blush); */
+  color: var(--secondary-font-color);
+  margin-top: 70px; /* 70px is the height of the header */
+  padding: 0;
+  width: inherit; /* Inherit the width of the parent */
+  min-width: 200px;
+  padding: 2.5rem; /* Equal to the footer height */
+
+  /* border: 1px solid var(--dark-purple); */
+  /* border-radius: 100px; */
+  /* padding-top: 100px; */
+  /* padding-bottom: 100px; */
+  /* padding-left: 0px; */
+  /* padding-right: 0px; */
+  /* margin-bottom: 10%; */
+
   /* border: var(--dark-purple); */
   /* border-width: 5px; */
   /* border: 1rem solid var(--dark-purple); */
@@ -353,54 +373,49 @@ footer {
   padding-right: 5px;
   padding-bottom: 2rem;
   gap: 5px;
+}
+.newsletter {
+  text-align: center;
+  background-color: var(--dark-purple);
+}
 
-  .newsletter {
-    text-align: center;
-  }
+.footer-links {
+  display: inline;
+  flex-wrap: wrap; /* Allows items to wrap onto a new line */
+  gap: 0px; /* Optional: Adds spacing between items */
+  justify-content: space-evenly;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-top: 0px;
 
-  .footer-links {
-    display: inline;
-    flex-wrap: wrap; /* Allows items to wrap onto a new line */
-    gap: 0px; /* Optional: Adds spacing between items */
-    justify-content: space-evenly;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    padding-top: 0px;
+  /* height: 300px; */
+  border: 1px solid black;
+  column-fill: auto;
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+  column-width: 100px;
+  -webkit-column-width: 150px;
+  -moz-column-width: 150px;
+}
 
-    height: 300px;
-    border: 1px solid black;
-    column-fill: auto;
-    -webkit-column-fill: auto;
-    -moz-column-fill: auto;
-    column-width: 100px;
-    -webkit-column-width: 150px;
-    -moz-column-width: 150px;
-  }
+.footer-links a {
+  text-decoration: none;
+  color: black;
+  /* color: inherit; */
+  flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+  flex-basis: auto;
+  box-sizing: border-box; /* Ensures padding and borders don't increase width */
+  text-align: left; /* Aligns text inside the links */
+  /* display: inline-block; */
+}
 
-  .footer-links a {
-    text-decoration: none;
-    color: black;
-    /* color: inherit; */
-    flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
-    flex-basis: auto;
-    box-sizing: border-box; /* Ensures padding and borders don't increase width */
-    text-align: left; /* Aligns text inside the links */
-    /* display: inline-block; */
-  }
+.footer-links a:hover {
+  color: whitesmoke;
+}
 
-  .footer-links a:hover {
-    color: whitesmoke;
-  }
-
-  .linkIcon {
-    padding-right: 5px;
-  }
-
-  h2 {
-    text-align: center;
-    padding-top: 5px;
-  }
+.linkIcon {
+  padding-right: 5px;
 }
 
 /* Style for the email input */
@@ -482,14 +497,15 @@ footer {
 }
 
 /* ----------------HOME---------------- */
-.fullscreen-background {
-  padding-top: 0px;
+/* .fullscreen-background { */
+/* padding-top: 0px;
   padding-bottom: 60px;
   position: relative;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
-  overflow: hidden; /* Hide any overflow to prevent scrollbars */
-}
+  width: 100vw;
+  height: 100vh;  */
+/* overflow: hidden;  */
+/* Hide any overflow to prevent scrollbars */
+/* } */
 
 .overlay-text {
   position: absolute;
@@ -585,9 +601,9 @@ div.scroll-container img {
   text-align: justify;
   text-justify: auto;
 
-  h2 {
-    text-align: left;
-  }
+  /* h2 {
+        text-align: left;
+    } */
 }
 
 /* ----------------PROJECTS---------------- */
@@ -711,19 +727,28 @@ div.scroll-container img {
 /* ------------------- CART ----------------------- */
 /* This can be used for featured page to list a bunch of products */
 #products .product {
-  border: 1px solid #ddd;
+  border: 1px solid var(--dark-purple);
   padding: 10px;
   margin: 10px;
   display: inline-block;
   text-align: center;
 }
 
-#cart {
-  margin-top: 20px;
-  border-top: 2px solid #000;
-  padding-top: 10px;
-}
+/* #cart { */
+/* margin-top: 20px; */
+/* border-top: 5px solid var(--dark-purple); */
+/* padding-top: 10px; */
+/* } */
 
 .nav-links.show-nav-links {
   overscroll-behavior: contain;
+}
+
+/* ------------------- CHECKOUT----------------------- */
+#checkout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-purple);
 }

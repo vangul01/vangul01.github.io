@@ -1,0 +1,64 @@
+---
+import Header from '../components/header.astro';
+import Footer from '../components/footer.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Collabs | VANGULAR";
+const keywords = "art, design, past work, projects, commission, creative, logos, collaborations, cover art"
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <section class="content-container" id="collabs">
+      <div class="two-column-container">
+        <div class="project-image">
+          <img
+            src="/src/assets/images/web/logo.png"
+            alt="Vangular colorful eye logo"
+          />
+        </div>
+
+        <div class="project-text">
+          <h3>Cover art for EmmaLee & The Dream</h3>
+          <p>
+            Digital collage styled artwork for no-man band EmmaLee & The Dream.
+            <br /><br />
+            <!-- "Really sick review!!" -EmmaLee, Frontwoman of E&D
+                            <br><br> -->
+            <a
+              href="https://emmaleekidwell.com/emmalee-%26-the-dream/"
+              target="_blank"
+            >
+              Check out the band's website here!
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <div class="two-column-container">
+        <div class="project-image">
+          <img
+            src="/src/assets/images/web/logo.png"
+            alt="Vangular colorful eye logo"
+          />
+        </div>
+
+        <div class="project-text">
+          <h3>Logo for The Crew Rowing Co.</h3>
+          <p>
+            Main logo for inclusive and LGBTQ+friendly rowing company The Crew
+            and secondary logo for advertising.
+            <br /><br />
+            <!-- "Really sick review!!" -Brynly, Founder of The Crew
+                            <br><br> -->
+            <a href="https://www.inthecrew.com/" target="_blank">
+              Check out The Crew's website here!
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

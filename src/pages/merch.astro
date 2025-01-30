@@ -1,0 +1,236 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Merch | VANGULAR";
+const keywords = "merch, art, design, stickers, t-shirts, hats, socks, totebags, phonecases, temporary tattoos, earrings, 3D printed stuff, phonecases, deals, bundles, discounted merch"
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <h2>Merch</h2>
+
+    <section class="content-container" id="merch-paintings">
+      <div>
+        <h3>Paintings & Collages</h3>
+        <p>
+          One-of-a-kind collages, paintings and drawings all sold in their
+          original formats.
+        </p>
+      </div>
+
+      <div class="image-grid">
+        <a href="/product">
+          <img src="/src/assets/images/products/a-skelli.jpg" alt="Colorful skull" />
+        </a>
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/a-alladream.png"
+            alt="Pink collage"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/a-bioblitz.jpg"
+            alt="Colorful abstract designs"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/a-weirddreams.jpg"
+            alt="Abstract absurd painting"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/a-findingvoice.jpg"
+            alt="Vibrant person with flame"
+          />
+        </a>
+
+        <a href="/product">
+          <img src="/src/assets/images/products/a-starmi.jpg" alt="Dancing star" />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/a-butts.jpg"
+            alt="Buttocks with flowers and plants"
+          />
+        </a>
+
+        <a href="/product">
+          <img src="/src/assets/images/products/a-buddha.jpg" alt="Buddha" />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/a-blislandia.jpg"
+            alt="Colorful collage"
+          />
+        </a>
+      </div>
+    </section>
+
+    <section class="content-container" id="merch-digital-art">
+      <div>
+        <h3>Digital Art</h3>
+        <p>Digital art printed to your liking.</p>
+      </div>
+
+      <div class="image-grid">
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-cheugy-clear.png"
+            style="object-fit: contain"
+            alt="Mouth saying 'Cheugy'"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-drippy-clear.png"
+            style="object-fit: contain"
+            alt="Mouth eating a strawberry"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-eatmorerainbows-clear.png"
+            style="object-fit: contain"
+            alt="Frog eating rainbow flies"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-hayyv2-clear.png"
+            style="object-fit: contain"
+            alt="Naked man on a beach"
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-nirvana-clear.png"
+            style="object-fit: contain"
+            alt="Nirvana fan"
+          />
+        </a>
+      </div>
+    </section>
+
+    <section class="content-container" id="merch-stationary">
+      <div>
+        <h3>Stickers & Stationary</h3>
+        <p>Stickers, cards, pins, and other cute things.</p>
+      </div>
+
+      <div class="image-grid">
+        <a href="/product">
+          <img src="/src/assets/images/products/m-hayy-card1.png" alt="" />
+        </a>
+
+        <a href="/product">
+          <img src="/src/assets/images/products/m-hayy-card3.png" alt="" />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-nirvana-clear.png"
+            style="background-color: inherit"
+            alt=""
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-eatmorerainbows-clear.png"
+            style="object-fit: contain; background-color: inherit"
+            alt=""
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-drippy-clear.png"
+            style="object-fit: contain; background-color: inherit"
+            alt=""
+          />
+        </a>
+
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/d-hayy-clear.png"
+            style="background-color: inherit"
+            alt=""
+          />
+        </a>
+      </div>
+    </section>
+
+    <section class="content-container" id="merch-wears">
+      <div>
+        <h3>Wears</h3>
+        <p>
+          Sweet threads from head to toe. Totebags, t-shirts, hats and socks
+          galore.
+        </p>
+      </div>
+
+      <div class="image-grid">
+        <a href="/product">
+          <img src="/src/assets/images/products/m-nirvana-tote.png" alt="" />
+        </a>
+
+        <a href="/product">
+          <img src="/src/assets/images/products/m-rainbows-totecloud.png" alt="" />
+        </a>
+      </div>
+    </section>
+
+    <section class="content-container" id="merch-experiments">
+      <div>
+        <h3>Experiments</h3>
+        <p>
+          Temporary tattoos, earrings, 3D printed stuff, phonecases ... the
+          world is our oyster!
+        </p>
+      </div>
+
+      <div class="image-grid">
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/m-cheugy-mug.png"
+            style="object-fit: contain; background-color: inherit"
+            alt=""
+          />
+        </a>
+      </div>
+    </section>
+
+    <section class="content-container" id="merch-deals">
+      <div>
+        <h3>Deals!</h3>
+        <p>Sticker packs, bundles and discounted merch.</p>
+      </div>
+
+      <div class="image-grid">
+        <a href="/product">
+          <img
+            src="/src/assets/images/products/m-cheugy-mug.png"
+            style="object-fit: contain; background-color: inherit"
+            alt=""
+          />
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+import ContactForm from './ContactForm.astro';
+---
+
+<footer class="footer-container">
+  <ContactForm />
+
+  <!-- NEWSLETTER -->
+
+  <div class="newsletter">
+    <h3>Newsletter</h3>
+
+    <form action="/submit" method="POST">
+      <label for="newsletter-email"
+        >Subscribe to my mailing list for insider news, product launches, and
+        more!
+      </label>
+      <br /><br />
+      <input
+        class="email"
+        type="email"
+        id="newsletter-email"
+        name="Email"
+        placeholder="Email"
+        autocomplete="email"
+        required
+      />
+      <br /><br />
+      <button type="submit" class="button-54">Subscribe</button>
+
+      <p>
+        By subscribing, you agree to receive emails from Vangular. Your
+        information will not be shared with any third parties.
+      </p>
+
+      <p>Thanks for subscribing!</p>
+    </form>
+  </div>
+
+  <!-- FOOTER LINKS -->
+
+  <nav class="footer-nav">
+    <div class="footer-two-col-container">
+      <div class="footer-links">
+        <ul>
+          <li><h3>Connect With Us</h3></li>
+          <li>
+            <a href="https://www.etsy.com/shop/vangular/" target="_blank">
+              Etsy</a
+            >
+          </li>
+
+          <li>
+            <a href="https://www.instagram.com/vangular/" target="_blank">
+              Instagram</a
+            >
+          </li>
+
+          <li>
+            <a
+              href="https://www.linkedin.com/company/vangular/"
+              target="_blank"
+            >
+              LinkedIn</a
+            >
+          </li>
+
+          <li>
+            <a href="#" target="_blank"> TikTok</a>
+          </li>
+
+          <li>
+            <a href="#" target="_blank"> Youtube</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <ul>
+          <li><h3>Quick Links</h3></li>
+          <li><a href="/home">Home</a></li>
+          <li><a href="/merch">Merch</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/collabs">Collabs</a></li>
+          <li><a href="#" id="contact-link">Contact Me</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- FOOTER COPYWRITE -->
+
+  <p class="footer-copywrite">
+    &copy; <span id="copyright-year"></span> VANGULAR. All rights reserved.
+  </p>
+</footer>

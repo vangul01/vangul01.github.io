@@ -1,0 +1,81 @@
+---
+import Header from '../components/header.astro';
+import Footer from '../components/footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Home | VANGULAR";
+const keywords = "Vangular, home, welcome, art, design, portfolio, creative, vibrant, spiritual"
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <!-- Welcome/Hero Section -->
+    <section class="fullscreen-background" id="hero-section">
+      <div class="overlay-text">
+        <p>Welcome to</p>
+        <h1>Vangular</h1>
+        <p>Art and Designs for the Existential and Absurd</p>
+      </div>
+    </section>
+
+    <section class="content-container" id="home-featured-art">
+      <h2>Featured Art</h2>
+      <!-- <p>Explore high quality paintings and collages that are ready for purchase!</p> -->
+
+      <div class="scroll-container">
+        <img
+          src="/src/assets/images/products/a-skelli.jpg"
+          alt="Colorful skull"
+        />
+        <img
+          src="/src/assets/images/products/a-alladream.png"
+          alt="Pink city themed collage"
+        />
+        <img
+          src="/src/assets/images/products/a-butts.jpg"
+          alt="Two buttocks surrounded by plants"
+        />
+        <img
+          src="/src/assets/images/products/a-bioblitz.jpg"
+          alt="Colorful abstract designs"
+        />
+      </div>
+    </section>
+
+    <section class="content-container" id="home-featured-merch">
+      <h2>Featured Merch</h2>
+      <!-- <p>Check out my inventory of stickers, shirts, cards, tattoos, pins, prints and more!</p> -->
+
+      <div class="scroll-container">
+        <img
+          src="/src/assets/images/products/m-cheugy-mug.png"
+          alt="design on a mug"
+        />
+        <img
+          src="/src/assets/images/products/m-hayy-card4.png"
+          alt="design on a card"
+        />
+        <img
+          src="/src/assets/images/products/m-rainbows-totecloud.png"
+          alt="frog design on a tote"
+        />
+        <img
+          src="/src/assets/images/products/m-nirvana-tote.png"
+          alt="nirvana guy design on a tote"
+        />
+        <img
+          src="/src/assets/images/products/m-drippy-printframe.png"
+          alt="framed pic of a mouth eating strawberries"
+        />
+      </div>
+
+      <div class="button-formating">
+        <a href="/merch"
+          ><button class="button-54" role="button">Shop All Merch</button></a
+        >
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

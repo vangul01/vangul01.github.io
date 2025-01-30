@@ -1,0 +1,44 @@
+---
+import vangularLogo from '/src/assets/images/web/logo.png'
+---
+
+<header>
+  <nav class="header-nav">
+    <div class="logo-container">
+      <img src={vangularLogo.src} alt="" />
+      <a href="/" class="nav-logo">VANGULAR</a>
+    </div>
+
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="/home" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item">
+        <a href="/merch" class="nav-link">Merch</a>
+      </li>
+      <li class="nav-item">
+        <a href="/about" class="nav-link">About</a>
+      </li>
+      <li class="nav-item">
+        <a href="/collabs" class="nav-link">Collabs</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="/product" class="nav-link">Test</a>
+      </li>
+    </ul>
+
+    <div class="cart-container">
+      <a href="/checkout" class="cart-button">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="toggle navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="nav-overlay"></div>
+  </nav>
+</header>

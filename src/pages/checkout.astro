@@ -1,0 +1,30 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Checkout | VANGULAR";
+const keywords = "test cart, test checkout, test payment"
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <div class="content-container">
+      <section>
+        <h2>Checkout</h2>
+      </section>
+
+      <section id="checkout-container">
+        <div id="cart">
+          <ul id="checkout-cart-items"></ul>
+          <p id="checkout-total-quantity">Items: 0</p>
+          <p id="checkout-total-price">Total Amount: $0</p>
+        </div>
+        <button id="proceed-to-payment">Proceed to Payment</button>
+        <button id="clear-cart">Clear my cart!</button>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

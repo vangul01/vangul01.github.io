@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Order Success | VANGULAR";
+const keywords = "order success, payment success, thank you, order confirmation"
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <div class="content-container">
+      <h1>Thank you for your order!</h1>
+      <p>Your payment was successful.</p>
+      <a href="/merch" class="button">Continue Shopping</a>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
