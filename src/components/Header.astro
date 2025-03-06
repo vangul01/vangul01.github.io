@@ -1,35 +1,33 @@
 ---
-import vangularLogo from '/src/assets/images/web/logo.png'
+import vangularLogo from "/src/assets/images/web/logo.png";
+import { siteNavigation } from "../config/navigation";
+
+const links = siteNavigation.headerLinks;
 ---
 
 <header>
   <nav class="header-nav">
     <div class="logo-container">
       <img src={vangularLogo.src} alt="" />
-      <a href="/" class="nav-logo">VANGULAR</a>
+      <a href={links.logo[0].href} class="nav-logo">
+        {links.logo[0].name}
+      </a>
     </div>
 
     <ul class="nav-links">
-      <li class="nav-item">
-        <a href="/home" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item">
-        <a href="/merch" class="nav-link">Merch</a>
-      </li>
-      <li class="nav-item">
-        <a href="/about" class="nav-link">About</a>
-      </li>
-      <li class="nav-item">
-        <a href="/collabs" class="nav-link">Collabs</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="/product" class="nav-link">Test</a>
-      </li>
+      {
+        links.mainNav.map(({ name, href }) => (
+          <li class="nav-item">
+            <a href={href} class="nav-link">
+              {name}
+            </a>
+          </li>
+        ))
+      }
     </ul>
 
     <div class="cart-container">
-      <a href="/checkout" class="cart-button">
+      <a href={links.cart[0].href} class="cart-button">
         <i class="fa fa-shopping-cart"></i>
         <span class="cart-count">0</span>
       </a>

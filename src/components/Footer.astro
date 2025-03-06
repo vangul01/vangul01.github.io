@@ -1,96 +1,111 @@
 ---
-import ContactForm from './ContactForm.astro';
+import ContactForm from "./ContactForm.astro";
+import { siteNavigation } from "../config/navigation";
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = siteNavigation.footerLinks;
 ---
 
-<footer class="footer-container">
+<footer class="footer">
   <ContactForm />
 
-  <!-- NEWSLETTER -->
+  <div class="footer-grid">
+    <!-- Quick Links -->
+    <div class="footer-links">
+      <h3 class="footer-title">Quick Links</h3>
+      <ul class="link-list">
+        {
+          footerLinks.quickLinks.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+        <li><a href="#" class="contact-link"> Contact </a></li>
+      </ul>
+    </div>
 
-  <div class="newsletter">
-    <h3>Newsletter</h3>
+    <!-- Shop Links -->
+    <div class="footer-links">
+      <h3 class="footer-title">Shop</h3>
+      <ul class="link-list">
+        {
+          footerLinks.shop.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
-    <form action="/submit" method="POST">
-      <label for="newsletter-email"
-        >Subscribe to my mailing list for insider news, product launches, and
-        more!
-      </label>
-      <br /><br />
-      <input
-        class="email"
-        type="email"
-        id="newsletter-email"
-        name="Email"
-        placeholder="Email"
-        autocomplete="email"
-        required
-      />
-      <br /><br />
-      <button type="submit" class="button-54">Subscribe</button>
+    <!-- About Links -->
+    <!-- Add in class to footer link mapping if I need to do something with that... -->
+    <div class="footer-links">
+      <h3 class="footer-title">About</h3>
+      <ul class="link-list">
+        {
+          footerLinks.about.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+        <!-- <li><a href="#" class="contact-link"> Contact </a></li> -->
+      </ul>
+    </div>
 
-      <p>
-        By subscribing, you agree to receive emails from Vangular. Your
-        information will not be shared with any third parties.
+    <!-- Social Links -->
+    <div class="footer-links">
+      <h3 class="footer-title">Connect</h3>
+      <ul class="link-list">
+        {
+          footerLinks.social.map(({ name, href, icon }) => (
+            <a
+              href={href}
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+            >
+              <i class={`fa fa-${icon}`} />
+            </a>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-newsletter">
+      <h3 class="footer-title">Stay Updated</h3>
+      <p class="text-sm text-muted mb-3">
+        Subscribe to get special offers and updates.
       </p>
-
-      <p>Thanks for subscribing!</p>
-    </form>
+      <form class="newsletter-form">
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            class="newsletter-input"
+            aria-label="Email for newsletter"
+            autocomplete="email"
+          />
+          <button
+            type="submit"
+            class="button button-secondary"
+            aria-label="Subscribe to newsletter"
+          >
+            Subscribe
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <!-- FOOTER LINKS -->
-
-  <nav class="footer-nav">
-    <div class="footer-two-col-container">
-      <div class="footer-links">
-        <ul>
-          <li><h3>Connect With Us</h3></li>
-          <li>
-            <a href="https://www.etsy.com/shop/vangular/" target="_blank">
-              Etsy</a
-            >
-          </li>
-
-          <li>
-            <a href="https://www.instagram.com/vangular/" target="_blank">
-              Instagram</a
-            >
-          </li>
-
-          <li>
-            <a
-              href="https://www.linkedin.com/company/vangular/"
-              target="_blank"
-            >
-              LinkedIn</a
-            >
-          </li>
-
-          <li>
-            <a href="#" target="_blank"> TikTok</a>
-          </li>
-
-          <li>
-            <a href="#" target="_blank"> Youtube</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="footer-links">
-        <ul>
-          <li><h3>Quick Links</h3></li>
-          <li><a href="/home">Home</a></li>
-          <li><a href="/merch">Merch</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/collabs">Collabs</a></li>
-          <li><a href="#" id="contact-link">Contact Me</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- FOOTER COPYWRITE -->
-
-  <p class="footer-copywrite">
-    &copy; <span id="copyright-year"></span> VANGULAR. All rights reserved.
-  </p>
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>© {currentYear} VANGULAR. All rights reserved.</p>
+  </div>
 </footer>

@@ -1,6 +1,5 @@
 import { initContactForm } from "./contact-form.js";
 import { initNav } from "./nav.js";
-import { updateCopyrightYear } from "./footer.js";
 import { loadCart, clearStoredCart } from "./cart/cart-storage.js";
 import { createCartUI } from "./cart/cart-ui.js";
 import { initAddToCart } from "./cart/add-to-cart.js";
@@ -11,7 +10,6 @@ if (typeof document !== "undefined") {
     // Initialize global features
     initNav();
     initContactForm();
-    updateCopyrightYear();
     initAddToCart();
 
     // Initialize checkout page features if applicable

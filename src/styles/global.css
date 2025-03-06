@@ -18,14 +18,85 @@ font sizes: 4,8,12,16,24,32,48,64,96,128,192,256,384,512,640,768
 padding and margins:
 */
 
+/* ------------------- CSS RESET ------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------- VARIABLES ------------------- */
 :root {
-  --black: #000;
-  --black-purple: #000020;
-  --dark-purple: #190a2a;
-  --blush: rgb(187, 133, 170);
-  --primary-font-color: #190a2a;
-  --secondary-font-color: whitesmoke;
-  /* --background: linear-gradient(180deg, #faba76 0%, #F75590 100%) */
+  /* Default Theme (Purple & Blush) */
+  --color-primary: #190a2a;
+  --color-secondary: #bb85aa;
+  --color-accent: #f3d2c1;
+
+  /* Common Colors */
+  --color-text: #190a2a;
+  --color-text-light: #f5f5f5;
+  --color-text-muted: #666666;
+  --color-background: #ffffff;
+  --color-background-alt: #f8f8f8;
+  --color-error: #dc3545;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+
+  /* Colors */
+  --color-primary: #190a2a; /* Dark Purple */
+  --color-secondary: #bb85aa; /* Blush */
+  --color-accent: #4032db;
+  --color-text: #190a2a;
+  --color-text-secondary: slategray;
+  --color-text-light: whitesmoke;
+  --color-background: #ffffff;
+  --color-border: #e88a8a;
+  --color-shadow: #000020;
+
+  /* Typography */
+  --font-primary: "Russo One", sans-serif;
+  --font-secondary: "Open Sans", arial, sans-serif;
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 2rem; /* 32px */
+
+  /* Spacing */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+
+  /* Borders */
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 1rem;
+  --border-radius-lg: 1.5rem;
+  --border-radius-circle: 50%;
+  --border-thickness-sm: 0.25rem;
+  --border-thickness-md: 0.5rem;
+  --border-thickness-lg: 1rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+
+  /* Layout */
+  --container-width: 1200px;
+  --header-height: 70px;
+
+  /* My Variables */
   --fsize: 20px;
   --defaultfsize: 16px;
   --bshadow: 0 5px 10px var(--black);
@@ -39,18 +110,155 @@ padding and margins:
   --icon-size: 24px;
 }
 
-/* ----------------TEST NAVIGATION ---------------- */
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-text: #f5f5f5;
+  --color-text-light: #190a2a;
+  --color-text-muted: #999999;
+  --color-background: #121212;
+  --color-background-alt: #1e1e1e;
+  --color-border: #333333;
+}
+
+/* ------------------- TYPOGRAPHY ------------------- */
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+.text-base {
+  font-size: var(--font-size-base);
+}
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+.text-2xl {
+  font-size: var(--font-size-2xl);
+}
+.text-3xl {
+  font-size: var(--font-size-3xl);
+}
+
+.font-primary {
+  font-family: var(--font-primary);
+}
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+.text-secondary {
+  color: var(--color-secondary);
+}
+.text-muted {
+  color: var(--color-text-muted);
+}
+.text-light {
+  color: var(--color-text-light);
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+.fw-medium {
+  font-weight: 500;
+}
+.fw-bold {
+  font-weight: 700;
+}
+
+/* ------------------- BASE STYLES ------------------- */
+body {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.5;
+  background-color: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ------------------- UTILITY CLASSES ------------------- */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+.mt-1 {
+  margin-top: var(--spacing-xs);
+}
+.mt-2 {
+  margin-top: var(--spacing-sm);
+}
+.mt-3 {
+  margin-top: var(--spacing-md);
+}
+.mt-4 {
+  margin-top: var(--spacing-lg);
+}
+.mt-5 {
+  margin-top: var(--spacing-xl);
+}
+
+/* ------------------- BUTTONS ------------------- */
+.button {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.button-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ------------------- NAVIGATION ------------------- */
 .header-nav {
   position: fixed;
   width: 100%; /* Changed from 100vw to prevent horizontal scroll */
-  height: 70px;
+  height: var(--header-height);
+  /* background-color: var(--color-primary); */
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  background-color: var(--dark-purple);
-  z-index: 1002;
   box-sizing: border-box; /* Added to include padding in width calculation */
 }
 
@@ -93,6 +301,7 @@ padding and margins:
   gap: 0;
   flex-direction: column;
   background-color: var(--dark-purple);
+  color: var(--dark-purple);
   width: 25%;
   height: 100%;
   text-align: center;
@@ -109,6 +318,7 @@ padding and margins:
 
 .show-nav-links {
   right: 0;
+  color: var(--dark-purple);
 }
 
 .cart-container {
@@ -143,7 +353,10 @@ padding and margins:
   color: var(--secondary-font-color);
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0s;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0s linear 0s;
 }
 
 .nav-toggle i {
@@ -173,10 +386,61 @@ padding and margins:
   cursor: pointer; /* Indicates clickable area */
 }
 
+/* same as above? except javascript handles it */
 .nav-overlay.visible {
   display: block;
   overflow: hidden;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.8);
 }
+
+/* ------------------- PRODUCT CARDS ------------------- */
+/* .product-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  transition: transform var(--transition-normal);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+} */
+
+/* ------------------- CART ------------------- */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ------------------- RESPONSIVE DESIGN ------------------- */
+@media (max-width: 768px) {
+  :root {
+    /* Adjust sizes for mobile */
+    --font-size-3xl: 1.75rem;
+    --spacing-xl: 1.5rem;
+  }
+
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+/* ------------------- ANIMATIONS ------------------- */
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-normal);
+} */
 
 /* WHEN SCREEN SIZE IS LARGER THAN 768px */
 @media (min-width: 768px) {
@@ -184,7 +448,9 @@ padding and margins:
     opacity: 0;
     visibility: hidden;
     transform: scale(0.8);
-    transition: opacity 0.3s ease, transform 0.3s ease,
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
       visibility 0s linear 0.3s;
     display: none;
   }
@@ -210,7 +476,7 @@ padding and margins:
 
   /* .nav-overlay {
     display: none;
-  }  */
+  } */
 }
 
 /* ----------------UNIVERSAL ELEMENT SELECTORS---------------- */
@@ -361,62 +627,6 @@ footer {
 /* Aligns items at the start when stacked vertically */
 /* } */
 /* } */
-
-.nav-footer-container {
-  font-family: var(--secondary-font), var(--backup-font2);
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
-  justify-content: space-around; /* Or space-between for more separation */
-  padding-top: 1rem;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 2rem;
-  gap: 5px;
-}
-.newsletter {
-  text-align: center;
-  background-color: var(--dark-purple);
-}
-
-.footer-links {
-  display: inline;
-  flex-wrap: wrap; /* Allows items to wrap onto a new line */
-  gap: 0px; /* Optional: Adds spacing between items */
-  justify-content: space-evenly;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 5px;
-  padding-top: 0px;
-
-  /* height: 300px; */
-  border: 1px solid black;
-  column-fill: auto;
-  -webkit-column-fill: auto;
-  -moz-column-fill: auto;
-  column-width: 100px;
-  -webkit-column-width: 150px;
-  -moz-column-width: 150px;
-}
-
-.footer-links a {
-  text-decoration: none;
-  color: black;
-  /* color: inherit; */
-  flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
-  flex-basis: auto;
-  box-sizing: border-box; /* Ensures padding and borders don't increase width */
-  text-align: left; /* Aligns text inside the links */
-  /* display: inline-block; */
-}
-
-.footer-links a:hover {
-  color: whitesmoke;
-}
-
-.linkIcon {
-  padding-right: 5px;
-}
 
 /* Style for the email input */
 /* input[type="email"] { */
@@ -726,13 +936,13 @@ div.scroll-container img {
 
 /* ------------------- CART ----------------------- */
 /* This can be used for featured page to list a bunch of products */
-#products .product {
+/* #products .product {
   border: 1px solid var(--dark-purple);
   padding: 10px;
   margin: 10px;
   display: inline-block;
   text-align: center;
-}
+} */
 
 /* #cart { */
 /* margin-top: 20px; */
@@ -740,9 +950,9 @@ div.scroll-container img {
 /* padding-top: 10px; */
 /* } */
 
-.nav-links.show-nav-links {
+/* .nav-links.show-nav-links {
   overscroll-behavior: contain;
-}
+} */
 
 /* ------------------- CHECKOUT----------------------- */
 #checkout-container {
@@ -751,4 +961,163 @@ div.scroll-container img {
   align-items: center;
   justify-content: center;
   background-color: var(--dark-purple);
+}
+
+/* ------------------- FOOTER OG CSS ----------------------- */
+
+.footer-links {
+  display: inline;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: var(--spacing-md);
+  border: var(--border-thickness-md) solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  background-color: var(--color-secondary);
+  /* box-shadow: 2px 2px 2px var(--color-shadow); */
+
+  column-fill: auto;
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+
+  column-width: 100px;
+  -webkit-column-width: 150px;
+  -moz-column-width: 150px;
+
+  a {
+    text-decoration: none;
+    color: black;
+    /* color: inherit; */
+    flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+    flex-basis: auto;
+    box-sizing: border-box; /* Ensures padding and borders don't increase width */
+    text-align: left; /* Aligns text inside the links */
+    /* display: inline-block; */
+  }
+
+  a:hover {
+    color: whitesmoke;
+  }
+}
+
+.social-link {
+  display: flex;
+  /* flex-direction: row; */
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-circle);
+  background-color: var(--color-border);
+  /* color: var(--color-text-light); */
+  /* transition: all var(--transition-normal); */
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ---------- Footer CLAUDE CSS ---------- */
+
+.button-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-light);
+  border: 1px solid black;
+  box-shadow: 2px 2px 2px rgb(0 0 200 / 60%);
+  /* transition: all var(--transition-normal); */
+}
+.nav-footer-container {
+  font-family: var(--secondary-font), var(--backup-font2);
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+  justify-content: space-around; /* Or space-between for more separation */
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  border-bottom: var(--border-radius-sm) solid var(--color-border);
+  border-top: var(--border-radius-sm) solid var(--color-border);
+  margin-bottom: var(--spacing-lg);
+}
+
+.footer-title {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.link-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-normal);
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+  }
+}
+
+.newsletter {
+  text-align: center;
+  background-color: var(--dark-purple);
+}
+
+.newsletter-input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background-alt);
+  color: var(--color-text);
+  width: 100%;
+  max-width: 300px;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+}
+
+.footer-bottom {
+  font-size: var(--font-size-sm);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .footer-brand,
+  .footer-newsletter {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand,
+  .footer-newsletter {
+    grid-column: span 1;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
 }

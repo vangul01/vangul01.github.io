@@ -1,8 +1,9 @@
 // Contact Modal functionality
 export function initContactForm() {
   // Selecting Elements
-  const contactLink = document.getElementById("contact-link");
+  const contactLink = document.querySelector(".contact-link");
   const contactModal = document.getElementById("contact-modal");
+  //   const contactModal = document.querySelector("contact-container");
   const closeButton = document.querySelector(".close-button");
 
   function openModal() {

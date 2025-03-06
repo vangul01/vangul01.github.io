@@ -1,7 +1,6 @@
 ---
-import favicon from '/public/favicon.ico';
-import '/src/styles/global.css';
-// import '../scripts/main.js';
+import favicon from "/favicon.ico";
+import "/src/styles/global.css";
 
 interface Props {
   pageTitle: string;
@@ -9,49 +8,38 @@ interface Props {
 }
 
 const { pageTitle, keywords } = Astro.props;
+const font = "https://fonts.googleapis.com/css2?family=Russo+One&display=swap";
+const fontAwesome =
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href={favicon} type="image/x-icon" />
-    <meta name="generator" content="{Astro.generator}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Catamaran&family=Shadows+Into+Light&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="generator" content={Astro.generator} />
+    <link href={font} rel="stylesheet" />
+    <link href={fontAwesome} rel="stylesheet" />
+    <link href={favicon} rel="icon" type="image/x-icon" />
+    <meta name="author" content="Valerie Angulo" />
     <meta
       name="description"
       content="Vangular: Art and design brand for the existential and absurd."
     />
-    <meta
-      name="keywords"
-      content={keywords}
-    />
+    <meta name="keywords" content={keywords} />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content="Vangular: Art and design brand for the existential and absurd." />
-    <meta name="author" content="Valerie Angulo" />
+    <meta
+      property="og:description"
+      content="Vangular: Art and design brand for the existential and absurd."
+    />
     <title>{pageTitle}</title>
   </head>
   <body>
     <slot />
     <script>
-      import "../scripts/main.js";
+      //   import "../scripts/main.js";
     </script>
   </body>
 </html>
