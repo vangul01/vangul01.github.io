@@ -12,7 +12,7 @@ const footerLinks = siteNavigation.footerLinks;
 
   <div class="footer-grid">
     <!-- Quick Links -->
-    <div class="footer-links">
+    <div class="footer-section">
       <h3 class="footer-title">Quick Links</h3>
       <ul class="link-list">
         {
@@ -27,7 +27,7 @@ const footerLinks = siteNavigation.footerLinks;
     </div>
 
     <!-- Shop Links -->
-    <div class="footer-links">
+    <div class="footer-section">
       <h3 class="footer-title">Shop</h3>
       <ul class="link-list">
         {
@@ -42,7 +42,7 @@ const footerLinks = siteNavigation.footerLinks;
 
     <!-- About Links -->
     <!-- Add in class to footer link mapping if I need to do something with that... -->
-    <div class="footer-links">
+    <div class="footer-section">
       <h3 class="footer-title">About</h3>
       <ul class="link-list">
         {
@@ -57,7 +57,7 @@ const footerLinks = siteNavigation.footerLinks;
     </div>
 
     <!-- Social Links -->
-    <div class="footer-links">
+    <div class="footer-section">
       <h3 class="footer-title">Connect</h3>
       <ul class="link-list">
         {
@@ -77,29 +77,27 @@ const footerLinks = siteNavigation.footerLinks;
     </div>
 
     <!-- Newsletter -->
-    <div class="footer-newsletter">
+    <div class="footer-section newsletter">
       <h3 class="footer-title">Stay Updated</h3>
-      <p class="text-sm text-muted mb-3">
-        Subscribe to get special offers and updates.
-      </p>
-      <form class="newsletter-form">
-        <div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            class="newsletter-input"
-            aria-label="Email for newsletter"
-            autocomplete="email"
-          />
-          <button
-            type="submit"
-            class="button button-secondary"
-            aria-label="Subscribe to newsletter"
-          >
-            Subscribe
-          </button>
-        </div>
+      <p>Subscribe to get special offers and updates.</p>
+      <form>
+        <!-- <div> -->
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          class="newsletter-input"
+          aria-label="Email for newsletter"
+          autocomplete="email"
+        />
+        <button
+          type="submit"
+          class="button button-secondary"
+          aria-label="Subscribe to newsletter"
+        >
+          Subscribe
+        </button>
+        <!-- </div> -->
       </form>
     </div>
   </div>
