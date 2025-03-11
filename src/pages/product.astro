@@ -10,11 +10,11 @@ const keywords = "test, js, test js";
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
-    <section class="content-container" id="product-page">
-      <div class="heading">
-        <h2>Product Page!</h2>
-      </div>
+    <div class="heading">
+      <h2>Product Page!</h2>
+    </div>
 
+    <section class="content-container" id="product-page">
       <div class="two-column-container">
         <div class="product-image">
           <img
@@ -29,9 +29,11 @@ const keywords = "test, js, test js";
           <p>10 inches x 14 inches</p>
           <p>Product description lorem ipsum yada yada yada!</p>
           <p>Price: $20</p>
+          <p>Quantity: 1</p>
 
           <button
-            class="add-to-cart"
+            class="button button-primary"
+            id="add-to-cart"
             data-id="1"
             data-name="The Butts"
             data-price="20"
