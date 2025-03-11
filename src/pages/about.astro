@@ -1,16 +1,20 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "About | VANGULAR";
-const keywords = "about, vangular, art, design"
+const keywords = "about, vangular, art, design";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
     <section class="content-container">
+      <div class="heading">
+        <h2>About</h2>
+      </div>
+
       <div class="two-column-container">
         <div class="about-image">
           <img
@@ -25,16 +29,17 @@ const keywords = "about, vangular, art, design"
           <p>
             I'm Valerie and welcome to VANGULAR!
             <br /><br />
-            I'm a Brooklyn-based visual artist who collaborates with small
-            businesses and other artists to create fun and inspiring logos and
-            designs tailored to their needs.
+            I'm a Brooklyn-based visual artist who collaborates with small businesses
+            and other artists to create fun and inspiring logos and designs tailored
+            to their needs.
             <br /><br />
-            I love using vibrant colors and designs to ignite people's
-            imaginations and create a sense of playfulness and community.
+            I love using vibrant colors and designs to ignite people's imaginations
+            and create a sense of playfulness and community.
             <br /><br />
             If you'd like to inquire about commissions, contact me
-            <a href="#" class="contact-link">here</a>. Thanks for visiting my site, and I hope you
-            see something that makes you smile :) <br /><br />
+            <a href="#" class="contact-link">here</a>. Thanks for visiting my
+            site, and I hope you see something that makes you smile :) <br /><br
+            />
           </p>
           <h3>
             Lots of love,

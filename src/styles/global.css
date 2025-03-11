@@ -30,42 +30,41 @@ padding and margins:
 /* ------------------- VARIABLES ------------------- */
 :root {
   /* Default Theme (Purple & Blush) */
-  --color-primary: #190a2a;
-  --color-secondary: #bb85aa;
+  --color-primary: #190a2a; /* Dark Purple */
+  --color-secondary: #bb85aa; /* Blush */
   --color-accent: #f3d2c1;
 
   /* Common Colors */
-  --color-text: #190a2a;
-  --color-text-light: #f5f5f5;
-  --color-text-muted: #666666;
+  --color-text-primary: #190a2a; /* Dark Purple */
+  --color-text-secondary: slategray;
+  --color-text-light: whitesmoke;
+  --color-text-muted: #504646;
+  --color-border: #e88a8a;
+  --color-border-dark: #ce7b7b;
+  --color-shadow: #000020;
   --color-background: #ffffff;
   --color-background-alt: #f8f8f8;
+  --color-button-primary: rgb(146, 131, 170);
+  --color-button-secondary: #e88a8a;
+  --color-button-tertiary: #ce7b7b;
+
+  /* Color Alerts */
   --color-error: #dc3545;
   --color-success: #28a745;
   --color-warning: #ffc107;
   --color-info: #17a2b8;
 
-  /* Colors */
-  --color-primary: #190a2a; /* Dark Purple */
-  --color-secondary: #bb85aa; /* Blush */
-  --color-accent: #4032db;
-  --color-text: #190a2a;
-  --color-text-secondary: slategray;
-  --color-text-light: whitesmoke;
-  --color-background: #ffffff;
-  --color-border: #e88a8a;
-  --color-shadow: #000020;
-
   /* Typography */
   --font-primary: "Russo One", sans-serif;
   --font-secondary: "Open Sans", arial, sans-serif;
-  --font-size-xs: 0.75rem; /* 12px */
-  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-xs: 0.5rem; /* 8px */
+  --font-size-sm: 0.75rem; /* 12px */
   --font-size-base: 1rem; /* 16px */
-  --font-size-lg: 1.125rem; /* 18px */
-  --font-size-xl: 1.25rem; /* 20px */
-  --font-size-2xl: 1.5rem; /* 24px */
-  --font-size-3xl: 2rem; /* 32px */
+  --font-size-lg: 1.5rem; /* 24px */
+  --font-size-xl: 2rem; /* 32px */
+  --font-size-2xl: 3rem; /* 48px */
+  --font-size-3xl: 4rem; /* 64px */
+  --font-size-4xl: 6rem; /* 96px */
 
   /* Spacing */
   --spacing-xs: 0.25rem; /* 4px */
@@ -73,6 +72,7 @@ padding and margins:
   --spacing-md: 1rem; /* 16px */
   --spacing-lg: 1.5rem; /* 24px */
   --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
 
   /* Borders */
   --border-radius-sm: 0.5rem;
@@ -95,303 +95,116 @@ padding and margins:
   /* Layout */
   --container-width: 1200px;
   --header-height: 70px;
+  --footer-height: 2.5rem;
+
+  /* Media Queries */
+  --screen-xs: 0;
+  --screen-sm: 576px;
+  --screen-md: 768px;
+  --screen-lg: 992px;
+  --screen-xl: 1200px;
 
   /* My Variables */
-  --fsize: 20px;
-  --defaultfsize: 16px;
-  --bshadow: 0 5px 10px var(--black);
-  --primary-font: "Russo One";
-  --secondary-font: "Open Sans";
-  --backup-font1: sans-serif;
-  --backup-font2: arial;
-  --product-title-size: 24px;
   --background-yellow: #faba76;
   --background-orange: #ff8a79;
-  --icon-size: 24px;
+  --height-icon: 30px;
+  --overlay-opacity: 0.6;
 }
 
 /* Dark Theme */
-[data-theme="dark"] {
+/* [data-theme="dark"] {
   --color-text: #f5f5f5;
   --color-text-light: #190a2a;
   --color-text-muted: #999999;
   --color-background: #121212;
   --color-background-alt: #1e1e1e;
   --color-border: #333333;
-}
-
-/* ------------------- TYPOGRAPHY ------------------- */
-.text-xs {
-  font-size: var(--font-size-xs);
-}
-.text-sm {
-  font-size: var(--font-size-sm);
-}
-.text-base {
-  font-size: var(--font-size-base);
-}
-.text-lg {
-  font-size: var(--font-size-lg);
-}
-.text-xl {
-  font-size: var(--font-size-xl);
-}
-.text-2xl {
-  font-size: var(--font-size-2xl);
-}
-.text-3xl {
-  font-size: var(--font-size-3xl);
-}
-
-.font-primary {
-  font-family: var(--font-primary);
-}
-.font-secondary {
-  font-family: var(--font-secondary);
-}
-
-.text-primary {
-  color: var(--color-primary);
-}
-.text-secondary {
-  color: var(--color-secondary);
-}
-.text-muted {
-  color: var(--color-text-muted);
-}
-.text-light {
-  color: var(--color-text-light);
-}
-
-.fw-normal {
-  font-weight: 400;
-}
-.fw-medium {
-  font-weight: 500;
-}
-.fw-bold {
-  font-weight: 700;
-}
+} */
 
 /* ------------------- BASE STYLES ------------------- */
 body {
+  /* display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh; */
+
   font-family: var(--font-secondary);
   font-size: var(--font-size-base);
-  color: var(--color-text);
-  line-height: 1.5;
+  color: var(--color-text-primary);
   background-color: var(--color-background);
+
+  line-height: 1.6;
+  letter-spacing: 1.6px;
 }
 
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
   font-family: var(--font-primary);
-  line-height: 1.2;
-  margin-bottom: var(--spacing-md);
-}
-
-/* ------------------- UTILITY CLASSES ------------------- */
-.container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-.text-center {
-  text-align: center;
-}
-.text-right {
-  text-align: right;
-}
-
-.mt-1 {
-  margin-top: var(--spacing-xs);
-}
-.mt-2 {
-  margin-top: var(--spacing-sm);
-}
-.mt-3 {
-  margin-top: var(--spacing-md);
-}
-.mt-4 {
-  margin-top: var(--spacing-lg);
-}
-.mt-5 {
-  margin-top: var(--spacing-xl);
+  /* margin-bottom: var(--spacing-md); */
+  /* margin-top: var(--spacing-md); */
+  /* margin-bottom: var(--spacing-md); */
+  /* line-height: 1.8; */
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 /* ------------------- BUTTONS ------------------- */
 .button {
-  display: inline-block;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  border: none;
   font-family: var(--font-secondary);
   font-size: var(--font-size-base);
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  /* background-color: var(--color-border); */
+  color: #000;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  border: 3px solid;
+  /* padding: 0.25em 0.5em; */
+  padding: var(--spacing-sm) var(--spacing-md);
+  box-shadow:
+    1px 1px 0px 0px,
+    2px 2px 0px 0px,
+    3px 3px 0px 0px,
+    4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+  /*  transition: all var(--transition-normal); */
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+.button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+.button-formating {
+  /* display: flex; */
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: var(--spacing-xl);
 }
 
 .button-primary {
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
+  background-color: var(--color-button-primary);
 }
 
-.button-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.button-secondary {
+  background-color: var(--color-button-secondary);
 }
 
-/* ------------------- NAVIGATION ------------------- */
-.header-nav {
-  position: fixed;
-  width: 100%; /* Changed from 100vw to prevent horizontal scroll */
-  height: var(--header-height);
-  /* background-color: var(--color-primary); */
-  box-shadow: var(--shadow-md);
-  z-index: 1000;
-
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1rem;
-  box-sizing: border-box; /* Added to include padding in width calculation */
-}
-
-/* All links and buttons in the header have unified color*/
-.header-nav a,
-.header-nav button {
-  color: var(--secondary-font-color);
-  text-decoration: none;
-}
-
-.header-nav a:hover,
-.header-nav button:hover {
-  color: var(--blush);
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--primary-font), var(--backup-font1);
-  font-size: calc(14px + 1rem);
-  font-weight: bold;
-  z-index: 1002;
-}
-
-.logo-container img {
-  padding-right: 5px;
-  height: 30px;
-  justify-content: center;
-  align-items: center;
-}
-
-.nav-links {
-  position: fixed;
-  top: 0;
-  right: -100%; /* Start fully off-screen */
-  margin: 0;
-  padding-top: 70px;
-  padding-bottom: 2rem; /* Add some bottom padding for better spacing */
-  gap: 0;
-  flex-direction: column;
-  background-color: var(--dark-purple);
-  color: var(--dark-purple);
-  width: 25%;
-  height: 100%;
-  text-align: center;
-  transition: 0.3s ease;
-  font-size: var(--defaultfsize);
-  font-family: var(--secondary-font), var(--backup-font2);
-  z-index: 1001;
-  /* overflow: hidden; */
-}
-
-.nav-item {
-  margin: 2rem 0;
-}
-
-.show-nav-links {
-  right: 0;
-  color: var(--dark-purple);
-}
-
-.cart-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  font-size: var(--defaultfsize);
-  font-family: var(--secondary-font), var(--backup-font2);
-  z-index: 1002;
-
-  i {
-    font-size: 1.5rem;
-  }
-}
-
-.cart-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  /* transition: 0.3s ease-in; */
-  /* z-index: 1002; */
-}
-
-.nav-toggle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--secondary-font-color);
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    visibility 0s linear 0s;
-}
-
-.nav-toggle i {
-  transition: transform 0.3s ease; /* Smooth rotation */
-}
-
-.nav-toggle.active i {
-  transform: rotate(90deg);
-  color: var(--secondary-font-color);
-}
-
-.nav-toggle.active i:hover {
-  color: var(--blush);
-}
-
-/* Overlay when sidebar is open */
-.nav-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--dark-purple);
-  opacity: 0.7;
-  z-index: 999;
-  cursor: pointer; /* Indicates clickable area */
-}
-
-/* same as above? except javascript handles it */
-.nav-overlay.visible {
-  display: block;
-  overflow: hidden;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.8);
+.button-tertiary {
+  background-color: var(--color-button-tertiary);
 }
 
 /* ------------------- PRODUCT CARDS ------------------- */
@@ -407,27 +220,6 @@ h6 {
   box-shadow: var(--shadow-md);
 } */
 
-/* ------------------- CART ------------------- */
-.cart-item {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
-}
-
-/* ------------------- RESPONSIVE DESIGN ------------------- */
-@media (max-width: 768px) {
-  :root {
-    /* Adjust sizes for mobile */
-    --font-size-3xl: 1.75rem;
-    --spacing-xl: 1.5rem;
-  }
-
-  .container {
-    padding: 0 var(--spacing-sm);
-  }
-}
-
 /* ------------------- ANIMATIONS ------------------- */
 /* @keyframes fadeIn {
   from {
@@ -442,43 +234,6 @@ h6 {
   animation: fadeIn var(--transition-normal);
 } */
 
-/* WHEN SCREEN SIZE IS LARGER THAN 768px */
-@media (min-width: 768px) {
-  .nav-toggle {
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(0.8);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease,
-      visibility 0s linear 0.3s;
-    display: none;
-  }
-
-  .nav-links {
-    position: static;
-    padding: 0;
-    height: auto;
-    width: auto;
-    background-color: transparent;
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-left: auto; /* Added to push nav links to the right */
-    margin-right: 1rem; /* Added spacing before cart */
-    overflow-y: visible;
-  }
-
-  .nav-item {
-    margin: 0; /* Reset margin for desktop */
-  }
-
-  /* .nav-overlay {
-    display: none;
-  } */
-}
-
 /* ----------------UNIVERSAL ELEMENT SELECTORS---------------- */
 body {
   background: radial-gradient(whitesmoke, #d68e8e);
@@ -490,14 +245,14 @@ body {
   padding: 0;
 
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 main {
   /* position: relative;
-  min-height: 100vh; */
-  padding-top: 0;
-  padding-bottom: 2.5; /* Footer height */
+  min-height: 100dvh; */
+  padding-top: var(--header-height);
+  padding-bottom: var(--footer-height);
 }
 
 body.no-scroll {
@@ -514,7 +269,7 @@ ol {
 /* all links have unified color */
 a {
   text-decoration: none;
-  color: var(--secondary-font-color);
+  color: var(--color-text-primary);
 }
 
 /* all links have unified color on hover */
@@ -524,7 +279,7 @@ a:hover {
 
 /*
 h1 {
-  font-family: var(--primary-font), var(--backup-font1);
+  font-family: var(--font-primary);
   font-size: calc(16px + 10vw);
   line-height: 150%;
   text-transform: uppercase;
@@ -538,30 +293,30 @@ h1 {
 */
 
 h2 {
-  font-family: var(--primary-font), var(--backup-font1);
+  font-family: var(--font-primary);
   font-size: calc(16px + 3.5vw);
   letter-spacing: 0.1rem;
   line-height: 150%;
   text-transform: uppercase;
-  color: var(--secondary-font-color);
+  color: var(--color-text-primary);
   text-align: center;
   margin: 0;
   padding: 0;
 }
 /*
 h3 {
-  font-family: var(--primary-font), var(--backup-font1);
+  font-family: var(--font-primary);
   font-size: calc(16px + 2rem);
   text-align: left;
 }
 
 h4 {
-  font-family: var(--primary-font), var(--backup-font1);
+  font-family: var(--font-primary);
   font-size: calc(16px + 1rem);
 }
 
 p {
-  font-family: var(--secondary-font), var(--backup-font2);
+  font-family: var(--font-secondary);
   font-size: calc(16px + 0.5rem);
   line-height: 100%;
   color: slategray;
@@ -571,14 +326,14 @@ p {
 
 /* ----------------UNIVERSAL CLASSES---------------- */
 
-/* .header-container {
+.heading {
   max-width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 3rem 3rem;
-  margin-bottom: 2rem;
+  padding: var(--spacing-2xl) var(--spacing-2xl);
+  /* margin-bottom: var(--spacing-md); */
   overflow: auto;
-} */
+}
 
 .content-container {
   display: flex;
@@ -586,13 +341,9 @@ p {
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* background-color: var(--blush); */
-  color: var(--secondary-font-color);
-  margin-top: 70px; /* 70px is the height of the header */
-  padding: 0;
+  color: var(--color-text-primary);
   width: inherit; /* Inherit the width of the parent */
   min-width: 200px;
-  padding: 2.5rem; /* Equal to the footer height */
 
   /* border: 1px solid var(--dark-purple); */
   /* border-radius: 100px; */
@@ -606,15 +357,6 @@ p {
   /* border-width: 5px; */
   /* border: 1rem solid var(--dark-purple); */
 }
-
-/* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
-/* @media (min-width: 768px) { */
-/* .two-column-container { */
-/* flex-direction: column;
-    align-items: flex-start;  */
-/* Aligns items at the start when stacked vertically */
-/* } */
-/* } */
 
 /* Style for the email input */
 /* input[type="email"] { */
@@ -643,49 +385,6 @@ p {
   background-color: #444;
 } */
 
-/* .button-54 {
-  font-family: var(--secondary-font), var(--backup-font2);
-  font-size: 16px;
-  letter-spacing: 2px;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #000;
-  cursor: pointer;
-  border: 3px solid;
-  padding: 0.25em 0.5em;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
-    5px 5px 0px 0px;
-  position: relative;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  transition: opacity 0.15s;
-}
-
-.button-54:hover {
-  opacity: 0.9;
-}
-
-.button-54:active {
-  box-shadow: 0px 0px 0px 0px;
-  top: 5px;
-  left: 5px;
-}
-
-@media (min-width: 768px) {
-  .button-54 {
-    padding: 0.25em 0.75em;
-  }
-}
-
-.button-formating {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 30px;
-} */
-
 /* ----------------PORTAL---------------- */
 .overlay-image img {
   position: absolute;
@@ -695,15 +394,14 @@ p {
 }
 
 /* ----------------HOME---------------- */
-/* .fullscreen-background { */
-/* padding-top: 0px;
-  padding-bottom: 60px;
+.hero-section {
+  padding-top: 0px;
   position: relative;
-  width: 100vw;
-  height: 100vh;  */
-/* overflow: hidden;  */
-/* Hide any overflow to prevent scrollbars */
-/* } */
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  /* Hide any overflow to prevent scrollbars */
+}
 
 .overlay-text {
   position: absolute;
@@ -711,12 +409,19 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
   /* background-color: #000020; */
-  opacity: 100%;
-  color: whitesmoke;
-  padding: 50px 50px;
-  font-size: 20px;
+  /* opacity: 100%; */
+  /* color: whitesmoke; */
+  /* padding: 50px 50px; */
   text-align: center;
-  z-index: 2;
+  z-index: 1000;
+
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  p {
+    font-size: var(--font-size-lg);
+  }
 }
 
 div.scroll-container {
@@ -804,7 +509,7 @@ div.scroll-container img {
     } */
 }
 
-/* ----------------PROJECTS---------------- */
+/* ---------------- COLLABS ---------------- */
 
 .project-image {
   display: inline-block;
@@ -838,27 +543,14 @@ div.scroll-container img {
 }
 
 /* ------------------ MODAL CONTACT FORM ------------------------ */
-
-/* Button Styling */
-/* #contactButton {
-  padding: 10px 20px;
-  background: purple;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 18px;
-} */
-
-/* Modal Styling */
 .contact-container {
   display: none; /* Hidden by default */
   position: fixed;
-  z-index: 1000;
+  z-index: 2000;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.8);
   justify-content: center;
   align-items: center;
@@ -885,14 +577,14 @@ div.scroll-container img {
   input,
   textarea {
     background: whitesmoke;
-    font-family: var(--secondary-font), var(--backup-font2);
+    font-family: var(--font-secondary);
     width: 90%;
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
     border: none;
     color: var(--black-purple);
-    font-size: var(--defaultfsize);
+    font-size: var(--font-size-base);
     resize: none;
   }
 
@@ -923,24 +615,12 @@ div.scroll-container img {
 }
 
 /* ------------------- CART ----------------------- */
-/* This can be used for featured page to list a bunch of products */
-/* #products .product {
-  border: 1px solid var(--dark-purple);
-  padding: 10px;
-  margin: 10px;
-  display: inline-block;
-  text-align: center;
-} */
-
-/* #cart { */
-/* margin-top: 20px; */
-/* border-top: 5px solid var(--dark-purple); */
-/* padding-top: 10px; */
-/* } */
-
-/* .nav-links.show-nav-links {
-  overscroll-behavior: contain;
-} */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
 
 /* ------------------- CHECKOUT----------------------- */
 #checkout-container {
@@ -951,15 +631,166 @@ div.scroll-container img {
   background-color: var(--dark-purple);
 }
 
+/* ------------------- HEADER NAVIGATION ------------------- */
+.header-nav {
+  position: fixed;
+  width: 100%; /* Changed from 100vw to prevent horizontal scroll */
+  height: var(--header-height);
+  background-color: var(--color-border);
+  /* box-shadow: var(--shadow-md); */
+  z-index: 2000;
+
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box; /* Added to include padding in width calculation */
+}
+
+/* All links and buttons in the header have unified color*/
+.header-nav a,
+.header-nav button {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Hover transition and color for entire nav bar */
+.header-nav a:hover,
+.header-nav button:hover {
+  color: var(--color-text-light);
+  transition: var(--transition-normal);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  /* font-size: calc(14px + 1rem); */
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+}
+
+.logo-container img {
+  padding-right: var(--spacing-xs);
+  height: var(--height-icon);
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start fully off-screen */
+  margin: 0;
+  padding-top: var(--header-height);
+  /* padding-bottom: var(--spacing-xl); */
+  gap: 0;
+  flex-direction: column;
+  background-color: var(--color-border-dark);
+  color: inherit;
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  transition: var(--transition-normal);
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  z-index: 1000;
+  /* overflow: hidden; */
+  transition: var(--transition-normal);
+}
+
+.nav-item {
+  margin: 2rem 0;
+}
+
+/* javascript */
+.show-nav-links {
+  right: 0;
+  /* color: inherit; */
+  z-index: 1000;
+}
+
+.cart-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  z-index: 1002;
+
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  visibility: visible;
+  z-index: 1002;
+  opacity: 1;
+  /* transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0s; */
+}
+
+/* Smooth rotation */
+.nav-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.nav-toggle.vertical i {
+  transform: rotate(90deg);
+}
+
+/* Overlay when sidebar is open */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  cursor: pointer;
+}
+
+/* Javascript makes above visible*/
+.nav-overlay.visible {
+  display: block;
+  overflow: hidden;
+  background-color: var(--color-primary);
+  opacity: var(--overlay-opacity);
+  /* transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0.3s; */
+}
+
 /* ------------------- FOOTER ----------------------- */
 footer {
-  font-family: var(--secondary-font), var(--backup-font2);
-  color: var(--secondary-font-color);
-  font-size: var(--defaultfsize);
+  font-family: var(--font-secondary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;
+  height: var(--footer-height);
 }
 
 .footer-grid {
@@ -1002,20 +833,23 @@ footer {
     /* display: inline-block; */
   }
 
-  a:hover {
+  /* a:hover {
     color: whitesmoke;
-  }
+  } */
 }
 
 .footer-title {
   font-family: var(--font-primary);
   font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 0;
+  text-align: center;
+  padding: var(--spacing-md);
 }
 
 .link-list {
   list-style: none;
-  padding: 0;
+  padding: var(--spacing-md);
+  text-align: center;
 
   li {
     margin-bottom: var(--spacing-sm);
@@ -1056,12 +890,16 @@ footer {
   color: var(--color-text-muted);
 }
 
+/* .newsletter button {
+  text-align: center;
+} */
+
 .newsletter-input {
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-background-alt);
-  color: var(--color-text);
+  color: var(--color-text-primary);
   max-width: 300px;
   width: 100%;
   margin-bottom: var(--spacing-md);
@@ -1072,22 +910,33 @@ footer {
   border-color: var(--color-secondary);
 }
 
-.button-secondary {
-  background-color: var(--color-border);
-  color: var(--color-text-light);
-  text-align: center;
-  /* border: 1px solid black; */
-  /* box-shadow: 2px 2px 2px rgb(0 0 200 / 60%); */
-  /* transition: all var(--transition-normal); */
-}
-
 .footer-bottom {
   font-size: var(--font-size-sm);
   text-align: center;
-  color: var(--color-text-muted);
+  color: var(--color-text-light);
 }
 
-/* Responsive Design */
+/* ------------------- RESPONSIVE DESIGN ------------------- */
+@media (max-width: 768px) {
+  :root {
+    /* Adjust sizes for mobile */
+    --font-size-3xl: 1.75rem;
+    --spacing-xl: 1.5rem;
+  }
+
+  /* .container {
+      padding: 0 var(--spacing-sm);
+    } */
+}
+
+/* Button */
+@media (min-width: 768px) {
+  .button {
+    padding: 0.25em 0.75em;
+  }
+}
+
+/* Footer */
 @media (max-width: 992px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
@@ -1099,6 +948,7 @@ footer {
   }
 }
 
+/* Footer */
 @media (max-width: 576px) {
   .footer-grid {
     grid-template-columns: 1fr;
@@ -1106,5 +956,38 @@ footer {
 
   .newsletter {
     grid-column: span 1;
+  }
+}
+
+/* Nav header WHEN SCREEN SIZE IS LARGER THAN 768px */
+@media (min-width: 768px) {
+  .nav-toggle {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0.3s;
+    display: none;
+  }
+
+  .nav-links {
+    position: static;
+    padding: 0;
+    height: auto;
+    width: auto;
+    background-color: transparent;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-right: var(--spacing-lg); /* Added spacing before cart */
+    margin-left: auto; /* Added to push nav links to the right */
+    overflow-y: visible;
+  }
+
+  .nav-item {
+    margin: 0; /* Reset margin for desktop */
   }
 }

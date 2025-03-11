@@ -1,18 +1,21 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Merch | VANGULAR";
-const keywords = "merch, art, design, stickers, t-shirts, hats, socks, totebags, phonecases, temporary tattoos, earrings, 3D printed stuff, phonecases, deals, bundles, discounted merch"
+const keywords =
+  "merch, art, design, stickers, t-shirts, hats, socks, totebags, phonecases, temporary tattoos, earrings, 3D printed stuff, phonecases, deals, bundles, discounted merch";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
-    <h2>Merch</h2>
-
     <section class="content-container" id="merch-paintings">
+      <div class="heading">
+        <h2>Merch</h2>
+      </div>
+
       <div>
         <h3>Paintings & Collages</h3>
         <p>
@@ -23,7 +26,10 @@ const keywords = "merch, art, design, stickers, t-shirts, hats, socks, totebags,
 
       <div class="image-grid">
         <a href="/product">
-          <img src="/src/assets/images/products/a-skelli.jpg" alt="Colorful skull" />
+          <img
+            src="/src/assets/images/products/a-skelli.jpg"
+            alt="Colorful skull"
+          />
         </a>
         <a href="/product">
           <img
@@ -54,7 +60,10 @@ const keywords = "merch, art, design, stickers, t-shirts, hats, socks, totebags,
         </a>
 
         <a href="/product">
-          <img src="/src/assets/images/products/a-starmi.jpg" alt="Dancing star" />
+          <img
+            src="/src/assets/images/products/a-starmi.jpg"
+            alt="Dancing star"
+          />
         </a>
 
         <a href="/product">
@@ -190,7 +199,10 @@ const keywords = "merch, art, design, stickers, t-shirts, hats, socks, totebags,
         </a>
 
         <a href="/product">
-          <img src="/src/assets/images/products/m-rainbows-totecloud.png" alt="" />
+          <img
+            src="/src/assets/images/products/m-rainbows-totecloud.png"
+            alt=""
+          />
         </a>
       </div>
     </section>

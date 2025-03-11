@@ -18,7 +18,7 @@ const links = siteNavigation.headerLinks;
       {
         links.mainNav.map(({ name, href }) => (
           <li class="nav-item">
-            <a href={href} class="nav-link">
+            <a href={href} id="nav-link">
               {name}
             </a>
           </li>
@@ -29,14 +29,14 @@ const links = siteNavigation.headerLinks;
     <div class="cart-container">
       <a href={links.cart[0].href} class="cart-button">
         <i class="fa fa-shopping-cart"></i>
-        <span class="cart-count">0</span>
+        <span id="cart-count">0</span>
       </a>
 
       <button class="nav-toggle" aria-label="toggle navigation">
         <i class="fa fa-bars"></i>
       </button>
     </div>
-
-    <div class="nav-overlay"></div>
   </nav>
+
+  <div class="nav-overlay"></div>
 </header>

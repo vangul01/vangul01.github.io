@@ -1,17 +1,19 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "TestProd | VANGULAR";
-const keywords = "test, js, test js"
+const keywords = "test, js, test js";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
     <section class="content-container" id="product-page">
-      <h2>Vangular Merch</h2>
+      <div class="heading">
+        <h2>Product Page!</h2>
+      </div>
 
       <div class="two-column-container">
         <div class="product-image">

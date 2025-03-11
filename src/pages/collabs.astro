@@ -1,16 +1,21 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Collabs | VANGULAR";
-const keywords = "art, design, past work, projects, commission, creative, logos, collaborations, cover art"
+const keywords =
+  "art, design, past work, projects, commission, creative, logos, collaborations, cover art";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
     <section class="content-container" id="collabs">
+      <div class="heading">
+        <h2>Collabs</h2>
+      </div>
+
       <div class="two-column-container">
         <div class="project-image">
           <img

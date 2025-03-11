@@ -3,7 +3,7 @@
 import { calculateTotals } from "./cart-operations.js";
 
 export function initCartCount() {
-  const cartCountElement = document.querySelector(".cart-count");
+  const cartCountElement = document.querySelector("#cart-count");
 
   function updateCartCount(cart) {
     if (!cartCountElement) return;

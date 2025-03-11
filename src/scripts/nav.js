@@ -9,7 +9,7 @@ export function initNav() {
   // Function to close the sidenav
   function closeNav() {
     navLinks.classList.remove("show-nav-links");
-    navToggle.classList.remove("active");
+    navToggle.classList.remove("vertical");
     navOverlay.classList.remove("visible");
     document.body.classList.remove("no-scroll");
   }
@@ -17,13 +17,13 @@ export function initNav() {
   // Only open the nav when the toggle is clicked
   navToggle?.addEventListener("click", () => {
     navLinks.classList.toggle("show-nav-links");
-    navToggle.classList.toggle("active");
+    navToggle.classList.toggle("vertical");
     navOverlay.classList.toggle("visible");
     document.body.classList.toggle("no-scroll");
   });
 
   // Close the nav when a link is clicked
-  document.querySelectorAll(".nav-link").forEach((link) => {
+  document.querySelectorAll("#nav-link").forEach((link) => {
     link.addEventListener("click", closeNav);
   });
 
