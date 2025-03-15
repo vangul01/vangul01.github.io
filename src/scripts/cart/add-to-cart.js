@@ -8,7 +8,7 @@ export function initAddToCart() {
   let cart = loadCart();
   const { updateCartCount } = initCartCount();
 
-  document.querySelectorAll(".add-to-cart").forEach((button) => {
+  document.querySelectorAll("#add-to-cart").forEach((button) => {
     button.addEventListener("click", function () {
       const product = {
         id: this.dataset.id,

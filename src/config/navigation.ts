@@ -6,9 +6,8 @@ export const siteNavigation = {
       { name: "Merch", href: "/merch" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
-      { name: "Test", href: "/product" },
     ],
-    cart: [{ href: "/checkout" }],
+    cart: [{ href: "/cart" }],
   },
   footerLinks: {
     quickLinks: [
@@ -16,8 +15,6 @@ export const siteNavigation = {
       { name: "Merch", href: "/merch" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
-      { name: "Test", href: "/test" },
-      //   { name: "Contact", href: "#", class: "contact-container" },
     ],
     shop: [
       { name: "All Products", href: "/merch" },
@@ -27,7 +24,6 @@ export const siteNavigation = {
     about: [
       { name: "Our Story", href: "/about" },
       { name: "Collaborations", href: "/collabs" },
-      //   { name: "Contact", href: "#", class: "contact-link" },
     ],
     social: [
       { name: "Etsy", href: "https://etsy.com/shop/vangular/", icon: "etsy" },

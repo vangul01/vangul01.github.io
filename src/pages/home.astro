@@ -2,6 +2,9 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { prodDetails } from "../config/prod-details";
+
+const prodInfo = prodDetails.featuredProd;
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -20,61 +23,49 @@ const keywords =
       </div>
     </section>
 
-    <section class="content-container" id="home-featured-art">
-      <h2>Featured Art</h2>
-      <!-- <p>Explore high quality paintings and collages that are ready for purchase!</p> -->
+    <section class="content-container">
+      <h2>New Arrivals</h2>
+      <p>
+        Explore high quality paintings and collages that are ready for purchase!
+      </p>
 
-      <div class="scroll-container">
-        <img
-          src="/src/assets/images/products/a-skelli.jpg"
-          alt="Colorful skull"
-        />
-        <img
-          src="/src/assets/images/products/a-alladream.png"
-          alt="Pink city themed collage"
-        />
-        <img
-          src="/src/assets/images/products/a-butts.jpg"
-          alt="Two buttocks surrounded by plants"
-        />
-        <img
-          src="/src/assets/images/products/a-bioblitz.jpg"
-          alt="Colorful abstract designs"
-        />
-      </div>
-    </section>
-
-    <section class="content-container" id="home-featured-merch">
-      <h2>Featured Merch</h2>
-      <!-- <p>Check out my inventory of stickers, shirts, cards, tattoos, pins, prints and more!</p> -->
-
-      <div class="scroll-container">
-        <img
-          src="/src/assets/images/products/m-cheugy-mug.png"
-          alt="design on a mug"
-        />
-        <img
-          src="/src/assets/images/products/m-hayy-card4.png"
-          alt="design on a card"
-        />
-        <img
-          src="/src/assets/images/products/m-rainbows-totecloud.png"
-          alt="frog design on a tote"
-        />
-        <img
-          src="/src/assets/images/products/m-nirvana-tote.png"
-          alt="nirvana guy design on a tote"
-        />
-        <img
-          src="/src/assets/images/products/m-drippy-printframe.png"
-          alt="framed pic of a mouth eating strawberries"
-        />
+      <div class="image-grid">
+        {
+          prodInfo.new.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} />
+            </a>
+          ))
+        }
       </div>
 
       <div class="button-formating">
         <a href="/merch"
           ><button class="button button-primary" role="button"
-            >Shop All Merch</button
+            >Shop New Arrivals</button
+          ></a
+        >
+      </div>
+    </section>
+
+    <section class="content-container">
+      <h2>Best Sellers</h2>
+      <p>Check out best sellers across all categories!</p>
+
+      <div class="image-grid">
+        {
+          prodInfo.popular.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} />
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="button-formating">
+        <a href="/merch"
+          ><button class="button button-primary" role="button"
+            >Shop Best Sellers</button
           ></a
         >
       </div>

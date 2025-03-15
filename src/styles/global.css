@@ -63,9 +63,10 @@
   --border-radius-md: 1rem;
   --border-radius-lg: 1.5rem;
   --border-radius-circle: 50%;
-  --border-thickness-sm: 0.25rem;
-  --border-thickness-md: 0.5rem;
-  --border-thickness-lg: 1rem;
+
+  --border-primary: 0.5rem solid var(--color-border);
+  --border-secondary: 0.25rem solid var(--color-border);
+  --border-tertiary: 0.125rem solid var(--color-border);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -80,6 +81,7 @@
   --container-width: 1200px;
   --header-height: 70px;
   --footer-height: 2.5rem;
+  --min-width: 200px;
 
   /* Media Queries */
   --screen-xs: 0;
@@ -129,6 +131,7 @@
   touch-action: manipulation;
   transition: opacity 0.15s;
   /*  transition: all var(--transition-normal); */
+  margin: var(--spacing-lg);
 }
 
 .button:hover {
@@ -148,11 +151,14 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: var(--spacing-xl);
+  /* margin: var(--spacing-xl); */
 }
 
 .button-primary {
   background-color: var(--color-button-primary);
+  /* padding: var(--spacing-lg) var(--spacing-xl); */
+  /* padding: var(--spacing-xl); */
+  /* margin: var(--spacing-lg); */
 }
 
 .button-secondary {
@@ -161,6 +167,16 @@
 
 .button-tertiary {
   background-color: var(--color-button-tertiary);
+}
+
+.button-modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 var(--spacing-sm);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
 }
 
 /* ------------------- BASE STYLES ------------------- */
@@ -180,7 +196,7 @@ body {
 
   font-size: var(--font-size-base);
   font-family: var(--font-secondary);
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
 
   line-height: 1.6;
   letter-spacing: 0.1rem; /* 1.6px */
@@ -216,16 +232,35 @@ h3 {
   font-size: var(--font-size-lg);
 }
 
-body.no-scroll {
-  overflow: hidden;
-  overscroll-behavior: none;
-}
-
 /* all lists have no bullet points */
 ul,
 ol {
   list-style-type: none;
 }
+
+input,
+textarea {
+  background: whitesmoke;
+  font-family: var(--font-secondary);
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+  color: var(--black-purple);
+  font-size: var(--font-size-base);
+  resize: none;
+}
+
+/* input::placeholder { */
+/* font-weight: bold; */
+/* opacity: 0.5; */
+/* color: grey;
+  } */
+
+/* .email-field:hover {
+    background: whitesmoke;
+  } */
 
 /* all links have unified color */
 /* a {
@@ -236,19 +271,6 @@ ol {
 /* all links have unified color on hover */
 /* a:hover {
   color: var(--color-text-light);
-} */
-
-/* ------------------- PRODUCT CARDS ------------------- */
-/* .product-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  padding: var(--spacing-md);
-  transition: transform var(--transition-normal);
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
 } */
 
 /* ----------------UNIVERSAL CLASSES---------------- */
@@ -269,8 +291,22 @@ ol {
   text-align: center;
   color: var(--color-text-primary);
   width: inherit; /* Inherit the width of the parent */
-  min-width: 200px;
+  min-width: var(--min-width);
   padding: var(--spacing-2xl) var(--spacing-2xl);
+}
+
+.product-card {
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  transition: transform var(--transition-normal);
+  background-color: var(--color-background);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--color-background-alt);
+  box-shadow: var(--shadow-md);
 }
 
 /* Style for the email input */
@@ -341,18 +377,18 @@ ol {
   }
 }
 
-div.scroll-container {
-  /* background-color: fuchsia; */
+/* div.scroll-container {
+  background-color: fuchsia;
   overflow: auto;
   white-space: nowrap;
   padding: 10px;
-  /* max-height: 3rem; */
-}
+  max-height: 3rem;
+} */
 
-div.scroll-container img {
+/* div.scroll-container img {
   padding: 10px;
   max-height: 20rem;
-}
+} */
 
 /* ----------------GALLERY / MERCH---------------- */
 
@@ -369,7 +405,6 @@ div.scroll-container img {
     width: 20rem;
     height: 20rem;
     object-fit: cover;
-    background-color: blanchedalmond;
   }
 
   div {
@@ -460,7 +495,7 @@ div.scroll-container img {
   display: flex;
   align-items: center;
   padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: var(--border-tertiary);
 }
 
 /* ------------------- CHECKOUT----------------------- */
@@ -474,21 +509,36 @@ div.scroll-container img {
 
 /* ------------------ MODAL CONTACT FORM ------------------------ */
 .contact-container {
-  display: none; /* Hidden by default */
+  /* display: none;  */
   position: fixed;
-  z-index: 2000;
-  left: 0;
+  z-index: 2001;
   top: 0;
-  width: 100dvw;
-  height: 100dvh;
-  background-color: rgba(0, 0, 0, 0.8);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
   justify-content: center;
   align-items: center;
   overscroll-behavior: contain;
+
+  /* Start hidden */
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+}
+
+.contact-container.visible {
+  opacity: 1;
+  visibility: visible;
+  overflow: hidden;
 }
 
 /* Modal Content Box */
-.contact-content {
+.contact-box {
   background: linear-gradient(
     180deg,
     rgb(227, 181, 241) 0%,
@@ -503,45 +553,6 @@ div.scroll-container img {
   h2 {
     color: rgb(88, 58, 118);
   }
-
-  input,
-  textarea {
-    background: whitesmoke;
-    font-family: var(--font-secondary);
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: none;
-    color: var(--black-purple);
-    font-size: var(--font-size-base);
-    resize: none;
-  }
-
-  /* input::placeholder { */
-  /* font-weight: bold; */
-  /* opacity: 0.5; */
-  /* color: grey;
-    } */
-
-  /* .email-field:hover {
-      background: whitesmoke;
-    } */
-
-  .submit {
-    align-items: center;
-    margin-top: 10px;
-    width: 30%;
-    background-color: rgb(118, 79, 156);
-  }
-
-  .close-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    cursor: pointer;
-  }
 }
 
 /* ------------------- HEADER NAVIGATION ------------------- */
@@ -550,7 +561,9 @@ div.scroll-container img {
   width: 100%; /* Changed from 100vw to prevent horizontal scroll */
   height: var(--header-height);
   background-color: var(--color-border);
-  /* box-shadow: var(--shadow-md); */
+  border-bottom: 5px solid black;
+  box-shadow: var(--shadow-md);
+
   z-index: 2000;
 
   top: 0;
@@ -622,6 +635,8 @@ div.scroll-container img {
 .show-nav-links {
   right: 0;
   /* color: inherit; */
+  border-left: 5px solid black;
+
   z-index: 1000;
 }
 
@@ -681,6 +696,9 @@ div.scroll-container img {
   z-index: 999;
   cursor: pointer;
 
+  width: 100%;
+  height: 100%;
+
   background-color: var(--color-overlay);
   opacity: 0;
   visibility: hidden;
@@ -696,13 +714,14 @@ div.scroll-container img {
   overflow: hidden;
 }
 
-/* ------------------- FOOTER ----------------------- */
-/* footer { */
-/* font-family: var(--font-secondary); */
-/* color: var(--color-text-primary); */
-/* font-size: var(--font-size-base); */
-/* } */
+/* Javascript makes it so you can't scroll with overlay */
+.nav-overlay.no-scroll {
+  /* Prevent scrolling */
+  overflow: hidden;
+  overscroll-behavior: none; /* Prevent overscroll effects */
+}
 
+/* ------------------- FOOTER ----------------------- */
 .footer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
@@ -718,10 +737,10 @@ div.scroll-container img {
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding: var(--spacing-md);
-  border: var(--border-thickness-md) solid var(--color-border);
-  border-radius: var(--border-radius-lg);
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
   background-color: var(--color-secondary);
-  /* box-shadow: 2px 2px 2px var(--color-shadow); */
+  box-shadow: var(--shadow-md);
 
   column-fill: auto;
   -webkit-column-fill: auto;
@@ -766,6 +785,14 @@ div.scroll-container img {
   }
 }
 
+/* .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+} */
+
 .social-link {
   display: flex;
   /* flex-direction: row; */
@@ -776,6 +803,13 @@ div.scroll-container img {
   border-radius: var(--border-radius-circle);
   background-color: var(--color-border);
   margin-bottom: var(--spacing-sm);
+  /* gap: 1rem; */
+  list-style: none;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
 }
 
 .newsletter p {

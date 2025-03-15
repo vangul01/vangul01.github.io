@@ -1,3 +1,18 @@
+/*
+Logic:
+Open nav:
+    - when window < 768px
+    - when nav-toggle is clicked
+Close nav:
+    - when window > 768px
+    - when nav-overlay is clicked
+    - when a nav-link is clicked
+
+ISSUE:
+scrolling when overlay is on top, not able to deacitvate it???
+-affects global, contact form js and astro, nav js,
+*/
+
 // Navigation functionality
 export function initNav() {
   // Select elements
@@ -10,16 +25,24 @@ export function initNav() {
   function closeNav() {
     navLinks.classList.remove("show-nav-links");
     navToggle.classList.remove("vertical");
-    navOverlay.classList.remove("visible");
-    document.body.classList.remove("no-scroll");
+    navOverlay.classList.remove("visible", "no-scroll");
+  }
+
+  // Function to open the sidenav
+  function openNav() {
+    navLinks.classList.add("show-nav-links");
+    navToggle.classList.add("vertical");
+    navOverlay.classList.add("visible", "no-scroll");
   }
 
   // Only open the nav when the toggle is clicked
   navToggle?.addEventListener("click", () => {
-    navLinks.classList.toggle("show-nav-links");
-    navToggle.classList.toggle("vertical");
-    navOverlay.classList.toggle("visible");
-    document.body.classList.toggle("no-scroll");
+    const isNavOpen = navLinks.classList.contains("show-nav-links");
+    if (isNavOpen) {
+      closeNav();
+    } else {
+      openNav();
+    }
   });
 
   // Close the nav when a link is clicked
@@ -27,13 +50,19 @@ export function initNav() {
     link.addEventListener("click", closeNav);
   });
 
-  // Event listeners for closing the nav when clicking outside of it
+  //   Event listeners for closing the nav when clicking outside of it
   navOverlay?.addEventListener("click", closeNav);
 
-  // Close the nav when the window is resized
-  window.onresize = function () {
+  window.addEventListener("resize", () => {
+    console.log("Window resized:", window.outerWidth);
     if (window.outerWidth > minWindowWidth) {
+      console.log("Closing nav due to large window size");
       closeNav();
+    } else {
+      if (navLinks.classList.contains("show-nav-links")) {
+        console.log("Keeping no-scroll because nav is open");
+        navOverlay.classList.add("no-scroll");
+      }
     }
-  };
+  });
 }

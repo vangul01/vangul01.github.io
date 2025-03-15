@@ -3,15 +3,15 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pageTitle = "Checkout | VANGULAR";
-const keywords = "test cart, test checkout, test payment";
+const pageTitle = "Cart | VANGULAR";
+const keywords = "Cart, Shopping Cart, Checkout";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
     <div class="heading">
-      <h2>Checkout</h2>
+      <h2>Your Cart</h2>
     </div>
 
     <section class="content-container">
@@ -21,12 +21,21 @@ const keywords = "test cart, test checkout, test payment";
           <p id="checkout-total-quantity">Items: 0</p>
           <p id="checkout-total-price">Total Amount: $0</p>
         </div>
-        <button class="button button-primary" id="proceed-to-payment"
-          >Proceed to Payment</button
-        >
-        <button class="button button-secondary" id="clear-cart"
-          >Clear my cart!</button
-        >
+
+        <div>
+          <button class="button button-tertiary" id="clear-cart"
+            >Clear Cart</button
+          >
+
+          <!-- Or continue shopping?? -->
+          <button class="button button-secondary" onclick="history.back()"
+            >Go Back</button
+          >
+
+          <button class="button button-primary" id="proceed-to-payment"
+            >Proceed to Checkout</button
+          >
+        </div>
       </div>
     </section>
   </main>

@@ -31,7 +31,7 @@ export function updateQuantity(cart, productId, newQuantity) {
   }
 
   const newCart = cart.map((item) =>
-    item.id === productId ? { ...item, quantity: newQuantity } : item
+    item.id === productId ? { ...item, quantity: newQuantity } : item,
   );
 
   saveCart(newCart);
@@ -44,6 +44,6 @@ export function calculateTotals(cart) {
       price: totals.price + item.price * item.quantity,
       quantity: totals.quantity + item.quantity,
     }),
-    { price: 0, quantity: 0 }
+    { price: 0, quantity: 0 },
   );
 }
