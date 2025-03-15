@@ -1,0 +1,55 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Merch | VANGULAR";
+const keywords = "vangular, merch, art, products";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <div class="heading">
+      <h2>Merch</h2>
+      <h3>*All products currently unavailable for purchase*</h3>
+    </div>
+
+    <section class="content-container" id="product-page">
+      <div class="two-column-container">
+        <div class="image product-image">
+          <img
+            src="/src/assets/images/products/a-butts.jpg"
+            alt="product.name"
+          />
+        </div>
+
+        <div class="text product-text">
+          <h2>The Butts!</h2>
+          <h4>
+            Bodacious booties inspired by a "Culitos" wine bottle, this piece is
+            sure to give you and your friends something cheeky to talk about!
+          </h4>
+          <br />
+          <p>Oil pastel, chalk pastel, heavy-weight paper</p>
+          <p>10 inches x 14 inches</p>
+          <p>$150</p>
+          <p>1 Available</p>
+
+          <!-- <div class="button-container"> -->
+          <button
+            class="button button-primary"
+            id="add-to-cart"
+            data-id="1"
+            data-name="The Butts"
+            data-price="150"
+          >
+            Add to Cart
+          </button>
+          <!-- </div> -->
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

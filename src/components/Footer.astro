@@ -1,0 +1,94 @@
+---
+import ContactForm from "./ContactForm.astro";
+import { siteNavigation } from "../config/navigation";
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = siteNavigation.footerLinks;
+---
+
+<footer class="footer">
+  <ContactForm />
+
+  <div class="footer-grid">
+    <!-- Quick Links -->
+    <div class="footer-section">
+      <h3 class="footer-title">Links</h3>
+      <ul class="link-list">
+        {
+          footerLinks.quickLinks.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+        <li><a href="#" class="contact-link"> Contact </a></li>
+      </ul>
+    </div>
+
+    <!-- Shop Links -->
+    <div class="footer-section">
+      <h3 class="footer-title">Shop</h3>
+      <ul class="link-list">
+        {
+          footerLinks.shop.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Social Links -->
+    <div class="footer-section">
+      <h3 class="footer-title">Connect</h3>
+      <ul class="link-list social-links">
+        {
+          footerLinks.social.map(({ name, href, icon }) => (
+            <a
+              href={href}
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+            >
+              <i class={`fa fa-${icon}`} />
+            </a>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-section newsletter">
+      <h3 class="footer-title">Stay Updated</h3>
+      <p>Subscribe to get special offers and updates.</p>
+      <form>
+        <!-- <div> -->
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          class="newsletter-input"
+          aria-label="Email for newsletter"
+          autocomplete="email"
+        />
+        <br />
+        <button
+          type="submit"
+          class="button button-secondary"
+          aria-label="Subscribe to newsletter"
+        >
+          Subscribe
+        </button>
+        <!-- </div> -->
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>© {currentYear} VANGULAR. All rights reserved.</p>
+  </div>
+</footer>

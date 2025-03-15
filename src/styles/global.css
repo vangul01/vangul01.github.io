@@ -1,0 +1,969 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* ------------------- CSS RESET ------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------- VARIABLES ------------------- */
+:root {
+  /* Default Theme (Purple & Blush) */
+  --color-primary: #190a2a; /* Dark Purple */
+  --color-secondary: #bb85aa; /* Blush */
+  --color-accent: #f3d2c1;
+  --color-yellow: #faba76;
+  --color-orange: #ff8a79;
+  --color-purple: rgb(88, 58, 118);
+
+  /* Common Colors */
+  --color-text-primary: #190a2a; /* Dark Purple */
+  --color-text-secondary: slategray;
+  --color-text-light: whitesmoke;
+  --color-text-muted: #504646;
+  --color-border-light: #e88a8a;
+  --color-border-medium: #ce7b7b;
+  --color-border-dark: rgb(88, 58, 118);
+  --color-shadow: #000020;
+  --color-background: #ffffff;
+  --color-background-alt: #f8f8f8;
+  --color-button-primary: rgb(146, 131, 170);
+  --color-button-secondary: #e88a8a;
+  --color-button-tertiary: #ce7b7b;
+  --color-overlay: rgba(0, 0, 0, 0.8);
+  --color-site-background: radial-gradient(whitesmoke, #d68e8e);
+  --color-modal-background: linear-gradient(180deg, #fbbfbf 0%, #faba76 100%);
+
+  /* Color Alerts */
+  --color-error: #dc3545;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  /* --color-info: #17a2b8; */
+  --color-info: #00899e;
+
+  /* Typography */
+  --font-primary: "Russo One", sans-serif;
+  --font-secondary: "Open Sans", arial, sans-serif;
+  --font-size-xs: 0.5rem; /* 8px */
+  --font-size-sm: 0.75rem; /* 12px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.5rem; /* 24px */
+  --font-size-xl: 2rem; /* 32px */
+  --font-size-2xl: 3rem; /* 48px */
+  --font-size-3xl: 4rem; /* 64px */
+  --font-size-4xl: 6rem; /* 96px */
+
+  /* Spacing */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+
+  /* Borders */
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 1rem;
+  --border-radius-lg: 1.5rem;
+  --border-radius-circle: 50%;
+
+  --border-primary: 0.5rem solid var(--color-border-light);
+  --border-secondary: 0.25rem solid var(--color-border-light);
+  --border-tertiary: 0.125rem solid var(--color-border-dark);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+
+  /* Layout */
+  --container-width: 1200px;
+  --header-height: 70px;
+  --footer-height: 2.5rem;
+  --min-width: 200px;
+  --max-text-width: 35rem;
+
+  /* Media Queries */
+  --screen-xs: 0;
+  --screen-sm: 576px;
+  --screen-md: 768px;
+  --screen-lg: 992px;
+  --screen-xl: 1200px;
+
+  /* My Variables */
+  --height-icon: 30px;
+}
+
+/* Dark Theme */
+/* [data-theme="dark"] {
+  --color-text: #f5f5f5;
+  --color-text-light: #190a2a;
+  --color-text-muted: #999999;
+  --color-background: #121212;
+  --color-background-alt: #1e1e1e;
+  --color-border: #333333;
+} */
+
+/* ------------------- BUTTONS ------------------- */
+.button {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  /* background-color: var(--color-border); */
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  /* padding: 0.25em 0.5em; */
+  padding: var(--spacing-sm) var(--spacing-md);
+  box-shadow:
+    1px 1px 0px 0px,
+    2px 2px 0px 0px,
+    3px 3px 0px 0px,
+    4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+  /*  transition: all var(--transition-normal); */
+  margin: var(--spacing-lg);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+.button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+.button-formating {
+  /* display: flex; */
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* margin: var(--spacing-xl); */
+}
+
+.button-primary {
+  background-color: var(--color-button-primary);
+  /* padding: var(--spacing-lg) var(--spacing-xl); */
+  /* padding: var(--spacing-xl); */
+  /* margin: var(--spacing-lg); */
+}
+
+.button-secondary {
+  background-color: var(--color-button-secondary);
+}
+
+.button-tertiary {
+  background-color: var(--color-button-tertiary);
+}
+
+.button-modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 var(--spacing-sm);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+/* ------------------- BASE STYLES ------------------- */
+body {
+  display: grid;
+  grid-template-rows: var(--header-height) 1fr auto;
+  min-height: 100dvh;
+
+  position: relative;
+  background: var(--color-site-background);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; /* Ensures the background covers the entire viewport */
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  color: var(--color-text-muted);
+
+  line-height: 1.6;
+  letter-spacing: 0.1rem; /* 1.6px */
+}
+
+main {
+  position: relative;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-primary);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  line-height: 180%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  /* position: relative; */
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+  /* font-size: calc(var(--font-size-base) + 3.5dvw); h2 */
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+}
+
+/* all lists have no bullet points */
+ul,
+ol {
+  list-style-type: none;
+}
+
+input,
+textarea {
+  background: whitesmoke;
+  font-family: var(--font-secondary);
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+  color: var(--black-purple);
+  font-size: var(--font-size-base);
+  resize: none;
+}
+
+/* input::placeholder { */
+/* font-weight: bold; */
+/* opacity: 0.5; */
+/* color: grey;
+  } */
+
+/* .email-field:hover {
+    background: whitesmoke;
+  } */
+
+/* all links have unified color */
+/* a {
+  text-decoration: none;
+  color: var(--color-text-primary);
+} */
+
+/* all links have unified color on hover */
+/* a:hover {
+  color: var(--color-text-light);
+} */
+
+/* ----------------UNIVERSAL CLASSES---------------- */
+
+.heading {
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-2xl) var(--spacing-2xl);
+  overflow: auto;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-text-primary);
+  width: inherit; /* Inherit the width of the parent */
+  min-width: var(--min-width);
+  padding: var(--spacing-2xl) var(--spacing-2xl);
+}
+
+.two-column-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem; /* Optional, adds space between elements */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+}
+
+.image {
+  display: flex;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  object-fit: contain;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.text {
+  flex: 1; /* Allows the text container to take up remaining space */
+  display: inline-block;
+  justify-content: center;
+  margin: auto;
+  max-width: var(--max-text-width);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  text-align: justify;
+  text-justify: auto;
+
+  a {
+    color: var(--color-info);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+    transition: var(--transition-normal);
+  }
+}
+
+.product-card {
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  transition: transform var(--transition-normal);
+  background-color: var(--color-background);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--color-background-alt);
+  box-shadow: var(--shadow-md);
+}
+
+/* Style for the email input */
+/* input[type="email"] { */
+/*width: 70%; /* Full width of the container */
+/*max-width: fit-content;
+  /*padding: 10px 20px; /* Padding for a button-like look */
+/*border: none; /* Remove border */
+/*border-radius: 8px; /* Rounded corners */
+/*background-color: #190a2a; /* Background color */
+/*color: #fff; /* Text color */
+/*font-size: 16px; /* Font size */
+/*font-family: inherit; /* Use same font as the rest */
+/*outline: none; /* Remove outline on focus */
+/*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+/*margin-bottom: 5px; /* Spacing below input */
+/* } */
+
+/* Placeholder text styling */
+/* input[type="email"]::placeholder {
+  color: #bbb;
+  opacity: 0.8;
+} */
+
+/* Add a hover effect like the button -  Darker on hover */
+/* input[type="email"]:hover {
+  background-color: #444;
+} */
+
+/* ----------------PORTAL---------------- */
+.overlay-image {
+  position: fixed; /* Covers the whole screen */
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh; /* Ensures it takes the full height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-image img {
+  max-width: 100%;
+  max-height: 90dvh; /* Adjust this value to whatever max height you want */
+  object-fit: contain; /* Ensures the image scales without distortion */
+}
+
+/* ----------------HOME---------------- */
+.hero-section {
+  padding-top: 0px;
+  position: relative;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  /* Hide any overflow to prevent scrollbars */
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  p {
+    font-size: var(--font-size-lg);
+    letter-spacing: 3px;
+  }
+}
+
+/* div.scroll-container {
+  background-color: fuchsia;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 10px;
+  max-height: 3rem;
+} */
+
+/* div.scroll-container img {
+  padding: 10px;
+  max-height: 20rem;
+} */
+
+/* ----------------GALLERY / MERCH---------------- */
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  div {
+    width: 20rem;
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* ----------------ABOUT---------------- */
+
+.about-image img {
+  width: 30rem;
+  max-width: 100%; /* Ensures the image scales properly */
+  height: auto; /* Maintains aspect ratio */
+  /* border: 5px outset aquamarine; */
+  /* border-radius: 50%; */
+  border-radius: 20%;
+}
+
+.about-text {
+  h3 {
+    text-align: left;
+  }
+  .signature {
+    text-align: right;
+  }
+}
+
+/* ---------------- COLLABS ---------------- */
+
+.project-image img {
+  padding: var(--spacing-md);
+  width: 20rem;
+  height: 20rem;
+  object-fit: contain;
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background);
+}
+
+.project-text h3 {
+  text-align: center;
+}
+
+/* ------------------- PRODUCT PAGE ----------------------- */
+
+.product-text {
+  h2 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+    padding: var(--spacing-xs);
+  }
+  .button {
+    /* bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute; */
+    /* left: 50%; */
+    bottom: 0;
+    /* transform: translateX(-50%); */
+  }
+}
+
+.product-image img {
+  max-width: var(--max-text-width);
+  object-fit: cover;
+  border: var(--border-tertiary);
+  border-radius: var(--border-radius-sm);
+}
+
+/* ------------------- SHOPPING CART ----------------------- */
+#checkout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-purple);
+  /* padding: var(--spacing-xl); */
+}
+
+#cart {
+  padding: var(--spacing-md);
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: var(--border-tertiary);
+}
+
+/* ------------------ MODAL CONTACT FORM ------------------------ */
+.contact-container {
+  display: flex;
+  position: fixed;
+  z-index: 2001;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
+  justify-content: center;
+  align-items: center;
+  overscroll-behavior: contain;
+
+  /* Start hidden */
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+}
+
+.contact-container.visible {
+  opacity: 1;
+  visibility: visible;
+  overflow: hidden;
+}
+
+/* Modal Content Box */
+.contact-box {
+  background: var(--color-modal-background);
+  padding: var(--spacing-xl);
+  border-radius: 10px;
+  max-width: 25rem;
+  position: relative;
+  text-align: center;
+
+  h2 {
+    color: rgb(88, 58, 118);
+  }
+
+  input,
+  textarea {
+    border: var(--border-tertiary);
+  }
+}
+
+/* ------------------- HEADER NAVIGATION ------------------- */
+.header-nav {
+  position: fixed;
+  width: 100%; /* Changed from 100vw to prevent horizontal scroll */
+  height: var(--header-height);
+  background-color: var(--color-border-light);
+  border-bottom: 5px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+
+  z-index: 2000;
+
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box; /* Added to include padding in width calculation */
+}
+
+/* All links and buttons in the header have unified color*/
+.header-nav a,
+.header-nav button {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Hover transition and color for entire nav bar */
+.header-nav a:hover,
+.header-nav button:hover {
+  color: var(--color-text-light);
+  transition: var(--transition-normal);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  /* font-size: calc(14px + 1rem); */
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+}
+
+.logo-container img {
+  padding-right: var(--spacing-xs);
+  height: var(--height-icon);
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start fully off-screen */
+  margin: 0;
+  padding-top: var(--header-height);
+  /* padding-bottom: var(--spacing-xl); */
+  gap: 0;
+  flex-direction: column;
+  background-color: var(--color-border-medium);
+  color: inherit;
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  transition: var(--transition-normal);
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  z-index: 1000;
+  /* overflow: hidden; */
+  transition: var(--transition-normal);
+}
+
+.nav-item {
+  margin: 2rem 0;
+}
+
+/* javascript */
+.show-nav-links {
+  right: 0;
+  /* color: inherit; */
+  border-left: 5px solid var(--color-primary);
+
+  z-index: 1000;
+}
+
+.cart-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  z-index: 1002;
+
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  visibility: visible;
+  z-index: 1002;
+  opacity: 1;
+  /* transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0s; */
+}
+
+/* Smooth rotation */
+.nav-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.nav-toggle.vertical i {
+  transform: rotate(90deg);
+}
+
+/* Overlay when sidebar is open */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  cursor: pointer;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--color-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s;
+}
+
+/* Javascript makes above visible */
+.nav-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+  overflow: hidden;
+}
+
+/* Javascript makes it so you can't scroll with overlay */
+.nav-overlay.no-scroll {
+  /* Prevent scrolling */
+  overflow: hidden;
+  overscroll-behavior: none; /* Prevent overscroll effects */
+}
+
+/* ------------------- FOOTER ----------------------- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  /* border-bottom: var(--border-radius-sm) solid var(--color-border); */
+  border-top: var(--border-primary);
+  /* margin-bottom: var(--spacing-lg); */
+}
+
+.footer-section {
+  display: inline;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: var(--spacing-md);
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
+
+  column-fill: auto;
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+  /* max-width: 500px; */
+
+  /* column-width: 100px; */
+  /* -webkit-column-width: 150px; */
+  /* -moz-column-width: 150px; */
+
+  a {
+    text-decoration: none;
+    flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+    flex-basis: auto;
+    box-sizing: border-box; /* Ensures padding and borders don't increase width */
+    text-align: left; /* Aligns text inside the links */
+    /* display: inline-block; */
+  }
+}
+
+.footer-title {
+  padding: var(--spacing-md);
+}
+
+.link-list {
+  list-style: none;
+  padding: var(--spacing-md);
+  text-align: center;
+
+  li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-normal);
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+  }
+}
+
+/* .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+} */
+
+.social-link {
+  display: flex;
+  /* flex-direction: row; */
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-circle);
+  background-color: var(--color-border);
+  margin-bottom: var(--spacing-sm);
+  /* gap: 1rem; */
+  list-style: none;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+}
+
+.newsletter p {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-muted);
+}
+
+.newsletter-input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background-alt);
+  color: var(--color-text-primary);
+  max-width: 300px;
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+.newsletter-input:focus {
+  /* outline: none; */
+  border-color: var(--color-secondary);
+}
+
+.footer-bottom {
+  font-size: var(--font-size-sm);
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+/* ------------------- RESPONSIVE DESIGN ------------------- */
+@media (max-width: 768px) {
+  :root {
+    /* Adjust sizes for mobile */
+    --font-size-3xl: 1.75rem;
+    --spacing-xl: 1.5rem;
+    --header-height: 60px;
+  }
+
+  /* .content-container {
+    padding: 0 var(--spacing-sm);
+  } */
+}
+
+/* Button */
+@media (min-width: 768px) {
+  .button {
+    padding: 0.25em 0.75em;
+  }
+}
+
+/* Footer */
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .newsletter {
+    grid-column: span 2;
+  }
+
+  /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+  .two-column-container {
+    flex-direction: column;
+    align-items: flex-start; /* Aligns items at the start when stacked vertically */
+  }
+}
+
+/* Footer */
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter {
+    grid-column: span 1;
+  }
+}
+
+/* Nav header WHEN SCREEN SIZE IS LARGER THAN 768px */
+@media (min-width: 768px) {
+  .nav-toggle {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0.3s;
+    display: none;
+  }
+
+  .nav-links {
+    position: static;
+    padding: 0;
+    height: auto;
+    width: auto;
+    background-color: transparent;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-right: var(--spacing-lg); /* Added spacing before cart */
+    margin-left: auto; /* Added to push nav links to the right */
+    overflow-y: visible;
+  }
+
+  .nav-item {
+    margin: 0; /* Reset margin for desktop */
+  }
+}

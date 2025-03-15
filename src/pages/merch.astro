@@ -1,0 +1,133 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { prodDetails } from "../config/prod-details";
+
+const prodInfo = prodDetails.allProd;
+const pageTitle = "Merch | VANGULAR";
+const keywords =
+  "merch, art, design, stickers, t-shirts, hats, socks, totebags, phonecases, temporary tattoos, earrings, 3D printed stuff, phonecases, deals, bundles, discounted merch";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <div class="heading">
+      <h2>Merch</h2>
+      <h3>*All products currently unavailable for purchase*</h3>
+    </div>
+
+    <section class="content-container">
+      <div>
+        <h3>Paintings & Collages</h3>
+        <p>
+          One-of-a-kind collages, paintings and drawings all sold in their
+          original formats.
+        </p>
+      </div>
+
+      <div class="image-grid">
+        {
+          prodInfo.paintings.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div>
+        <h3>Prints</h3>
+        <p>Prints of digital art to liven up your living space.</p>
+      </div>
+
+      <div class="image-grid">
+        {
+          prodInfo.digital.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} style="object-fit: contain" />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div>
+        <h3>Stickers & Stationary</h3>
+        <p>Stickers, cards, pins, and other cute things.</p>
+      </div>
+
+      <div class="image-grid">
+        {
+          prodInfo.stationary.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} style="object-fit: contain" />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div>
+        <h3>Wears</h3>
+        <p>
+          Sweet threads from head to toe. Totebags, t-shirts, hats and socks
+          galore.
+        </p>
+      </div>
+
+      <div class="image-grid">
+        {
+          prodInfo.textiles.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div>
+        <h3>Experiments</h3>
+        <p>
+          Temporary tattoos, earrings, 3D printed stuff, phonecases ... the
+          world is your oyster!
+        </p>
+      </div>
+
+      <div class="image-grid">
+        {
+          prodInfo.misc.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} style="object-fit: contain" />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div>
+        <h3>Deals!</h3>
+        <p>Sticker packs, bundles and discounted merch.</p>
+      </div>
+
+      <div class="image-grid">
+        {
+          prodInfo.onSale.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} style="object-fit: contain" />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

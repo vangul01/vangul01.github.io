@@ -1,0 +1,76 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Collabs | VANGULAR";
+const keywords =
+  "art, design, past work, projects, commission, creative, logos, collaborations, cover art";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <div class="heading">
+      <h2>Collabs</h2>
+    </div>
+
+    <section class="content-container" id="collabs">
+      <div class="two-column-container">
+        <div class="image project-image">
+          <img
+            src="/src/assets/images/web/dream.jpg"
+            alt="EmmaLee & The Dream album art"
+          />
+        </div>
+
+        <div class="text project-text">
+          <h3>EmmaLee & The Dream</h3>
+          <br />
+          <p>
+            Digital collage-styled album art for EmmaLee & The Dream's first EP,
+            Unsustainable. EmmaLee & the Dream is a three-woman no-man band
+            based in Brooklyn, New York.
+
+            <a
+              href="https://emmaleekidwell.com/emmalee-%26-the-dream/"
+              target="_blank"
+            >
+              Visit the band's website here.
+            </a>
+
+            <!-- "Really sick review!!" -EmmaLee, Frontwoman of E&D
+                            <br><br> -->
+          </p>
+        </div>
+      </div>
+
+      <div class="two-column-container">
+        <div class="image project-image">
+          <img
+            src="/src/assets/images/web/crew_logo.jpg"
+            alt="The Crew Rowing Co. logo"
+          />
+        </div>
+
+        <div class="text project-text">
+          <h3>The Crew</h3>
+          <br />
+          <p>
+            Primary logo for LGBTQ+ friendly rowing company The Crew. The Crew
+            focuses on empowering women through inclusive and accessible rowing
+            classes and is based in Malden, Massachusetts.
+
+            <a href="https://www.inthecrew.com/" target="_blank"
+              >Visit The Crew's website here.
+            </a>
+
+            <!-- "Really sick review!!" -Brynly, Founder of The Crew
+                            <br><br> -->
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,75 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { prodDetails } from "../config/prod-details";
+
+const prodInfo = prodDetails.featuredProd;
+
+const pageTitle = "Home | VANGULAR";
+const keywords =
+  "Vangular, home, welcome, art, design, portfolio, creative, vibrant, spiritual";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <!-- Welcome/Hero Section -->
+    <section class="hero-section">
+      <div class="overlay-text">
+        <p>Welcome to</p>
+        <h1>Vangular</h1>
+        <p>Art and Designs for the <br /> Existential and Absurd</p>
+      </div>
+    </section>
+
+    <section class="content-container">
+      <h2>New Arrivals</h2>
+      <p>
+        Explore high quality paintings and collages that are ready for purchase!
+      </p>
+
+      <div class="image-grid">
+        {
+          prodInfo.new.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} />
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="button-formating">
+        <a href="/merch"
+          ><button class="button button-primary" role="button"
+            >Shop New Arrivals</button
+          ></a
+        >
+      </div>
+    </section>
+
+    <section class="content-container">
+      <h2>Best Sellers</h2>
+      <p>Check out best sellers across all categories!</p>
+
+      <div class="image-grid">
+        {
+          prodInfo.popular.map(({ src, alt, href }) => (
+            <a href={href} class="product-card">
+              <img src={src} alt={alt} />
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="button-formating">
+        <a href="/merch"
+          ><button class="button button-primary" role="button"
+            >Shop Best Sellers</button
+          ></a
+        >
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

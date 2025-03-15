@@ -1,0 +1,21 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "404 | VANGULAR";
+const keywords = "404 error";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <section class="content-container">
+      <div class="heading">
+        <h2>404</h2>
+        <h3>Page not found. <br /> Blasted broken link!</h3>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
