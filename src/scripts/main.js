@@ -22,62 +22,60 @@ Checkout page
 
 */
 
-import { loadCart, clearStoredCart } from "./cart/cart-storage.js";
+import {
+  addToCart,
+  clearCart,
+  updateUI,
+  updateCartCount,
+} from "./cart/cart.js";
+import { loadCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
-import { createCartUI } from "./cart/cart-ui.js";
-import { initCartCount } from "./cart/cart-count.js";
-import { initAddToCart } from "./cart/add-to-cart.js";
 import { initContactForm } from "./contact-form.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
-    // Preload cart data
-    const cart = loadCart();
-
-    // Initialize cart count UI
-    const { updateCartCount } = initCartCount();
-    updateCartCount(cart); // Update the cart count immediately
-
     // Initialize global features
     initNav();
-    initAddToCart();
     initContactForm();
 
-    // Initialize checkout page features if applicable
-    const checkoutContainer = document.getElementById("checkout-container");
-    if (checkoutContainer) {
-      let cart = loadCart();
-      const { updateCartCount } = initCartCount();
+    // Initialize cart UI
+    updateUI();
+    updateCartCount();
 
-      const { updateUI } = createCartUI(cart, (newCart) => {
-        cart = newCart;
-        updateCartCount(cart);
+    // Clear cart button
+    document.querySelector("#clear-cart")?.addEventListener("click", () => {
+      clearCart();
+      console.log("Cart cleared successfully");
+    });
+
+    // Add to cart buttons
+    document.querySelectorAll("#add-to-cart").forEach((button) => {
+      button.addEventListener("click", function () {
+        const product = {
+          id: this.dataset.id,
+          name: this.dataset.name,
+          price: parseFloat(this.dataset.price),
+        };
+
+        addToCart(product);
+
+        // Visual feedback
+        this.textContent = "Added!";
+        setTimeout(() => (this.textContent = "Add to Cart"), 1000);
       });
+    });
 
-      // Initial UI update
-      updateUI();
-      updateCartCount(cart);
+    // Proceed to payment button
+    document
+      .querySelector("#proceed-to-payment")
+      ?.addEventListener("click", () => {
+        const cart = loadCart();
+        if (cart.length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
 
-      // Clear cart button
-      document.querySelector("#clear-cart")?.addEventListener("click", () => {
-        cart = [];
-        clearStoredCart();
-        updateUI();
-        updateCartCount(cart);
+        console.log("Proceeding to payment with cart:", cart);
       });
-
-      // Optional: Add proceed to payment handler
-      document
-        .querySelector("#proceed-to-payment")
-        ?.addEventListener("click", () => {
-          if (cart.length === 0) {
-            alert("Your cart is empty!");
-            return;
-          }
-
-          // Add your payment logic here
-          console.log("Proceeding to payment with cart:", cart);
-        });
-    }
   });
 }

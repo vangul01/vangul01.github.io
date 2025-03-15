@@ -40,4 +40,35 @@ const keywords = "Cart, Shopping Cart, Checkout";
     </section>
   </main>
   <Footer />
+  <script type="module">
+    //     import { loadStripe } from "https://js.stripe.com/v3/";
+
+    //     const stripe = await loadStripe(import.meta.env.PUBLISHABLE_KEY); // Use your publishable key
+
+    //     document
+    //       .querySelector("#proceed-to-payment")
+    //       .addEventListener("click", async () => {
+    //         try {
+    //           // Redirect to Stripe Checkout
+    //           const { error } = await stripe.redirectToCheckout({
+    //             lineItems: [
+    //               // Replace these with your actual Price IDs and quantities
+    //               { price: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 1 },
+    //             ],
+    //             mode: "payment",
+    //             successUrl: `${import.meta.env.PUBLIC_SITE_URL}/success`,
+    //             cancelUrl: `${import.meta.env.PUBLIC_SITE_URL}/cancel`,
+    //           });
+
+    //           if (error) {
+    //             console.error("Stripe Checkout error:", error);
+    //             alert("Failed to redirect to Stripe Checkout.");
+    //           }
+    //         } catch (err) {
+    //           console.error("Error:", err);
+    //           alert("An error occurred while processing your payment.");
+    //         }
+    //       });
+    //
+  </script>
 </BaseLayout>
