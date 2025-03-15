@@ -54,13 +54,13 @@ export function initNav() {
   navOverlay?.addEventListener("click", closeNav);
 
   window.addEventListener("resize", () => {
-    console.log("Window resized:", window.outerWidth);
+    // console.log("Window resized:", window.outerWidth);
     if (window.outerWidth > minWindowWidth) {
-      console.log("Closing nav due to large window size");
+      //   console.log("Closing nav due to large window size");
       closeNav();
     } else {
       if (navLinks.classList.contains("show-nav-links")) {
-        console.log("Keeping no-scroll because nav is open");
+        // console.log("Keeping no-scroll because nav is open");
         navOverlay.classList.add("no-scroll");
       }
     }

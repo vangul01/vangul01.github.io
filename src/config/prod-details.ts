@@ -16,11 +16,6 @@ export const prodDetails = {
         alt: "Buttocks with flowers and plants",
         href: "/product",
       },
-      {
-        src: "/src/assets/images/products/a-butts.jpg",
-        alt: "Buttocks with flowers and plants",
-        href: "/product",
-      },
     ],
     popular: [
       {

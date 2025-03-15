@@ -15,14 +15,18 @@
   --color-primary: #190a2a; /* Dark Purple */
   --color-secondary: #bb85aa; /* Blush */
   --color-accent: #f3d2c1;
+  --color-yellow: #faba76;
+  --color-orange: #ff8a79;
+  --color-purple: rgb(88, 58, 118);
 
   /* Common Colors */
   --color-text-primary: #190a2a; /* Dark Purple */
   --color-text-secondary: slategray;
   --color-text-light: whitesmoke;
   --color-text-muted: #504646;
-  --color-border: #e88a8a;
-  --color-border-dark: #ce7b7b;
+  --color-border-light: #e88a8a;
+  --color-border-medium: #ce7b7b;
+  --color-border-dark: rgb(88, 58, 118);
   --color-shadow: #000020;
   --color-background: #ffffff;
   --color-background-alt: #f8f8f8;
@@ -30,12 +34,15 @@
   --color-button-secondary: #e88a8a;
   --color-button-tertiary: #ce7b7b;
   --color-overlay: rgba(0, 0, 0, 0.8);
+  --color-site-background: radial-gradient(whitesmoke, #d68e8e);
+  --color-modal-background: linear-gradient(180deg, #fbbfbf 0%, #faba76 100%);
 
   /* Color Alerts */
   --color-error: #dc3545;
   --color-success: #28a745;
   --color-warning: #ffc107;
-  --color-info: #17a2b8;
+  /* --color-info: #17a2b8; */
+  --color-info: #00899e;
 
   /* Typography */
   --font-primary: "Russo One", sans-serif;
@@ -64,9 +71,9 @@
   --border-radius-lg: 1.5rem;
   --border-radius-circle: 50%;
 
-  --border-primary: 0.5rem solid var(--color-border);
-  --border-secondary: 0.25rem solid var(--color-border);
-  --border-tertiary: 0.125rem solid var(--color-border);
+  --border-primary: 0.5rem solid var(--color-border-light);
+  --border-secondary: 0.25rem solid var(--color-border-light);
+  --border-tertiary: 0.125rem solid var(--color-border-dark);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -82,6 +89,7 @@
   --header-height: 70px;
   --footer-height: 2.5rem;
   --min-width: 200px;
+  --max-text-width: 35rem;
 
   /* Media Queries */
   --screen-xs: 0;
@@ -91,8 +99,6 @@
   --screen-xl: 1200px;
 
   /* My Variables */
-  --background-yellow: #faba76;
-  --background-orange: #ff8a79;
   --height-icon: 30px;
 }
 
@@ -176,7 +182,7 @@
   padding: 0 var(--spacing-sm);
   cursor: pointer;
   font-size: var(--font-size-lg);
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
 }
 
 /* ------------------- BASE STYLES ------------------- */
@@ -186,7 +192,7 @@ body {
   min-height: 100dvh;
 
   position: relative;
-  background: radial-gradient(whitesmoke, #d68e8e);
+  background: var(--color-site-background);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover; /* Ensures the background covers the entire viewport */
@@ -293,6 +299,51 @@ textarea {
   width: inherit; /* Inherit the width of the parent */
   min-width: var(--min-width);
   padding: var(--spacing-2xl) var(--spacing-2xl);
+}
+
+.two-column-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem; /* Optional, adds space between elements */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+}
+
+.image {
+  display: flex;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  object-fit: contain;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.text {
+  flex: 1; /* Allows the text container to take up remaining space */
+  display: inline-block;
+  justify-content: center;
+  margin: auto;
+  max-width: var(--max-text-width);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  text-align: justify;
+  text-justify: auto;
+
+  a {
+    color: var(--color-info);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+    transition: var(--transition-normal);
+  }
 }
 
 .product-card {
@@ -418,22 +469,8 @@ textarea {
 
 /* ----------------ABOUT---------------- */
 
-.about-image {
-  display: flex;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  object-fit: contain;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .about-image img {
   width: 30rem;
-  /* width: 22rem;  */
-  /* Adjust as necessary */
   max-width: 100%; /* Ensures the image scales properly */
   height: auto; /* Maintains aspect ratio */
   /* border: 5px outset aquamarine; */
@@ -442,55 +479,72 @@ textarea {
 }
 
 .about-text {
-  flex: 1; /* Allows the text container to take up remaining space */
-  display: inline-block;
-  justify-content: center;
-  /* text-align: left; */
-  max-width: 35rem;
-  margin: auto;
-  padding-left: var(--spacing-md);
-  padding-right: var(--spacing-md);
-  text-align: justify;
-  text-justify: auto;
-
   h3 {
     text-align: left;
+  }
+  .signature {
+    text-align: right;
   }
 }
 
 /* ---------------- COLLABS ---------------- */
 
-.project-image {
-  display: inline-block;
-  margin: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-}
-
 .project-image img {
-  width: 13rem; /* Adjust as necessary */
-  max-width: 100%; /* Ensures the image scales properly */
-  height: auto; /* Maintains aspect ratio */
-  /* border: 5px solid black; */
-  border-radius: 10%;
-  background-color: grey;
+  padding: var(--spacing-md);
+  width: 20rem;
+  height: 20rem;
+  object-fit: contain;
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background);
 }
 
-.project-text {
-  flex: 1; /* Allows the text container to take up remaining space */
-  display: inline-block;
-  text-align: left;
-  /* max-width: 35rem; */
-  margin: auto;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  padding-bottom: 1rem;
-  text-align: justify;
-  text-justify: auto;
+.project-text h3 {
+  text-align: center;
 }
 
-/* ------------------- CART ----------------------- */
+/* ------------------- PRODUCT PAGE ----------------------- */
+
+.product-text {
+  h2 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+    padding: var(--spacing-xs);
+  }
+  .button {
+    /* bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute; */
+    /* left: 50%; */
+    bottom: 0;
+    /* transform: translateX(-50%); */
+  }
+}
+
+.product-image img {
+  max-width: var(--max-text-width);
+  object-fit: cover;
+  border: var(--border-tertiary);
+  border-radius: var(--border-radius-sm);
+}
+
+/* ------------------- SHOPPING CART ----------------------- */
+#checkout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-purple);
+  /* padding: var(--spacing-xl); */
+}
+
+#cart {
+  padding: var(--spacing-md);
+}
+
 .cart-item {
   display: flex;
   align-items: center;
@@ -498,18 +552,9 @@ textarea {
   border-bottom: var(--border-tertiary);
 }
 
-/* ------------------- CHECKOUT----------------------- */
-#checkout-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--dark-purple);
-}
-
 /* ------------------ MODAL CONTACT FORM ------------------------ */
 .contact-container {
-  /* display: none;  */
+  display: flex;
   position: fixed;
   z-index: 2001;
   top: 0;
@@ -539,19 +584,20 @@ textarea {
 
 /* Modal Content Box */
 .contact-box {
-  background: linear-gradient(
-    180deg,
-    rgb(227, 181, 241) 0%,
-    rgb(148, 166, 188) 100%
-  );
-  padding: 20px;
+  background: var(--color-modal-background);
+  padding: var(--spacing-xl);
   border-radius: 10px;
-  width: 400px;
+  max-width: 25rem;
   position: relative;
   text-align: center;
 
   h2 {
     color: rgb(88, 58, 118);
+  }
+
+  input,
+  textarea {
+    border: var(--border-tertiary);
   }
 }
 
@@ -560,8 +606,8 @@ textarea {
   position: fixed;
   width: 100%; /* Changed from 100vw to prevent horizontal scroll */
   height: var(--header-height);
-  background-color: var(--color-border);
-  border-bottom: 5px solid black;
+  background-color: var(--color-border-light);
+  border-bottom: 5px solid var(--color-primary);
   box-shadow: var(--shadow-md);
 
   z-index: 2000;
@@ -614,7 +660,7 @@ textarea {
   /* padding-bottom: var(--spacing-xl); */
   gap: 0;
   flex-direction: column;
-  background-color: var(--color-border-dark);
+  background-color: var(--color-border-medium);
   color: inherit;
   width: 25%;
   height: 100%;
@@ -635,7 +681,7 @@ textarea {
 .show-nav-links {
   right: 0;
   /* color: inherit; */
-  border-left: 5px solid black;
+  border-left: 5px solid var(--color-primary);
 
   z-index: 1000;
 }
@@ -724,11 +770,11 @@ textarea {
 /* ------------------- FOOTER ----------------------- */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr 2fr;
   gap: var(--spacing-xl);
   padding: var(--spacing-xl);
   /* border-bottom: var(--border-radius-sm) solid var(--color-border); */
-  border-top: var(--border-radius-sm) solid var(--color-border);
+  border-top: var(--border-primary);
   /* margin-bottom: var(--spacing-lg); */
 }
 
@@ -848,9 +894,9 @@ textarea {
     --header-height: 60px;
   }
 
-  /* .container {
-      padding: 0 var(--spacing-sm);
-    } */
+  /* .content-container {
+    padding: 0 var(--spacing-sm);
+  } */
 }
 
 /* Button */
@@ -869,6 +915,12 @@ textarea {
 
   .newsletter {
     grid-column: span 2;
+  }
+
+  /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+  .two-column-container {
+    flex-direction: column;
+    align-items: flex-start; /* Aligns items at the start when stacked vertically */
   }
 }
 

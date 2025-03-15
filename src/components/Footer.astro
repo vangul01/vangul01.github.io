@@ -22,7 +22,7 @@ const footerLinks = siteNavigation.footerLinks;
             </li>
           ))
         }
-        <!-- <li><a href="#" class="contact-link"> Contact </a></li> -->
+        <li><a href="#" class="contact-link"> Contact </a></li>
       </ul>
     </div>
 
@@ -37,22 +37,6 @@ const footerLinks = siteNavigation.footerLinks;
             </li>
           ))
         }
-      </ul>
-    </div>
-
-    <!-- About Links -->
-    <!-- Add in class to footer link mapping if I need to do something with that... -->
-    <div class="footer-section">
-      <h3 class="footer-title">About</h3>
-      <ul class="link-list">
-        {
-          footerLinks.about.map(({ name, href }) => (
-            <li>
-              <a href={href}>{name}</a>
-            </li>
-          ))
-        }
-        <li><a href="#" class="contact-link"> Contact </a></li>
       </ul>
     </div>
 

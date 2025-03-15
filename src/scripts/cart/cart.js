@@ -12,7 +12,13 @@ let cart = loadCart();
 function updateCartCount() {
   if (!elements.cartCount) return;
   const { quantity } = calculateTotals();
-  elements.cartCount.textContent = quantity;
+
+  //   Don't show 0 in the cart count
+  if (quantity === 0) {
+    elements.cartCount.textContent = "";
+  } else {
+    elements.cartCount.textContent = quantity;
+  }
 }
 
 function updateUI() {
@@ -58,7 +64,11 @@ function addToCart(product) {
   if (existingProduct) {
     existingProduct.quantity += 1;
   } else {
-    cart.push({ ...product, quantity: 1 });
+    cart.push({
+      ...product,
+      priceId: product.priceId,
+      quantity: 1,
+    });
   }
 
   saveCart(cart);

@@ -1,0 +1,22 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Order Cancelled | VANGULAR";
+const keywords = "order cancelled, payment failure";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <div class="content-container">
+      <h2>Order has been cancelled.</h2>
+      <h3>Something went wrong. Please go back and try again.</h3>
+      <button class="button button-secondary" onclick="history.back()"
+        >Go Back</button
+      >
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

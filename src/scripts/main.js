@@ -28,9 +28,9 @@ import {
   updateUI,
   updateCartCount,
 } from "./cart/cart.js";
-import { loadCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
 import { initContactForm } from "./contact-form.js";
+import { proceedToPayment } from "./stripe.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -45,7 +45,6 @@ if (typeof document !== "undefined") {
     // Clear cart button
     document.querySelector("#clear-cart")?.addEventListener("click", () => {
       clearCart();
-      console.log("Cart cleared successfully");
     });
 
     // Add to cart buttons
@@ -68,14 +67,9 @@ if (typeof document !== "undefined") {
     // Proceed to payment button
     document
       .querySelector("#proceed-to-payment")
+      //   ?.addEventListener("click", proceedToPayment);
       ?.addEventListener("click", () => {
-        const cart = loadCart();
-        if (cart.length === 0) {
-          alert("Your cart is empty!");
-          return;
-        }
-
-        console.log("Proceeding to payment with cart:", cart);
+        alert("All products currently unavailable for purchase.");
       });
   });
 }

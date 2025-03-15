@@ -21,10 +21,6 @@ export const siteNavigation = {
       { name: "New Arrivals", href: "/merch/new" },
       { name: "Best Sellers", href: "/merch/best" },
     ],
-    about: [
-      { name: "Our Story", href: "/about" },
-      { name: "Collaborations", href: "/collabs" },
-    ],
     social: [
       { name: "Etsy", href: "https://etsy.com/shop/vangular/", icon: "etsy" },
       {
@@ -39,7 +35,7 @@ export const siteNavigation = {
       },
       {
         name: "YouTube",
-        href: "https://youtube.com/vangular",
+        href: "https://youtube.com/@vangular.designs",
         icon: "youtube",
       },
       // { name: "TikTok", href: "https://tiktok.com/@vangular", icon: "tiktok"}
