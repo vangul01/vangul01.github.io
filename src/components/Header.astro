@@ -1,5 +1,4 @@
 ---
-import vangularLogo from "/src/assets/images/web/logo.png";
 import { siteNavigation } from "../config/navigation";
 
 const links = siteNavigation.headerLinks;
@@ -8,7 +7,7 @@ const links = siteNavigation.headerLinks;
 <header>
   <nav class="header-nav">
     <div class="logo-container">
-      <img src={vangularLogo.src} alt="" />
+      <img src="/images/web/logo.png" alt="" />
       <a href={links.logo[0].href} class="nav-logo">
         {links.logo[0].name}
       </a>
