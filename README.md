@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Astro Starter Kit: Basics
 
 ```sh
@@ -46,6 +47,9 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+=======
+Repo to host my website :)
+>>>>>>> main
 
 Frontend: html5, css, flask server
 Backend Tech Stack: Python, Django and postgresql (or fastAPI?)
