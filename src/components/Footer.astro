@@ -10,6 +10,26 @@ const footerLinks = siteNavigation.footerLinks;
 <footer class="footer">
   <ContactForm />
 
+  <!-- Social Links -->
+  <!-- <div class="footer-section"> -->
+  <!-- <h3 class="footer-title">Connect</h3> -->
+  <ul class="link-list social-links">
+    {
+      footerLinks.social.map(({ name, href, icon }) => (
+        <a
+          href={href}
+          class="social-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={name}
+        >
+          <i class={`fa fa-${icon}`} />
+        </a>
+      ))
+    }
+  </ul>
+  <!-- </div> -->
+
   <div class="footer-grid">
     <!-- Quick Links -->
     <div class="footer-section">
@@ -35,26 +55,6 @@ const footerLinks = siteNavigation.footerLinks;
             <li>
               <a href={href}>{name}</a>
             </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <!-- Social Links -->
-    <div class="footer-section">
-      <h3 class="footer-title">Connect</h3>
-      <ul class="link-list social-links">
-        {
-          footerLinks.social.map(({ name, href, icon }) => (
-            <a
-              href={href}
-              class="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={name}
-            >
-              <i class={`fa fa-${icon}`} />
-            </a>
           ))
         }
       </ul>
