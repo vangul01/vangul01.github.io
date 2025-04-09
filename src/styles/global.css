@@ -424,9 +424,9 @@ textarea {
   transform: translate(-50%, -50%);
   text-align: center;
 
-  h1 {
-    /* font-size: 5.9vw; */
-  }
+  /* h1 { */
+  /* font-size: 5.9vw; */
+  /* } */
 
   p {
     font-size: var(--font-size-lg);
@@ -538,7 +538,7 @@ textarea {
 }
 
 /* ------------------- SHOPPING CART ----------------------- */
-#checkout-container {
+.cart-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -547,7 +547,7 @@ textarea {
   /* padding: var(--spacing-xl); */
 }
 
-#cart {
+.cart-listings-container {
   padding: var(--spacing-md);
 }
 
@@ -556,6 +556,15 @@ textarea {
   align-items: center;
   padding: var(--spacing-md);
   border-bottom: var(--border-tertiary);
+}
+
+/* ------------------- CHECKOUT ----------------------- */
+#checkout-container {
+  width: 100%; /* Full width of the parent container */
+  /* max-width: 600px;  */
+  margin: 0 auto; /* Center the container */
+  padding: 1rem; /* Add some padding */
+  /* background-color: #ce7b7b; */
 }
 
 /* ------------------ MODAL CONTACT FORM ------------------------ */
@@ -692,7 +701,7 @@ textarea {
   z-index: 1000;
 }
 
-.cart-container {
+.nav-cart-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -706,7 +715,7 @@ textarea {
   }
 }
 
-.cart-button {
+.nav-cart-button {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -920,6 +929,10 @@ textarea {
 
   /* .content-container {
     padding: 0 var(--spacing-sm);
+  } */
+
+  /* #checkout-container {
+    width: 90%;
   } */
 }
 

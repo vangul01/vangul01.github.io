@@ -1,9 +1,9 @@
 import { loadCart, saveCart, clearStoredCart } from "./cart-storage.js";
 
 const elements = {
-  cartItems: document.getElementById("checkout-cart-items"),
-  totalPrice: document.getElementById("checkout-total-price"),
-  totalQuantity: document.getElementById("checkout-total-quantity"),
+  cartItems: document.getElementById("cart-items"),
+  totalPrice: document.getElementById("cart-total-price"),
+  totalQuantity: document.getElementById("cart-total-quantity"),
   cartCount: document.getElementById("cart-count"),
 };
 
