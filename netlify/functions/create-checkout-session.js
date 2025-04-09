@@ -6,6 +6,13 @@ export async function handler(event) {
     const { items } = JSON.parse(event.body);
     console.log("Items received:", items);
 
+    if (
+      !Array.isArray(items) ||
+      items.some((item) => !item.priceId || !item.quantity)
+    ) {
+      throw new Error("Invalid items array");
+    }
+
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
@@ -18,7 +25,6 @@ export async function handler(event) {
       return_url: `${process.env.PUBLIC_SITE_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
     });
 
-    console.log("Stripe Checkout session created:", session);
     console.log(
       "return_url:",
       `${process.env.PUBLIC_SITE_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
@@ -28,7 +34,7 @@ export async function handler(event) {
       statusCode: 200,
       body: JSON.stringify({
         sessionId: session.id,
-        publishableKey: process.env.PUBLIC_STRIPE_KEY,
+        clientSecret: session.client_secret,
       }),
     };
   } catch (error) {

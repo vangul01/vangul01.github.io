@@ -12,50 +12,53 @@ const keywords = "checkout, stripe, payment";
   <main>
     <section class="content-container">
       <div class="heading">
-        <h2>Checkout!</h2>
+        <h2>Checkout</h2>
       </div>
 
       <div id="checkout-container">
-        <iframe
-          id="stripe-checkout-iframe"
-          style="display: none; width: 100%; height: 600px; border: none; background: #b73fb3;"
-        ></iframe>
+        <!-- Checkout will insert the payment form here -->
       </div>
     </section>
   </main>
   <Footer />
-
+  <script src="https://js.stripe.com/v3/"></script>
   <script type="module">
-    console.log("Checkout page loading...");
-    // console.log(JSON.stringify(loadCart()));
+    const stripe = Stripe("PUB_KEY");
 
-    async function loadCheckout() {
+    document.addEventListener("DOMContentLoaded", async () => {
       try {
-        const response = await fetch(
-          "/.netlify/functions/create-checkout-session",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              items: [{ priceId: "FAKE_PRICE", quantity: 1 }],
-            }),
-          },
-        );
+        // Fetch Checkout Session and retrieve the client secret
+        const fetchClientSecret = async () => {
+          const response = await fetch(
+            "/.netlify/functions/create-checkout-session",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                items: JSON.parse(localStorage.getItem("cartItems") || "[]"), // Retrieve cart items from localStorage
+              }),
+            },
+          );
 
-        const { sessionId, publishableKey } = await response.json();
-        const iframe = document.querySelector("#stripe-checkout-iframe");
-        iframe.src = `https://checkout.stripe.com/c/${sessionId}`;
-        iframe.style.display = "block";
+          if (!response.ok) {
+            throw new Error("Failed to fetch client secret");
+          }
 
-        console.log("Stripe Checkout session ID:", sessionId);
-        console.log("publishableKey:", publishableKey);
-        console.log("Stripe Checkout iframe loaded");
-        console.log("Stripe Checkout iframe src:", iframe.src);
-      } catch (err) {
-        console.error("Error loading checkout:", err);
+          const { clientSecret } = await response.json();
+          return clientSecret;
+        };
+
+        // Initialize Embedded Checkout
+        const checkout = await stripe.initEmbeddedCheckout({
+          fetchClientSecret,
+        });
+
+        // Mount Checkout to the container
+        checkout.mount("#checkout-container");
+      } catch (error) {
+        console.error("Error initializing Stripe Checkout:", error);
+        alert("There was an issue loading the payment form. Please try again.");
       }
-    }
-
-    loadCheckout();
+    });
   </script>
 </BaseLayout>

@@ -30,7 +30,6 @@ import {
 } from "./cart/cart.js";
 import { initNav } from "./nav.js";
 import { initContactForm } from "./contact-form.js";
-import { proceedToPayment } from "./stripe.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -64,12 +63,18 @@ if (typeof document !== "undefined") {
       });
     });
 
-    // Proceed to payment button
-    document
-      .querySelector("#proceed-to-payment")
-      //   ?.addEventListener("click", proceedToPayment);
-      ?.addEventListener("click", () => {
-        alert("All products currently unavailable for purchase.");
-      });
+    // Proceed to payment link in cart.astro
+    // document
+    //   .querySelector("#proceed-to-payment")
+    //   .addEventListener("click", () => {
+    //         // Example cart data
+    //         const cartItems = [
+    //           { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 1 },
+    //           { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 2 },
+    //         ];
+
+    //     // Save cart data to local storage
+    //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    //   });
   });
 }

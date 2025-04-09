@@ -7,7 +7,6 @@ if (!secretKey) {
   throw new Error("Missing Stripe secret key");
 }
 
-// "2025-02-24.acacia" "2025-03-31.basil"
 export const stripe = new Stripe(secretKey, {
   apiVersion: "2025-02-24.acacia",
 });
