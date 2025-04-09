@@ -1,0 +1,61 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Checkout | VANGULAR";
+const keywords = "checkout, stripe, payment";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <section class="content-container">
+      <div class="heading">
+        <h2>Checkout!</h2>
+      </div>
+
+      <div id="checkout-container">
+        <iframe
+          id="stripe-checkout-iframe"
+          style="display: none; width: 100%; height: 600px; border: none; background: #b73fb3;"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+  <Footer />
+
+  <script type="module">
+    console.log("Checkout page loading...");
+    // console.log(JSON.stringify(loadCart()));
+
+    async function loadCheckout() {
+      try {
+        const response = await fetch(
+          "/.netlify/functions/create-checkout-session",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              items: [{ priceId: "FAKE_PRICE", quantity: 1 }],
+            }),
+          },
+        );
+
+        const { sessionId, publishableKey } = await response.json();
+        const iframe = document.querySelector("#stripe-checkout-iframe");
+        iframe.src = `https://checkout.stripe.com/c/${sessionId}`;
+        iframe.style.display = "block";
+
+        console.log("Stripe Checkout session ID:", sessionId);
+        console.log("publishableKey:", publishableKey);
+        console.log("Stripe Checkout iframe loaded");
+        console.log("Stripe Checkout iframe src:", iframe.src);
+      } catch (err) {
+        console.error("Error loading checkout:", err);
+      }
+    }
+
+    loadCheckout();
+  </script>
+</BaseLayout>

@@ -1,3 +1,16 @@
 [build]
   command = "npm run build" # Command to build your Astro site
   publish = "dist"          # Directory to publish (output folder)
+  functions = "netlify/functions"
+
+[dev]
+  framework = "astro"
+  targetPort = 4321
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = '/api/*'
+  to = '/.netlify/functions/:splat'
+  status = 200

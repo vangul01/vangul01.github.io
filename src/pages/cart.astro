@@ -10,11 +10,11 @@ const keywords = "Cart, Shopping Cart, Checkout";
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
-    <div class="heading">
-      <h2>Shopping Cart</h2>
-    </div>
-
     <section class="content-container">
+      <div class="heading">
+        <h2>Shopping Cart</h2>
+      </div>
+
       <div id="checkout-container">
         <h3>*All products currently unavailable for purchase*</h3>
         <p>
@@ -38,13 +38,16 @@ const keywords = "Cart, Shopping Cart, Checkout";
             >Go Back</button
           >
 
-          <button class="button button-primary" id="proceed-to-payment"
-            >Proceed to Checkout</button
+          <a
+            href="/checkout"
+            class="button button-primary"
+            id="proceed-to-payment"
           >
+            Proceed to Checkout
+          </a>
         </div>
       </div>
     </section>
   </main>
   <Footer />
-  <script src="https://js.stripe.com/v3/"></script>
 </BaseLayout>
