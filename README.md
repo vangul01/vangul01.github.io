@@ -46,3 +46,30 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## How to Run Vangular!
+
+An e-commerce webstore with JAMstack architecture.
+
+Tools and frameworks:
+
+```
+Astro: Static site generator excellent for SEO, page optimization and speed
+Sanity: Headless CMS for all product info, more robust than product info in Stripe
+Stripe: Payments processor, Vangular uses embedded checkout
+Netlify: Webhost that allows for automated builds, serverless functions, Git integration and website deployment
+ngrok: To have static web address when developing locally for Stripe Checkout and testing serverless functions
+```
+
+When testing serverless functions:
+
+```
+$ netlify dev
+$ ngrok http --url=raccoon-allowed-wahoo.ngrok-free.app 8888
+```
+
+When checking out frontend and UI:
+
+```
+npm run dev
+```

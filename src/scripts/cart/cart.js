@@ -1,33 +1,39 @@
 import { loadCart, saveCart, clearStoredCart } from "./cart-storage.js";
 
 const elements = {
-  cartItems: document.getElementById("cart-items"),
+  cartItemsList: document.getElementById("cart-items-list"),
   totalPrice: document.getElementById("cart-total-price"),
   totalQuantity: document.getElementById("cart-total-quantity"),
-  cartCount: document.getElementById("cart-count"),
+  cartIconCount: document.getElementById("cart-icon-count"),
 };
 
 let cart = loadCart();
 
+// Update the number next to cart icon in header
 function updateCartCount() {
-  if (!elements.cartCount) return;
+  if (!elements.cartIconCount) return;
   const { quantity } = calculateTotals();
 
   //   Don't show 0 in the cart count
   if (quantity === 0) {
-    elements.cartCount.textContent = "";
+    elements.cartIconCount.textContent = "";
   } else {
-    elements.cartCount.textContent = quantity;
+    elements.cartIconCount.textContent = quantity;
   }
 }
 
+// Update cart items and totals in cart.astro UI
+// [{ id: "1", name: "The Butts", price: 150, quantity: 1 }];
 function updateUI() {
-  if (!elements.cartItems) return;
+  if (!elements.cartItemsList) return;
+
+  console.log("updateUI Cart:", cart); // Debug log
 
   // Clear and update cart items
-  elements.cartItems.innerHTML = "";
+  elements.cartItemsList.innerHTML = "";
   cart.forEach((item) => {
-    elements.cartItems.appendChild(createCartItemElement(item));
+    console.log("updateUI Cart item:", item); // Debug log
+    elements.cartItemsList.appendChild(createCartItemElement(item));
   });
 
   // Update totals
@@ -40,6 +46,8 @@ function updateUI() {
   }
 }
 
+// Calculate total price and quantity to display in cart.astro UI
+// [ { id: '1', name: 'The Butts', price: 150, quantity: 1 } ]
 function calculateTotals() {
   return cart.reduce(
     (totals, item) => ({
@@ -52,21 +60,33 @@ function calculateTotals() {
 
 function createCartItemElement(item) {
   const listItem = document.createElement("li");
-  listItem.id = `cart-item-${item.id}`;
+  listItem.id = `cart-item-${item.priceId}`;
   listItem.className = "cart-item";
-  listItem.textContent = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+
+  console.log("cart item", item);
+
+  try {
+    listItem.textContent = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+  } catch (error) {
+    console.error("Error creating cart item element:", error);
+    listItem.textContent = `Error displaying item`;
+  }
   return listItem;
 }
 
+//EDIT THIS!!! When I update Add to Cart to use Stripe product data,
+// the product object will have a different structure.
 function addToCart(product) {
-  const existingProduct = cart.find((item) => item.id === product.id);
+  const existingProduct = cart.find((item) => item.priceId === product.priceId);
 
   if (existingProduct) {
     existingProduct.quantity += 1;
   } else {
     cart.push({
-      ...product,
-      priceId: product.priceId,
+      //   id: product.id,
+      name: product.name, // Ensure name is included
+      price: product.price, // Ensure price is included
+      priceId: product.priceId, // For Stripe Checkout
       quantity: 1,
     });
   }

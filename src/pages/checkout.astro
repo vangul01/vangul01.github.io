@@ -22,59 +22,11 @@ const keywords = "checkout, stripe, payment";
   </main>
   <Footer />
   <script src="https://js.stripe.com/v3/"></script>
+  <script type="module" src="/src/scripts/checkout.js"></script>
   <script type="module">
-    const stripe = Stripe("PUBKEY");
+    import { initializeCheckout } from "../scripts/checkout.js";
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      try {
-        // Log the cart items from localStorage
-        const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-        console.log("Cart items from localStorage:", cartItems);
-        console.log(
-          "Cart items OG:",
-          JSON.parse(localStorage.getItem("cartItems")),
-        );
-
-        // If cartItems is empty, show an error or initialize it
-        if (!cartItems.length) {
-          console.error(
-            "Cart is empty or invalid. Please add items to the cart.",
-          );
-          alert("Your cart is empty. Please add items before checking out.");
-        }
-
-        // Fetch Checkout Session and retrieve the client secret
-        const fetchClientSecret = async () => {
-          const response = await fetch(
-            "/.netlify/functions/create-checkout-session",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                items: cartItems, // Retrieve cart items from localStorage
-              }),
-            },
-          );
-
-          if (!response.ok) {
-            throw new Error("Failed to fetch client secret");
-          }
-
-          const { clientSecret } = await response.json();
-          return clientSecret;
-        };
-
-        // Initialize Embedded Checkout
-        const checkout = await stripe.initEmbeddedCheckout({
-          fetchClientSecret,
-        });
-
-        // Mount Checkout to the container
-        checkout.mount("#checkout-container");
-      } catch (error) {
-        console.error("Error initializing Stripe Checkout:", error);
-        alert("There was an issue loading the payment form. Please try again.");
-      }
-    });
+    // Initialize the checkout process
+    initializeCheckout("{{stripePublicKey}}");
   </script>
 </BaseLayout>

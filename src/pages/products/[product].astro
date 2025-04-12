@@ -1,7 +1,9 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const { product } = Astro.params;
 
 const pageTitle = "Merch | VANGULAR";
 const keywords = "vangular, merch, art, products";
@@ -37,9 +39,6 @@ const keywords = "vangular, merch, art, products";
           <p>1 Available</p>
 
           <!-- <div class="button-container"> -->
-          <!-- [ { id: '1', name: 'The Butts', price: 150, quantity: 1 } ] -->
-          <!-- EDIT THIS!!! When I update Add to Cart to use Stripe product data, -->
-          <!-- the data sent will have a different structure. -->
           <button
             class="button button-primary"
             id="add-to-cart"

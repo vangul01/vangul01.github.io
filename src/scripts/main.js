@@ -46,13 +46,18 @@ if (typeof document !== "undefined") {
       clearCart();
     });
 
-    // Add to cart buttons
+    // EDIT THIS!
+    // Add-to cart-button data send. Needs product data from stripe to work
     document.querySelectorAll("#add-to-cart").forEach((button) => {
       button.addEventListener("click", function () {
         const product = {
           id: this.dataset.id,
           name: this.dataset.name,
+          images: this.dataset.images,
+          description: this.dataset.description,
           price: parseFloat(this.dataset.price),
+          priceId: product.priceId, // For Stripe Checkout
+          quantity: 1,
         };
 
         addToCart(product);
