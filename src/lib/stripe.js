@@ -1,3 +1,4 @@
+// Needs to be in JS instead of TS for Node.js/netlify functions compatibility
 import Stripe from "stripe";
 
 // Use import.meta.env for Vite, process.env for Node.js used in netlify functions
