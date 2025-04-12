@@ -513,10 +513,10 @@ textarea {
 
 .product-text {
   h2 {
-    text-align: center;
+    text-align: left;
   }
   p {
-    text-align: center;
+    text-align: left;
     padding: var(--spacing-xs);
   }
   .button {

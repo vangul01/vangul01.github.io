@@ -2,56 +2,159 @@
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { client } from "../../lib/sanity-client";
+import type { Product } from "../../types/sanity-schema";
 
-const { product } = Astro.params;
+export async function getStaticPaths() {
+  const query = `*[_type == "product"]{
+    _id,
+    "slug": slug.current,
+    name,
+    description,
+    price,
+    materials,
+    dimensions,
+    quantity,
+    stripePriceId,
+    "images": images[].asset->url,
+    category,
+    featured
+  }`;
 
-const pageTitle = "Merch | VANGULAR";
-const keywords = "vangular, merch, art, products";
+  const products = (await client.fetch(query)) as Product[];
+
+  return products.map((product: Product) => ({
+    params: { product: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const pageTitle = `${product.name} | VANGULAR`;
+const keywords = `vangular, ${product.name}, art, products`;
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
-    <div class="heading">
-      <h2>Merch</h2>
-      <h3>*All products currently unavailable for purchase*</h3>
-    </div>
-
     <section class="content-container" id="product-page">
       <div class="two-column-container">
         <div class="image product-image">
           <img
-            src="/src/assets/images/products/a-butts.jpg"
-            alt="product.name"
+            id="main-product-image"
+            src={product.images[0]}
+            alt={product.name}
           />
+
+          {
+            product.images.length > 1 && (
+              <div class="product-thumbnails">
+                {product.images.map((imageUrl, index) => (
+                  <img
+                    src={imageUrl}
+                    alt={`${product.name} view`}
+                    class="thumbnail"
+                    data-image-url={imageUrl}
+                    data-index={index}
+                  />
+                ))}
+              </div>
+            )
+          }
         </div>
 
         <div class="text product-text">
-          <h2>The Butts!</h2>
-          <h4>
-            Bodacious booties inspired by a "Culitos" wine bottle, this piece is
-            sure to give you and your friends something cheeky to talk about!
-          </h4>
-          <br />
-          <p>Oil pastel, chalk pastel, heavy-weight paper</p>
-          <p>10 inches x 14 inches</p>
-          <p>$150</p>
-          <p>1 Available</p>
+          <h2>{product.name}</h2>
 
-          <!-- <div class="button-container"> -->
-          <button
-            class="button button-primary"
-            id="add-to-cart"
-            data-id="1"
-            data-name="The Butts"
-            data-price="150"
-          >
-            Add to Cart
-          </button>
-          <!-- </div> -->
+          {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
+          <br />
+
+          <p>${product.price} USD</p>
+          <p>{product.quantity} Available</p>
+          <br />
+
+          {
+            product.quantity > 0 && (
+              <button
+                class="button button-primary"
+                id="add-to-cart"
+                data-id={product.stripePriceId}
+                data-name={product.name}
+                data-price={product.price}
+                data-quantity={product.quantity}
+              >
+                Add to Cart
+              </button>
+            )
+          }
+          <br />
+          <h4>{product.description}</h4>
+          <br />
+          <h4>Details</h4>
+          {product.materials && <p>Materials: {product.materials}</p>}
+          {product.dimensions && <p>Dimensions: {product.dimensions}</p>}
         </div>
       </div>
     </section>
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  // Handle thumbnail clicks
+  document.addEventListener("DOMContentLoaded", () => {
+    const mainImage = document.getElementById(
+      "main-product-image",
+    ) as HTMLImageElement;
+    const thumbnails = document.querySelectorAll(".thumbnail");
+
+    thumbnails.forEach((thumb) => {
+      thumb.addEventListener("click", () => {
+        // Update main image
+        const newImageUrl = thumb.getAttribute("data-image-url");
+        if (newImageUrl && mainImage) {
+          mainImage.src = newImageUrl;
+        }
+
+        // Update active thumbnail state
+        thumbnails.forEach((t) => t.classList.remove("active"));
+        thumb.classList.add("active");
+      });
+    });
+  });
+</script>
+
+<style>
+  .product-thumbnails {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .thumbnail:hover {
+    border-color: #666;
+  }
+
+  .thumbnail.active {
+    border-color: #000;
+  }
+
+  #main-product-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+</style>
