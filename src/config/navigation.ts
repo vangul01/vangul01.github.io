@@ -15,7 +15,6 @@ export const siteNavigation = {
       { name: "Merch", href: "/merch" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
-      { name: "Checkout", href: "/checkout" },
     ],
     shop: [
       { name: "All Products", href: "/merch" },

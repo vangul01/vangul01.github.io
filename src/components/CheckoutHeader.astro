@@ -1,0 +1,24 @@
+---
+import vangularLogo from "/src/assets/images/web/logo.png";
+import { siteNavigation } from "../config/navigation";
+
+const links = siteNavigation.headerLinks;
+---
+
+<header>
+  <nav class="header-nav">
+    <div class="logo-container">
+      <img src={vangularLogo.src} alt="" />
+      <a href={links.logo[0].href} class="nav-logo">
+        {links.logo[0].name}
+      </a>
+    </div>
+
+    <div class="nav-cart-container">
+      <a href={links.cart[0].href} class="nav-cart-button">
+        <i class="fa fa-shopping-cart"></i>
+        <span id="cart-icon-count"></span>
+      </a>
+    </div>
+  </nav>
+</header>

@@ -10,27 +10,26 @@ const footerLinks = siteNavigation.footerLinks;
 <footer class="footer">
   <ContactForm />
 
-  <!-- Social Links -->
-  <!-- <div class="footer-section"> -->
-  <!-- <h3 class="footer-title">Connect</h3> -->
-  <ul class="link-list social-links">
-    {
-      footerLinks.social.map(({ name, href, icon }) => (
-        <a
-          href={href}
-          class="social-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={name}
-        >
-          <i class={`fa fa-${icon}`} />
-        </a>
-      ))
-    }
-  </ul>
-  <!-- </div> -->
-
   <div class="footer-grid">
+    <!-- Social Links -->
+    <div class="social-section">
+      <ul class="social-links">
+        {
+          footerLinks.social.map(({ name, href, icon }) => (
+            <a
+              href={href}
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+            >
+              <i class={`fa fa-${icon}`} />
+            </a>
+          ))
+        }
+      </ul>
+    </div>
+
     <!-- Quick Links -->
     <div class="footer-section">
       <h4 class="footer-title">Links</h4>
@@ -63,9 +62,8 @@ const footerLinks = siteNavigation.footerLinks;
     <!-- Newsletter -->
     <div class="footer-section newsletter">
       <h4 class="footer-title">Stay Updated</h4>
-      <p>Subscribe to get special offers and updates.</p>
+      <p>Subscribe to get special offers and updates!</p>
       <form>
-        <!-- <div> -->
         <input
           type="email"
           name="email"
@@ -82,7 +80,6 @@ const footerLinks = siteNavigation.footerLinks;
         >
           Subscribe
         </button>
-        <!-- </div> -->
       </form>
     </div>
   </div>

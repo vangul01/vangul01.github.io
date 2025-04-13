@@ -1,6 +1,5 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import CheckoutHeader from "../components/CheckoutHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Checkout | VANGULAR";
@@ -8,25 +7,25 @@ const keywords = "checkout, stripe, payment";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
+  <!-- Add this before your checkout container -->
+  <script async src="https://js.stripe.com/v3/"></script>
+  <CheckoutHeader />
   <main>
-    <section class="content-container">
-      <div class="heading">
-        <h2>Checkout</h2>
-      </div>
-
-      <div id="checkout-container">
-        <!-- Checkout will insert the payment form here -->
-      </div>
-    </section>
+    <!-- <section class="content-container"> -->
+    <div id="checkout-container">
+      <!-- Stripe Embedded Checkout will be mounted here -->
+    </div>
+    <!-- </section> -->
   </main>
-  <Footer />
-  <script src="https://js.stripe.com/v3/"></script>
-  <script type="module" src="/src/scripts/checkout.js"></script>
-  <script type="module">
-    import { initializeCheckout } from "../scripts/checkout.js";
+  <script>
+    import { initializeCheckout } from "../scripts/cart/checkout";
 
-    // Initialize the checkout process
-    initializeCheckout("{{stripePublicKey}}");
+    // Make sure this matches your Stripe public key
+    const stripePublicKey = import.meta.env.PUBLIC_STRIPE_KEY;
+    console.log("Stripe public key:", stripePublicKey);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initializeCheckout(stripePublicKey);
+    });
   </script>
 </BaseLayout>
