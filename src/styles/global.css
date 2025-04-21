@@ -36,7 +36,9 @@
   --color-overlay: rgba(0, 0, 0, 0.85);
   --color-site-background: radial-gradient(whitesmoke, #d68e8e);
   --color-modal-background: linear-gradient(180deg, #fbbfbf 0%, #faba76 100%);
-  --color-nav: rgba(223, 141, 144, 0.447);
+  /* --color-nav: rgba(223, 141, 144, 0.447); */
+  --color-nav: rgba(233, 176, 178, 0.547);
+
   --color-header: rgba(223, 141, 144, 0.73);
   --color-error: #dc3545;
   --color-success: #28a745;
@@ -344,6 +346,10 @@ textarea {
     color: var(--color-text-light);
     transition: var(--transition-normal);
   }
+}
+
+.hidden {
+  display: none;
 }
 
 .product-card {
@@ -889,8 +895,7 @@ textarea {
   /* padding: var(--spacing-md); */
   border: var(--border-secondary);
   /* border-radius: var(--border-radius-md); */
-  /* background-color: var(--color-nav); */
-  /* opacity: 40%; */
+  background-color: var(--color-nav);
   /* box-shadow: var(--shadow-md); */
 
   column-fill: auto;
@@ -982,7 +987,8 @@ textarea {
 } */
 
 .social-link:hover {
-  background-color: var(--color-button-primary);
+  /* background-color: var(--color-button-primary); */
+  background-color: var(--color-border-dark);
   border-color: transparent;
 
   i {
