@@ -40,10 +40,9 @@
   --color-nav: rgba(233, 176, 178, 0.547);
 
   --color-header: rgba(223, 141, 144, 0.73);
-  --color-error: #dc3545;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  /* --color-info: #17a2b8; */
+  --color-error: #dd5d5d;
+  --color-success: #a1d86a;
+  --color-warning: #eceb92;
   --color-info: #00899e;
 
   /* Typography */
@@ -177,7 +176,7 @@
   background-color: var(--color-button-tertiary);
 }
 
-.button-modal-close {
+/* .button-modal-close {
   position: absolute;
   top: 0;
   right: 0;
@@ -185,7 +184,7 @@
   cursor: pointer;
   font-size: var(--font-size-lg);
   color: var(--color-text-muted);
-}
+} */
 
 /* ------------------- BASE STYLES ------------------- */
 body {
@@ -262,15 +261,15 @@ textarea {
   resize: none;
 }
 
-/* input::placeholder { */
-/* font-weight: bold; */
-/* opacity: 0.5; */
-/* color: grey;
-  } */
+/* input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: grey;
+} */
 
 /* .email-field:hover {
-    background: whitesmoke;
-  } */
+  background: whitesmoke;
+} */
 
 /* all links have unified color */
 /* a {
@@ -427,6 +426,9 @@ textarea {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+
+  /* position: relative; */
+  z-index: 2;
 
   /* h1 { */
   /* font-size: 5.9vw; */
@@ -663,37 +665,9 @@ textarea {
 }
 
 /* ------------------ MODAL CONTACT FORM ------------------------ */
-.contact-container {
-  display: flex;
-  position: fixed;
-  z-index: 2001;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-overlay);
-  justify-content: center;
-  align-items: center;
-  overscroll-behavior: contain;
-
-  /* Start hidden */
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s ease-in-out,
-    visibility 0.3s ease-in-out;
-}
-
-.contact-container.visible {
-  opacity: 1;
-  visibility: visible;
-  overflow: hidden;
-}
 
 /* Modal Content Box */
-.contact-box {
+/* .contact-box {
   background: var(--color-modal-background);
   padding: var(--spacing-xl);
   border-radius: 10px;
@@ -709,7 +683,7 @@ textarea {
   textarea {
     border: var(--border-tertiary);
   }
-}
+} */
 
 /* ------------------- HEADER NAVIGATION ------------------- */
 .header-nav {
@@ -815,6 +789,14 @@ textarea {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+/* Highlight current page */
+.nav-links a.active,
+.nav-cart-button.active {
+  color: var(--color-text-light);
+  font-weight: bold;
+  position: relative;
 }
 
 .nav-toggle {

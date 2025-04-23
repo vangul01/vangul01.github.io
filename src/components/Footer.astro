@@ -1,5 +1,4 @@
 ---
-import ContactForm from "./ContactForm.astro";
 import { siteNavigation } from "../config/navigation";
 
 const currentYear = new Date().getFullYear();
@@ -8,8 +7,6 @@ const footerLinks = siteNavigation.footerLinks;
 ---
 
 <footer class="footer">
-  <ContactForm />
-
   <div class="footer-grid">
     <!-- Social Links -->
     <div class="social-section">
@@ -41,7 +38,7 @@ const footerLinks = siteNavigation.footerLinks;
             </li>
           ))
         }
-        <li><a href="#" class="contact-link"> Contact </a></li>
+        <!-- <li><a href="#" class="contact-link"> Contact </a></li> -->
       </ul>
     </div>
 

@@ -2,127 +2,161 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { prodDetails } from "../config/prod-details";
+import { getAllProducts } from "../lib/sanity-client";
+import type { Product } from "../types/sanity-schema";
+// import { prodDetails } from "../config/prod-details";
 
-const prodInfo = prodDetails.allProd;
+const products = await getAllProducts();
+
+// Group products by category
+const productsByCategory = products.reduce(
+  (acc, product) => {
+    const category = product.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(product);
+    return acc;
+  },
+  {} as Record<Product["category"], Product[]>,
+);
+
+// Category display names
+const categoryNames = {
+  paintings: "Paintings",
+  digital: "Digital Art",
+  stationary: "Stationary",
+  textiles: "Textiles",
+  misc: "Miscellaneous",
+};
+
 const pageTitle = "Merch | VANGULAR";
-const keywords =
-  "merch, art, design, stickers, t-shirts, hats, socks, totebags, phonecases, temporary tattoos, earrings, 3D printed stuff, phonecases, deals, bundles, discounted merch";
+const keywords = "art, merchandise, prints, digital art, paintings";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
     <section class="content-container">
-      <div>
-        <h3>Paintings & Collages</h3>
-        <p>
-          One-of-a-kind collages, paintings and drawings all sold in their
-          original formats.
-        </p>
-      </div>
-
-      <div class="image-grid">
-        {
-          prodInfo.paintings.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} />
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="content-container">
-      <div>
-        <h3>Prints</h3>
-        <p>Prints of digital art to liven up your living space.</p>
-      </div>
-
-      <div class="image-grid">
-        {
-          prodInfo.digital.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} style="object-fit: contain" />
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="content-container">
-      <div>
-        <h3>Stickers & Stationary</h3>
-        <p>Stickers, cards, pins, and other cute things.</p>
-      </div>
-
-      <div class="image-grid">
-        {
-          prodInfo.stationary.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} style="object-fit: contain" />
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="content-container">
-      <div>
-        <h3>Wears</h3>
-        <p>
-          Sweet threads from head to toe. Totebags, t-shirts, hats and socks
-          galore.
-        </p>
-      </div>
-
-      <div class="image-grid">
-        {
-          prodInfo.textiles.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} />
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="content-container">
-      <div>
-        <h3>Experiments</h3>
-        <p>
-          Temporary tattoos, earrings, 3D printed stuff, phonecases ... the
-          world is your oyster!
-        </p>
-      </div>
-
-      <div class="image-grid">
-        {
-          prodInfo.misc.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} style="object-fit: contain" />
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="content-container">
-      <div>
-        <h3>Deals!</h3>
-        <p>Sticker packs, bundles and discounted merch.</p>
-      </div>
-
-      <div class="image-grid">
-        {
-          prodInfo.onSale.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} style="object-fit: contain" />
-            </a>
-          ))
-        }
-      </div>
+      {
+        Object.entries(productsByCategory).map(
+          ([category, categoryProducts]) => {
+            const typedCategory = category as keyof typeof categoryNames;
+            return (
+              <div class="category-section">
+                <h4 class="category-title">{categoryNames[typedCategory]}</h4>
+                <div class="products-grid">
+                  {categoryProducts.map((product) => (
+                    <a href={`/products/${product.slug}`} class="product-card">
+                      <div class="product-image">
+                        <img
+                          src={
+                            product.images?.[0] ||
+                            "/src/assets/images/web/logo.png"
+                          }
+                          alt={product.name}
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="product-info">
+                        <h4>{product.name}</h4>
+                        {product.featured && (
+                          <span class="featured-badge">{product.featured}</span>
+                        )}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          },
+        )
+      }
     </section>
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .category-section {
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .category-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: var(--border-secondary);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    justify-content: center; /* Centers the grid items */
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition-normal);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .product-image {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--border-radius-sm);
+    border: var(--border-tertiary);
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-info {
+    padding: var(--spacing-sm) 0;
+    text-align: center;
+  }
+
+  .featured-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+  }
+
+  /* Update media query for responsive design */
+  @media (max-width: 992px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .products-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+    .category-section {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .category-title {
+      font-size: var(--font-size-lg);
+    }
+  }
+</style>

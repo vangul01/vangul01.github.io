@@ -29,13 +29,11 @@ import {
   updateCartCount,
 } from "./cart/cart.js";
 import { initNav } from "./nav.js";
-import { initContactForm } from "./contact-form.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     // Initialize global features
     initNav();
-    initContactForm();
 
     // Initialize cart UI
     updateUI();
@@ -51,13 +49,10 @@ if (typeof document !== "undefined") {
     document.querySelectorAll("#add-to-cart").forEach((button) => {
       button.addEventListener("click", function () {
         const product = {
-          id: this.dataset.id,
+          priceId: this.dataset.priceId, // For Stripe Checkout
           name: this.dataset.name,
-          images: this.dataset.images,
-          description: this.dataset.description,
           price: parseFloat(this.dataset.price),
-          priceId: product.priceId, // For Stripe Checkout
-          quantity: 1,
+          quantity: parseInt(this.dataset.quantity) || 1,
         };
 
         addToCart(product);
