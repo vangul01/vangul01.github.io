@@ -8,6 +8,13 @@ export default defineConfig({
 
   adapter: netlify(),
 
+  // Image optimization
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+    },
+  },
+
   // To whitelist ngrok domain
   vite: {
     server: {
