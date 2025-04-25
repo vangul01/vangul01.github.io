@@ -1,0 +1,31 @@
+---
+import CheckoutHeader from "../components/CheckoutHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Checkout | VANGULAR";
+const keywords = "checkout, stripe, payment";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <!-- Add this before your checkout container -->
+  <script async src="https://js.stripe.com/v3/"></script>
+  <CheckoutHeader />
+  <main>
+    <!-- <section class="content-container"> -->
+    <div id="checkout-container">
+      <!-- Stripe Embedded Checkout will be mounted here -->
+    </div>
+    <!-- </section> -->
+  </main>
+  <script>
+    import { initializeCheckout } from "../scripts/cart/checkout";
+
+    // Make sure this matches your Stripe public key
+    const stripePublicKey = import.meta.env.PUBLIC_STRIPE_KEY;
+    console.log("Stripe public key:", stripePublicKey);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initializeCheckout(stripePublicKey);
+    });
+  </script>
+</BaseLayout>

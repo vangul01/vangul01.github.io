@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { Image } from "astro:assets";
+import eye from "../assets/images/web/blinking_eye.gif";
+
+const pageTitle = "Welcome to VANGULAR!";
+const keywords = "Vangular, enter, portal";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main class="portal">
+    <a href="/home" class="overlay-image">
+      <Image src={eye} alt="image of an eye" />
+    </a>
+  </main>
+</BaseLayout>

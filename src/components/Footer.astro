@@ -1,0 +1,102 @@
+---
+import { siteNavigation } from "../config/navigation";
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = siteNavigation.footerLinks;
+---
+
+<footer class="footer">
+  <div class="footer-grid">
+    <!-- Social Links -->
+    <div class="social-section">
+      <ul class="social-links">
+        {
+          footerLinks.social.map(({ name, href, icon }) => (
+            <a
+              href={href}
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+            >
+              <i class={`fa fa-${icon}`} />
+            </a>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section">
+      <h4 class="footer-title">Links</h4>
+      <ul class="link-list">
+        {
+          footerLinks.quickLinks.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+        <!-- <li><a href="#" class="contact-link"> Contact </a></li> -->
+      </ul>
+    </div>
+
+    <!-- Shop Links -->
+    <div class="footer-section">
+      <h4 class="footer-title">Shop</h4>
+      <ul class="link-list">
+        {
+          footerLinks.shop.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-section newsletter">
+      <h4 class="footer-title">Stay Updated</h4>
+      <p>Subscribe to get special offers and updates!</p>
+
+      <form
+        name="newsletter"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="newsletter" />
+        <p class="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="bot-field" />
+          </label>
+        </p>
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          class="newsletter-input"
+          aria-label="Email for newsletter"
+          autocomplete="email"
+          required
+        />
+        <br />
+        <button
+          type="submit"
+          class="button button-secondary"
+          aria-label="Subscribe to newsletter"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>© {currentYear} VANGULAR. All rights reserved.</p>
+  </div>
+</footer>

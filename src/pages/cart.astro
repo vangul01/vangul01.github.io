@@ -1,0 +1,47 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Cart | VANGULAR";
+const keywords = "Cart, Shopping Cart, Checkout";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <section class="content-container">
+      <div class="heading">
+        <h3>Your Cart</h3>
+      </div>
+
+      <div class="cart-container">
+        <div class="cart-list-container">
+          <ul id="cart-items-list"></ul>
+          <p id="cart-total-quantity">Items: 0</p>
+          <p id="cart-total-price">Total Amount: $0</p>
+        </div>
+      </div>
+
+      <div class="cart-buttons">
+        <button class="button button-tertiary" id="clear-cart"
+          >Clear Cart</button
+        >
+
+        <!-- Or continue shopping?? -->
+        <button class="button button-secondary" onclick="history.back()"
+          >Go Back</button
+        >
+
+        <!-- <a
+          href="/checkout"
+          class="button button-primary"
+          id="proceed-to-payment"
+        >
+          Proceed to Checkout
+        </a> -->
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+<Footer />

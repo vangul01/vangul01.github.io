@@ -1,0 +1,52 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { Image } from "astro:assets";
+import aboutMe from "../assets/images/web/square_me.png";
+
+const pageTitle = "About | VANGULAR";
+const keywords = "about, vangular, art, design";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <section class="content-container">
+      <div class="two-column-container">
+        <div class="image about-image">
+          <Image
+            src={aboutMe}
+            alt="Image of the artist VANGULAR aka Valerie Angulo"
+          />
+        </div>
+
+        <div class="text about-text">
+          <h4>Hello!</h4>
+          <br />
+          <p>
+            I'm Valerie and welcome to VANGULAR!
+            <br /><br />
+            I'm a Brooklyn-based visual artist who collaborates with small businesses
+            and other artists to create fun and inspiring logos and designs tailored
+            to their needs.
+            <br /><br />
+            I love using vibrant colors and designs to ignite people's imaginations
+            and create a sense of playfulness and community.
+            <br /><br />
+            If you'd like to inquire about commissions, contact me at the link below.
+            Thanks for visiting my site, and I hope you see something that makes
+            you smile☺ <br /><br />
+          </p>
+          <h4 class="signature">
+            Lots of love,
+            <br />
+            Val
+          </h4>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

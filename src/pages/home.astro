@@ -1,0 +1,229 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { Image } from "astro:assets";
+import leftLeaf from "../assets/images/web/left-leaf.svg";
+import rightLeaf from "../assets/images/web/right-leaf.svg";
+import featuredArt from "../assets/images/web/eyecon.png";
+import aboutMe from "../assets/images/web/about-home.png";
+import collab from "../assets/images/web/dreams.png";
+
+const pageTitle = "Home | VANGULAR";
+const keywords =
+  "Vangular, home, welcome, art, design, portfolio, creative, vibrant, spiritual";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <Header />
+  <main>
+    <!-- Welcome/Hero Section -->
+    <section class="hero-section">
+      <div class="leaves-container">
+        <Image
+          src={leftLeaf}
+          alt=""
+          class="leaf leaf-left"
+          width={500}
+          height={500}
+        />
+        <Image
+          src={rightLeaf}
+          alt=""
+          class="leaf leaf-right"
+          width={500}
+          height={500}
+        />
+      </div>
+      <div class="overlay-text">
+        <p>Welcome to</p>
+        <h1>Vangular</h1>
+        <p>Art and Designs for the Existential and Absurd</p>
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div class="two-column-container">
+        <div class="image about-image">
+          <Image src={featuredArt} alt="Image of a featured piece." />
+        </div>
+
+        <div class="text about-text">
+          <h3>Featured Artwork</h3>
+          <br />
+          <p>
+            Take a look at some of my favorite pieces! I love creating art that
+            is vibrant, colorful, and a little absurd. My work is inspired by my
+            experiences, dreams, and the world around me. I hope my art brings a
+            sense of joy and wonder to your life. Each piece is a reflection of
+            my journey, a snapshot of my thoughts and feelings, and I hope you
+            can find a connection to it.
+          </p>
+          <br />
+          <a href="/merch"
+            ><button class="button button-primary" role="button"
+              >Explore All Art</button
+            ></a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div class="two-column-container">
+        <div class="text about-text">
+          <h3>About Vangular</h3>
+          <br />
+          <p>
+            Hey I'm Valerie and welcome to VANGULAR! Vangular was born out of a
+            desire to create a space for my art and designs that are fun,
+            vibrant, and a little absurd. I love using colors and designs to
+            ignite people's imaginations and create a sense of playfulness and
+            community.
+          </p>
+          <br />
+          <a href="/about"
+            ><button class="button button-primary" role="button"
+              >Learn More</button
+            ></a
+          >
+        </div>
+
+        <div class="image about-image">
+          <Image
+            src={aboutMe}
+            alt="Image of the artist VANGULAR aka Valerie Angulo"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="content-container">
+      <div class="two-column-container">
+        <div class="image about-image">
+          <Image src={collab} alt="EmmaLee Collaboration" />
+        </div>
+
+        <div class="text about-text">
+          <h3>Collabs & Commissions</h3>
+          <br />
+          <p>
+            Collaborations are a big part of my creative process. I love working
+            with other artists and designers to create something new and
+            exciting. Whether it's a joint art piece, a design project, or a
+            community event, I believe that collaboration is a powerful way to
+            connect and create. If you're interested in collaborating, please
+            reach out! I'm always open to new ideas and projects.
+          </p>
+          <br />
+          <a href="/contact"
+            ><button class="button button-primary" role="button"
+              >Let's Work Together!</button
+            ></a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .leaves-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .leaf {
+    position: absolute;
+    width: 30%;
+    opacity: 0.8;
+    will-change: transform, opacity;
+
+    animation: leafEntrance 1s ease-out forwards;
+
+    color: var(--color-accent); /* Controls the fill color */
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1)); /* Optional: adds depth */
+  }
+
+  .leaf-left {
+    left: -5%;
+    top: 20%;
+    transform: translateX(0) rotate(-10deg);
+  }
+
+  .leaf-right {
+    right: -5%;
+    top: 25%;
+    transform: translateX(0) rotate(10deg);
+  }
+
+  @keyframes leafEntrance {
+    from {
+      opacity: 0;
+      transform: translateX(var(--start-x)) rotate(var(--start-rotate));
+    }
+    to {
+      opacity: 0.8;
+      transform: translateX(0) rotate(var(--end-rotate));
+    }
+  }
+
+  .leaf-left {
+    --start-x: -100px;
+    --start-rotate: -45deg;
+    --end-rotate: -10deg;
+  }
+
+  .leaf-right {
+    --start-x: 100px;
+    --start-rotate: 45deg;
+    --end-rotate: 10deg;
+  }
+</style>
+
+<script>
+  function handleParallax() {
+    const leaves = document.querySelectorAll(".leaf");
+    let scrolled = window.scrollY;
+
+    requestAnimationFrame(() => {
+      leaves.forEach((leaf) => {
+        const speed = leaf.classList.contains("leaf-left") ? 0.5 : 0.7;
+        const translateX = scrolled * speed;
+        const rotate = scrolled * 0.02;
+        const opacity = 1 - scrolled * 0.003;
+
+        const leafElement = leaf as HTMLElement;
+        leafElement.style.transform = `
+            translateX(${leafElement.classList.contains("leaf-left") ? -translateX : translateX}px)
+            rotate(${leafElement.classList.contains("leaf-left") ? -rotate : rotate}deg)
+          `;
+        leafElement.style.opacity = Math.max(opacity, 0).toString();
+      });
+    });
+  }
+
+  function debounce(func: Function, wait: number) {
+    let timeout: ReturnType<typeof setTimeout>;
+    return function executedFunction(...args: any[]) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  const debouncedHandleParallax = debounce(handleParallax, 16); // 60fps
+  window.addEventListener("scroll", debouncedHandleParallax);
+
+  // Add this before the closing script tag
+  document.addEventListener("astro:before-swap", () => {
+    window.removeEventListener("scroll", handleParallax);
+  });
+</script>

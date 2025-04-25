@@ -1,0 +1,1144 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* ------------------- CSS RESET ------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------- VARIABLES ------------------- */
+:root {
+  /* Default Theme (Purple & Blush) */
+  --color-primary: #190a2a; /* Dark Purple */
+  --color-secondary: #bb85aa; /* Blush */
+  --color-accent: #f3d2c1;
+  --color-yellow: #faba76;
+  --color-orange: #ff8a79;
+  --color-purple: rgb(88, 58, 118);
+
+  /* Common Colors */
+  --color-text-primary: #190a2a; /* Dark Purple */
+  --color-text-secondary: slategray;
+  --color-text-light: whitesmoke;
+  --color-text-muted: #504646;
+  --color-border-light: #e88a8a;
+  --color-border-medium: #ce7b7b;
+  --color-border-dark: rgb(88, 58, 118);
+  --color-shadow: #000020;
+  --color-background: #ffffff;
+  --color-background-alt: #f8f8f8;
+  --color-button-primary: rgb(146, 131, 170);
+  --color-button-secondary: #e88a8a;
+  --color-button-tertiary: #ce7b7b;
+  --color-overlay: rgba(0, 0, 0, 0.85);
+  --color-site-background: radial-gradient(whitesmoke, #d68e8e);
+  --color-modal-background: linear-gradient(180deg, #fbbfbf 0%, #faba76 100%);
+  /* --color-nav: rgba(223, 141, 144, 0.447); */
+  --color-nav: rgba(233, 176, 178, 0.547);
+
+  --color-header: rgba(223, 141, 144, 0.73);
+  --color-error: #dd5d5d;
+  --color-success: #a1d86a;
+  --color-warning: #eceb92;
+  --color-info: #00899e;
+
+  /* Typography */
+  --font-primary: "Russo One", sans-serif;
+  --font-secondary: "Open Sans", arial, sans-serif;
+  --font-size-xs: 0.5rem; /* 8px */
+  --font-size-sm: 0.75rem; /* 12px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.5rem; /* 24px */
+  --font-size-xl: 2rem; /* 32px */
+  --font-size-2xl: 3rem; /* 48px */
+  --font-size-3xl: 4rem; /* 64px */
+  --font-size-4xl: 6rem; /* 96px */
+
+  /* Spacing */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+
+  /* Borders */
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 1rem;
+  --border-radius-lg: 1.5rem;
+  --border-radius-circle: 50%;
+
+  --border-primary: 0.5rem solid var(--color-border-light);
+  --border-secondary: 0.25rem solid var(--color-border-light);
+  --border-tertiary: 0.125rem solid var(--color-border-dark);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+
+  /* Layout */
+  --container-width: 1200px;
+  --header-height: 70px;
+  --footer-height: 2.5rem;
+  --min-width: 200px;
+  --max-text-width: 35rem;
+
+  /* Media Queries */
+  --screen-xs: 0;
+  --screen-sm: 576px;
+  --screen-md: 768px;
+  --screen-lg: 992px;
+  --screen-xl: 1200px;
+
+  /* My Variables */
+  --height-icon: 30px;
+}
+
+/* Dark Theme */
+/* [data-theme="dark"] {
+  --color-text: #f5f5f5;
+  --color-text-light: #190a2a;
+  --color-text-muted: #999999;
+  --color-background: #121212;
+  --color-background-alt: #1e1e1e;
+  --color-border: #333333;
+} */
+
+/* ------------------- BUTTONS ------------------- */
+.button {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  /* background-color: var(--color-border); */
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  /* padding: 0.25em 0.5em; */
+  padding: var(--spacing-sm) var(--spacing-md);
+  box-shadow:
+    1px 1px 0px 0px,
+    2px 2px 0px 0px,
+    3px 3px 0px 0px,
+    4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+  /*  transition: all var(--transition-normal); */
+  margin: var(--spacing-lg);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+.button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+.button-formating {
+  /* display: flex; */
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* margin: var(--spacing-xl); */
+}
+
+.button-primary {
+  background-color: var(--color-button-primary);
+  /* padding: var(--spacing-lg) var(--spacing-xl); */
+  /* padding: var(--spacing-xl); */
+  /* margin: var(--spacing-lg); */
+}
+
+.button-secondary {
+  background-color: var(--color-button-secondary);
+}
+
+.button-tertiary {
+  background-color: var(--color-button-tertiary);
+}
+
+/* .button-modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 var(--spacing-sm);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+} */
+
+/* ------------------- BASE STYLES ------------------- */
+body {
+  display: grid;
+  grid-template-rows: var(--header-height) 1fr auto;
+  min-height: 100dvh;
+
+  position: relative;
+  background: var(--color-site-background);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; /* Ensures the background covers the entire viewport */
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+
+  font-size: calc(var(--font-size-base) + 0.5vw);
+  font-family: var(--font-secondary);
+  color: var(--color-text-muted);
+
+  line-height: 1.6;
+  letter-spacing: 0.1rem; /* 1.6px */
+}
+
+main {
+  position: relative;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-primary);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  line-height: 180%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  /* position: relative; */
+}
+
+h1 {
+  /* font-size: var(--font-size-4xl); */
+  font-size: calc(var(--font-size-base) + 9vw);
+}
+
+h2 {
+  /* font-size: var(--font-size-2xl); */
+  font-size: calc(var(--font-size-base) + 3.5dvw);
+}
+
+h3 {
+  /* font-size: var(--font-size-lg); */
+  font-size: calc(var(--font-size-base) + 1.5dvw);
+}
+
+/* all lists have no bullet points */
+ul,
+ol {
+  list-style-type: none;
+}
+
+input,
+textarea {
+  background: whitesmoke;
+  font-family: var(--font-secondary);
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+  color: var(--black-purple);
+  font-size: var(--font-size-base);
+  resize: none;
+}
+
+/* input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: grey;
+} */
+
+/* .email-field:hover {
+  background: whitesmoke;
+} */
+
+/* all links have unified color */
+/* a {
+  text-decoration: none;
+  color: var(--color-text-primary);
+} */
+
+/* all links have unified color on hover */
+/* a:hover {
+  color: var(--color-text-light);
+} */
+
+/* ----------------UNIVERSAL CLASSES---------------- */
+
+.heading {
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-2xl) var(--spacing-2xl);
+  overflow: auto;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-text-primary);
+  width: inherit; /* Inherit the width of the parent */
+  min-width: var(--min-width);
+  padding-top: var(--spacing-2xl);
+}
+
+.two-column-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem; /* Optional, adds space between elements */
+  flex-wrap: wrap; /* Ensures they wrap to the next line on smaller screens */
+}
+
+.image {
+  display: flex;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  object-fit: contain;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.text {
+  flex: 1; /* Allows the text container to take up remaining space */
+  display: inline-block;
+  justify-content: center;
+  margin: auto;
+  max-width: var(--max-text-width);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  /* padding-bottom: var(--spacing-lg); */
+  text-align: justify;
+  text-justify: auto;
+
+  a {
+    color: var(--color-info);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+    transition: var(--transition-normal);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.product-card {
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  transition: transform var(--transition-normal);
+  background-color: var(--color-background);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--color-background-alt);
+  box-shadow: var(--shadow-md);
+}
+
+/* Style for the email input */
+/* input[type="email"] { */
+/*width: 70%; /* Full width of the container */
+/*max-width: fit-content;
+  /*padding: 10px 20px; /* Padding for a button-like look */
+/*border: none; /* Remove border */
+/*border-radius: 8px; /* Rounded corners */
+/*background-color: #190a2a; /* Background color */
+/*color: #fff; /* Text color */
+/*font-size: 16px; /* Font size */
+/*font-family: inherit; /* Use same font as the rest */
+/*outline: none; /* Remove outline on focus */
+/*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+/*margin-bottom: 5px; /* Spacing below input */
+/* } */
+
+/* Placeholder text styling */
+/* input[type="email"]::placeholder {
+  color: #bbb;
+  opacity: 0.8;
+} */
+
+/* Add a hover effect like the button -  Darker on hover */
+/* input[type="email"]:hover {
+  background-color: #444;
+} */
+
+/* ----------------PORTAL---------------- */
+.overlay-image {
+  position: fixed; /* Covers the whole screen */
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh; /* Ensures it takes the full height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-image img {
+  max-width: 100%;
+  max-height: 90dvh; /* Adjust this value to whatever max height you want */
+  object-fit: contain; /* Ensures the image scales without distortion */
+}
+
+/* ----------------HOME---------------- */
+.hero-section {
+  /* padding-top: 0px; */
+  position: relative;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  /* Hide any overflow to prevent scrollbars */
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  /* position: relative; */
+  z-index: 2;
+
+  /* h1 { */
+  /* font-size: 5.9vw; */
+  /* } */
+
+  p {
+    font-size: var(--font-size-lg);
+    letter-spacing: 3px;
+  }
+}
+
+/* div.scroll-container {
+  background-color: fuchsia;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 10px;
+  max-height: 3rem;
+} */
+
+/* div.scroll-container img {
+  padding: 10px;
+  max-height: 20rem;
+} */
+
+/* ----------------GALLERY / MERCH---------------- */
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  div {
+    width: 20rem;
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* ----------------ABOUT---------------- */
+
+.about-image {
+  margin-top: 0;
+
+  img {
+    width: 30rem;
+    max-width: 100%; /* Ensures the image scales properly */
+    height: auto; /* Maintains aspect ratio */
+    /* border: 5px outset aquamarine; */
+    border-radius: var(--border-radius-md);
+  }
+}
+
+.about-text {
+  margin-top: 0;
+  margin-left: 0;
+
+  h3 {
+    text-align: left;
+  }
+
+  p {
+    font-size: var(--font-size-base);
+  }
+
+  .signature {
+    text-align: right;
+  }
+}
+
+/* ---------------- COLLABS ---------------- */
+
+.project-image img {
+  padding: var(--spacing-md);
+  width: 20rem;
+  height: 20rem;
+  object-fit: contain;
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background);
+}
+
+.project-text {
+  margin-top: 0;
+  margin-left: 0;
+
+  h3 {
+    text-align: center;
+  }
+
+  p {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* ------------------- PRODUCT PAGE ----------------------- */
+
+.product-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: 0; /* Reset any top margin */
+  /* padding: var(--spacing-lg); */
+  h3 {
+    text-align: left;
+  }
+
+  h4 {
+    margin: var(--spacing-md) 0;
+  }
+
+  p {
+    font-size: var(--font-size-base);
+  }
+
+  .button {
+    /* bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute; */
+    /* left: 50%; */
+    bottom: 0;
+    margin: var(--spacing-md) 0; /* transform: translateX(-50%); */
+  }
+}
+
+.product-image img {
+  max-width: var(--max-text-width);
+  object-fit: cover;
+  /* border: var(--border-tertiary); */
+  border-radius: var(--border-radius-sm);
+}
+
+.product-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  max-width: 600px; /* Adjust as needed */
+  width: 100%;
+  margin-top: 0; /* Reset any top margin */
+}
+
+#main-product-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  /* border: var(--border-tertiary); */
+  /* border-radius: var(--border-radius-lg); */
+  transition: transform 0.3s ease;
+}
+
+.product-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 80px);
+  gap: var(--spacing-sm);
+  justify-content: center;
+  width: 100%;
+  padding: var(--spacing-sm);
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+.thumbnail:hover {
+  opacity: 1;
+  border-color: var(--color-border-medium);
+  transform: translateY(-2px);
+}
+
+.thumbnail.active {
+  border-color: var(--color-border-dark);
+  opacity: 1;
+}
+
+/* ------------------- SHOPPING CART ----------------------- */
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-purple);
+  /* padding: var(--spacing-xl); */
+  p {
+    text-align: left;
+  }
+}
+
+.cart-list-container {
+  p {
+    padding-top: var(--spacing-md);
+  }
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+
+  padding-bottom: var(--spacing-md);
+  border-bottom: var(--border-tertiary);
+}
+
+.cart-buttons {
+  margin: var(--spacing-lg);
+}
+
+/* ------------------- CHECKOUT ----------------------- */
+#checkout-container {
+  width: 100%; /* Full width of the parent container */
+  /* max-width: 600px;  */
+  margin: 0 auto; /* Center the container */
+  /* padding: 1rem;  */
+  /* Add some padding */
+  /* background-color: #ce7b7b; */
+}
+
+/* ------------------ MODAL CONTACT FORM ------------------------ */
+
+/* Modal Content Box */
+/* .contact-box {
+  background: var(--color-modal-background);
+  padding: var(--spacing-xl);
+  border-radius: 10px;
+  max-width: 25rem;
+  position: relative;
+  text-align: center;
+
+  h2 {
+    color: rgb(88, 58, 118);
+  }
+
+  input,
+  textarea {
+    border: var(--border-tertiary);
+  }
+} */
+
+/* ------------------- HEADER NAVIGATION ------------------- */
+.header-nav {
+  position: fixed;
+  width: 100%; /* Changed from 100vw to prevent horizontal scroll */
+  height: var(--header-height);
+  background-color: var(--color-header);
+
+  /* border-bottom: 5px solid var(--color-primary); */
+  /* box-shadow: var(--shadow-sm); */
+
+  z-index: 2000;
+
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box; /* Added to include padding in width calculation */
+}
+
+/* All links and buttons in the header have unified color*/
+.header-nav a,
+.header-nav button {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Hover transition and color for entire nav bar */
+.header-nav a:hover,
+.header-nav button:hover {
+  color: var(--color-text-light);
+  transition: var(--transition-normal);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  /* font-size: calc(14px + 1rem); */
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+}
+
+.logo-container img {
+  padding-right: var(--spacing-xs);
+  height: var(--height-icon);
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start fully off-screen */
+  margin: 0;
+  padding-top: var(--header-height);
+  /* padding-bottom: var(--spacing-xl); */
+  gap: 0;
+  flex-direction: column;
+  background-color: var(--color-header);
+  color: inherit;
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  transition: var(--transition-normal);
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  z-index: 1000;
+  /* overflow: hidden; */
+  transition: var(--transition-normal);
+}
+
+.nav-item {
+  margin: 2rem 0;
+}
+
+/* javascript */
+.show-nav-links {
+  right: 0;
+  /* color: inherit; */
+  /* border-left: 5px solid var(--color-primary); */
+
+  z-index: 1000;
+}
+
+.nav-cart-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  z-index: 1002;
+
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+.nav-cart-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Highlight current page */
+.nav-links a.active,
+.nav-cart-button.active {
+  color: var(--color-text-light);
+  font-weight: bold;
+  position: relative;
+}
+
+.nav-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  visibility: visible;
+  z-index: 1002;
+  opacity: 1;
+  /* transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0s; */
+}
+
+/* Smooth rotation */
+.nav-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.nav-toggle.vertical i {
+  transform: rotate(90deg);
+}
+
+/* Overlay when sidebar is open */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  cursor: pointer;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--color-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s;
+}
+
+/* Javascript makes above visible */
+.nav-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+  overflow: hidden;
+}
+
+/* Javascript makes it so you can't scroll with overlay */
+.nav-overlay.no-scroll {
+  /* Prevent scrolling */
+  overflow: hidden;
+  overscroll-behavior: none; /* Prevent overscroll effects */
+}
+
+/* ------------------- FOOTER ----------------------- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  border-top: var(--border-secondary);
+  margin: 0 var(--spacing-3xl);
+}
+
+.footer-section {
+  display: inline;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* padding: var(--spacing-md); */
+  border: var(--border-secondary);
+  /* border-radius: var(--border-radius-md); */
+  background-color: var(--color-nav);
+  /* box-shadow: var(--shadow-md); */
+
+  column-fill: auto;
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+  /* max-width: 500px; */
+
+  /* column-width: 100px; */
+  /* -webkit-column-width: 150px; */
+  /* -moz-column-width: 150px; */
+  font-size: var(--font-size-sm);
+
+  a {
+    text-decoration: none;
+    flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+    flex-basis: auto;
+    box-sizing: border-box; /* Ensures padding and borders don't increase width */
+    text-align: left; /* Aligns text inside the links */
+    /* display: inline-block; */
+    /* font-size: var(--font-size-sm); */
+  }
+
+  ul {
+    text-align: left;
+  }
+}
+
+.footer-title {
+  font-size: var(--font-size-base);
+  padding: var(--spacing-md);
+}
+
+.link-list {
+  list-style: none;
+  padding: var(--spacing-md);
+  text-align: center;
+
+  li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-normal);
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+  }
+}
+
+.social-section {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--spacing-lg);
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Made slightly smaller */
+  height: 40px;
+  border-radius: var(--border-radius-circle);
+  background-color: var(--color-background);
+  border: var(--border-tertiary);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+
+  i {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+  }
+}
+
+/* .social-link:hover {
+  transform: translateY(-2px);
+} */
+
+.social-link:hover {
+  /* background-color: var(--color-button-primary); */
+  background-color: var(--color-border-dark);
+  border-color: transparent;
+
+  i {
+    color: var(--color-text-light);
+  }
+}
+
+.newsletter {
+  grid-column: span 2;
+  grid-row: 2;
+  text-align: center;
+
+  h4 {
+    font-size: var(--font-size-lg);
+  }
+
+  p {
+    /* margin-bottom: var(--spacing-md); */
+    color: var(--color-text-muted);
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+}
+
+.newsletter form {
+  padding: var(--spacing-md) var(--spacing-md);
+}
+
+.newsletter button {
+  width: 100%;
+  max-width: 400px;
+  margin: var(--spacing-lg) 0 0 0;
+}
+
+.newsletter-input {
+  /* padding: var(--spacing-sm) var(--spacing-md); */
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background-alt);
+  color: var(--color-text-primary);
+  max-width: 400px;
+  width: 100%;
+  margin: 0;
+  /* margin-bottom: var(--spacing-md); */
+}
+
+.newsletter-input:focus {
+  /* outline: none; */
+  border-color: var(--color-secondary);
+}
+
+/* Quick Links and Shop sections */
+.footer-section:not(.social-section):not(.newsletter) {
+  grid-column: span 1;
+  grid-row: 2;
+}
+
+.footer-bottom {
+  border-top: var(--border-secondary);
+  padding: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+/* ------------------- RESPONSIVE DESIGN ------------------- */
+@media (max-width: 768px) {
+  :root {
+    /* Adjust sizes for mobile */
+    --font-size-3xl: 1.75rem;
+    --spacing-xl: 1.5rem;
+    --header-height: 60px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin: 0;
+  }
+
+  /* Keep socials on top */
+  .social-section {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Newsletter takes full width below socials */
+  .newsletter {
+    padding: var(--spacing-md);
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* Quick Links and Shop sections in two columns at bottom */
+  .footer-section:not(.social-section):not(.newsletter) {
+    grid-column: span 1;
+    grid-row: 3;
+  }
+}
+
+/* Footer */
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+
+  .newsletter {
+    grid-column: span 2;
+  }
+
+  .social-section {
+    grid-column: span 4;
+  }
+
+  /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+  .two-column-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed from center to flex-start */
+    width: 100%;
+    gap: 1rem;
+    padding-top: 0; /* Reset any top padding */
+    margin-top: 0; /* Reset any top margin */
+  }
+}
+
+/* Nav header WHEN SCREEN SIZE IS LARGER THAN 768px */
+/* Content container increase padding on bigger screens */
+@media (min-width: 768px) {
+  .nav-toggle {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0.3s;
+    display: none;
+  }
+
+  .nav-links {
+    position: static;
+    padding: 0;
+    height: auto;
+    width: auto;
+    background-color: transparent;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-right: var(--spacing-lg); /* Added spacing before cart */
+    margin-left: auto; /* Added to push nav links to the right */
+    overflow-y: visible;
+  }
+
+  .nav-item {
+    margin: 0; /* Reset margin for desktop */
+  }
+
+  .content-container {
+    padding-top: 0;
+    padding: var(--spacing-2xl) var(--spacing-2xl);
+  }
+
+  /* Button */
+  .button {
+    padding: 0.25em 0.75em;
+  }
+}
