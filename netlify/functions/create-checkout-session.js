@@ -6,11 +6,8 @@ export async function handler(event) {
     const { items } = JSON.parse(event.body);
     console.log("Items received:", items);
 
-    if (
-      !Array.isArray(items) ||
-      items.some((item) => !item.priceId || !item.quantity)
-    ) {
-      throw new Error("Invalid items array");
+    if (!Array.isArray(items) || items.length === 0) {
+      throw new Error("No items provided");
     }
 
     // Create a Stripe Checkout session
@@ -23,6 +20,9 @@ export async function handler(event) {
       })),
       mode: "payment",
       return_url: `${process.env.PUBLIC_SITE_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
     });
 
     console.log(
@@ -33,7 +33,6 @@ export async function handler(event) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        sessionId: session.id,
         clientSecret: session.client_secret,
       }),
     };

@@ -11,7 +11,6 @@ export async function getStaticPaths() {
     "slug": slug.current,
     name,
     description,
-    price,
     materials,
     dimensions,
     quantity,
@@ -47,14 +46,14 @@ const keywords = `vangular, ${product.name}, art, products`;
           <div class="zoom-container">
             <img
               id="main-product-image"
-              src={product.images[0]}
+              src={product.images?.[0] || "/src/assets/images/web/logo.png"}
               alt={product.name}
               loading="eager"
             />
           </div>
 
           {
-            product.images.length > 1 && (
+            product.images?.length > 1 && (
               <div class="product-thumbnails" role="list">
                 {product.images.map((imageUrl, index) => (
                   <img
@@ -77,7 +76,7 @@ const keywords = `vangular, ${product.name}, art, products`;
           {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
 
           <div>
-            <p>${product.price} USD</p>
+            <p>$GET FROM STRIPE USD</p>
             <p>{product.quantity} Available</p>
           </div>
 
@@ -88,7 +87,7 @@ const keywords = `vangular, ${product.name}, art, products`;
                 id="add-to-cart"
                 data-price-id={product.stripePriceId}
                 data-name={product.name}
-                data-price={product.price}
+                data-price="GET FROM STRIPE"
                 data-quantity="1"
               >
                 Add to Cart

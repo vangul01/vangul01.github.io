@@ -39,7 +39,7 @@ function updateUI() {
   // Update totals
   const totals = calculateTotals();
   if (elements.totalPrice) {
-    elements.totalPrice.textContent = `Total Amount: $${totals.price.toFixed(2)}`;
+    elements.totalPrice.textContent = `Total Amount: $${totals.price?.toFixed(2) || 0}`;
   }
   if (elements.totalQuantity) {
     elements.totalQuantity.textContent = `Items: ${totals.quantity}`;
@@ -66,7 +66,7 @@ function createCartItemElement(item) {
   console.log("cart item", item);
 
   try {
-    listItem.textContent = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+    listItem.textContent = `${item.name} - $${item.price?.toFixed(2) || 0} x ${item.quantity}`;
   } catch (error) {
     console.error("Error creating cart item element:", error);
     listItem.textContent = `Error displaying item`;
@@ -108,6 +108,11 @@ function clearCart() {
   clearStoredCart();
   updateUI();
   updateCartCount();
+}
+
+// Also clear cache after successful checkout
+function handleCheckoutSuccess() {
+  clearCart();
 }
 
 export { addToCart, removeFromCart, clearCart, updateUI, updateCartCount };

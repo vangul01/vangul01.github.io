@@ -73,3 +73,23 @@ When checking out frontend and UI:
 ```
 npm run dev
 ```
+
+# Sanity
+
+Used as headless CMS for Vangular products. Update the following files as needed if any product fields are or are not required:
+
+```
+src/types/sanity-schema.ts
+src/lib/sanity-client.ts
+```
+
+# UI
+
+Documentation for image and font sources used in website.
+
+Fonts Used
+
+Primary:
+Primary Source:
+
+Secondary:
