@@ -6,6 +6,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import leftLeaf from "../assets/images/web/left-leaf.svg";
 import rightLeaf from "../assets/images/web/right-leaf.svg";
+import featuredArt from "../assets/images/web/eyecon.png";
+import aboutMe from "../assets/images/web/about-home.jpg";
+import collab from "../assets/images/web/dream.jpg";
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -43,10 +46,7 @@ const keywords =
     <section class="content-container">
       <div class="two-column-container">
         <div class="image about-image">
-          <img
-            src="/src/assets/images/web/eyecon.png"
-            alt="Image of a featured piece."
-          />
+          <Image src={featuredArt} alt="Image of a featured piece." />
         </div>
 
         <div class="text about-text">
@@ -91,8 +91,8 @@ const keywords =
         </div>
 
         <div class="image about-image">
-          <img
-            src="/src/assets/images/web/about-home.jpg"
+          <Image
+            src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
           />
         </div>
@@ -102,10 +102,7 @@ const keywords =
     <section class="content-container">
       <div class="two-column-container">
         <div class="image about-image">
-          <img
-            src="/src/assets/images/web/dream.jpg"
-            alt="Image of the artist VANGULAR aka Valerie Angulo"
-          />
+          <Image src={collab} alt="EmmaLee Collaboration" />
         </div>
 
         <div class="text about-text">
