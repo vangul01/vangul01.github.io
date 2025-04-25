@@ -3,6 +3,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+import { Image } from "astro:assets";
+import aboutMe from "../assets/images/web/square_me.png";
+
 const pageTitle = "About | VANGULAR";
 const keywords = "about, vangular, art, design";
 ---
@@ -13,8 +16,8 @@ const keywords = "about, vangular, art, design";
     <section class="content-container">
       <div class="two-column-container">
         <div class="image about-image">
-          <img
-            src="/src/assets/images/web/square_me.png"
+          <Image
+            src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
           />
         </div>

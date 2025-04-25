@@ -3,6 +3,10 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+import { Image } from "astro:assets";
+import dreamCollab from "../assets/images/web/dreams.png";
+import crewCollab from "../assets/images/web/crew_logo.png";
+
 const pageTitle = "Collabs | VANGULAR";
 const keywords =
   "art, design, past work, projects, commission, creative, logos, collaborations, cover art";
@@ -14,10 +18,7 @@ const keywords =
     <section class="content-container" id="collabs">
       <div class="two-column-container">
         <div class="image project-image">
-          <img
-            src="/src/assets/images/web/dream.png"
-            alt="EmmaLee & The Dream album art"
-          />
+          <Image src={dreamCollab} alt="EmmaLee & The Dream album art" />
         </div>
 
         <div class="text project-text">
@@ -43,10 +44,7 @@ const keywords =
 
       <div class="two-column-container">
         <div class="image project-image">
-          <img
-            src="/src/assets/images/web/crew_logo.jpg"
-            alt="The Crew Rowing Co. logo"
-          />
+          <Image src={crewCollab} alt="The Crew Rowing Co. logo" />
         </div>
 
         <div class="text project-text">
