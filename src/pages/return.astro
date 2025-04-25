@@ -1,14 +1,11 @@
----
+<!-- ---
 import { stripe } from "../lib/stripe";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// import { loadStripe } from "@stripe/stripe-js";
-
 const pageTitle = "Checkout | VANGULAR";
 const keywords = "checkout, stripe, payment";
-// const stripeKey = import.meta.env.PUBLIC_STRIPE_KEY;
 
 async function getSession(sessionId: string) {
   const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -42,4 +39,4 @@ const session = await getSession(sessionID!);
     </section>
   </main>
   <Footer />
-</BaseLayout>
+</BaseLayout> -->
