@@ -55,7 +55,20 @@ const keywords = "Cart, Shopping Cart, Checkout";
           </div>
 
           <div class="cart-product-quantity">
-            <p>1</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn minus" aria-label="Decrease quantity"
+                >-</button
+              >
+
+              <span class="quantity">1</span>
+              <button class="quantity-btn plus" aria-label="Increase quantity"
+                >+</button
+              >
+            </div>
+            <button class="delete-btn" aria-label="Remove item">
+              <i class="fa fa-trash"></i>
+            </button>
+            <!-- <p>1</p> -->
             <!-- <h4>{product.quantity}</h4> -->
           </div>
 
@@ -144,12 +157,69 @@ const keywords = "Cart, Shopping Cart, Checkout";
     text-align: left;
   }
 
-  .cart-product-quantity,
   .cart-product-total-price {
     p {
       text-align: center;
     }
   }
+
+  .cart-product-quantity {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    justify-content: center;
+    text-align: center;
+
+    p {
+      text-align: center;
+    }
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    border: var(--border-tertiary);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-base);
+  }
+
+  .quantity-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    width: var(--font-size-lg);
+    height: var(--font-size-lg);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+  }
+
+  .quantity-btn:hover {
+    color: var(--color-text-light);
+    background-color: var(--color-button-primary);
+    border-radius: var(--border-radius-circle);
+  }
+
+  .quantity {
+    min-width: var(--font-size-lg);
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: var(--color-error);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-base);
+  }
+  /*
+  .delete-btn:hover {
+    transform: scale(1.1);
+  } */
 
   .cart-buttons {
     display: flex;
@@ -197,3 +267,55 @@ const keywords = "Cart, Shopping Cart, Checkout";
     }
   }
 </style>
+
+<script>
+  function initializeQuantityControls() {
+    document.querySelectorAll(".quantity-controls").forEach((control) => {
+      const minusBtn = control.querySelector(".minus");
+      const plusBtn = control.querySelector(".plus");
+      const quantitySpan = control.querySelector(".quantity");
+
+      minusBtn?.addEventListener("click", () => {
+        let quantity = parseInt(quantitySpan?.textContent || "0");
+        if (quantity > 1) {
+          quantity--;
+          if (quantitySpan) quantitySpan.textContent = quantity.toString();
+          updateCartItem(quantity);
+        }
+      });
+
+      plusBtn?.addEventListener("click", () => {
+        let quantity = parseInt(quantitySpan?.textContent || "0");
+        quantity++;
+        if (quantitySpan) quantitySpan.textContent = quantity.toString();
+        updateCartItem(quantity);
+      });
+    });
+
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const cartItem = (e.target as HTMLElement).closest(
+          ".cart-products-grid",
+        );
+        if (cartItem) {
+          cartItem.remove();
+          updateCart();
+        }
+      });
+    });
+  }
+
+  function updateCartItem(quantity: number) {
+    // Add your cart update logic here
+    console.log("Updated quantity:", quantity);
+    updateCart();
+  }
+
+  function updateCart() {
+    // Add your cart total update logic here
+    console.log("Cart updated");
+  }
+
+  // Initialize controls when the page loads
+  document.addEventListener("DOMContentLoaded", initializeQuantityControls);
+</script>
