@@ -37,7 +37,8 @@
   --color-site-background: radial-gradient(whitesmoke, #d68e8e);
   --color-modal-background: linear-gradient(180deg, #fbbfbf 0%, #faba76 100%);
   /* --color-nav: rgba(223, 141, 144, 0.447); */
-  --color-nav: rgba(233, 176, 178, 0.547);
+  /* --color-nav: rgba(233, 176, 178, 0.547); */
+  --color-nav: rgba(233, 176, 178, 0.801);
 
   --color-header: rgba(223, 141, 144, 0.73);
   --color-error: #dd5d5d;
@@ -101,6 +102,7 @@
 
   /* My Variables */
   --height-icon: 30px;
+  --height-footer-image: 125px;
 }
 
 /* Dark Theme */
@@ -873,12 +875,26 @@ textarea {
 }
 
 /* ------------------- FOOTER ----------------------- */
+.footer {
+  background-image: url("/src/assets/images/web/plantie_footer.png");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  /* background-repeat: repeat-x; */
+  background-size: cover;
+  padding-top: var(--height-footer-image);
+
+  /* padding-bottom: 120px; */ /* Adjust based on your image height */
+  /* margin-top: auto;  */ /* Pushes footer to bottom */
+  width: 100%;
+}
+
 .footer-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-xl);
   padding: var(--spacing-xl);
-  border-top: var(--border-secondary);
+  /* padding-top: var(--height-footer-image); */
+  /* border-top: var(--border-secondary); */
   margin: 0 var(--spacing-3xl);
 }
 
@@ -1041,7 +1057,7 @@ textarea {
 }
 
 .footer-bottom {
-  border-top: var(--border-secondary);
+  /* border-top: var(--border-secondary); */
   padding: var(--spacing-md);
   font-size: var(--font-size-sm);
   text-align: center;
@@ -1085,10 +1101,15 @@ textarea {
 
 /* Footer */
 @media (max-width: 992px) {
+  .footer {
+    padding: 0;
+  }
+
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
     margin: 0 var(--spacing-lg);
     padding: var(--spacing-lg);
+    border-top: var(--border-secondary);
   }
 
   .newsletter {
