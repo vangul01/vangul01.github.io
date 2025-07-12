@@ -102,7 +102,7 @@
 
   /* My Variables */
   --height-icon: 30px;
-  --height-footer-image: 125px;
+  --height-footer-image: 150px;
 }
 
 /* Dark Theme */
@@ -878,9 +878,10 @@ textarea {
 .footer {
   background-image: url("/src/assets/images/web/plantie_footer.png");
   background-position: bottom;
-  background-repeat: no-repeat;
-  /* background-repeat: repeat-x; */
-  background-size: cover;
+  /* background-repeat: no-repeat; */
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  /* background-size: cover; */
   padding-top: var(--height-footer-image);
 
   /* padding-bottom: 120px; */ /* Adjust based on your image height */

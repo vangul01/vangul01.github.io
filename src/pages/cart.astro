@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CartIsland from "../components/CartIsland.astro";
 
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
@@ -15,69 +16,15 @@ const keywords = "Cart, Shopping Cart, Checkout";
         <h3>Your Cart</h3>
       </div>
 
-      <!-- <div class="cart-container">
-        <div class="cart-list-container">
-          <ul id="cart-items-list"></ul>
-          <p id="cart-total-price">Total Amount: $0</p>
-        </div>
-      </div> -->
-
       <div class="cart-container">
-        <div class="cart-products-grid">
-          <div class="cart-titles">Product</div>
-          <div class="cart-titles">Quantity</div>
-          <div class="cart-titles">Total</div>
+        <div class="cart-products-grid cart-titles">
+          <div>Product</div>
+          <div>Quantity</div>
+          <div>Total</div>
         </div>
 
-        <div class="cart-products-grid">
-          <!-- {categoryProducts.map((product) => (
-          <a href={`/products/${product.slug}`}> -->
-
-          <div class="cart-product-info">
-            <div class="cart-product-image">
-              <img
-                src="/src/assets/images/web/logo.png"
-                alt="Product Image"
-                loading="lazy"
-              />
-              <!-- <img
-              src={product.images?.[0] || "/src/assets/images/web/logo.png"}
-              alt={product.name}
-              loading="lazy"
-            /> -->
-            </div>
-
-            <div class="cart-product-text">
-              <p>Product Name</p>
-              <p>$1 per item</p>
-              <!-- <h4>{product.name}</h4> -->
-            </div>
-          </div>
-
-          <div class="cart-product-quantity">
-            <div class="quantity-controls">
-              <button class="quantity-btn minus" aria-label="Decrease quantity"
-                >-</button
-              >
-
-              <span class="quantity">1</span>
-              <button class="quantity-btn plus" aria-label="Increase quantity"
-                >+</button
-              >
-            </div>
-            <button class="delete-btn" aria-label="Remove item">
-              <i class="fa fa-trash"></i>
-            </button>
-            <!-- <p>1</p> -->
-            <!-- <h4>{product.quantity}</h4> -->
-          </div>
-
-          <div class="cart-product-total-price">
-            <p>$1 x Quantity</p>
-            <!-- <h4>${product.price * product.quantity}</h4> -->
-          </div>
-        </div>
-
+        <CartIsland client:load />
+        
         <div class="cart-buttons">
           <a href="/merch" class="link">Continue Shopping</a>
 
@@ -268,6 +215,25 @@ const keywords = "Cart, Shopping Cart, Checkout";
   }
 </style>
 
+<!-- <script type="module">
+// filepath: /Users/valerieangulo/Code/vangul01.github.io/src/pages/cart.astro
+import { loadCart } from "/src/scripts/cart/cart-storage.js";
+
+function renderCart() {
+  const cart = loadCart();
+  const container = document.getElementById("cart-items-list");
+  container.innerHTML = ""; // Clear previous
+
+  if (!cart.length) {
+    container.innerHTML = "<p>Your cart is empty.</p>";
+    return;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderCart);
+</script> -->
+
+<!-- 
 <script>
   function initializeQuantityControls() {
     document.querySelectorAll(".quantity-controls").forEach((control) => {
@@ -318,4 +284,4 @@ const keywords = "Cart, Shopping Cart, Checkout";
 
   // Initialize controls when the page loads
   document.addEventListener("DOMContentLoaded", initializeQuantityControls);
-</script>
+</script> -->

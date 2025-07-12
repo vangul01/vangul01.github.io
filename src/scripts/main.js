@@ -29,6 +29,7 @@ import {
   updateCartCount,
 } from "./cart/cart.js";
 import { initNav } from "./nav.js";
+import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -52,6 +53,7 @@ if (typeof document !== "undefined") {
           priceId: this.dataset.priceId, // For Stripe Checkout
           name: this.dataset.name,
           price: parseFloat(this.dataset.price),
+          image: this.dataset.image,
           quantity: parseInt(this.dataset.quantity) || 1,
         };
 

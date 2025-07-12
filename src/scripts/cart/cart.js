@@ -24,6 +24,7 @@ function updateCartCount() {
 
 // Update cart items and totals in cart.astro UI
 // [{ id: "1", name: "The Butts", price: 150, quantity: 1 }];
+// 0: Object { name: "Bio Blitz", price:null, priceId: "price_1QeM7uGMuu0DsYcfmTKqcR9g", quantity: 3}
 function updateUI() {
   if (!elements.cartItemsList) return;
 
@@ -54,40 +55,37 @@ function calculateTotals() {
       price: totals.price + item.price * item.quantity,
       quantity: totals.quantity + item.quantity,
     }),
-    { price: 0, quantity: 0 },
+    { price: 0, quantity: 0 }
   );
 }
 
 function createCartItemElement(item) {
-  const listItem = document.createElement("li");
-  listItem.id = `cart-item-${item.priceId}`;
-  listItem.className = "cart-item";
+  const template = document.getElementById("cart-item-template");
+  const row = template.content.cloneNode(true);
 
-  console.log("cart item", item);
+  row.querySelector("img").src =
+    item.images?.[0] || "/src/assets/images/web/logo.png";
+  row.querySelector("img").alt = item.name;
+  row.querySelector(".cart-item-name").textContent = item.name;
+  row.querySelector(".cart-item-price").textContent =
+    `$${item.price?.toFixed(2) || 0} per item`;
+  row.querySelector(".quantity").textContent = item.quantity;
+  row.querySelector(".cart-item-total").textContent =
+    `$${(item.price * item.quantity).toFixed(2)}`;
 
-  try {
-    listItem.textContent = `${item.name} - $${item.price?.toFixed(2) || 0} x ${item.quantity}`;
-  } catch (error) {
-    console.error("Error creating cart item element:", error);
-    listItem.textContent = `Error displaying item`;
-  }
-  return listItem;
+  return row;
 }
 
-//EDIT THIS!!! When I update Add to Cart to use Stripe product data,
-// the product object will have a different structure.
+// This will push all fields I want into local storage :)
 function addToCart(product) {
   const existingProduct = cart.find((item) => item.priceId === product.priceId);
 
   if (existingProduct) {
-    existingProduct.quantity += 1;
+    existingProduct.quantity += product.quantity || 1;
   } else {
     cart.push({
-      //   id: product.id,
-      name: product.name, // Ensure name is included
-      price: product.price, // Ensure price is included
-      priceId: product.priceId, // For Stripe Checkout
-      quantity: 1,
+      ...product,
+      quantity: product.quantity || 1,
     });
   }
 

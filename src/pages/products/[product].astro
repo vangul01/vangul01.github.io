@@ -2,6 +2,8 @@
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getStripePrice } from "../../lib/stripe-client";
 import { client } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
 
@@ -33,6 +35,9 @@ interface Props {
 }
 
 const { product } = Astro.props;
+
+// Fetch Stripe price server-side
+const stripePrice = await getStripePrice(product.stripePriceId);
 const pageTitle = `${product.name} | VANGULAR`;
 const keywords = `vangular, ${product.name}, art, products`;
 ---
@@ -76,7 +81,7 @@ const keywords = `vangular, ${product.name}, art, products`;
           {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
 
           <div>
-            <p>$GET FROM STRIPE USD</p>
+            <p>${stripePrice.amount} {stripePrice.currency.toUpperCase()}</p>
             <p>{product.quantity} Available</p>
           </div>
 
@@ -87,7 +92,8 @@ const keywords = `vangular, ${product.name}, art, products`;
                 id="add-to-cart"
                 data-price-id={product.stripePriceId}
                 data-name={product.name}
-                data-price="GET FROM STRIPE"
+                data-price={stripePrice.amount}
+                data-image={product.images?.[0]}
                 data-quantity="1"
               >
                 Add to Cart
