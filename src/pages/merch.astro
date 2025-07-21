@@ -3,9 +3,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// import { Image } from "astro:assets";
-// import featuredArt from "../assets/images/web/eyecon.png";
-
 import { getAllProducts } from "../lib/sanity-client";
 import type { Product } from "../types/sanity-schema";
 
@@ -79,87 +76,3 @@ const keywords = "art, merchandise, prints, digital art, paintings";
   </main>
   <Footer />
 </BaseLayout>
-
-<style>
-  .category-section {
-    margin-bottom: var(--spacing-3xl);
-  }
-
-  .category-title {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: var(--border-secondary);
-  }
-
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
-    gap: var(--spacing-xl);
-    padding: var(--spacing-xl) 0;
-    max-width: var(--container-width);
-    margin: 0 auto;
-    justify-content: center; /* Centers the grid items */
-  }
-
-  .product-card {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    transition: transform var(--transition-normal);
-  }
-
-  .product-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .product-image {
-    aspect-ratio: 1;
-    overflow: hidden;
-    border-radius: var(--border-radius-sm);
-    border: var(--border-tertiary);
-  }
-
-  .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .product-info {
-    padding: var(--spacing-sm) 0;
-    text-align: center;
-  }
-
-  .featured-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    background-color: var(--color-accent);
-    color: var(--color-text-light);
-    border-radius: var(--border-radius-sm);
-    font-size: var(--font-size-sm);
-    margin-top: var(--spacing-xs);
-  }
-
-  /* Update media query for responsive design */
-  @media (max-width: 992px) {
-    .products-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .products-grid {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
-    }
-    .category-section {
-      margin-bottom: var(--spacing-2xl);
-    }
-
-    .category-title {
-      font-size: var(--font-size-lg);
-    }
-  }
-</style>

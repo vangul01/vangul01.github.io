@@ -22,12 +22,8 @@ Checkout page
 
 */
 
-import {
-  addToCart,
-  clearCart,
-  updateUI,
-  updateCartCount,
-} from "./cart/cart.js";
+import { updateUI, updateCartCount } from "./cart/cart.js";
+import { clearCart, addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
 // import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
 

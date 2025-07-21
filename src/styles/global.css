@@ -415,23 +415,26 @@ textarea {
 } */
 
 /* ----------------PORTAL---------------- */
+.portal-video {
+  width: 100%;
+  height: auto;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.portal {
+  background: transparent;
+  min-height: 100vh;
+}
+
 .overlay-image {
-  position: fixed; /* Covers the whole screen */
-  top: 0;
-  left: 0;
-  width: 100dvw;
-  height: 100dvh; /* Ensures it takes the full height */
+  display: block;
+  width: 100%;
+  height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
-
-.overlay-image img {
-  max-width: 100%;
-  max-height: 90dvh; /* Adjust this value to whatever max height you want */
-  object-fit: contain; /* Ensures the image scales without distortion */
-}
-
 /* ----------------HOME---------------- */
 .hero-section {
   /* padding-top: 0px; */
@@ -443,18 +446,12 @@ textarea {
 }
 
 .overlay-text {
+  z-index: 2;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-
-  /* position: relative; */
-  z-index: 2;
-
-  /* h1 { */
-  /* font-size: 5.9vw; */
-  /* } */
 
   p {
     font-size: var(--font-size-lg);
@@ -462,18 +459,59 @@ textarea {
   }
 }
 
-/* div.scroll-container {
-  background-color: fuchsia;
-  overflow: auto;
-  white-space: nowrap;
-  padding: 10px;
-  max-height: 3rem;
-} */
+.leaves-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
-/* div.scroll-container img {
-  padding: 10px;
-  max-height: 20rem;
-} */
+.leaf {
+  position: absolute;
+  width: 30%;
+  opacity: 0.8;
+  will-change: transform, opacity;
+
+  animation: leafEntrance 1s ease-out forwards;
+
+  color: var(--color-accent); /* Controls the fill color */
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1)); /* Optional: adds depth */
+}
+
+.leaf-left {
+  left: -5%;
+  top: 20%;
+  transform: translateX(0) rotate(-10deg);
+}
+
+.leaf-right {
+  right: -5%;
+  top: 25%;
+  transform: translateX(0) rotate(10deg);
+}
+
+@keyframes leafEntrance {
+  from {
+    opacity: 0;
+    transform: translateX(var(--start-x)) rotate(var(--start-rotate));
+  }
+  to {
+    opacity: 0.8;
+    transform: translateX(0) rotate(var(--end-rotate));
+  }
+}
+
+.leaf-left {
+  --start-x: -100px;
+  --start-rotate: -45deg;
+  --end-rotate: -10deg;
+}
+
+.leaf-right {
+  --start-x: 100px;
+  --start-rotate: 45deg;
+  --end-rotate: 10deg;
+}
 
 /* ----------------GALLERY / MERCH---------------- */
 
@@ -499,6 +537,66 @@ textarea {
     background-size: cover;
     background-position: center center;
   }
+}
+
+.category-section {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.category-title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: var(--border-secondary);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl) 0;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  justify-content: center; /* Centers the grid items */
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-normal);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--border-radius-sm);
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: var(--spacing-sm) 0;
+  text-align: center;
+}
+
+.featured-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
 }
 
 /* ----------------ABOUT---------------- */
@@ -557,7 +655,7 @@ textarea {
   }
 }
 
-/* ------------------- PRODUCT PAGE ----------------------- */
+/* ------------------- PRODUCT PAGES ----------------------- */
 
 .product-text {
   display: flex;
@@ -588,30 +686,36 @@ textarea {
   }
 }
 
-.product-image img {
-  max-width: var(--max-text-width);
-  object-fit: cover;
-  /* border: var(--border-tertiary); */
-  border-radius: var(--border-radius-sm);
-}
-
 .product-image {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-md);
-  max-width: 600px; /* Adjust as needed */
+  max-width: 600px;
   width: 100%;
-  margin-top: 0; /* Reset any top margin */
+  margin-top: 0;
+}
+
+.zoom-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 500px;
+  cursor: zoom-in;
+  /* border-radius: var(--border-radius-sm); */
+  /* margin-top: 0; */
 }
 
 #main-product-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   /* border: var(--border-tertiary); */
   /* border-radius: var(--border-radius-lg); */
   transition: transform 0.3s ease;
+  /* transition:
+    transform 0.1s ease-out,
+    opacity 0.2s ease; */
 }
 
 .product-thumbnails {
@@ -630,6 +734,7 @@ textarea {
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: var(--border-radius-sm);
+  /* transition: border-color 0.2s ease; */
   transition: all 0.2s ease;
   opacity: 0.7;
 }
@@ -637,7 +742,6 @@ textarea {
 .thumbnail:hover {
   opacity: 1;
   border-color: var(--color-border-medium);
-  transform: translateY(-2px);
 }
 
 .thumbnail.active {
@@ -685,14 +789,15 @@ textarea {
   font-size: var(--font-size-base);
   /* margin: var(--spacing-md) 0; */
   /* padding: 0 var(--spacing-md); */
-  border-bottom: var(--border-tertiary);
+  /* border-bottom: var(--border-tertiary); */
 }
 
 .cart-titles {
   display: grid;
   width: 100%;
   font-weight: bold;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
+  border-bottom: var(--border-tertiary);
 }
 
 .cart-item {
@@ -830,6 +935,7 @@ textarea {
 }
 
 .all-products-total-price {
+  border-top: var(--border-tertiary);
   font-size: var(--font-size-lg);
   text-align: right;
   padding: var(--spacing-md);
@@ -850,26 +956,63 @@ textarea {
   /* background-color: #ce7b7b; */
 }
 
-/* ------------------ MODAL CONTACT FORM ------------------------ */
+/* ------------------ CONTACT FORM ------------------------ */
 
-/* Modal Content Box */
-/* .contact-box {
-  background: var(--color-modal-background);
-  padding: var(--spacing-xl);
-  border-radius: 10px;
-  max-width: 25rem;
-  position: relative;
+#success-message {
+  margin-top: var(--spacing-md);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
   text-align: center;
+}
 
-  h2 {
-    color: rgb(88, 58, 118);
-  }
+.form-field {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
 
-  input,
-  textarea {
-    border: var(--border-tertiary);
-  }
-} */
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-background);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+}
+
+.form-field label {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  /* padding: 0 var(--spacing-xs); */
+  color: var(--color-accent);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+  pointer-events: none;
+}
+
+.form-field textarea ~ label {
+  top: var(--spacing-sm);
+  transform: translateY(0);
+}
+
+.form-field input:focus ~ label,
+.form-field textarea:focus ~ label,
+.form-field input:not(:placeholder-shown) ~ label,
+.form-field textarea:not(:placeholder-shown) ~ label {
+  top: -0.5rem;
+  transform: scale(0.8);
+  color: var(--color-text-dark);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--color-text-dark);
+  border-radius: var(--border-radius-sm);
+  outline: none;
+}
 
 /* ------------------- HEADER NAVIGATION ------------------- */
 .header-nav {
@@ -1274,6 +1417,20 @@ textarea {
     grid-row: 3;
   }
 
+  /* merch.astro */
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  .category-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .category-title {
+    font-size: var(--font-size-lg);
+  }
+
+  /* cart.astro */
   .cart-products-grid,
   .cart-titles {
     grid-template-columns: 2fr 1fr 1fr;
@@ -1296,8 +1453,8 @@ textarea {
   }
 }
 
-/* Footer */
 @media (max-width: 992px) {
+  /* Footer */
   .footer {
     padding: 0;
   }
@@ -1326,6 +1483,11 @@ textarea {
     gap: 1rem;
     padding-top: 0; /* Reset any top padding */
     margin-top: 0; /* Reset any top margin */
+  }
+
+  /* merch.astro */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

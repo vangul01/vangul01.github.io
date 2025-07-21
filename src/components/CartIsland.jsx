@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { saveCart } from "../scripts/cart/cart-storage";
+import {
+  loadCart,
+  saveCart,
+  calculateTotals,
+} from "../scripts/cart/cart-storage";
 import "../styles/global.css";
-
-function getCart() {
-  if (typeof window === "undefined") return [];
-  return JSON.parse(localStorage.getItem("cartItems") || "[]");
-}
-
-// function saveCart(cart) {
-//   localStorage.setItem("cartItems", JSON.stringify(cart));
-// }
 
 export default function CartIsland() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    setCart(getCart());
+    setCart(loadCart());
   }, []);
 
   function updateQuantity(idx, delta) {
@@ -35,22 +30,19 @@ export default function CartIsland() {
     return (
       <div className="empty-cart">
         <p>Your cart is empty!</p>
-        <a href="/merch" class="button button-primary">
+        <a href="/merch" className="button button-primary">
           Continue Shopping
         </a>
       </div>
     );
   }
 
-  const finalPrice = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const { price: finalPrice } = calculateTotals(cart);
 
   return (
     <>
-      <div class="cart-container">
-        <div class="cart-products-grid cart-titles">
+      <div className="cart-container">
+        <div className="cart-products-grid cart-titles">
           <div>Product</div>
           <div>Quantity</div>
           <div>Total</div>
@@ -106,19 +98,6 @@ export default function CartIsland() {
             </div>
           </div>
         ))}
-        <div class="cart-buttons">
-          <a href="/merch" class="link">
-            Continue Shopping
-          </a>
-
-          <a
-            href="/checkout"
-            class="button button-primary"
-            id="proceed-to-payment"
-          >
-            Proceed to Checkout
-          </a>
-        </div>
 
         <div className="all-products-total-price">
           <p className="cart-items-subtotal">
@@ -127,6 +106,20 @@ export default function CartIsland() {
           <p className="subtotal-disclaimer">
             Taxes and shipping calculated at checkout
           </p>
+        </div>
+
+        <div className="cart-buttons">
+          <a href="/merch" className="link">
+            Continue Shopping
+          </a>
+
+          <a
+            href="/checkout"
+            className="button button-primary"
+            id="proceed-to-payment"
+          >
+            Proceed to Checkout
+          </a>
         </div>
       </div>
     </>
