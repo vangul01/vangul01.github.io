@@ -59,23 +59,6 @@ function calculateTotals() {
   );
 }
 
-function createCartItemElement(item) {
-  const template = document.getElementById("cart-item-template");
-  const row = template.content.cloneNode(true);
-
-  row.querySelector("img").src =
-    item.images?.[0] || "/src/assets/images/web/logo.png";
-  row.querySelector("img").alt = item.name;
-  row.querySelector(".cart-item-name").textContent = item.name;
-  row.querySelector(".cart-item-price").textContent =
-    `$${item.price?.toFixed(2) || 0} per item`;
-  row.querySelector(".quantity").textContent = item.quantity;
-  row.querySelector(".cart-item-total").textContent =
-    `$${(item.price * item.quantity).toFixed(2)}`;
-
-  return row;
-}
-
 // This will push all fields I want into local storage :)
 function addToCart(product) {
   const existingProduct = cart.find((item) => item.priceId === product.priceId);

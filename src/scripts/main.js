@@ -29,7 +29,7 @@ import {
   updateCartCount,
 } from "./cart/cart.js";
 import { initNav } from "./nav.js";
-import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
+// import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -78,6 +78,28 @@ if (typeof document !== "undefined") {
     //     // Save cart data to local storage
     //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     //   });
+  });
+
+  function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    // Optionally save to localStorage
+    localStorage.setItem("theme", theme);
+  }
+
+  // On page load, set theme to user's saved preference, or system preference if not set
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    setTheme(savedTheme);
+  } else {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setTheme(prefersDark ? "dark" : "light");
+  }
+
+  document.getElementById("theme-toggle").addEventListener("click", () => {
+    const current = localStorage.getItem("theme") === "dark" ? "light" : "dark";
+    setTheme(current);
   });
 
   // Register service worker

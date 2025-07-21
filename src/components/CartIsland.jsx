@@ -1,0 +1,134 @@
+import React, { useEffect, useState } from "react";
+import { saveCart } from "../scripts/cart/cart-storage";
+import "../styles/global.css";
+
+function getCart() {
+  if (typeof window === "undefined") return [];
+  return JSON.parse(localStorage.getItem("cartItems") || "[]");
+}
+
+// function saveCart(cart) {
+//   localStorage.setItem("cartItems", JSON.stringify(cart));
+// }
+
+export default function CartIsland() {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    setCart(getCart());
+  }, []);
+
+  function updateQuantity(idx, delta) {
+    const newCart = [...cart];
+    newCart[idx].quantity = Math.max(1, newCart[idx].quantity + delta);
+    setCart(newCart);
+    saveCart(newCart);
+  }
+
+  function removeItem(idx) {
+    const newCart = cart.filter((_, i) => i !== idx);
+    setCart(newCart);
+    saveCart(newCart);
+  }
+
+  if (!cart.length) {
+    return (
+      <div className="empty-cart">
+        <p>Your cart is empty!</p>
+        <a href="/merch" class="button button-primary">
+          Continue Shopping
+        </a>
+      </div>
+    );
+  }
+
+  const finalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  return (
+    <>
+      <div class="cart-container">
+        <div class="cart-products-grid cart-titles">
+          <div>Product</div>
+          <div>Quantity</div>
+          <div>Total</div>
+        </div>
+        {cart.map((item, idx) => (
+          <div className="cart-products-grid cart-row" key={item.priceId}>
+            {/* Column 1: Image, Name, Price per item */}
+            <div className="cart-product-info">
+              <img
+                className="cart-product-thumbnail"
+                src={item.image || "/src/assets/images/web/logo.png"}
+                alt={item.name}
+              />
+              <div className="cart-product-details">
+                <p className="cart-item-name">{item.name}</p>
+                <p className="cart-item-price">
+                  ${item.price?.toFixed(2) || 0} per item
+                </p>
+              </div>
+            </div>
+            {/* Column 2: Quantity controls */}
+            <div className="cart-product-quantity">
+              <div className="quantity-controls">
+                <button
+                  className="quantity-btn minus"
+                  aria-label="Decrease quantity"
+                  onClick={() => updateQuantity(idx, -1)}
+                >
+                  -
+                </button>
+                <span className="quantity">{item.quantity}</span>
+                <button
+                  className="quantity-btn plus"
+                  aria-label="Increase quantity"
+                  onClick={() => updateQuantity(idx, 1)}
+                >
+                  +
+                </button>
+              </div>
+              <button
+                className="delete-btn"
+                aria-label="Remove item"
+                onClick={() => removeItem(idx)}
+              >
+                <i className="fa fa-trash"></i>
+              </button>
+            </div>
+            {/* Column 3: Total price */}
+            <div className="cart-product-total-price">
+              <p className="cart-item-total">
+                ${Number(item.price * item.quantity).toFixed(2)}
+              </p>
+            </div>
+          </div>
+        ))}
+        <div class="cart-buttons">
+          <a href="/merch" class="link">
+            Continue Shopping
+          </a>
+
+          <a
+            href="/checkout"
+            class="button button-primary"
+            id="proceed-to-payment"
+          >
+            Proceed to Checkout
+          </a>
+        </div>
+
+        <div className="all-products-total-price">
+          <p className="cart-items-subtotal">
+            Subtotal ${Number(finalPrice).toFixed(2)} USD
+          </p>
+          <p className="subtotal-disclaimer">
+            Taxes and shipping calculated at checkout
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}
