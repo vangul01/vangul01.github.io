@@ -9,11 +9,11 @@ export function handleParallax() {
       const rotate = scrolled * 0.02;
       const opacity = 1 - scrolled * 0.003;
 
-      leafElement.style.transform = `
-            translateX(${leafElement.classList.contains("leaf-left") ? -translateX : translateX}px)
-            rotate(${leafElement.classList.contains("leaf-left") ? -rotate : rotate}deg)
+      leaf.style.transform = `
+            translateX(${leaf.classList.contains("leaf-left") ? -translateX : translateX}px)
+            rotate(${leaf.classList.contains("leaf-left") ? -rotate : rotate}deg)
           `;
-      leafElement.style.opacity = Math.max(opacity, 0).toString();
+      leaf.style.opacity = Math.max(opacity, 0).toString();
     });
   });
 }

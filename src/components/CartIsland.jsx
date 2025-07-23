@@ -26,6 +26,13 @@ export default function CartIsland() {
     saveCart(newCart);
   }
 
+  function formatPrice(price) {
+    return new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(price);
+  }
+
   if (!cart.length) {
     return (
       <div className="empty-cart">
@@ -51,11 +58,16 @@ export default function CartIsland() {
           <div className="cart-products-grid cart-row" key={item.priceId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
-              <img
-                className="cart-product-thumbnail"
-                src={item.image || "/src/assets/images/web/logo.png"}
-                alt={item.name}
-              />
+              <a
+                href={`products/${item.productUrl}`}
+                className="cart-product-link"
+              >
+                <img
+                  className="cart-product-thumbnail"
+                  src={item.image || "/src/assets/images/web/logo.png"}
+                  alt={item.name}
+                />
+              </a>
               <div className="cart-product-details">
                 <p className="cart-item-name">{item.name}</p>
                 <p className="cart-item-price">
@@ -93,7 +105,7 @@ export default function CartIsland() {
             {/* Column 3: Total price */}
             <div className="cart-product-total-price">
               <p className="cart-item-total">
-                ${Number(item.price * item.quantity).toFixed(2)}
+                ${formatPrice(item.price * item.quantity)}
               </p>
             </div>
           </div>
@@ -101,7 +113,7 @@ export default function CartIsland() {
 
         <div className="all-products-total-price">
           <p className="cart-items-subtotal">
-            Subtotal ${Number(finalPrice).toFixed(2)} USD
+            Subtotal ${formatPrice(finalPrice)} USD
           </p>
           <p className="subtotal-disclaimer">
             Taxes and shipping calculated at checkout
