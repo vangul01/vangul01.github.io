@@ -3,8 +3,18 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+import { getStripePrices } from "../lib/stripe-client";
+import type { CartItem } from "../types/sanity-schema";
+
+import { loadCart } from "../scripts/cart/cart-storage";
+
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
+
+// Load cart items and fetch their prices
+const cartItems = loadCart() as CartItem[];
+const priceIds = cartItems.map((item: CartItem) => item.priceId);
+const prices = priceIds.length > 0 ? await getStripePrices(priceIds) : {};
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
@@ -23,71 +33,98 @@ const keywords = "Cart, Shopping Cart, Checkout";
       </div> -->
 
       <div class="cart-container">
-        <div class="cart-products-grid">
-          <div class="cart-titles">Product</div>
-          <div class="cart-titles">Quantity</div>
-          <div class="cart-titles">Total</div>
+        <div class="empty-cart-message hidden">
+          <p>Your cart is empty</p>
+          <a href="/merch" class="button button-primary">Continue Shopping</a>
         </div>
 
-        <div class="cart-products-grid">
-          <!-- {categoryProducts.map((product) => (
-          <a href={`/products/${product.slug}`}> -->
-
-          <div class="cart-product-info">
-            <div class="cart-product-image">
-              <img
-                src="/src/assets/images/web/logo.png"
-                alt="Product Image"
-                loading="lazy"
-              />
-              <!-- <img
-              src={product.images?.[0] || "/src/assets/images/web/logo.png"}
-              alt={product.name}
-              loading="lazy"
-            /> -->
-            </div>
-
-            <div class="cart-product-text">
-              <p>Product Name</p>
-              <p>$1 per item</p>
-              <!-- <h4>{product.name}</h4> -->
-            </div>
+        <div class="cart-content hidden">
+          <div class="cart-products-grid cart-headers">
+            <div class="cart-titles">Product</div>
+            <div class="cart-titles">Quantity</div>
+            <div class="cart-titles">Total</div>
           </div>
 
-          <div class="cart-product-quantity">
-            <div class="quantity-controls">
-              <button class="quantity-btn minus" aria-label="Decrease quantity"
-                >-</button
-              >
+          {
+            cartItems.map((item) => (
+              <div class="cart-products-grid" data-product-id={item.priceId}>
+                <div class="cart-product-info">
+                  <div class="cart-product-image">
+                    <img
+                      src={item.image?.[0] || "/src/assets/images/web/logo.png"}
+                      alt={item.name || "Product Image"}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="cart-product-text">
+                    <p>{item.name}</p>
+                    <p>
+                      ${(prices[item.priceId]?.amount / 100).toFixed(2)} per
+                      item
+                    </p>
+                  </div>
+                </div>
 
-              <span class="quantity">1</span>
-              <button class="quantity-btn plus" aria-label="Increase quantity"
-                >+</button
-              >
-            </div>
-            <button class="delete-btn" aria-label="Remove item">
-              <i class="fa fa-trash"></i>
-            </button>
-            <!-- <p>1</p> -->
-            <!-- <h4>{product.quantity}</h4> -->
+                <div class="cart-product-quantity">
+                  <div class="quantity-controls">
+                    <button
+                      class="quantity-btn minus"
+                      aria-label="Decrease quantity"
+                    >
+                      -
+                    </button>
+                    <span class="quantity">{item.quantity}</span>
+                    <button
+                      class="quantity-btn plus"
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button class="delete-btn" aria-label="Remove item">
+                    <i class="fa fa-trash" />
+                  </button>
+                </div>
+
+                <div class="cart-product-total-price">
+                  <p>
+                    $
+                    {(
+                      (prices[item.priceId]?.amount / 100) *
+                      item.quantity
+                    ).toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+
+          <div class="subtotal-container">
+            <h4>
+              Subtotal: ${
+                cartItems
+                  .reduce(
+                    (total, item) =>
+                      total +
+                      (prices[item.priceId]?.amount / 100) * item.quantity,
+                    0,
+                  )
+                  .toFixed(2)
+              } USD
+            </h4>
+            <p>Taxes and shipping calculated at checkout</p>
           </div>
 
-          <div class="cart-product-total-price">
-            <p>$1 x Quantity</p>
-            <!-- <h4>${product.price * product.quantity}</h4> -->
+          <div class="cart-buttons">
+            <a href="/merch" class="link">Continue Shopping</a>
+            <a
+              href="/checkout"
+              class="button button-primary"
+              id="proceed-to-payment"
+            >
+              Proceed to Checkout
+            </a>
           </div>
-        </div>
-
-        <div class="cart-buttons">
-          <a href="/merch" class="link">Continue Shopping</a>
-
-          <a
-            href="/checkout"
-            class="button button-primary"
-            id="proceed-to-payment"
-          >
-            Proceed to Checkout
-          </a>
         </div>
       </div>
     </section>
@@ -96,6 +133,28 @@ const keywords = "Cart, Shopping Cart, Checkout";
 </BaseLayout>
 
 <style>
+  .subtotal-container {
+    text-align: right;
+    padding: var(--spacing-md); /* Added padding to align with grid */
+    gap: var(--spacing-sm);
+    h4 {
+      font-size: var(--font-size-lg);
+      padding-bottom: var(--spacing-sm);
+    }
+    p {
+      font-size: var(--font-size-base);
+    }
+  }
+  .empty-cart-message {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .empty-cart-message p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-text-muted);
+  }
   .cart-container {
     display: flex;
     flex-direction: column;
@@ -166,7 +225,7 @@ const keywords = "Cart, Shopping Cart, Checkout";
   .cart-product-quantity {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     justify-content: center;
     text-align: center;
 
@@ -226,7 +285,7 @@ const keywords = "Cart, Shopping Cart, Checkout";
     justify-content: space-between; /* Changed from flex-end to space-between */
     align-items: center;
     width: 100%;
-    padding: 0 var(--spacing-md); /* Added padding to align with grid */
+    padding: var(--spacing-md); /* Added padding to align with grid */
     /* margin-top: var(--spacing-xl);
     border-top: var(--border-tertiary); */
 
@@ -311,11 +370,55 @@ const keywords = "Cart, Shopping Cart, Checkout";
     updateCart();
   }
 
-  function updateCart() {
-    // Add your cart total update logic here
-    console.log("Cart updated");
+  import { loadCart } from "../scripts/cart/cart-storage.js";
+
+  function handleEmptyCart() {
+    const emptyMessage = document.querySelector(".empty-cart-message");
+    const cartContent = document.querySelector(".cart-content");
+    const cart = loadCart();
+
+    if (emptyMessage && cartContent) {
+      const isEmpty = cart.length === 0;
+      console.log("Cart is empty:", isEmpty, cart.length, cart);
+
+      //   if (isEmpty) {
+      //     console.log("Cart is empty for real!");
+      //     // Cart is empty
+      //     emptyMessage.classList.remove("hidden");
+      //     cartContent.classList.add("hidden");
+      //   } else {
+      //     console.log("Cart is NOT EMPTY!");
+      //     // Has items in cart
+      //     emptyMessage.classList.add("hidden");
+      //     cartContent.classList.remove("hidden");
+      //   }
+
+      emptyMessage.classList.toggle("hidden", !isEmpty);
+      cartContent.classList.toggle("hidden", isEmpty);
+    }
+
+    // if (emptyMessage && cartContent) {
+    //   if (cart.length > 0) {
+    //     // Has items in cart
+    //     emptyMessage.classList.add("hidden");
+    //     cartContent.classList.remove("hidden");
+    //   } else {
+    //     // Cart is empty
+    //     emptyMessage.classList.remove("hidden");
+    //     cartContent.classList.add("hidden");
+    //   }
+    // }
   }
 
-  // Initialize controls when the page loads
-  document.addEventListener("DOMContentLoaded", initializeQuantityControls);
+  // Update initialization to include handleEmptyCart
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeQuantityControls();
+    handleEmptyCart(); // Check cart state on page load
+  });
+
+  // Also handle empty cart state after item removal
+  function updateCart() {
+    console.log("Cart updated");
+    handleEmptyCart();
+  }
 </script>

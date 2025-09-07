@@ -11,3 +11,9 @@ export function saveCart(cart) {
 export function clearStoredCart() {
   localStorage.removeItem("cartItems");
 }
+
+// I did not check this logic
+export function updateCartCount(cart) {
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  document.querySelector("#cart-count").textContent = cartCount;
+}

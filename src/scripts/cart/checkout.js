@@ -1,3 +1,18 @@
+/*
+This is the checkout script for the embedded Stripe Checkout.
+It initializes the Stripe Checkout with the provided public key,
+fetches the cart items, and creates a checkout session.
+
+It handles errors gracefully and provides user feedback.
+It also includes a function to fetch Stripe price details.
+It is designed to be used in a web application where users can add items to their cart
+and proceed to checkout.
+
+It is important to ensure that the cart is not empty before proceeding to checkout.
+It is also important to handle errors gracefully and provide user feedback.
+It is crucial to never use innerHTML for user inputs to prevent XSS attacks.
+*/
+
 import { loadCart } from "../cart/cart-storage.js";
 export async function initializeCheckout(stripePublicKey) {
   if (!stripePublicKey) {
@@ -59,9 +74,12 @@ export async function initializeCheckout(stripePublicKey) {
         ? "Unable to connect to checkout. Please check your internet connection."
         : "There was a problem loading the checkout form. Please try again.";
 
+    // NEVER USE INNERHTML FOR USER INPUTS!!!!
     errorContainer.innerHTML = `<p class="error">${errorMessage}</p>`;
 
     // Optional: Add a retry button
+    // NEVER USE INNERHTML FOR USER INPUTS!!!!
+
     errorContainer.innerHTML += `
       <button class="button button-secondary" onclick="window.location.reload()">
         Try Again

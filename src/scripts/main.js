@@ -67,28 +67,28 @@ if (typeof document !== "undefined") {
     // document
     //   .querySelector("#proceed-to-payment")
     //   .addEventListener("click", () => {
-    //         // Example cart data
-    //         const cartItems = [
-    //           { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 1 },
-    //           { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 2 },
-    //         ];
+    //     // Example cart data
+    //     const cartItems = [
+    //       { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 1 },
+    //       { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 2 },
+    //     ];
 
     //     // Save cart data to local storage
     //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     //   });
   });
 
-  // Register service worker
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then(() => {
-          console.log("Service Worker registered!");
-        })
-        .catch((error) => {
-          console.log("Service Worker registration failed:", error);
-        });
-    });
-  }
+  // Register service worker - why???
+  //   if ("serviceWorker" in navigator) {
+  //     window.addEventListener("load", () => {
+  //       navigator.serviceWorker
+  //         .register("/sw.js")
+  //         .then(() => {
+  //           console.log("Service Worker registered!");
+  //         })
+  //         .catch((error) => {
+  //           console.log("Service Worker registration failed:", error);
+  //         });
+  //     });
+  //   }
 }

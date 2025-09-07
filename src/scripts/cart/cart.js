@@ -1,3 +1,5 @@
+// I want this to be for the cart page only!! cart.astros javaScript file
+
 import { loadCart, saveCart, clearStoredCart } from "./cart-storage.js";
 
 const elements = {

@@ -32,3 +32,10 @@ export interface Product {
   category: SanityProduct["category"];
   featured?: SanityProduct["featured"];
 }
+
+export interface CartItem {
+  priceId: string;
+  name: string;
+  quantity: number;
+  image?: string;
+}
