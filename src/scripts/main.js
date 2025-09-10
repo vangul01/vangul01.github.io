@@ -107,12 +107,6 @@ if (typeof document !== "undefined") {
     //   });
   });
 
-  // function setTheme(theme) {
-  //   document.documentElement.setAttribute("data-theme", theme);
-  //   // Optionally save to localStorage
-  //   localStorage.setItem("theme", theme);
-  // }
-
   // Register service worker
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
