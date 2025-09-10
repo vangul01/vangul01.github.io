@@ -125,13 +125,13 @@ export default function CartIsland() {
             Continue Shopping
           </a>
 
-          <a
+          {/* <a
             href="/checkout"
             className="button button-primary"
             id="proceed-to-payment"
           >
             Proceed to Checkout
-          </a>
+          </a> */}
         </div>
       </div>
     </>
