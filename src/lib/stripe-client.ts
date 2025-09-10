@@ -4,29 +4,27 @@ interface StripePrice {
 }
 
 /**
- * Fetch a single price from Stripe
+ * Helper to get the correct Netlify function URL
  */
-export async function getStripePrice(priceId: string): Promise<StripePrice> {
-  const response = await fetch("/.netlify/functions/get-stripe-prices", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ priceId }),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch price from Stripe");
+function getNetlifyFunctionUrl(path: string) {
+  if (typeof window !== "undefined") {
+    // Client-side: relative path works
+    return path;
   }
-
-  return response.json();
+  // Server-side: use environment variable or default to localhost
+  const base =
+    process.env.URL || process.env.DEPLOY_PRIME_URL || "http://localhost:8888";
+  return `${base}${path}`;
 }
 
 /**
- * Fetch multiple prices from Stripe in one call
+ * Fetch one or more Stripe prices from Netlify function
  */
 export async function getStripePrices(
-  priceIds: string[],
+  priceIds: string[]
 ): Promise<Record<string, StripePrice>> {
-  const response = await fetch("/.netlify/functions/get-stripe-prices-batch", {
+  const url = getNetlifyFunctionUrl("/.netlify/functions/get-stripe-prices");
+  const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ priceIds }),
@@ -37,4 +35,12 @@ export async function getStripePrices(
   }
 
   return response.json();
+}
+
+/**
+ * Fetch a single Stripe price by ID
+ */
+export async function getStripePrice(priceId: string): Promise<StripePrice> {
+  const prices = await getStripePrices([priceId]);
+  return prices[priceId];
 }

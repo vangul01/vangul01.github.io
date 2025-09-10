@@ -22,17 +22,17 @@ Checkout page
 
 */
 
-import {
-  addToCart,
-  clearCart,
-  updateUI,
-  updateCartCount,
-} from "./cart/cart.js";
+import { updateUI, updateCartCount } from "./cart/cart.js";
+import { clearCart, addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
+import { initTheme } from "./color-theme.js";
+
+// import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     // Initialize global features
+    initTheme();
     initNav();
 
     // Initialize cart UI
@@ -52,7 +52,9 @@ if (typeof document !== "undefined") {
           priceId: this.dataset.priceId, // For Stripe Checkout
           name: this.dataset.name,
           price: parseFloat(this.dataset.price),
+          image: this.dataset.image,
           quantity: parseInt(this.dataset.quantity) || 1,
+          productUrl: this.dataset.productUrl,
         };
 
         addToCart(product);
@@ -62,6 +64,33 @@ if (typeof document !== "undefined") {
         setTimeout(() => (this.textContent = "Add to Cart"), 1000);
       });
     });
+
+    // // Theme toggle
+    // const themeToggle = document.getElementById("theme-toggle");
+    // if (themeToggle) {
+    //   themeToggle.addEventListener("click", () => {
+    //     const current =
+    //       localStorage.getItem("theme") === "dark" ? "light" : "dark";
+    //     setTheme(current);
+    //   });
+    // }
+
+    // // On page load, set theme to user's saved preference, or system preference if not set
+    // const savedTheme = localStorage.getItem("theme");
+    // if (savedTheme) {
+    //   setTheme(savedTheme);
+    // } else {
+    //   const prefersDark = window.matchMedia(
+    //     "(prefers-color-scheme: dark)"
+    //   ).matches;
+    //   setTheme(prefersDark ? "dark" : "light");
+    // }
+
+    // document.getElementById("theme-toggle").addEventListener("click", () => {
+    //   const current =
+    //     localStorage.getItem("theme") === "dark" ? "light" : "dark";
+    //   setTheme(current);
+    // });
 
     // Proceed to payment link in cart.astro
     // document
@@ -77,6 +106,12 @@ if (typeof document !== "undefined") {
     //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     //   });
   });
+
+  // function setTheme(theme) {
+  //   document.documentElement.setAttribute("data-theme", theme);
+  //   // Optionally save to localStorage
+  //   localStorage.setItem("theme", theme);
+  // }
 
   // Register service worker
   if ("serviceWorker" in navigator) {
