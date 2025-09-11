@@ -2,10 +2,15 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CartIsland from "../components/CartIsland.jsx";
 
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
 ---
+<!-- TO DO:
+ on hover of image, have border change too
+different colored dividers/other styling things, min width?
+-->
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
@@ -13,35 +18,14 @@ const keywords = "Cart, Shopping Cart, Checkout";
     <section class="content-container">
       <div class="heading">
         <h3>Your Cart</h3>
+        <br />
+        <p>Checkout is currently disabled.</p>
+        <h6> Sign up for our newsletter below to get details on website launch information!</h6>
       </div>
 
-      <div class="cart-container">
-        <div class="cart-list-container">
-          <ul id="cart-items-list"></ul>
-          <p id="cart-total-quantity">Items: 0</p>
-          <p id="cart-total-price">Total Amount: $0</p>
-        </div>
-      </div>
+      <CartIsland client:load />
 
-      <div class="cart-buttons">
-        <button class="button button-tertiary" id="clear-cart"
-          >Clear Cart</button
-        >
-
-        <!-- Or continue shopping?? -->
-        <button class="button button-secondary" onclick="history.back()"
-          >Go Back</button
-        >
-
-        <!-- <a
-          href="/checkout"
-          class="button button-primary"
-          id="proceed-to-payment"
-        >
-          Proceed to Checkout
-        </a> -->
-      </div>
     </section>
   </main>
+  <Footer />
 </BaseLayout>
-<Footer />
