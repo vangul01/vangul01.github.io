@@ -78,8 +78,9 @@ const keywords = `vangular, ${product.name}, art, products`;
           {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
 
           <div>
-            <p>id="product-price" data-price-id={product.stripePriceId}>
-              Loading price...</p>
+            <p id="product-price" data-price-id={product.stripePriceId}>
+              Loading price...
+            </p>
             <p>{product.quantity} Available</p>
           </div>
 
