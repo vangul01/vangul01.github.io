@@ -35,9 +35,6 @@ interface Props {
 }
 
 const { product } = Astro.props;
-
-// Fetch Stripe price server-side
-const stripePrice = await getStripePrice(product.stripePriceId);
 const pageTitle = `${product.name} | VANGULAR`;
 const keywords = `vangular, ${product.name}, art, products`;
 ---
@@ -81,7 +78,8 @@ const keywords = `vangular, ${product.name}, art, products`;
           {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
 
           <div>
-            <p>${stripePrice.amount} {stripePrice.currency.toUpperCase()}</p>
+            <p>id="product-price" data-price-id={product.stripePriceId}>
+              Loading price...</p>
             <p>{product.quantity} Available</p>
           </div>
 
@@ -92,7 +90,6 @@ const keywords = `vangular, ${product.name}, art, products`;
                 id="add-to-cart"
                 data-price-id={product.stripePriceId}
                 data-name={product.name}
-                data-price={stripePrice.amount}
                 data-image={product.images?.[0]}
                 data-quantity="1"
                 data-product-url={`${product.slug}`}
@@ -127,6 +124,37 @@ const keywords = `vangular, ${product.name}, art, products`;
 <script>
   import { initZoom, initThumbnails, initKeyboardNav } from "../../scripts/product.js";
   document.addEventListener("DOMContentLoaded", () => {
+    initZoom();
+    initThumbnails();
+    initKeyboardNav();
+  });
+
+    import { getStripePrice } from "../../lib/stripe-client";
+
+  async function loadPrice() {
+    const priceElement = document.getElementById('product-price');
+    const priceId = priceElement?.dataset.priceId;
+    
+    if (priceId) {
+      try {
+        const price = await getStripePrice(priceId);
+        priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
+        
+        // Update the add-to-cart button's price data
+        const addToCartBtn = document.getElementById('add-to-cart');
+        if (addToCartBtn) {
+          addToCartBtn.dataset.price = String(price.amount);
+        }
+      } catch (error) {
+        console.error('Error loading price:', error);
+        priceElement.textContent = 'Price unavailable';
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadPrice();
+    // ...your existing initialization code...
     initZoom();
     initThumbnails();
     initKeyboardNav();
