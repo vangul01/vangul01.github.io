@@ -33,3 +33,25 @@ export async function getAllProducts(): Promise<Product[]> {
   // TypeScript knows the return type from the function signature
   return products;
 }
+
+export async function getFeaturedProducts(): Promise<Product[]> {
+  const query = `*[_type == "product" && featured == true]{
+        _id,
+        name,
+        "slug": slug.current,
+        "images": images[].asset->url
+      }`;
+
+  return await client.fetch(query);
+}
+
+export async function getCollabProducts(): Promise<Product[]> {
+  const query = `*[_type == "product" && category == "collaboration"]{
+    _id,
+    name,
+    "slug": slug.current,
+    "images": images[].asset->url
+  }`;
+
+  return await client.fetch(query);
+}

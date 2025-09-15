@@ -1,0 +1,141 @@
+---
+interface Props {
+  items: {
+    slug?: string;
+    images: string[];
+    name: string;
+    link?: string;
+  }[];
+  height?: string;
+  showArrows?: boolean;
+  autoPlay?: boolean;
+}
+
+const { 
+  items, 
+  height = "400px",
+  showArrows = true,
+  autoPlay = true
+} = Astro.props;
+---
+
+<div class="carousel-container" style={`height: ${height};`}>
+  <div class="carousel">
+    {
+      items.map((item) => (
+        <div class="carousel-slide">
+          {item.link || item.slug ? (
+            <a href={item.link || `/products/${item.slug}`}>
+              <img
+                src={item.images[0]}
+                alt={item.name}
+                class="carousel-image"
+              />
+            </a>
+          ) : (
+            <img
+              src={item.images[0]}
+              alt={item.name}
+              class="carousel-image"
+            />
+          )}
+        </div>
+      ))
+    }
+  </div>
+  {showArrows && (
+    <>
+      <button class="carousel-button prev" aria-label="Previous slide">←</button>
+      <button class="carousel-button next" aria-label="Next slide">→</button>
+    </>
+  )}
+</div>
+
+<script>
+  function setupCarousel() {
+    const carousel = document.querySelector('.carousel');
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const nextButton = document.querySelector('.carousel-button.next');
+    let currentSlide = 0;
+
+    function updateSlides() {
+      slides.forEach((slide, index) => {
+        slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
+      });
+    }
+
+    prevButton.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      updateSlides();
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      updateSlides();
+    });
+
+    // Auto advance every 5 seconds
+if (autoPlay) {
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlides();
+  }, 5000);
+}
+
+    updateSlides();
+  }
+
+  document.addEventListener('DOMContentLoaded', setupCarousel);
+</script>
+
+<style>
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .carousel {
+    display: flex;
+    height: 100%;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .carousel-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .prev {
+    left: 1rem;
+  }
+
+  .next {
+    right: 1rem;
+  }
+</style>
