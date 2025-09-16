@@ -3,20 +3,21 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+
 import { Image } from "astro:assets";
-import { getFeaturedProducts, getCollabProducts } from "../lib/sanity-client.ts";
+import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import leftLeaf from "../assets/images/web/left-leaf.svg";
 import rightLeaf from "../assets/images/web/right-leaf.svg";
-// import featuredArt from "../assets/images/web/eyecon.png";
+import featuredArt from "../assets/images/web/eyecon.png";
 import aboutMe from "../assets/images/web/about-home.png";
 import collab from "../assets/images/web/dreams.png";
 
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
-const collabProducts = await getCollabProducts();
+const collabs = await getCollabs();
 
-import ProductCarousel from "../components/Carousel.astro";
+import Carousel from "../components/Carousel.astro";
 
 
 const pageTitle = "Home | VANGULAR";
@@ -66,12 +67,9 @@ const keywords =
     <section class="content-container">
       <div class="two-column-container">
         <div class="image about-image">
-        <ProductCarousel 
-          items={featuredProducts}
-          height="400px"
-          showArrows={true}
-          autoPlay={true}
-        />
+        <!-- <Carousel 
+          items={featuredProducts} /> -->
+          <Image src={featuredArt} alt="Featured Artwork" />
         </div>
 
         <div class="text about-text">

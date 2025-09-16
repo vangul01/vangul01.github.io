@@ -1,141 +1,135 @@
 ---
 interface Props {
   items: {
+    images: any[];
+    name?: string;
     slug?: string;
-    images: string[];
-    name: string;
-    link?: string;
   }[];
-  height?: string;
-  showArrows?: boolean;
-  autoPlay?: boolean;
 }
 
-const { 
-  items, 
-  height = "400px",
-  showArrows = true,
-  autoPlay = true
-} = Astro.props;
+const { items } = Astro.props;
+console.log('Carousel items:', items);
+
+// import featuredArt from "../assets/images/web/eyecon.png";
 ---
 
-<div class="carousel-container" style={`height: ${height};`}>
-  <div class="carousel">
+<div class="carousel">
+  <div class="slides-container">
     {
-      items.map((item) => (
-        <div class="carousel-slide">
-          {item.link || item.slug ? (
-            <a href={item.link || `/products/${item.slug}`}>
-              <img
-                src={item.images[0]}
-                alt={item.name}
-                class="carousel-image"
-              />
-            </a>
-          ) : (
+      items.map((item, index) => (
+        <div class="slide" data-index={index}>
+          <a href={item.slug ? `${item.slug}` : '#'}>
             <img
-              src={item.images[0]}
-              alt={item.name}
-              class="carousel-image"
+              src={item?.images[0] || "../assets/images/web/eyecon.png"}
+              alt={item.name || 'Artwork'}
+              loading="lazy"
             />
-          )}
+          </a>
         </div>
       ))
     }
   </div>
-  {showArrows && (
-    <>
-      <button class="carousel-button prev" aria-label="Previous slide">←</button>
-      <button class="carousel-button next" aria-label="Next slide">→</button>
-    </>
-  )}
+  
+  <button class="nav-button prev" aria-label="Previous image">‹</button>
+  <button class="nav-button next" aria-label="Next image">›</button>
 </div>
 
-<script>
-  function setupCarousel() {
-    const carousel = document.querySelector('.carousel');
-    const slides = carousel.querySelectorAll('.carousel-slide');
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const nextButton = document.querySelector('.carousel-button.next');
-    let currentSlide = 0;
-
-    function updateSlides() {
-      slides.forEach((slide, index) => {
-        slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`;
-      });
-    }
-
-    prevButton.addEventListener('click', () => {
-      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-      updateSlides();
-    });
-
-    nextButton.addEventListener('click', () => {
-      currentSlide = (currentSlide + 1) % slides.length;
-      updateSlides();
-    });
-
-    // Auto advance every 5 seconds
-if (autoPlay) {
-  setInterval(() => {
-    currentSlide = (currentSlide + 1) % slides.length;
-    updateSlides();
-  }, 5000);
-}
-
-    updateSlides();
-  }
-
-  document.addEventListener('DOMContentLoaded', setupCarousel);
-</script>
+<div class="debug" style="display: none;">
+  {JSON.stringify(items, null, 2)}
+</div>
 
 <style>
-  .carousel-container {
+  .carousel {
     position: relative;
     width: 100%;
     height: 400px;
+    margin: 0 auto;
     overflow: hidden;
+    border-radius: 8px;
   }
 
-  .carousel {
-    display: flex;
+  .slides-container {
     height: 100%;
+    width: 100%;
   }
 
-  .carousel-slide {
+  .slide {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    transition: transform 0.5s ease-in-out;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
   }
 
-  .carousel-image {
+  .slide.active {
+    opacity: 1;
+  }
+
+  .slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .carousel-button {
+  .nav-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     color: white;
     border: none;
-    padding: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
     cursor: pointer;
-    z-index: 2;
+    transition: background-color 0.3s ease;
   }
 
-  .carousel-button:hover {
-    background: rgba(0, 0, 0, 0.8);
+  .nav-button:hover {
+    background: rgba(0, 0, 0, 0.6);
   }
 
   .prev {
-    left: 1rem;
+    left: 20px;
   }
 
   .next {
-    right: 1rem;
+    right: 20px;
   }
 </style>
+
+<script>
+  function initCarousel() {
+    const slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+
+    let currentSlide = 0;
+    slides[0].classList.add('active');
+
+    function showSlide(index: number) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+    }
+
+    document.querySelector('.prev')?.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    document.querySelector('.next')?.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    // Auto advance every 5 seconds
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 5000);
+  }
+
+  document.addEventListener('DOMContentLoaded', initCarousel);
+</script>
