@@ -1,0 +1,210 @@
+/* ------------------- FOOTER ----------------------- */
+.footer {
+  background-image: url("/src/assets/images/web/plantie_footer.png");
+  background-position: bottom;
+
+  /* background-repeat: no-repeat; */
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+
+  /* background-size: cover; */
+
+  /* padding-top: var(--height-footer-image); */
+  padding-top: 0;
+  height: auto; /* Let content set the height */
+
+  /* padding-bottom: 120px; */
+
+  /* Adjust based on your image height */
+
+  /* margin-top: auto;  */
+
+  /* Pushes footer to bottom */
+  width: 100%;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+
+  /* padding-top: var(--height-footer-image); */
+
+  /* border-top: var(--border-secondary); */
+  margin: 0 var(--spacing-3xl);
+
+  /* min-height: 200px; Ensures footer has a minimum height */
+}
+
+.footer-section {
+  display: inline;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  /* padding: var(--spacing-md); */
+  border: var(--border-secondary);
+
+  /* border-radius: var(--border-radius-md); */
+  background-color: var(--color-nav);
+
+  /* box-shadow: var(--shadow-md); */
+  column-fill: auto;
+
+  /* max-width: 500px; */
+
+  /* column-width: 100px; */
+
+  /* -webkit-column-width: var(--thumbnail); */
+
+  /* -moz-column-width: var(--thumbnail); */
+  font-size: var(--font-size-sm);
+
+  a {
+    text-decoration: none;
+    flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
+    flex-basis: auto;
+    box-sizing: border-box; /* Ensures padding and borders don't increase width */
+    text-align: left; /* Aligns text inside the links */
+
+    /* display: inline-block; */
+
+    /* font-size: var(--font-size-sm); */
+  }
+
+  ul {
+    text-align: left;
+  }
+}
+
+.footer-title {
+  font-size: var(--font-size-base);
+  padding: var(--spacing-md);
+}
+
+.link-list {
+  list-style: none;
+  padding: var(--spacing-md);
+  text-align: center;
+
+  li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-normal);
+  }
+
+  a:hover {
+    color: var(--color-text-light);
+  }
+}
+
+.social-section {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--spacing-lg);
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Made slightly smaller */
+  height: 40px;
+  border-radius: var(--border-radius-circle);
+  background-color: var(--color-background);
+  border: var(--border-tertiary);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+
+  i {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+  }
+}
+
+/* .social-link:hover {
+  transform: translateY(-2px);
+} */
+
+.social-link:hover {
+  /* background-color: var(--color-button-primary); */
+  background-color: var(--color-border-dark);
+  border-color: transparent;
+
+  i {
+    color: var(--color-text-light);
+  }
+}
+
+.newsletter {
+  grid-column: span 2;
+  grid-row: 2;
+  text-align: center;
+
+  h4 {
+    font-size: var(--font-size-lg);
+  }
+
+  p {
+    /* margin-bottom: var(--spacing-md); */
+    color: var(--color-text-muted);
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+}
+
+.newsletter form {
+  padding: var(--spacing-md) var(--spacing-md);
+}
+
+.newsletter button {
+  width: 100%;
+  max-width: 400px;
+  margin: var(--spacing-lg) 0 0 0;
+}
+
+.newsletter-input {
+  /* padding: var(--spacing-sm) var(--spacing-md); */
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-background-alt);
+  color: var(--color-text-primary);
+  max-width: 400px;
+  width: 100%;
+  margin: 0;
+
+  /* margin-bottom: var(--spacing-md); */
+}
+
+.newsletter-input:focus {
+  /* outline: none; */
+  border-color: var(--color-secondary);
+}
+
+/* Quick Links and Shop sections */
+.footer-section:not(.social-section, .newsletter) {
+  grid-column: span 1;
+  grid-row: 2;
+}
+
+.footer-bottom {
+  /* border-top: var(--border-secondary); */
+  padding: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  color: var(--color-text-light);
+}

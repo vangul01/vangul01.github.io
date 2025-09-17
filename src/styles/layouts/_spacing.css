@@ -1,0 +1,87 @@
+/* Base Spacing System */
+:root {
+  /* Spacing Scale (rem = 16px base) */
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem); /*  4px - 8px  */
+  --space-sm: clamp(0.5rem, 1vw, 1rem); /*  8px - 16px */
+  --space-md: clamp(1rem, 2vw, 2rem); /* 16px - 32px */
+  --space-lg: clamp(1.5rem, 3vw, 3rem); /* 24px - 48px */
+  --space-xl: clamp(2rem, 4vw, 4rem); /* 32px - 64px */
+
+  /* Container Widths */
+  --container-max: 75rem; /* 1200px */
+  --container-narrow: 60rem; /* 960px */
+}
+
+/* Container */
+.content-container {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+  padding: var(--space-md);
+}
+
+/* Two Column Layout - Mobile First */
+.two-column-container {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+/* Grid goes to two columns on larger screens */
+@media (width >= 48em) {
+  /* 768px */
+  .two-column-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Section Spacing */
+section {
+  margin-block: var(--space-xl);
+}
+
+/* Image Containers */
+.image {
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Text Containers */
+.text {
+  padding: var(--space-sm);
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: 100dvh;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--space-lg);
+}
+
+/* Responsive Adjustments */
+@media (width >= 64em) {
+  /* 1024px */
+  .content-container {
+    padding: var(--space-lg);
+  }
+
+  .about-text {
+    gap: var(--space-lg);
+  }
+}

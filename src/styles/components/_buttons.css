@@ -1,0 +1,141 @@
+/* ------------------- BUTTONS ------------------- */
+.button {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  /* background-color: var(--color-border); */
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+
+  /* padding: 0.25em 0.5em; */
+  padding: var(--spacing-sm) var(--spacing-md);
+  box-shadow:
+    1px 1px 0 0,
+    2px 2px 0 0,
+    3px 3px 0 0,
+    4px 4px 0 0,
+    5px 5px 0 0;
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+
+  /*  transition: all var(--transition-normal); */
+  margin: var(--spacing-lg);
+}
+
+.button:hover {
+  /* transform: translateY(-2px); */
+  opacity: 0.8;
+  background-color: var(--color-button-hover);
+}
+
+.button:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+.button-formating {
+  /* display: flex; */
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  /* margin: var(--spacing-xl); */
+}
+
+.button-primary {
+  background-color: var(--color-button-primary);
+
+  /* padding: var(--spacing-lg) var(--spacing-xl); */
+
+  /* padding: var(--spacing-xl); */
+
+  /* margin: var(--spacing-lg); */
+}
+
+.button-secondary {
+  background-color: var(--color-button-secondary);
+}
+
+.button-tertiary {
+  background-color: var(--color-button-tertiary);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  padding: var(--spacing-xs);
+  font-size: var(--font-size-base);
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between; /* Changed from flex-end to space-between */
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--spacing-md); /* Added padding to align with grid */
+
+  /* margin-top: var(--spacing-xl);
+    border-top: var(--border-tertiary); */
+
+  .link {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* Ensure consistent button sizes */
+.cart-buttons .button,
+.cart-buttons .link {
+  min-width: var(--thumbnail);
+  text-align: center;
+}
+
+.quantity-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.quantity-btn:hover {
+  color: var(--color-text-light);
+  background-color: var(--color-button-primary);
+  border-radius: var(--border-radius-circle);
+}
+
+@media (width >= 768px) {
+  /* Button */
+  .button {
+    padding: 0.25em 0.75em;
+  }
+}
+
+@media (width <= 768px) {
+  .cart-buttons {
+    flex-direction: column-reverse;
+    gap: var(--spacing-md);
+  }
+
+  .cart-buttons .button,
+  .cart-buttons .link {
+    width: 70%;
+  }
+}

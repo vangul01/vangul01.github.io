@@ -1,0 +1,11 @@
+:root {
+  /* Primary palette */
+  --color-primary-100: hsl(280deg 60% 95%);
+  --color-primary-500: hsl(280deg 60% 50%);
+  --color-primary-900: hsl(280deg 60% 15%);
+
+  /* Semantic colors */
+  --color-surface: var(--color-primary-100);
+  --color-text: var(--color-primary-900);
+  --color-accent: var(--color-primary-500);
+}
