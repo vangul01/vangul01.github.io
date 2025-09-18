@@ -17,7 +17,7 @@ const fontAwesome =
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, inithantial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
     <meta name="generator" content={Astro.generator} />
 
@@ -81,6 +81,10 @@ const fontAwesome =
     <link href={font} rel="stylesheet" />
     <link href={fontAwesome} rel="stylesheet" />
     <link href={favicon} rel="icon" type="image/x-icon" />
+
+    <!-- PWA Icon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/src/assets/images/web/logo.png">
+
     <meta name="author" content="Valerie Angulo" />
     <meta
       name="description"
@@ -92,6 +96,7 @@ const fontAwesome =
   <body>
     <slot />
     <script>
+      
       import "../scripts/main.js";
     </script>
   </body>
