@@ -21,20 +21,36 @@ function getNetlifyFunctionUrl(path: string) {
  * Fetch one or more Stripe prices from Netlify function
  */
 export async function getStripePrices(
-  priceIds: string[]
+  priceIds: string[],
 ): Promise<Record<string, StripePrice>> {
+  // Add debug logging
+  console.log("Sanity Dataset:", import.meta.env.PUBLIC_SANITY_DATASET);
+  console.log("Requesting price(s) for:", priceIds);
+
   const url = getNetlifyFunctionUrl("/.netlify/functions/get-stripe-prices");
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ priceIds }),
-  });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch prices from Stripe");
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priceIds }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Stripe API Error:", errorText);
+
+      throw new Error(
+        `Failed to fetch prices: ${response.status} ${errorText}`,
+      );
+    }
+    const data = await response.json();
+    console.log("Stripe API Response:", data);
+    return data;
+  } catch (error) {
+    console.error("Stripe Client Error:", error);
+    throw error;
   }
-
-  return response.json();
 }
 
 /**
