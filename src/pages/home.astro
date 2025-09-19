@@ -3,13 +3,23 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+
 import { Image } from "astro:assets";
+import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import leftLeaf from "../assets/images/web/left-leaf.svg";
 import rightLeaf from "../assets/images/web/right-leaf.svg";
 import featuredArt from "../assets/images/web/eyecon.png";
 import aboutMe from "../assets/images/web/about-home.png";
 import collab from "../assets/images/web/dreams.png";
 import eyeImage from "../assets/images/web/eyecon.png";
+
+
+// Fetch featured products from Sanity
+const featuredProducts = await getFeaturedProducts();
+const collabs = await getCollabs();
+
+import Carousel from "../components/Carousel.astro";
+
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -36,15 +46,14 @@ const keywords =
           loading="eager"
           decoding="async"
           
-<!--         />
+         />
       </div>
       <div class="hero-image">
-        <Image 
+        <!-- <Image 
           src={eyeImage}
           alt="Large eye illustration"
-          class="eye-background" -->
-        
-        />
+          class="eye-background" 
+        /> -->
       </div>
       <div class="overlay-text">
         <p>Welcome to</p>
@@ -59,7 +68,9 @@ const keywords =
     <section class="content-container">
       <div class="two-column-container">
         <div class="image about-image">
-          <Image src={featuredArt} alt="Image of a featured piece." />
+        <!-- <Carousel 
+          items={featuredProducts} /> -->
+          <Image src={featuredArt} alt="Featured Artwork" />
         </div>
 
         <div class="text about-text">
@@ -142,7 +153,7 @@ const keywords =
   <Footer />
 </BaseLayout>
 
-<script>
+<!-- <script>
   import { initParallax } from "../scripts/home.js";
   document.addEventListener("DOMContentLoaded", initParallax);
-</script>
+</script> -->

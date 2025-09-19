@@ -13,7 +13,15 @@ const urlsToCache = [
 // Install the service worker
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache)),
+    caches.open(CACHE_NAME).then(async (cache) => {
+      // First try to add all resources
+      try {
+        return await cache.addAll(urlsToCache);
+      } catch (err) {
+        console.warn("Some resources failed to cache:", err);
+        return await Promise.resolve();
+      }
+    }),
   );
 });
 

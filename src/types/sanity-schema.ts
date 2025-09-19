@@ -19,6 +19,27 @@ export interface SanityProduct {
   featured?: "new" | "popular";
 }
 
+export interface SanityCollaboration {
+  _id: string;
+  _type: "collab";
+  title: string;
+  client: string;
+  company?: string;
+  services?: string;
+  sector?: string;
+  completionYear: number;
+  description?: string;
+  projectLink?: string;
+  clientLink?: string;
+  clientReview?: string;
+  tags?: string[];
+  images: {
+    asset: {
+      url: string;
+    };
+  }[];
+}
+
 export interface Product {
   _id: string;
   slug: string;
@@ -31,4 +52,20 @@ export interface Product {
   images: string[];
   category: SanityProduct["category"];
   featured?: SanityProduct["featured"];
+}
+
+export interface Collaboration {
+  _id: string;
+  title: string;
+  client: string;
+  services?: string;
+  sector?: string;
+  completionYear: number;
+  company?: string;
+  description?: string;
+  projectLink?: string;
+  clientLink?: string;
+  clientReview?: string;
+  tags?: string[];
+  images: string[];
 }
