@@ -21,7 +21,7 @@ function getNetlifyFunctionUrl(path: string) {
  * Fetch one or more Stripe prices from Netlify function
  */
 export async function getStripePrices(
-  priceIds: string[]
+  priceIds: string[],
 ): Promise<Record<string, StripePrice>> {
   // Add debug logging
   console.log("Sanity Dataset:", import.meta.env.PUBLIC_SANITY_DATASET);
@@ -51,14 +51,6 @@ export async function getStripePrices(
     console.error("Stripe Client Error:", error);
     throw error;
   }
-}
-
-/**
- * Fetch a single Stripe price by ID
- */
-export async function getStripePrice(priceId: string): Promise<StripePrice> {
-  const prices = await getStripePrices([priceId]);
-  return prices[priceId];
 }
 
 /**
