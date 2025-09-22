@@ -15,16 +15,11 @@
   to = '/.netlify/functions/:splat'
   status = 200
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Content-Security-Policy = '''
-      default-src 'self';
-      script-src 'self' 'nonce-{RANDOM_NONCE}' https://js.stripe.com;
-      frame-src 'self' https://js.stripe.com https://hooks.stripe.com;
-      connect-src 'self' https://api.stripe.com;
-      img-src 'self' https: data:;
-      style-src 'self' 'nonce-{RANDOM_NONCE}';
-      font-src 'self' https: data:;
-      upgrade-insecure-requests;
-    '''
+[[plugins]]
+package = "netlify-plugin-csp-generator"
+
+  [plugins.inputs]
+  buildDir = "dist"
+
+  [plugins.inputs.policies]
+    defaultSrc = "'self'"

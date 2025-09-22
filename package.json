@@ -17,6 +17,7 @@
     "@sanity/image-url": "^1.1.0",
     "@stripe/stripe-js": "^6.1.0",
     "astro": "^5.3.0",
+    "netlify-plugin-csp-generator": "^1.6.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "stripe": "^18.0.0"
