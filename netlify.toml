@@ -20,6 +20,8 @@ package = "netlify-plugin-csp-generator"
 
   [plugins.inputs]
   buildDir = "dist"
+  reportOnly = true
+  reportTo = "csp-violations-group"
 
   [plugins.inputs.policies]
     defaultSrc = "'self' cloudfront.net *.cloudfront.net"
