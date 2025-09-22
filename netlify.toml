@@ -21,8 +21,7 @@ package = "netlify-plugin-csp-generator"
   [plugins.inputs]
   buildDir = "dist"
   reportOnly = false
-  reportUri = "/.netlify/functions/csp-report"
-  enableCache = true
+  reportURI = "/.netlify/functions/csp-report"
 
   [plugins.inputs.policies]
     defaultSrc = "'self'"
