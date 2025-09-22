@@ -58,14 +58,12 @@ export default function CartIsland() {
           <div className="cart-products-grid cart-row" key={item.priceId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
-              <a
-                href={`products/${item.productUrl}`}
-                className="cart-product-link"
-              >
+              <a href={`/products/${item.slug}`} className="cart-product-link">
                 <img
                   className="cart-product-thumbnail"
                   src={item.image || "/src/assets/images/web/logo.png"}
                   alt={item.name}
+                  loading="lazy"
                 />
               </a>
               <div className="cart-product-details">

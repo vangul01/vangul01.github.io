@@ -94,6 +94,9 @@ const fontAwesome =
     <!-- Canonical URL -->
     <link rel="canonical" href="https://vangular.com" />
 
+    <link rel="preload" href="/styles/global.css" as="style" />
+    <link rel="stylesheet" href="/styles/global.css" />
+
     <link href={font} rel="stylesheet" />
     <link href={fontAwesome} rel="stylesheet" />
     <link href={favicon} rel="icon" type="image/x-icon" />
@@ -117,7 +120,6 @@ const fontAwesome =
   <body>
     <slot />
     <script>
-      
       import "../scripts/main.js";
     </script>
   </body>

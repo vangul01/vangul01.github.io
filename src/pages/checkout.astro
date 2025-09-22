@@ -8,25 +8,29 @@ const keywords = "checkout, stripe, payment";
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <CheckoutHeader />
+
+  <script src="https://js.stripe.com/v3/" defer crossorigin="anonymous"
+  ></script>
+
   <main>
     <div id="checkout-container">
       <!-- Stripe Embedded Checkout will be mounted here -->
     </div>
   </main>
-  <script src="https://js.stripe.com/v3/" async crossorigin="anonymous"
-  ></script>
+  <!-- <script src="https://js.stripe.com/v3/" async crossorigin="anonymous" -->
+  ></BaseLayout
+>
 
-  <script>
-    import { initializeCheckout } from "../scripts/cart/checkout";
+<script>
+  import { initializeCheckout } from "../scripts/cart/checkout";
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      try {
-        const stripePublicKey = import.meta.env.PUBLIC_STRIPE_KEY;
-        console.log("Initializing checkout with key:", stripePublicKey);
-        await initializeCheckout(stripePublicKey);
-      } catch (error) {
-        console.error("Checkout initialization error:", error);
-      }
-    });
-  </script>
-</BaseLayout>
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const stripePublicKey = import.meta.env.PUBLIC_STRIPE_KEY;
+      console.log("Initializing checkout with key:", stripePublicKey);
+      await initializeCheckout(stripePublicKey);
+    } catch (error) {
+      console.error("Checkout initialization error:", error);
+    }
+  });
+</script>
