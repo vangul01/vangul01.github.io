@@ -4,6 +4,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Checkout | VANGULAR";
 const keywords = "checkout, stripe, payment";
+
+// for security policy with inline scripts
+// const nonce = crypto.randomBytes(16).toString('base64');
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
