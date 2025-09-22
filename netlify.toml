@@ -20,6 +20,16 @@ package = "netlify-plugin-csp-generator"
 
   [plugins.inputs]
   buildDir = "dist"
+  reportOnly = false
+  reportUri = "/.netlify/functions/csp-report"
+  enableCache = true
 
   [plugins.inputs.policies]
     defaultSrc = "'self'"
+    scriptSrc = "'self' 'unsafe-eval' https://js.stripe.com"
+    frameSrc = "'self' https://js.stripe.com https://hooks.stripe.com https://app.netlify.com"
+    connectSrc = "'self' https://api.stripe.com https://cdn.sanity.io"
+    imgSrc = "'self' https: data: https://*.stripe.com https://*.sanity.io"
+    styleSrc = "'self' 'unsafe-inline'"
+    fontSrc = "'self' https: data:"
+    upgradeInsecureRequests = true
