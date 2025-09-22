@@ -4,6 +4,7 @@ import {
   saveCart,
   calculateTotals,
 } from "../scripts/cart/cart-storage";
+import { handleCheckout } from "../scripts/cart/checkout.js";
 import "../styles/global.css";
 
 export default function CartIsland() {
@@ -123,13 +124,17 @@ export default function CartIsland() {
             Continue Shopping
           </a>
 
-          <a
-            href="/checkout"
+          {/* <form action="/create-checkout-session" method="POST">
+            <button type="submit" id="checkout-button">Checkout</button>
+        </form> */}
+
+          <button
             className="button button-primary"
+            onClick={handleCheckout}
             id="proceed-to-payment"
           >
             Proceed to Checkout
-          </a>
+          </button>
         </div>
       </div>
     </>

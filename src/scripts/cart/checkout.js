@@ -1,4 +1,37 @@
 import { loadCart } from "../cart/cart-storage.js";
+
+export async function handleCheckout() {
+  try {
+    const response = await fetch(
+      "/.netlify/functions/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: cart.map((item) => ({
+            priceId: item.priceId,
+            quantity: item.quantity,
+          })),
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const { url } = await response.json();
+
+    // Redirect to Stripe Checkout
+    window.location.href = url;
+  } catch (error) {
+    console.error("Checkout error:", error);
+    alert("There was a problem starting checkout. Please try again.");
+  }
+}
+
 export async function initializeCheckout(stripePublicKey) {
   if (!stripePublicKey) {
     console.error("Stripe public key is required");

@@ -2,6 +2,8 @@
 import CheckoutHeader from "../components/CheckoutHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+import { initializeCheckout } from "../scripts/cart/checkout";
+
 const pageTitle = "Checkout | VANGULAR";
 const keywords = "checkout, stripe, payment";
 ---
@@ -9,26 +11,36 @@ const keywords = "checkout, stripe, payment";
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <CheckoutHeader />
 
-  <script src="https://js.stripe.com/v3/" defer crossorigin="anonymous"
-  ></script>
+  <!-- <script src="https://js.stripe.com/v3/" defer crossorigin="anonymous" -->
+  <!-- ></script> -->
 
   <main>
-    <div id="checkout-container">
-      <!-- Stripe Embedded Checkout will be mounted here -->
-    </div>
+    <div id="checkout-loading">Preparing checkout...</div>
   </main>
-  <!-- <script src="https://js.stripe.com/v3/" async crossorigin="anonymous" -->
-  ></BaseLayout
->
+</BaseLayout>
 
+<script src="https://js.stripe.com/v3/" defer></script>
 <script>
-  import { initializeCheckout } from "../scripts/cart/checkout";
-
   document.addEventListener("DOMContentLoaded", async () => {
     try {
+      const { loadCart } = await import("../scripts/cart/cart-storage.js");
+      const cart = loadCart();
+
+      const response = await fetch(
+        "/.netlify/functions/create-checkout-session",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: cart }),
+        },
+      );
+
+      const { sessionId } = await response.json();
       const stripePublicKey = import.meta.env.PUBLIC_STRIPE_KEY;
       console.log("Initializing checkout with key:", stripePublicKey);
-      await initializeCheckout(stripePublicKey);
+
+      const stripe = Stripe(stripePublicKey); // Initialize Stripe with the public key
+      await stripe.initializeCheckout({ sessionId });
     } catch (error) {
       console.error("Checkout initialization error:", error);
     }
