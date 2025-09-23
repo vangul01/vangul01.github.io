@@ -16,11 +16,15 @@ export async function handler(event) {
 
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
-      //   ui_mode: "embedded",
       payment_method_types: ["card"],
       line_items: items.map((item) => ({
         price: item.priceId,
         quantity: item.quantity,
+        // adjustable_quantity: {
+        //   enabled: true,
+        //   minimum: 1,
+        //   maximum: 10,
+        // },
       })),
       mode: "payment",
       success_url: `${process.env.PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
