@@ -6,8 +6,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
 import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
-import leftLeaf from "../assets/images/web/left-leaf.svg";
-import rightLeaf from "../assets/images/web/right-leaf.svg";
+// import leftLeaf from "../assets/images/web/left-leaf.svg";
+// import rightLeaf from "../assets/images/web/right-leaf.svg";
 import featuredArt from "../assets/images/web/eyecon.png";
 import aboutMe from "../assets/images/web/about-home.png";
 import collab from "../assets/images/web/dreams.png";
@@ -31,7 +31,7 @@ const keywords =
   <main>
     <!-- Welcome/Hero Section -->
     <section class="hero-section">
-      <div class="leaves-container">
+      <!-- <div class="leaves-container">
         <Image
           src={leftLeaf}
           alt=""
@@ -47,7 +47,7 @@ const keywords =
           decoding="async"
           
          />
-      </div>
+      </div> -->
       <div class="hero-image">
         <!-- <Image 
           src={eyeImage}
