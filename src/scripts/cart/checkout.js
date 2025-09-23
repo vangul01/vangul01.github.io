@@ -2,51 +2,10 @@ import { loadCart } from "../cart/cart-storage.js";
 
 export async function handleCheckout() {
   try {
-    const response = await fetch(
-      "/.netlify/functions/create-checkout-session",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items: cart.map((item) => ({
-            priceId: item.priceId,
-            quantity: item.quantity,
-          })),
-        }),
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const { url } = await response.json();
-
-    // Redirect to Stripe Checkout
-    window.location.href = url;
-  } catch (error) {
-    console.error("Checkout error:", error);
-    alert("There was a problem starting checkout. Please try again.");
-  }
-}
-
-export async function initializeCheckout(stripePublicKey) {
-  if (!stripePublicKey) {
-    console.error("Stripe public key is required");
-    return;
-  }
-
-  const stripe = Stripe(stripePublicKey);
-
-  try {
     const cartItems = loadCart();
-    console.log("Cart items:", cartItems);
 
     if (!cartItems.length) {
       alert("Your cart is empty. Please add items before checking out.");
-      window.location.href = "/cart";
       return;
     }
 
@@ -67,39 +26,15 @@ export async function initializeCheckout(stripePublicKey) {
     );
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error("Network response was not ok:", error);
     }
 
-    const { clientSecret } = await response.json();
-
-    if (!clientSecret) {
-      throw new Error("No client secret received");
-    }
-
-    const checkout = await stripe.initEmbeddedCheckout({
-      clientSecret,
-    });
-
-    // Mount Checkout
-    checkout.mount("#checkout-container");
+    const { url } = await response.json();
+    // Redirect to Stripe Checkout
+    window.location.href = url;
   } catch (error) {
-    console.error("Checkout Error:", error);
-    const errorContainer = document.getElementById("checkout-container");
-
-    // More specific error messages
-    const errorMessage =
-      error.message === "Network response was not ok"
-        ? "Unable to connect to checkout. Please check your internet connection."
-        : "There was a problem loading the checkout form. Please try again.";
-
-    errorContainer.innerHTML = `<p class="error">${errorMessage}</p>`;
-
-    // Optional: Add a retry button
-    errorContainer.innerHTML += `
-      <button class="button button-secondary" onclick="window.location.reload()">
-        Try Again
-      </button>
-    `;
+    console.error("Checkout error:", error);
+    alert("There was a problem starting checkout. Please try again.");
   }
 }
 

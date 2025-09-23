@@ -124,10 +124,6 @@ export default function CartIsland() {
             Continue Shopping
           </a>
 
-          {/* <form action="/create-checkout-session" method="POST">
-            <button type="submit" id="checkout-button">Checkout</button>
-        </form> */}
-
           <button
             className="button button-primary"
             onClick={handleCheckout}

@@ -35,7 +35,6 @@ export async function handler(event) {
       body: JSON.stringify({
         url: session.url, // Return the redirect URL
       }),
-      //   session.redirect(303, session.url);
     };
   } catch (error) {
     console.error("Error creating checkout session:", error);
