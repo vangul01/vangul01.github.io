@@ -8,18 +8,24 @@ const keywords =
   "order success, payment success, thank you, order confirmation";
 ---
 
+<!-- I'd like to have a success footer here which highlights connecting
+ on social media and signing up to newsletter -->
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <Header />
   <main>
     <div class="content-container">
-      <h2>Thank you for your purchase!</h2>
-      <h3>Your payment was successful.</h3>
-      <a href="/merch"
-        ><button class="button button-primary" role="button"
-          >Continue Shopping</button
-        ></a
-      >
+      <h3>Thank you!</h3>
+      <h4>Your payment was successful :)</h4>
+      <h5>
+        We've sent a confirmation email to [customer email address] with all the
+        details.
+      </h5>
     </div>
+    <a href="/home"
+      ><button class="button button-primary" role="button"
+        >Head Back to Vangular</button
+      ></a
+    >
   </main>
-  <Footer />
 </BaseLayout>
+<Footer />
