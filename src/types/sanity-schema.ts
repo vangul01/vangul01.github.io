@@ -1,6 +1,6 @@
 export interface SanityProduct {
   _id: string;
-  _type: 'product';
+  _type: "product";
   slug: {
     current: string;
   };
@@ -15,19 +15,21 @@ export interface SanityProduct {
       url: string;
     };
   }[];
-  category: 'paintings' | 'digital' | 'stationary' | 'textiles' | 'misc';
-  featured?: 'new' | 'popular';
+  category: "paintings" | "digital" | "stationary" | "textiles" | "misc";
+  featured?: "new" | "popular";
 }
 
 export interface SanityCollaboration {
   _id: string;
-  _type: 'collab';
+  _type: "collab";
   title: string;
   client: string;
   company?: string;
+  services?: string;
+  sector?: string;
+  completionYear: number;
   description?: string;
-  completedDate?: string;
-  link?: string;
+  projectLink?: string;
   clientLink?: string;
   clientReview?: string;
   tags?: string[];
@@ -48,18 +50,20 @@ export interface Product {
   quantity: number;
   stripePriceId: string;
   images: string[];
-  category: SanityProduct['category'];
-  featured?: SanityProduct['featured'];
+  category: SanityProduct["category"];
+  featured?: SanityProduct["featured"];
 }
 
 export interface Collaboration {
   _id: string;
   title: string;
   client: string;
+  services?: string;
+  sector?: string;
+  completionYear: number;
   company?: string;
   description?: string;
-  completedDate?: string;
-  link?: string;
+  projectLink?: string;
   clientLink?: string;
   clientReview?: string;
   tags?: string[];

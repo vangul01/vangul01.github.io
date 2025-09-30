@@ -1,6 +1,10 @@
 import { stripe } from "../../src/lib/stripe.js";
 
 export async function handler(event) {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
+
   try {
     // Parse the request body to get the items array
     const { items } = JSON.parse(event.body);
@@ -12,28 +16,28 @@ export async function handler(event) {
 
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
-      ui_mode: "embedded",
       payment_method_types: ["card"],
       line_items: items.map((item) => ({
         price: item.priceId,
         quantity: item.quantity,
+        // adjustable_quantity: {
+        //   enabled: true,
+        //   minimum: 1,
+        //   maximum: 10,
+        // },
       })),
       mode: "payment",
-      return_url: `${process.env.PUBLIC_SITE_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.PUBLIC_SITE_URL}/cancel`,
       shipping_address_collection: {
         allowed_countries: ["US"],
       },
     });
 
-    console.log(
-      "return_url:",
-      `${process.env.PUBLIC_SITE_URL}/return?session_id={CHECKOUT_SESSION_ID}`,
-    );
-
     return {
       statusCode: 200,
       body: JSON.stringify({
-        clientSecret: session.client_secret,
+        url: session.url, // Return the redirect URL
       }),
     };
   } catch (error) {

@@ -109,13 +109,9 @@ const keywords = `vangular, ${product.name}, art, products`;
         </div>
       </div>
       <div>
-        <a href="#" class="link" onclick="window.history.back()">
-          Go Back
-        </a>
-        <br>
-        <a href="/cart" class="link">
-          Go To Cart
-        </a>
+        <a href="#" class="link" onclick="window.history.back()"> Go Back </a>
+        <br />
+        <a href="/cart" class="link"> Go To Cart </a>
       </div>
     </section>
   </main>
@@ -123,39 +119,42 @@ const keywords = `vangular, ${product.name}, art, products`;
 </BaseLayout>
 
 <script>
-  import { initZoom, initThumbnails, initKeyboardNav } from "../../scripts/product.js";
+  import {
+    initZoom,
+    initThumbnails,
+    initKeyboardNav,
+  } from "../../scripts/product.js";
   document.addEventListener("DOMContentLoaded", () => {
     initZoom();
     initThumbnails();
     initKeyboardNav();
   });
 
-    import { getStripePrice } from "../../lib/stripe-client";
+  import { getStripePrice } from "../../lib/stripe-client";
 
   async function loadPrice() {
-    const priceElement = document.getElementById('product-price');
+    const priceElement = document.getElementById("product-price");
     const priceId = priceElement?.dataset.priceId;
-    
+
     if (priceId) {
       try {
         const price = await getStripePrice(priceId);
         priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
-        
+
         // Update the add-to-cart button's price data
-        const addToCartBtn = document.getElementById('add-to-cart');
+        const addToCartBtn = document.getElementById("add-to-cart");
         if (addToCartBtn) {
           addToCartBtn.dataset.price = String(price.amount);
         }
       } catch (error) {
-        console.error('Error loading price:', error);
-        priceElement.textContent = 'Price unavailable';
+        console.error("Error loading price:", error);
+        priceElement.textContent = "Price unavailable";
       }
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     loadPrice();
-    // ...your existing initialization code...
     initZoom();
     initThumbnails();
     initKeyboardNav();

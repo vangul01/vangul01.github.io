@@ -17,7 +17,12 @@ const fontAwesome =
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, inithantial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+      ,
+      viewport-fit='cover"'
+    />
     <meta name="color-scheme" content="dark light" />
     <meta name="generator" content={Astro.generator} />
 
@@ -36,12 +41,8 @@ const fontAwesome =
     <!-- Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Security headers -->
+    <!-- Security headers (CSP located in netlify.toml) -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:;"
-    />
 
     <!-- Social media meta tags -->
     <meta property="og:type" content="website" />
@@ -78,12 +79,20 @@ const fontAwesome =
     <!-- Canonical URL -->
     <link rel="canonical" href="https://vangular.com" />
 
+    <link rel="preload" href="/styles/global.css" as="style" />
+    <link rel="stylesheet" href="/styles/global.css" />
+
     <link href={font} rel="stylesheet" />
     <link href={fontAwesome} rel="stylesheet" />
     <link href={favicon} rel="icon" type="image/x-icon" />
 
     <!-- PWA Icon -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/src/assets/images/web/logo.png">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/src/assets/images/web/logo.png"
+    />
 
     <meta name="author" content="Valerie Angulo" />
     <meta
@@ -96,7 +105,6 @@ const fontAwesome =
   <body>
     <slot />
     <script>
-      
       import "../scripts/main.js";
     </script>
   </body>

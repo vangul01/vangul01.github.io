@@ -39,11 +39,6 @@ if (typeof document !== "undefined") {
     updateUI();
     updateCartCount();
 
-    // Clear cart button
-    document.querySelector("#clear-cart")?.addEventListener("click", () => {
-      clearCart();
-    });
-
     // EDIT THIS!
     // Add-to cart-button data send. Needs product data from stripe to work
     document.querySelectorAll("#add-to-cart").forEach((button) => {
@@ -91,20 +86,6 @@ if (typeof document !== "undefined") {
     //     localStorage.getItem("theme") === "dark" ? "light" : "dark";
     //   setTheme(current);
     // });
-
-    // Proceed to payment link in cart.astro
-    // document
-    //   .querySelector("#proceed-to-payment")
-    //   .addEventListener("click", () => {
-    //         // Example cart data
-    //         const cartItems = [
-    //           { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 1 },
-    //           { priceId: "price_1QFHCbGMuu0DsYcfBVQtLBQQ", quantity: 2 },
-    //         ];
-
-    //     // Save cart data to local storage
-    //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    //   });
   });
 
   // Register service worker

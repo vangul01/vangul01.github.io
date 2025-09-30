@@ -4,6 +4,7 @@ import {
   saveCart,
   calculateTotals,
 } from "../scripts/cart/cart-storage";
+import { handleCheckout } from "../scripts/cart/checkout.js";
 import "../styles/global.css";
 
 export default function CartIsland() {
@@ -58,14 +59,12 @@ export default function CartIsland() {
           <div className="cart-products-grid cart-row" key={item.priceId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
-              <a
-                href={`products/${item.productUrl}`}
-                className="cart-product-link"
-              >
+              <a href={`/products/${item.slug}`} className="cart-product-link">
                 <img
                   className="cart-product-thumbnail"
                   src={item.image || "/src/assets/images/web/logo.png"}
                   alt={item.name}
+                  loading="lazy"
                 />
               </a>
               <div className="cart-product-details">
@@ -125,13 +124,13 @@ export default function CartIsland() {
             Continue Shopping
           </a>
 
-          {/* <a
-            href="/checkout"
+          <button
             className="button button-primary"
+            onClick={handleCheckout}
             id="proceed-to-payment"
           >
             Proceed to Checkout
-          </a> */}
+          </button>
         </div>
       </div>
     </>
