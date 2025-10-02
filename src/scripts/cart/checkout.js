@@ -41,7 +41,7 @@ export async function handleCheckout() {
 
 export async function getStripePrice(priceId) {
   try {
-    const response = await fetch("/.netlify/functions/get-stripe-price", {
+    const response = await fetch("/.netlify/functions/get-stripe-prices", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
