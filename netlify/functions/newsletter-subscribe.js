@@ -18,15 +18,25 @@ export async function handler(event) {
       };
     }
 
+    const body = {
+      email,
+      includeListIds: [8], // "test emails" list ID
+      templateId: 1, // default double opt-in template ID
+      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success`, // Replace with your actual redirection URL
+    };
+
     // Call Brevo API to add contact
-    const response = await fetch("https://api.brevo.com/v3/contacts", {
-      method: "POST",
-      headers: {
-        "api-key": process.env.SECRET_BREVO_API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
+    const response = await fetch(
+      "https://api.brevo.com/v3/contacts/doubleOptinConfirmation",
+      {
+        method: "POST",
+        headers: {
+          "api-key": process.env.SECRET_BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
     const data = await response.json();
     console.log("Brevo response:", data);
@@ -41,7 +51,7 @@ export async function handler(event) {
       return {
         statusCode: response.status,
         body: JSON.stringify({
-          message: data.message || "Subscription failed.",
+          message: "Subscription failed.",
         }),
         headers: { "Content-Type": "application/json" },
       };
@@ -50,7 +60,7 @@ export async function handler(event) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: error.message || "Subscription failed.",
+        message: "Subscription failed.",
       }),
       headers: { "Content-Type": "application/json" },
     };

@@ -3,7 +3,7 @@ import { loadCart } from "../cart/cart-storage.js";
 export async function handleCheckout() {
   try {
     const cartItems = loadCart();
-    const siteUrl = import.meta.env.PUBLIC_SITE_URL || "http://localhost:8888";
+    // const siteUrl = import.meta.env.PUBLIC_SITE_URL || "http://localhost:8888";
 
     if (!cartItems.length) {
       alert("Your cart is empty. Please add items before checking out.");
@@ -23,7 +23,7 @@ export async function handleCheckout() {
             quantity: item.quantity,
           })),
         }),
-      },
+      }
     );
 
     if (!response.ok) {

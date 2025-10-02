@@ -1,16 +1,15 @@
 import { useState } from "react";
-// import { subscribeToNewsletter } from "../scripts/newsletter.js";
 import "../styles/global.css";
 
 export default function NewsletterIsland() {
   const [message, setMessage] = useState("");
-  const [color, setColor] = useState("black");
+  // const [color, setColor] = useState("black");
 
   async function handleSubmit(e) {
     e.preventDefault();
     const email = e.target.email.value;
     setMessage("Subscribing...");
-    setColor("black");
+    // setColor("black");
     try {
       const response = await fetch("/.netlify/functions/newsletter-subscribe", {
         method: "POST",
@@ -20,11 +19,11 @@ export default function NewsletterIsland() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Failed to subscribe");
       setMessage(data.message || "Subscription successful!");
-      setColor("green");
+      // setColor("green");
       e.target.reset();
     } catch (error) {
       setMessage(error.message || "Subscription failed. Please try again.");
-      setColor("red");
+      // setColor("red");
     }
   }
 
@@ -54,7 +53,7 @@ export default function NewsletterIsland() {
       >
         Subscribe
       </button>
-      <div style={{ color }}>{message}</div>
+      <div>{message}</div>
     </form>
   );
 }
