@@ -2,23 +2,9 @@
 .footer {
   background-image: url("/src/assets/images/web/plantie_footer.png");
   background-position: bottom;
-
-  /* background-repeat: no-repeat; */
   background-repeat: repeat-x;
   background-size: auto 100%;
-
-  /* background-size: cover; */
-
-  /* padding-top: var(--height-footer-image); */
-  padding-top: 0;
   height: auto; /* Let content set the height */
-
-  /* padding-bottom: 120px; */
-
-  /* Adjust based on your image height */
-
-  /* margin-top: auto;  */
-
   /* Pushes footer to bottom */
   width: 100%;
 }
@@ -28,12 +14,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-xl);
   padding: var(--spacing-xl);
-
-  /* padding-top: var(--height-footer-image); */
-
-  /* border-top: var(--border-secondary); */
   margin: 0 var(--spacing-3xl);
-
   /* min-height: 200px; Ensures footer has a minimum height */
 }
 
@@ -41,35 +22,18 @@
   display: inline;
   flex-wrap: wrap;
   justify-content: space-evenly;
-
-  /* padding: var(--spacing-md); */
   border: var(--border-secondary);
-
-  /* border-radius: var(--border-radius-md); */
   background-color: var(--color-nav);
-
-  /* box-shadow: var(--shadow-md); */
   column-fill: auto;
-
   /* max-width: 500px; */
-
   /* column-width: 100px; */
-
-  /* -webkit-column-width: var(--thumbnail); */
-
-  /* -moz-column-width: var(--thumbnail); */
   font-size: var(--font-size-sm);
 
   a {
-    text-decoration: none;
     flex: 1 1 25%; /* Each link takes up approximately 45% of the container's width */
     flex-basis: auto;
-    box-sizing: border-box; /* Ensures padding and borders don't increase width */
     text-align: left; /* Aligns text inside the links */
-
     /* display: inline-block; */
-
-    /* font-size: var(--font-size-sm); */
   }
 
   ul {
@@ -83,22 +47,11 @@
 }
 
 .link-list {
-  list-style: none;
   padding: var(--spacing-md);
   text-align: center;
 
   li {
     margin-bottom: var(--spacing-sm);
-  }
-
-  a {
-    color: var(--color-text-muted);
-    text-decoration: none;
-    transition: color var(--transition-normal);
-  }
-
-  a:hover {
-    color: var(--color-text-light);
   }
 }
 

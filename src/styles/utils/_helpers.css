@@ -1,0 +1,19 @@
+/* Examples */
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
+.text-center {
+  text-align: center;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}

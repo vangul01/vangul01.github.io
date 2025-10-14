@@ -68,6 +68,7 @@
   background-color: var(--color-button-tertiary);
 }
 
+/* ------------------- CART PAGE ------------------- */
 .delete-btn {
   background: none;
   border: none;
@@ -120,6 +121,20 @@
   background-color: var(--color-button-primary);
   border-radius: var(--border-radius-circle);
 }
+
+/* ------------------- PRODUCT PAGES ----------------------- */
+
+.product-text .button {
+  /* bottom: 0;
+    left: 50%;
+    position: absolute; */
+
+  /* left: 50%; */
+  bottom: 0;
+  margin: var(--spacing-md) 0;
+}
+
+/* ------------------- MEDIA QUERIES ----------------------- */
 
 @media (width >= 768px) {
   /* Button */

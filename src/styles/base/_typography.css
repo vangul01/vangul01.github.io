@@ -1,11 +1,89 @@
-:root {
-  /* Primary palette */
-  --color-primary-100: hsl(280deg 60% 95%);
-  --color-primary-500: hsl(280deg 60% 50%);
-  --color-primary-900: hsl(280deg 60% 15%);
-
-  /* Semantic colors */
-  --color-surface: var(--color-primary-100);
-  --color-text: var(--color-primary-900);
-  --color-accent: var(--color-primary-500);
+/* ------------------- Core Body Typography ------------------- */
+body {
+  font-family: var(--font-secondary, Arial, sans-serif);
+  font-size: var(--font-size-base, 1rem);
+  color: var(--color-text-muted);
+  background: var(--color-site-background) no-repeat center center fixed;
+  background-size: cover;
+  display: grid;
+  letter-spacing: 0.08rem;
+  line-height: calc(1em + 0.5rem); /* 1.5rem */
+  /* grid-template-rows: var(--header-height, 70px) 1fr auto; */
 }
+
+/* ------------------- Main Element ------------------- */
+main {
+  position: relative;
+}
+
+/* ------------------- Paragraphs ------------------- */
+p {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+/* ------------------- Headings ------------------- */
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary, inherit);
+  color: var(--color-text-primary, inherit);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  text-wrap: balance;
+  line-height: calc(var(--font-size-base) + 0.5dvw); /* ~1.1 */
+}
+h1 {
+  font-size: calc(var(--font-size-base) + 9dvw), var(--font-size-4xl, 2.5rem);
+}
+h2 {
+  font-size:
+    calc(var(--font-size-base) + 3.5dvw), var(--font-size-2xl, 1.75rem);
+}
+h3 {
+  font-size: calc(var(--font-size-base) + 1.5dvw), var(--font-size-lg, 1.25rem);
+}
+
+button,
+input,
+label {
+  line-height: calc(var(--font-size-base) + 0.5dvw);
+}
+
+/* ------------------- Links ------------------- */
+a {
+  transition: color var(--transition-normal);
+}
+
+a:hover {
+  color: var(--color-text-light);
+}
+
+/* ------------------- Media Queries ------------------- */
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* @media (max-width: 768px) {
+  :root {
+    --font-size-4xl: 2.5rem;
+    --font-size-2xl: 1.75rem;
+    --font-size-lg: 1.25rem;
+    --header-height: var(--header-height-sm, 60px);
+    --spacing-xl: 1.5rem;
+  }
+  body {
+    font-size: 1rem;
+  }
+} */

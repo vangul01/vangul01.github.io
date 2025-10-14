@@ -1,3 +1,4 @@
+/* Grid/flexbox utilities */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
@@ -9,4 +10,55 @@
   flex-wrap: wrap;
   gap: var(--space-2);
   align-items: center;
+}
+
+/* ----------------GALLERY / MERCH---------------- */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl) 0;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  justify-content: center; /* Centers the grid items */
+}
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  div {
+    width: 20rem;
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* ------------------- SHOPPING CART ----------------------- */
+
+.cart-products-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(400px, 3fr) minmax(var(--thumbnail), 1fr)
+    minmax(var(--thumbnail), 1fr);
+  gap: var(--spacing-xl);
+  width: 100%;
+  align-items: center;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-base);
 }
