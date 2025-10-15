@@ -4,11 +4,8 @@
   width: 100%; /* Changed from 100vw to prevent horizontal scroll */
   height: var(--header-height);
   background-color: var(--color-header);
-
   /* border-bottom: 5px solid var(--color-primary); */
-
   /* box-shadow: var(--shadow-sm); */
-
   z-index: 2000;
   top: 0;
   display: flex;

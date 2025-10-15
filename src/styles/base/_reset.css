@@ -57,6 +57,8 @@ a {
 }
 
 /* ------------------- Images, Media, SVG ------------------- */
+/* Ensures the image doesn't exceed its container's width */
+/* Automatically adjusts the height to maintain aspect ratio */
 img,
 picture,
 video,
@@ -64,6 +66,7 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 /* ------------------- Inputs, Buttons, Textareas, Selects ------------------- */

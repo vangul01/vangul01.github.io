@@ -23,7 +23,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   border: var(--border-secondary);
-  background-color: var(--color-nav);
+  background-color: var(--color-footer);
   column-fill: auto;
   /* max-width: 500px; */
   /* column-width: 100px; */
@@ -78,7 +78,7 @@
   width: 40px; /* Made slightly smaller */
   height: 40px;
   border-radius: var(--border-radius-circle);
-  background-color: var(--color-background);
+  background-color: var(--color-accent);
   border: var(--border-tertiary);
   transition: all var(--transition-normal);
   text-decoration: none;
@@ -134,8 +134,8 @@
   /* padding: var(--spacing-sm) var(--spacing-md); */
   border: none;
   border-radius: var(--border-radius-sm);
-  background-color: var(--color-background-alt);
-  color: var(--color-text-primary);
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
   max-width: 400px;
   width: 100%;
   margin: 0;

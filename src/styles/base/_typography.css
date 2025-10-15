@@ -6,9 +6,9 @@ body {
   background: var(--color-site-background) no-repeat center center fixed;
   background-size: cover;
   display: grid;
-  letter-spacing: 0.08rem;
-  line-height: calc(1em + 0.5rem); /* 1.5rem */
-  /* grid-template-rows: var(--header-height, 70px) 1fr auto; */
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--line-height);
+  /* grid-template-rows: var(--height-header, 70px) 1fr auto; */
 }
 
 /* ------------------- Main Element ------------------- */
@@ -24,6 +24,7 @@ p {
 
 /* ------------------- Headings ------------------- */
 /* Set shorter line heights on headings and interactive elements */
+/* This makes line-height equal to font-size */
 h1,
 h2,
 h3,
@@ -32,27 +33,32 @@ h5,
 h6 {
   font-family: var(--font-primary, inherit);
   color: var(--color-text-primary, inherit);
-  letter-spacing: 2px;
+  /* letter-spacing: 2px; */
   text-transform: uppercase;
   text-align: center;
   text-wrap: balance;
-  line-height: calc(var(--font-size-base) + 0.5dvw); /* ~1.1 */
+  line-height: 1;
 }
 h1 {
-  font-size: calc(var(--font-size-base) + 9dvw), var(--font-size-4xl, 2.5rem);
+  font-size: calc(var(--font-size-base) + 9dvw);
 }
 h2 {
-  font-size:
-    calc(var(--font-size-base) + 3.5dvw), var(--font-size-2xl, 1.75rem);
+  font-size: calc(var(--font-size-base) + 3.5dvw);
 }
 h3 {
-  font-size: calc(var(--font-size-base) + 1.5dvw), var(--font-size-lg, 1.25rem);
+  font-size: calc(var(--font-size-base) + 1.5dvw);
+}
+h4,
+h5,
+h6 {
+  font-size: calc(var(--font-size-base) + 0.5dvw);
 }
 
 button,
 input,
 label {
-  line-height: calc(var(--font-size-base) + 0.5dvw);
+  /* line-height: calc(var(--font-size-base) + 0.5dvw); */
+  line-height: 1;
 }
 
 /* ------------------- Links ------------------- */
@@ -64,23 +70,34 @@ a:hover {
   color: var(--color-text-light);
 }
 
+/* ------------------- Form Fields ------------------- */
+input,
+textarea {
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: var(--border-tertiary);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) var(--spacing-xs);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+}
+
 /* ------------------- Media Queries ------------------- */
 /* Responsive Typography */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   h1 {
     font-size: 1.5rem;
   }
   h2 {
     font-size: 1.25rem;
   }
-}
+} */
 
 /* @media (max-width: 768px) {
   :root {
     --font-size-4xl: 2.5rem;
     --font-size-2xl: 1.75rem;
     --font-size-lg: 1.25rem;
-    --header-height: var(--header-height-sm, 60px);
     --spacing-xl: 1.5rem;
   }
   body {

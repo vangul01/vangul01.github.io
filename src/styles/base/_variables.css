@@ -5,26 +5,29 @@
 /* ----------- COLOR PALETTE ----------- */
 /* Primary Brand Colors */
 :root {
-  --color-primary: #190a2a; /* Main brand color (purple) */
-  --color-secondary: #bb85aa; /* Accent/secondary (blush) */
-  --color-accent: #f3d2c1, #ff8a79; /* Accent (light peach) */
+  /* Main brand color (purple) */
+  --color-primary: #372f49;
+  --color-primary-dark: #190a2a, #1a1a2e;
+  --color-primary-light: #453755;
+
+  /* Secondary color (blush) */
+  --color-secondary: #bb85aa;
+  --color-secondary-dark: #8c607e;
+  --color-secondary-light: #c4a7bb;
+
+  /* Accent color (light peach) */
+  --color-accent: rgb(233 176 178);
+  --color-accent-dark: #e88a8a;
+  --color-accent-light: #f3d2c1;
 
   /* Neutral Colors */
-  --color-white: #fff;
-  --color-black: #1a1a1a;
-  --color-gray-100: #f8f8f8;
-  --color-gray-200: #ececec;
+  --color-light: #f8f9fa;
+  --color-dark: #212529;
   --color-gray-300: #d1d1d1;
   --color-gray-400: #a3a3a3;
   --color-gray-500: #6e6e6e;
   --color-gray-600: #504646; /* #4c3e57 */
   --color-gray-700: #333;
-  --color-gray-800: #222;
-
-  /* --color-background-alt: #7e6565; */
-  /* --color-button-secondary: #e88a8a; */
-  /* --color-button-hover: rgb(233 176 178); */
-  /* --color-site-background: radial-gradient(whitesmoke, #d68e8e); */
 
   /* Alert Colors */
   --color-error: #dd5d5d;
@@ -32,62 +35,56 @@
   --color-warning: #eceb92;
   --color-info: #00899e;
 
-  /* Text Colors */
-  --color-text-primary: var(--color-black);
-  --color-text-secondary: var(--color-gray-600);
-  --color-text-light: var(--color-white);
-  --color-text-muted: var(--color-gray-500);
-  --color-input-text: var(--color-gray-700);
-  --color-input-bg: var(--color-gray-100);
-
-  /* Nav/Header Colors */
-  --color-nav: rgba(88 58 118 0.8); /* semi-transparent primary */
-  --color-header: rgba(88 58 118 0.73);
-
-  /* Button Colors */
-  --color-button-primary: var(--color-primary);
-  --color-button-secondary: var(--color-secondary);
-  --color-button-tertiary: var(--color-accent);
-  --color-button-hover: #a17fc9;
-
-  /* Input Fields */
-  --color-input-text: var(--color-gray-700);
-  --color-input-bg: var(--color-gray-300);
-
-  /* Backgrounds */
-  --color-background: var(--color-white);
-  --color-background-alt: var(--color-gray-100);
+  /* Background Colors */
   --color-site-background: radial-gradient(
-    var(--color-white),
-    var(--color-gray-100)
+    var(--color-accent-light),
+    var(--color-accent)
   );
-  --color-header-background: var(--color-primary);
-  --color-footer-background: var(--color-secondary);
   --color-overlay: rgba(0, 0, 0, 0.85);
 
-  /* Borders & Shadows */
-  --color-border-light: var(--color-gray-200);
-  --color-border-medium: var(--color-gray-400);
-  --color-border-dark: var(--color-primary);
-  --color-shadow: rgba(0, 0, 32, 0.1);
+  /* Nav/Header Colors */
+  --color-header: rgba(88 58 118 0.73);
+  --color-footer: rgba(72 59 97 / 0.8);
+
+  /* Text Colors */
+  --color-text-primary: var(--color-dark);
+  --color-text-secondary: var(--color-gray-600);
+  --color-text-light: var(--color-light);
+  --color-text-muted: var(--color-gray-500);
+
+  /* Button Colors */
+  --color-button-primary: var(--color-accent-dark);
+  --color-button-secondary: var(--color-accent);
+  --color-button-tertiary: var(--color-accent-light);
+  --color-button-hover: var(--color-secondary-light);
+
+  /* Input Fields */
+  --color-input-text: var(--color-dark);
+  --color-input-bg: var(--color-light);
+
+  /* Shadows */
+  --color-shadow: rgb(0 0 32 / 0.1);
+  --shadow-sm: 0 1px 2px var(--color-shadow);
+  --shadow-md: 0 4px 6px var(--color-shadow);
+  --shadow-lg: 0 10px 15px var(--color-shadow);
 
   /* Borders */
   --border-radius-sm: 0.5rem;
   --border-radius-md: 1rem;
   --border-radius-lg: 1.5rem;
   --border-radius-circle: 50%;
+  --color-border-light: var(--color-gray-300);
+  --color-border-medium: var(--color-gray-400);
+  --color-border-dark: var(--color-primary);
   --border-primary: 0.25rem solid var(--color-border-dark);
   --border-secondary: 0.125rem solid var(--color-border-medium);
-  --border-tertiary: 0.125rem solid var(--color-border-light);
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 10%);
-  --shadow-md: 0 4px 6px rgb(0 0 0 / 10%);
-  --shadow-lg: 0 10px 15px rgb(0 0 0 / 10%);
+  --border-tertiary: 0.0825rem solid var(--color-border-light);
 
   /* Typography */
   --font-primary: "Russo One", sans-serif;
-  --font-secondary: "Open Sans", arial, sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+  --letter-spacing: 0.08rem;
+  --line-height: 1.6rem;
   --font-size-xs: 0.5rem; /* 8px */
   --font-size-sm: 0.75rem; /* 12px */
   --font-size-base: 1rem; /* 16px */
@@ -117,6 +114,12 @@
   --min-width: 200px;
   --max-text-width: 35rem;
 
+  --width-text-max: 35rem;
+  --width-container-min: 200px;
+  --width-container-max: 1200px;
+  --height-header: 70px;
+  --height-header-min: 60px;
+
   /* Misc */
   --height-icon: 30px;
   --thumbnail: 150px;
@@ -125,19 +128,16 @@
 /* ----------- DARK THEME ----------- */
 .dark,
 [data-theme="dark"] {
-  --color-background: #1a1a2e;
-  --color-background-alt: #282142;
-  --color-site-background: radial-gradient(#282142, #1a1a2e);
-  --color-header-background: #372f49;
-  --color-footer-background: #4a3f6b;
-  --color-text-primary: var(--color-gray-200);
-  --color-text-secondary: var(--color-gray-400);
-  --color-text-muted: var(--color-gray-500);
+  --color-site-background: radial-gradient(
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  /* --color-text-primary: var(--color-gray-200);
+  --color-text-secondary: var(--color-gray-300);
+  --color-text-muted: var(--color-gray-400);
   --color-border-light: #4a3f6b;
   --color-border-medium: #5a4f7b;
-  --color-border-dark: #7a6f9b;
-  --color-nav: rgba(72 59 97 / 0.8);
-  --color-header: rgba(72 59 97 / 0.73);
+  --color-border-dark: #7a6f9b; */
 }
 
 /* ----------- INDUSTRY STANDARD COLOR COUNT ----------- */
