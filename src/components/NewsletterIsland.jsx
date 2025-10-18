@@ -48,7 +48,7 @@ export default function NewsletterIsland() {
       <br />
       <button
         type="submit"
-        className="button button-secondary"
+        className="button button-primary"
         aria-label="Subscribe to newsletter"
       >
         Subscribe

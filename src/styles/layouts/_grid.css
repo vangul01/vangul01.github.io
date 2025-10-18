@@ -6,7 +6,7 @@
   grid-template-columns: repeat(12, 1fr);
   column-gap: var(--spacing-lg, 1.5rem);
   row-gap: var(--spacing-xl, 2rem);
-  max-width: var(--width-container-max);
+  max-width: var(--container-width-max);
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -70,7 +70,7 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
   gap: var(--spacing-xl);
   padding: var(--spacing-xl) 0;
-  max-width: var(--container-width);
+  max-width: var(--container-width-max);
   margin: 0 auto;
   justify-content: center;
 }
@@ -83,20 +83,20 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
+}
 
-  img {
-    width: 20rem;
-    height: 20rem;
-    object-fit: cover;
-  }
+.image-grid img {
+  width: 20rem;
+  height: 20rem;
+  object-fit: cover;
+}
 
-  div {
-    width: 20rem;
-    height: 20rem;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-  }
+.image-grid div {
+  width: 20rem;
+  height: 20rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 /* ------------------- SHOPPING CART ----------------------- */
@@ -112,4 +112,17 @@
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   font-size: var(--font-size-base);
+}
+
+@media (width <= 992px) {
+  /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+  .two-column-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed from center to flex-start */
+    width: 100%;
+    gap: 1rem;
+    padding-top: 0; /* Reset any top padding */
+    margin-top: 0; /* Reset any top margin */
+  }
 }

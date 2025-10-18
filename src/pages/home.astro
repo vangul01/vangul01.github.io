@@ -3,7 +3,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-
 import { Image } from "astro:assets";
 import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 // import leftLeaf from "../assets/images/web/left-leaf.svg";
@@ -11,15 +10,14 @@ import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import featuredArt from "../assets/images/web/eyecon.png";
 import aboutMe from "../assets/images/web/about-home.png";
 import collab from "../assets/images/web/dreams.png";
+import holoBackground from "../assets/images/web/holographic_background.webp";
 import eyeImage from "../assets/images/web/eyecon.png";
-
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
 const collabs = await getCollabs();
 
 import Carousel from "../components/Carousel.astro";
-
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -45,14 +43,14 @@ const keywords =
           class="leaf leaf-right"
           loading="eager"
           decoding="async"
-          
+
          />
       </div> -->
       <div class="hero-image">
-        <!-- <Image 
+        <!-- <Image
           src={eyeImage}
           alt="Large eye illustration"
-          class="eye-background" 
+          class="eye-background"
         /> -->
       </div>
       <div class="overlay-text">
@@ -62,13 +60,12 @@ const keywords =
       </div>
     </section>
 
-      <button id="theme-toggle">Toggle Theme</button>
-
+    <button id="theme-toggle">Toggle Theme</button>
 
     <section class="content-container">
       <div class="two-column-container">
         <div class="image about-image">
-        <!-- <Carousel 
+          <!-- <Carousel
           items={featuredProducts} /> -->
           <Image src={featuredArt} alt="Featured Artwork" />
         </div>
@@ -77,12 +74,11 @@ const keywords =
           <h3>Featured Artwork</h3>
           <br />
           <p>
-            I love creating art that is vibrant, colorful, and a little absurd. My 
-            work is inspired by my
-            experiences, dreams, and the world around me. I hope my art brings a
-            sense of joy and wonder to your life. Each piece is a reflection of
-            my journey, a snapshot of my thoughts and feelings, and I hope you
-            can find a connection to it.
+            I love creating art that is vibrant, colorful, and a little absurd.
+            My work is inspired by my experiences, dreams, and the world around
+            me. I hope my art brings a sense of joy and wonder to your life.
+            Each piece is a reflection of my journey, a snapshot of my thoughts
+            and feelings, and I hope you can find a connection to it.
           </p>
           <br />
           <a href="/merch"
@@ -96,6 +92,13 @@ const keywords =
 
     <section class="content-container">
       <div class="two-column-container">
+        <div class="image about-image">
+          <Image
+            src={aboutMe}
+            alt="Image of the artist VANGULAR aka Valerie Angulo"
+          />
+        </div>
+
         <div class="text about-text">
           <h3>About Vangular</h3>
           <br />
@@ -112,13 +115,6 @@ const keywords =
               >Learn More</button
             ></a
           >
-        </div>
-
-        <div class="image about-image">
-          <Image
-            src={aboutMe}
-            alt="Image of the artist VANGULAR aka Valerie Angulo"
-          />
         </div>
       </div>
     </section>
@@ -152,8 +148,3 @@ const keywords =
   </main>
   <Footer />
 </BaseLayout>
-
-<!-- <script>
-  import { initParallax } from "../scripts/home.js";
-  document.addEventListener("DOMContentLoaded", initParallax);
-</script> -->

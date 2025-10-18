@@ -1,0 +1,44 @@
+/* ----------------HOME---------------- */
+.hero-section {
+  position: relative;
+  width: 100dvw;
+
+  /* width: 100%; */
+  height: 100dvh;
+  overflow: hidden;
+
+  /* Hide any overflow to prevent scrollbars */
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.eye-background {
+  width: 70dvw;
+  height: auto;
+  align-items: center;
+  object-fit: contain; /* or 'contain' if you want to see the whole eye */
+}
+
+.overlay-text {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  /* Optional: add text shadow or background for better visibility */
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
+
+  p {
+    font-size: var(--font-size-lg);
+    letter-spacing: 3px;
+  }
+}

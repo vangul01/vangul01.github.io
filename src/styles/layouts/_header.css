@@ -155,3 +155,38 @@ button:hover {
   overflow: hidden;
   overscroll-behavior: none; /* Prevent overscroll effects */
 }
+
+/* Nav header WHEN SCREEN SIZE IS LARGER THAN 768px */
+
+/* Content container increase padding on bigger screens */
+@media (width >= 768px) {
+  .nav-toggle {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0s linear 0.3s;
+    display: none;
+  }
+
+  .nav-links {
+    position: static;
+    padding: 0;
+    height: auto;
+    width: auto;
+    background-color: transparent;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-right: var(--spacing-lg); /* Added spacing before cart */
+    margin-left: auto; /* Added to push nav links to the right */
+    overflow-y: visible;
+  }
+
+  .nav-item {
+    margin: 0; /* Reset margin for desktop */
+  }
+}

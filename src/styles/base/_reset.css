@@ -74,6 +74,13 @@ input,
 textarea {
   resize: none;
 }
+
+input {
+  max-width: var(--input-width-max);
+  min-width: var(--input-width-min);
+  width: 100%;
+}
+
 /* Make sure textareas without a rows attribute are not tiny */
 textarea:not([rows]) {
   min-height: 10em;
