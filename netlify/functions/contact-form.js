@@ -20,7 +20,7 @@ export async function handler(event) {
 
     const body = {
       email,
-      includeListIds: `[${process.env.PUBLIC_NEWSLETTER_LIST_ID}]`, // "test emails" list ID
+      includeListIds: `[${process.env.PUBLIC_CONTACT_LIST_ID}]`, // "test emails" list ID
       templateId: 1, // default double opt-in template ID
       redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success`, // Replace with your actual redirection URL
     };
