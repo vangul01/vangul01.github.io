@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const payload = Object.fromEntries(formData.entries());
 
       try {
-        // Submit to Netlify Forms
+        // Send Brevo autoresponse to form submitter
         const response = await fetch(
           "/.netlify/functions/contact-autoresponse",
           {

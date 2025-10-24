@@ -1,6 +1,6 @@
 ---
 import { siteNavigation } from "../config/navigation";
-import NewsletterIsland from "./NewsletterIsland.jsx";
+import NewsletterForm from "./NewsletterForm.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -61,8 +61,7 @@ const footerLinks = siteNavigation.footerLinks;
     <div class="footer-section newsletter">
       <h4 class="footer-title">Stay Updated</h4>
       <p>Subscribe to get special offers and updates!</p>
-      <!-- <Newsletter /> -->
-      <NewsletterIsland client:load />
+      <NewsletterForm client:load />
     </div>
   </div>
 
