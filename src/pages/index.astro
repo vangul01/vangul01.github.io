@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PortalLayout from "../layouts/PortalLayout.astro";
 import blinkingEyeVideo from "../assets/videos/blinking_eye.mp4";
 // import blinkingEyeWebm from "../assets/videos/blinking_eye.webm";
 
@@ -10,7 +10,7 @@ const pageTitle = "Welcome to VANGULAR!";
 const keywords = "Vangular, enter, portal";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<PortalLayout pageTitle={pageTitle} keywords={keywords}>
   <main class="portal">
     <a href="/home" class="overlay-image">
        <Image 
@@ -30,27 +30,5 @@ const keywords = "Vangular, enter, portal";
       </video> -->
     </a>
   </main>
-</BaseLayout>
+</PortalLayout>
 
-<style>
-  .portal-video {
-    width: 100%;
-    height: auto;
-    max-width: 1500px;
-    margin: 0 auto;
-  }
-
-  .portal {
-    background: transparent;
-    min-height: 100vh;
-  }
-
-  .overlay-image {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>

@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Order Success | VANGULAR";
@@ -11,7 +9,6 @@ const keywords =
 <!-- I'd like to have a success footer here which highlights connecting
  on social media and signing up to newsletter -->
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
     <div class="content-container">
       <h3>Thank you!</h3>
@@ -27,5 +24,4 @@ const keywords =
       ></a
     >
   </main>
-  <Footer />
 </BaseLayout>

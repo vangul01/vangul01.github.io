@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
@@ -10,14 +8,14 @@ import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import featuredArt from "../assets/images/web/eyecon.png";
 import aboutMe from "../assets/images/web/about-home.png";
 import collab from "../assets/images/web/dreams.png";
-import holoBackground from "../assets/images/web/holographic_background.webp";
-import eyeImage from "../assets/images/web/eyecon.png";
+// import holoBackground from "../assets/images/web/holographic_background.webp";
+// import eyeImage from "../assets/images/web/eyecon.png";
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
 const collabs = await getCollabs();
 
-import Carousel from "../components/Carousel.astro";
+// import Carousel from "../components/Carousel.astro";
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -25,7 +23,6 @@ const keywords =
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
     <!-- Welcome/Hero Section -->
     <section class="hero-section">
@@ -60,7 +57,7 @@ const keywords =
       </div>
     </section>
 
-    <button id="theme-toggle">Toggle Theme</button>
+    <!-- <button id="theme-toggle">Toggle Theme</button> -->
 
     <section class="content-container">
       <div class="two-column-container">
@@ -146,5 +143,4 @@ const keywords =
       </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>

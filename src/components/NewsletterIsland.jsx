@@ -3,7 +3,6 @@ import "../styles/global.css";
 
 export default function NewsletterIsland() {
   const [message, setMessage] = useState("");
-  // const [color, setColor] = useState("black");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -53,7 +52,7 @@ export default function NewsletterIsland() {
       >
         Subscribe
       </button>
-      <div>{message}</div>
+      <div id="newsletter-message"></div>
     </form>
   );
 }

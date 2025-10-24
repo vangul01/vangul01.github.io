@@ -20,7 +20,8 @@ export async function handler(event) {
 
     const body = {
       email,
-      includeListIds: `[${process.env.PUBLIC_NEWSLETTER_LIST_ID}]`, // "test emails" list ID
+      // includeListIds: `${process.env.PUBLIC_NEWSLETTER_LIST_IDS}`, // "test emails" list ID
+      includeListIds: [8],
       templateId: 1, // default double opt-in template ID
       redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success`, // Replace with your actual redirection URL
     };
@@ -35,7 +36,7 @@ export async function handler(event) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      },
+      }
     );
 
     const data = await response.json();

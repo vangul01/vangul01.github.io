@@ -1,0 +1,99 @@
+ ---
+ import "/src/styles/global.css";
+import favicon from "/favicon.ico";
+
+interface Props {
+  pageTitle: string;
+  keywords: string;
+}
+
+const { pageTitle, keywords } = Astro.props;
+const font = "https://fonts.googleapis.com/css2?family=Russo+One&display=swap";
+const fontAwesome =
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+--- 
+  
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+      ,
+      viewport-fit='cover"'
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#190a2a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Vangular" />
+    <meta name="application-name" content="Vangular" />
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Security headers (CSP located in netlify.toml) -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Social media meta tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/icons/logo.png" />
+    <meta property="og:url" content="https://vangular.com" />
+    <meta property="og:site_name" content="Vangular" />
+    <meta property="og:title" content={pageTitle} />
+    <meta
+      property="og:description"
+      content="Vangular: Art and design brand for the existential and absurd."
+    />
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta
+      name="twitter:description"
+      content="Vangular: Art and design brand for the existential and absurd."
+    />
+    <meta name="twitter:image" content="/icons/logo.png" />
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+    <!-- RSS Feed -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Vangular RSS Feed"
+      href="/rss.xml"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://vangular.com" />
+
+    <link href={font} rel="stylesheet" />
+    <link href={fontAwesome} rel="stylesheet" />
+    <link href={favicon} rel="icon" type="image/x-icon" />
+
+    <!-- PWA Icon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/src/assets/images/web/logo.png"
+    />
+
+    <meta name="author" content="Valerie Angulo" />
+    <meta
+      name="description"
+      content="Vangular: Art and design brand for the existential and absurd."
+    />
+    <meta name="keywords" content={keywords} />
+    <title>{pageTitle}</title>
+  </head>
