@@ -26,6 +26,7 @@ import { updateUI, updateCartCount } from "./cart/cart.js";
 import { clearCart, addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
 import { initTheme } from "./color-theme.js";
+import { initNewsletterForm } from "./form-submission.js";
 
 // import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
 
@@ -34,6 +35,7 @@ if (typeof document !== "undefined") {
     // Initialize global features
     initTheme();
     initNav();
+    initNewsletterForm();
 
     // Initialize cart UI
     updateUI();

@@ -1,4 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
+// document.addEventListener("DOMContentLoaded", () => {
+
+// Separate contact form initialization
+function initContactForm() {
   // Contact form handler
   const contactForm = document.querySelector("#contact-form");
   const contactMsg = document.querySelector("#contact-submit-message");
@@ -37,7 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+}
 
+// Separate newsletter form initialization
+
+export function initNewsletterForm() {
   // Newsletter form handler
   const newsletterForm = document.querySelector("#newsletter-form");
   const newsletterMsg = document.querySelector("#newsletter-submit-message");
@@ -71,4 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+}
+
+// Initialize forms when DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  initContactForm();
+  initNewsletterForm();
 });
