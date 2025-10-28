@@ -19,23 +19,24 @@ export async function handler(event) {
         "api-key": process.env.SECRET_BREVO_API_KEY,
         "content-type": "application/json",
       },
+
       body: JSON.stringify({
-        sender: { name: "Vangular", email: "contact@vangular.com" }, //process.env.BREVO_SENDER_EMAIL
+        sender: { name: "Vangular TEST!", email: "contact@vangular.com" }, //process.env.BREVO_SENDER_EMAIL
         to: [
           {
             email,
             name: `${firstName} ${lastName}`.trim(),
           },
         ],
-        // templateId: parseInt(process.env.BREVO_TEMPLATE_ID), // Get from env var
 
+        // templateId: parseInt(process.env.BREVO_TEMPLATE_ID), // Get from env var
         templateId: 6, // <-- replace this with your Brevo template ID
-        params: {
-          // optional dynamic variables from your template
-          FIRST_NAME: firstName || "",
-          LAST_NAME: lastName || "",
-          MESSAGE: message || "",
-        },
+        // params: {
+        //   // optional dynamic variables from your template
+        //   FIRST_NAME: firstName || "",
+        //   LAST_NAME: lastName || "",
+        //   MESSAGE: message || "",
+        // },
       }),
     });
 

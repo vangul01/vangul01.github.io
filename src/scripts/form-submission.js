@@ -49,6 +49,11 @@ export function initNewsletterForm() {
   const newsletterForm = document.querySelector("#newsletter-form");
   const newsletterMsg = document.querySelector("#newsletter-submit-message");
 
+  if (!newsletterForm || !newsletterMsg) {
+    console.warn("Newsletter form elements not found");
+    return;
+  }
+
   if (newsletterForm) {
     newsletterForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -83,5 +88,5 @@ export function initNewsletterForm() {
 // Initialize forms when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
-  initNewsletterForm();
+  // initNewsletterForm();
 });

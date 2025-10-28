@@ -23,7 +23,7 @@ export async function handler(event) {
       // includeListIds: `${process.env.PUBLIC_NEWSLETTER_LIST_IDS}`, // "test emails" list ID
       includeListIds: [8],
       templateId: 1, // default double opt-in template ID
-      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success`, // Replace with your actual redirection URL
+      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success-newsletter`,
     };
 
     // Call Brevo API to add contact
