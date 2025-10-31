@@ -68,7 +68,7 @@ export async function handler(event) {
       includeListIds: [8],
       templateId: 1, // default double opt-in template ID
       //   redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success-newsletter`,
-      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/.netlify/functions/newsletter-welcome-email?email=${encodeURIComponent(email)}`,
+      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/.netlify/functions/newsletter-welcome-email?email={{params.email}}`,
     };
 
     const response = await fetch(
