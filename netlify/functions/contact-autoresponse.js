@@ -1,14 +1,12 @@
-// import fetch from "node-fetch";
-
 export async function handler(event) {
   try {
     const { firstName, lastName, email, message } = JSON.parse(event.body);
 
-    // Add validation
-    if (!email) {
+    if (!email || typeof email !== "string") {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: "Email is required" }),
+        body: JSON.stringify({ message: "Invalid email address." }),
+        headers: { "Content-Type": "application/json" },
       };
     }
 

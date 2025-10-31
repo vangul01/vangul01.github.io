@@ -1,5 +1,3 @@
-// document.addEventListener("DOMContentLoaded", () => {
-
 // Separate contact form initialization
 function initContactForm() {
   // Contact form handler
@@ -22,7 +20,7 @@ function initContactForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-          }
+          },
         );
 
         const json = await response.json();
@@ -43,7 +41,6 @@ function initContactForm() {
 }
 
 // Separate newsletter form initialization
-
 export function initNewsletterForm() {
   // Newsletter form handler
   const newsletterForm = document.querySelector("#newsletter-form");
@@ -63,12 +60,12 @@ export function initNewsletterForm() {
 
       try {
         const response = await fetch(
-          "/.netlify/functions/newsletter-subscribe",
+          "/.netlify/functions/newsletter-double-opt-in",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
-          }
+          },
         );
 
         const data = await response.json();
