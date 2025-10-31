@@ -23,7 +23,7 @@ export async function handler(event) {
           attributes: {
             "DOUBLE_OPT-IN": "1",
           },
-          listIds: [9], // ID of your confirmed subscribers list
+          listIds: [17], // ID of your confirmed subscribers list
           unlinkListIds: [8], // ID of your pending subscribers list
         }),
       },
@@ -41,7 +41,7 @@ export async function handler(event) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        templateId: 2, // Your welcome email template ID
+        templateId: 9, // Your welcome email template ID
         to: [{ email }],
       }),
     });
