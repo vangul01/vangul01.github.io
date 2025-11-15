@@ -4,7 +4,7 @@ import blinkingEyeVideo from "../assets/videos/blinking_eye.mp4";
 // import blinkingEyeWebm from "../assets/videos/blinking_eye.webm";
 
 import { Image } from "astro:assets";
-import eyeImage from "../assets/images/web/eyecon.png";
+import eyeImage from "../assets/images/web/logo_transparent.png";
 
 const pageTitle = "Welcome to VANGULAR!";
 const keywords = "Vangular, enter, portal";
@@ -13,11 +13,11 @@ const keywords = "Vangular, enter, portal";
 <PortalLayout pageTitle={pageTitle} keywords={keywords}>
   <main class="portal">
     <a href="/home" class="overlay-image">
-       <Image 
-          src={eyeImage}
-          alt="Large eye illustration"
-          class="eye-background" 
-        />
+      <Image
+        src={eyeImage}
+        alt="Large eye illustration"
+        class="eye-background"
+      />
       <!-- <video
         autoplay
         loop
@@ -31,4 +31,3 @@ const keywords = "Vangular, enter, portal";
     </a>
   </main>
 </PortalLayout>
-
