@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
+// import { Image } from "astro:assets";
+// import defaultProduct from "../assets/images/web/logo_eyewhites.png";
+
 import { getStripePrice } from "../../lib/stripe-client";
 import { client } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
@@ -45,7 +48,8 @@ const keywords = `vangular, ${product.name}, art, products`;
           <div class="zoom-container">
             <img
               id="main-product-image"
-              src={product.images?.[0] || "/src/assets/images/web/logo.png"}
+              src={product.images?.[0] ||
+                "/src/assets/images/web/logo_eyewhites.png"}
               alt={product.name}
               loading="eager"
             />
