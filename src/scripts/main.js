@@ -23,19 +23,20 @@ Checkout page
 */
 
 import { updateUI, updateCartCount } from "./cart/cart.js";
-import { clearCart, addToCart } from "./cart/cart-storage.js";
+import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
 import { initTheme } from "./color-theme.js";
-import { initNewsletterForm } from "./form-submission.js";
-
-// import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
+import { initContactForm, initNewsletterForm } from "./form-submission.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     // Initialize global features
     initTheme();
     initNav();
+
+    // Initialize forms
     initNewsletterForm();
+    initContactForm();
 
     // Initialize cart UI
     updateUI();

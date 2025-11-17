@@ -52,11 +52,11 @@ export async function handler(event) {
       },
 
       body: JSON.stringify({
-        sender: { name: "Vangular TEST!", email: "contact@vangular.com" }, //process.env.BREVO_SENDER_EMAIL
+        // sender: { name: "Vangular TEST!", email: "contact@vangular.com" }, //process.env.BREVO_SENDER_EMAIL
         to: [
           {
             email,
-            name: `${firstName} ${lastName}`.trim(),
+            // name: `${firstName} ${lastName}`.trim(),
           },
         ],
 
@@ -74,21 +74,26 @@ export async function handler(event) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Brevo error:", data);
-      throw new Error(data.message || "Failed to send email");
+      console.error("Brevo error (response not ok): ", data);
+      throw new Error(
+        data.message || "Message failed to send. Please try again."
+      );
     }
 
+    console.log("Brevo email sent successfully:", data);
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: "Thanks for your message! Check your email for confirmation.",
+        message: "Thanks for contacting us! We'll get back to you soon.",
       }),
     };
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Brevo error:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: "Failed to send confirmation email." }),
+      body: JSON.stringify({
+        message: "Message failed to send. Please try again.",
+      }),
     };
   }
 }

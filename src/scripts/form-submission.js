@@ -1,5 +1,5 @@
 // Separate contact form initialization
-function initContactForm() {
+export function initContactForm() {
   // Contact form handler
   const contactForm = document.querySelector("#contact-form");
   const contactMsg = document.querySelector("#contact-submit-message");
@@ -20,16 +20,16 @@ function initContactForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-          },
+          }
         );
 
         const json = await response.json();
 
         if (!response.ok)
-          throw new Error(json.message || "Message failed to send");
-        contactMsg.textContent =
-          json.message ||
-          "Thanks for contacting us! We'll get back to you soon.";
+          throw new Error(
+            json.message || "Message failed to send. Please try again."
+          );
+        contactMsg.textContent = json.message || "Message sent!";
         contactForm.reset();
       } catch (error) {
         console.error("Contact form error:", error);
@@ -65,7 +65,7 @@ export function initNewsletterForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
-          },
+          }
         );
 
         const data = await response.json();
@@ -83,7 +83,7 @@ export function initNewsletterForm() {
 }
 
 // Initialize forms when DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
-  initContactForm();
-  // initNewsletterForm();
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//   initContactForm();
+//   // initNewsletterForm();
+// });
