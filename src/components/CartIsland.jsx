@@ -68,7 +68,9 @@ export default function CartIsland() {
               >
                 <img
                   className="cart-product-thumbnail"
-                  src={item.image || "/src/assets/images/web/logo.png"}
+                  src={
+                    item.image || "/src/assets/images/web/logo_eyewhites.png"
+                  }
                   alt={item.name}
                   loading="lazy"
                 />
