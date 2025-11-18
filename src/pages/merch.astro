@@ -37,18 +37,21 @@ const keywords = "art, merchandise, prints, digital art, paintings";
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
-    <section class="content-container">
+    <section class="section">
       {
         Object.entries(productsByCategory).map(
           ([category, categoryProducts]) => {
             const typedCategory = category as keyof typeof categoryNames;
             return (
-              <div class="category-section">
-                <h4 class="category-title">{categoryNames[typedCategory]}</h4>
-                <div class="products-grid">
+              <div>
+                <div class="container column flex-center">
+                  <h3>{categoryNames[typedCategory]}</h3>
+                </div>
+
+                <div class="container grid-4">
                   {categoryProducts.map((product) => (
-                    <a href={`/products/${product.slug}`} class="product-card">
-                      <div class="product-image">
+                    <a href={`/products/${product.slug}`}>
+                      <div>
                         <img
                           src={
                             product.images?.[0] ||
@@ -58,11 +61,9 @@ const keywords = "art, merchandise, prints, digital art, paintings";
                           loading="lazy"
                         />
                       </div>
-                      <div class="product-info">
+
+                      <div>
                         <h4>{product.name}</h4>
-                        {product.featured && (
-                          <span class="featured-badge">{product.featured}</span>
-                        )}
                       </div>
                     </a>
                   ))}
