@@ -11,14 +11,14 @@ export function initTheme() {
   }
 
   // Add toggle listener
-  const themeToggle = document.getElementById("theme-toggle");
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const current =
-        localStorage.getItem("theme") === "dark" ? "light" : "dark";
-      setTheme(current);
-    });
-  }
+  //   const themeToggle = document.getElementById("theme-toggle");
+  //   if (themeToggle) {
+  //     themeToggle.addEventListener("click", () => {
+  //       const current =
+  //         localStorage.getItem("theme") === "dark" ? "light" : "dark";
+  //       setTheme(current);
+  //     });
+  //   }
 }
 
 function setTheme(theme) {

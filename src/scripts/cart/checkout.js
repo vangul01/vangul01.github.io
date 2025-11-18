@@ -39,20 +39,20 @@ export async function handleCheckout() {
   }
 }
 
-export async function getStripePrice(priceId) {
-  try {
-    const response = await fetch("/.netlify/functions/get-stripe-prices", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ priceId }),
-    });
+// export async function getStripePrice(priceId) {
+//   try {
+//     const response = await fetch("/.netlify/functions/get-stripe-prices", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ priceId }),
+//     });
 
-    if (!response.ok) throw new Error("Failed to fetch price");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching price:", error);
-    throw error;
-  }
-}
+//     if (!response.ok) throw new Error("Failed to fetch price");
+//     return await response.json();
+//   } catch (error) {
+//     console.error("Error fetching price:", error);
+//     throw error;
+//   }
+// }

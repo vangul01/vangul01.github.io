@@ -1,9 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pageTitle = "Order Success | VANGULAR";
-const keywords =
-  "order success, payment success, thank you, order confirmation";
+const pageTitle = "Newsletter Status | VANGULAR";
+const keywords = "subscription error";
 ---
 
 <!-- I'd like to have a success footer here which highlights connecting
@@ -11,17 +10,18 @@ const keywords =
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
     <div class="content-container">
-      <h3>Thank you!</h3>
-      <h4>Your payment was successful :)</h4>
+      <h3>Thanks for Subscribing!</h3>
       <br /><br />
-      <h5>
-        We've sent a confirmation email to [customer email address] with all the
-        details.
-      </h5>
+      <p>Sorry, your subscription was unsuccessful!</p>
     </div>
     <a href="/home"
       ><button class="button button-primary" role="button"
         >Back to Vangular</button
+      ></a
+    >
+    <a href="javascript:window.close()"
+      ><button class="button button-primary" role="button"
+        >Close this Window</button
       ></a
     >
   </main>

@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
@@ -11,7 +9,6 @@ const keywords = "about, vangular, art, design";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
     <section class="content-container">
       <div class="two-column-container">
@@ -48,5 +45,4 @@ const keywords = "about, vangular, art, design";
       </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>

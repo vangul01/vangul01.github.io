@@ -1,3 +1,5 @@
+// Should I import checkout.js into here??
+
 import React, { useEffect, useState } from "react";
 import {
   loadCart,

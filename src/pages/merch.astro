@@ -1,10 +1,11 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getAllProducts } from "../lib/sanity-client";
 import type { Product } from "../types/sanity-schema";
+
+// import { Image } from "astro:assets";
+// import defaultProdPic from "/src/assets/images/web/logo_eyewhites.png";
 
 const products = await getAllProducts();
 
@@ -35,7 +36,6 @@ const keywords = "art, merchandise, prints, digital art, paintings";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
     <section class="content-container">
       {
@@ -52,7 +52,7 @@ const keywords = "art, merchandise, prints, digital art, paintings";
                         <img
                           src={
                             product.images?.[0] ||
-                            "/src/assets/images/web/logo.png"
+                            "/src/assets/images/web/logo_eyewhites.png"
                           }
                           alt={product.name}
                           loading="lazy"
@@ -74,5 +74,4 @@ const keywords = "art, merchandise, prints, digital art, paintings";
       }
     </section>
   </main>
-  <Footer />
 </BaseLayout>
