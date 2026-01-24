@@ -56,3 +56,51 @@
   border-radius: var(--border-radius-sm);
   outline: none;
 }
+
+/* ------------------ NEWSLETTER FORM ------------------------ */
+
+.newsletter {
+  grid-column: span 2;
+  grid-row: 2;
+  text-align: center;
+
+  h4 {
+    font-size: var(--font-size-lg);
+  }
+
+  p {
+    /* margin-bottom: var(--spacing-md); */
+    color: var(--color-text-muted);
+    padding: 0 var(--spacing-md);
+  }
+}
+
+.newsletter form {
+  padding: var(--spacing-md) var(--spacing-md);
+}
+
+.newsletter button {
+  /* width: 100%; */
+  /* max-width: 400px; */
+  margin: var(--spacing-lg) 0 0 0;
+}
+
+.newsletter-input:focus {
+  /* outline: none; */
+  border-color: var(--color-secondary);
+}
+
+@media (width <= 768px) {
+  /* Newsletter takes full width below socials */
+  .newsletter {
+    padding: var(--spacing-md);
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (width <= 992px) {
+  .newsletter {
+    grid-column: span 2;
+  }
+}

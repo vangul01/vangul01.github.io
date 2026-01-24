@@ -1,67 +1,113 @@
-/* ===== Grid/flexbox Utilities ===== */
+/* ------------------------------------------------------------ */
+/* CONTAINERS + SECTIONS */
+/* ------------------------------------------------------------ */
+.container {
+  width: min(100% - 2rem, var(--container-width-max));
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.container-narrow {
+  width: min(100%, var(--container-width-narrow));
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.section {
+  margin-block: var(--spacing-2xl);
+  padding-block: var(--spacing-2xl);
+  overflow: hidden;
+}
+
+.section-sm {
+  padding-block: var(--spacing-lg);
+  margin-block: var(--spacing-lg);
+  overflow: hidden;
+}
 
 /* GLOBAL CONTAINER */
-.container {
+/* .container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: var(--spacing-lg, 1.5rem);
   row-gap: var(--spacing-xl, 2rem);
-  max-width: var(--container-width-max);
+  width: min(100% - 2rem, var(--container-width-max));
   margin: 0 auto;
-  padding: 0 1rem;
-}
+  padding: 0 1rem; */
+/* grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); */
+/* max-width: var(--container-width-max); */
+/* } */
 
-/* SECTION WRAPPER (each section on your homepage) */
-.section {
-  margin: 6rem 0;
-}
-
-/* ALIGNMENT UTILITIES */
-.span-12 {
-  grid-column: span 12;
-}
-.span-8 {
-  grid-column: span 8;
-}
-.span-6 {
-  grid-column: span 6;
-}
-.span-4 {
-  grid-column: span 4;
-}
-.span-3 {
-  grid-column: span 3;
-}
-
-.center {
-  text-align: center;
-  justify-self: center;
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .container {
-    grid-template-columns: repeat(6, 1fr);
-  }
-  [class*="span-"] {
-    grid-column: span 6 !important;
-  }
-}
-
-/* Old stuff, maybe s*/
-
-/* .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: var(--space-3);
-}
-
-.flex-container {
+/* ------------------------------------------------------------ */
+/* FLEX UTILITIES */
+/* ------------------------------------------------------------ */
+.flex {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--spacing-lg);
+}
+
+.flex-center {
+  display: flex;
+  /* flex-wrap: wrap; */
   align-items: center;
-} */
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-lg);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------------ */
+/* GRID SYSTEM */
+/* ------------------------------------------------------------ */
+.grid {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
 
 /* ----------------GALLERY / MERCH---------------- */
 
@@ -112,17 +158,4 @@
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   font-size: var(--font-size-base);
-}
-
-@media (width <= 992px) {
-  /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
-  .two-column-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Changed from center to flex-start */
-    width: 100%;
-    gap: 1rem;
-    padding-top: 0; /* Reset any top padding */
-    margin-top: 0; /* Reset any top margin */
-  }
 }

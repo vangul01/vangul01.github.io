@@ -3,19 +3,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
 import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
-// import leftLeaf from "../assets/images/web/left-leaf.svg";
-// import rightLeaf from "../assets/images/web/right-leaf.svg";
+
 import featuredArt from "../assets/images/web/logo_eyewhites.png";
 import aboutMe from "../assets/images/web/about-home.png";
 import collab from "../assets/images/web/dreams.png";
-// import holoBackground from "../assets/images/web/holographic_background.webp";
 // import eyeImage from "../assets/images/web/eyecon.png";
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
 const collabs = await getCollabs();
-
-// import Carousel from "../components/Carousel.astro";
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -25,32 +21,15 @@ const keywords =
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
     <!-- Welcome/Hero Section -->
-    <section class="hero-section">
-      <!-- <div class="leaves-container">
+    <section class="section">
+      <!-- <div>
         <Image
-          src={leftLeaf}
-          alt=""
-          class="leaf leaf-left"
-          loading="eager"
-          decoding="async"
-        />
-        <Image
-          src={rightLeaf}
-          alt=""
-          class="leaf leaf-right"
-          loading="eager"
-          decoding="async"
-
-         />
-      </div> -->
-      <div class="hero-image">
-        <!-- <Image
           src={eyeImage}
           alt="Large eye illustration"
           class="eye-background"
-        /> -->
-      </div>
-      <div class="overlay-text">
+        />
+      </div> -->
+      <div class="container column flex-center">
         <p>Welcome to</p>
         <h1>Vangular</h1>
         <p>Art and Designs for the Existential and Absurd</p>
@@ -59,15 +38,9 @@ const keywords =
 
     <!-- <button id="theme-toggle">Toggle Theme</button> -->
 
-    <section class="content-container">
-      <div class="two-column-container">
-        <div class="image about-image">
-          <!-- <Carousel
-          items={featuredProducts} /> -->
-          <Image src={featuredArt} alt="Featured Artwork" />
-        </div>
-
-        <div class="text about-text">
+    <section class="section">
+      <div class="container grid-2">
+        <div class="column">
           <h3>Featured Artwork</h3>
           <br />
           <p>
@@ -84,19 +57,23 @@ const keywords =
             ></a
           >
         </div>
+
+        <div>
+          <Image src={featuredArt} alt="Featured Artwork" />
+        </div>
       </div>
     </section>
 
-    <section class="content-container">
-      <div class="two-column-container">
-        <div class="image about-image">
+    <section class="section">
+      <div class="container grid-2">
+        <div>
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
           />
         </div>
 
-        <div class="text about-text">
+        <div class="column">
           <h3>About Vangular</h3>
           <br />
           <p>
@@ -116,13 +93,9 @@ const keywords =
       </div>
     </section>
 
-    <section class="content-container">
-      <div class="two-column-container">
-        <div class="image about-image">
-          <Image src={collab} alt="EmmaLee Collaboration" />
-        </div>
-
-        <div class="text about-text">
+    <section class="section">
+      <div class="container grid-2">
+        <div class="column">
           <h3>Collabs & Commissions</h3>
           <br />
           <p>
@@ -139,6 +112,10 @@ const keywords =
               >Let's Work Together!</button
             ></a
           >
+        </div>
+
+        <div>
+          <Image src={collab} alt="EmmaLee Collaboration" />
         </div>
       </div>
     </section>

@@ -5,19 +5,13 @@
   padding: var(--spacing-md);
   transition: transform var(--transition-normal);
   background-color: var(--color-background);
+  /* display: flex;
+  flex-direction: column;
+  color: inherit; */
 }
 
 .product-card:hover {
   /* transform: translateY(-4px); */
   background-color: var(--color-background-alt);
   box-shadow: var(--shadow-md);
-}
-
-/* merch */
-.product-card {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  transition: transform var(--transition-normal);
 }

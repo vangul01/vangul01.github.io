@@ -5,9 +5,6 @@
 /* ----------- COLOR PALETTE ----------- */
 /* Primary Brand Colors - purple, pink, orange */
 :root {
-  /* background image */
-  /* --background-image: 'url("src/assets/images/web/holographic_background.webp")'; */
-
   /* Main brand color (purple) */
   --color-primary: #372f49;
   --color-primary-dark: #190a2a, #221934;
@@ -43,6 +40,15 @@
     var(--color-accent-light),
     var(--color-accent)
   );
+  /* linear-gradient(
+    90deg,
+    #ff0066,
+    #ff8a00,
+    #ffee00,
+    #00d49a,
+    #008cff,
+    #7f00ff
+  ); */
   --color-overlay: rgba(0, 0, 0, 0.85);
 
   /* Nav/Header Colors */
@@ -135,23 +141,6 @@
   --height-icon: 30px;
   --thumbnail: 150px;
   --social-icon-size: 50px;
-}
-
-/* ----------- DARK THEME ----------- */
-.dark,
-[data-theme="dark"] {
-  --color-site-background: radial-gradient(
-    var(--color-primary-light),
-    var(--color-primary-dark)
-  );
-  background: var(--color-site-background) no-repeat center center fixed;
-
-  /* --color-text-primary: var(--color-gray-200);
-  --color-text-secondary: var(--color-gray-300);
-  --color-text-muted: var(--color-gray-400);
-  --color-border-light: #4a3f6b;
-  --color-border-medium: #5a4f7b;
-  --color-border-dark: #7a6f9b; */
 }
 
 /* ----------- INDUSTRY STANDARD COLOR COUNT ----------- */

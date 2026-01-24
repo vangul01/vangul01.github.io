@@ -20,14 +20,14 @@ export function initContactForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-          }
+          },
         );
 
         const json = await response.json();
 
         if (!response.ok)
           throw new Error(
-            json.message || "Message failed to send. Please try again."
+            json.message || "Message failed to send. Please try again.",
           );
         contactMsg.textContent = json.message || "Message sent!";
         contactForm.reset();
@@ -65,7 +65,7 @@ export function initNewsletterForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
-          }
+          },
         );
 
         const data = await response.json();
@@ -81,9 +81,3 @@ export function initNewsletterForm() {
     });
   }
 }
-
-// Initialize forms when DOM is ready
-// document.addEventListener("DOMContentLoaded", () => {
-//   initContactForm();
-//   // initNewsletterForm();
-// });

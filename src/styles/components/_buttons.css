@@ -1,4 +1,13 @@
 /* ------------------- BUTTONS ------------------- */
+/* VANGULAR SPECIAL: RAINBOW BUTTON */
+.btn-rainbow {
+  background: var(--gradient-vangular);
+  color: var(--c-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: 600;
+}
+
 .button {
   font-family: var(--font-secondary);
   font-size: var(--font-size-base);
