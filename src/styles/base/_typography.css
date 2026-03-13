@@ -16,9 +16,12 @@ main {
 }
 
 /* ------------------- Paragraphs ------------------- */
+/* Ideal range for characters is 50ch-75ch. Margin setting centers text */
 p {
   overflow-wrap: break-word;
   text-wrap: pretty;
+  max-width: var(--text-ratio);
+  margin: 0 auto;
 }
 
 /* ------------------- Headings ------------------- */
