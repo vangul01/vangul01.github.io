@@ -1,31 +1,29 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CartIsland from "../components/CartIsland.jsx";
 
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
 ---
+
 <!-- TO DO:
  on hover of image, have border change too
 different colored dividers/other styling things, min width?
 -->
-
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <section class="content-container">
-      <div class="heading">
+    <section class="section">
+      <div class="container column flex-center">
         <h3>Your Cart</h3>
         <br />
-        <p>Checkout is currently disabled.</p>
-        <h6> Sign up for our newsletter below to get details on website launch information!</h6>
+        <h6>Checkout is currently disabled.</h6>
+        <p>
+          Sign up for our newsletter below to get details on website launch
+          information!
+        </p>
       </div>
 
       <CartIsland client:load />
-
     </section>
   </main>
-  <Footer />
 </BaseLayout>

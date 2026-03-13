@@ -1,0 +1,109 @@
+/* ==========================================================
+   CSS Reset & Base Styles
+   Combines best practices from Josh Comeau, Meyer, and modern resets.
+
+   Josh's Custom CSS Reset: https://www.joshwcomeau.com/css/custom-css-reset/
+   ========================================================== */
+
+/* ------------------- Box Sizing & Margin Reset ------------------- */
+/* Apply box-sizing to all elements and remove default margin/padding/border */
+/* Border-box ensures padding and borders don't increase width */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* ------------------- Font Smoothing & Text Size Adjust ------------------- */
+/* Prevent font size inflation */
+html {
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin-block-end: 0;
+}
+
+/* ------------------- Remove List Styles ------------------- */
+ul,
+ol,
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+/* ------------------- Images, Media, SVG ------------------- */
+/* Ensures the image doesn't exceed its container's width */
+/* Automatically adjusts the height to maintain aspect ratio */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ------------------- Inputs, Buttons, Textareas, Selects ------------------- */
+input,
+textarea {
+  resize: none;
+}
+
+input {
+  max-width: var(--input-width-max);
+  min-width: var(--input-width-min);
+  width: 100%;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* ------------------- Table Reset ------------------- */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ------------------- Anchor Defaults ------------------- */
+/* A elements that don't have a class get default styles.
+Note: currentColor keyword dynamically picks up the current text color
+of the parent element, which often changes in dark mode.  */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* ------------------- Scroll Margin for Anchors ------------------- */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}

@@ -1,20 +1,14 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-// Add state for form submission
-const { success } = Astro.props;
 
 const pageTitle = "Contact | VANGULAR";
 const keywords = "Contact, Inquiry";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <section class="content-container">
-      <div class="heading text">
+    <section class="section">
+      <div class="container column flex-center">
         <h3>Contact Vangular</h3>
         <br />
         <p>
@@ -24,8 +18,10 @@ const keywords = "Contact, Inquiry";
         </p>
       </div>
 
-      <div class="contact-container">
+      <div class="container column flex-center">
         <form
+          class="contact-form"
+          id="contact-form"
           name="contact"
           method="POST"
           data-netlify="true"
@@ -86,16 +82,16 @@ const keywords = "Contact, Inquiry";
             <label for="contact-message">Message</label>
           </div>
 
-          <button class="button button-secondary" type="submit">
+          <button
+            type="submit"
+            class="button button-primary"
+            aria-label="Submit Contact Form"
+          >
             Submit
           </button>
-
-          <div id="success-message" class="hidden">
-            Thanks for contacting us! We'll get back to you as soon as possible.
-          </div>
+          <div id="contact-submit-message"></div>
         </form>
       </div>
     </section>
   </main>
 </BaseLayout>
-<Footer />

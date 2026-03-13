@@ -1,0 +1,116 @@
+/* ------------------- Core Body Typography ------------------- */
+body {
+  font-family: var(--font-secondary, Arial, sans-serif);
+  font-size: var(--font-size-base, 1rem);
+  color: var(--color-text-muted);
+  background-image: url("/src/assets/images/web/holographic_background.webp");
+  background-size: cover;
+  display: grid;
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--line-height);
+  /* grid-template-rows: var(--height-header, 70px) 1fr auto; */
+}
+/* ------------------- Main Element ------------------- */
+main {
+  position: relative;
+}
+
+/* ------------------- Paragraphs ------------------- */
+p {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+/* ------------------- Headings ------------------- */
+/* Set shorter line heights on headings and interactive elements */
+/* This makes line-height equal to font-size */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary, inherit);
+  color: var(--color-text-primary, inherit);
+  /* letter-spacing: 2px; */
+  text-transform: uppercase;
+  text-align: center;
+  text-wrap: balance;
+  line-height: 1;
+}
+h1 {
+  font-size: calc(var(--font-size-base) + 9dvw);
+}
+h2 {
+  font-size: calc(var(--font-size-base) + 3.5dvw);
+}
+h3 {
+  font-size: calc(var(--font-size-base) + 1.5dvw);
+}
+h4 {
+  font-size: calc(var(--font-size-base) + 0.5dvw);
+}
+h5 {
+  font-size: calc(var(--font-size-base) + 0.25dvw);
+}
+h6 {
+  font-size: calc(var(--font-size-base) + 0.1dvw);
+}
+
+button,
+input,
+label {
+  /* line-height: calc(var(--font-size-base) + 0.5dvw); */
+  line-height: 1;
+}
+
+/* ------------------- Links ------------------- */
+a {
+  transition: color var(--transition-normal);
+}
+
+a:hover {
+  color: var(--color-text-light);
+  transition: var(--transition-normal);
+}
+
+/* ------------------- Form Fields ------------------- */
+input,
+textarea {
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: var(--border-tertiary);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) var(--spacing-xs);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+}
+
+/* ----------- DARK THEME ----------- */
+.dark,
+[data-theme="dark"] {
+  --color-site-background: radial-gradient(
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  background: var(--color-site-background) no-repeat center center fixed;
+
+  /* @media (prefers-color-scheme: dark) {
+  body {
+    background: var(--c-white);
+    color: var(--c-black);
+  }
+  .card {
+    background: var(--c-gray-100);
+    color: var(--c-black);
+    box-shadow: none;
+  }
+} */
+
+  /* --color-text-primary: var(--color-gray-200);
+  --color-text-secondary: var(--color-gray-300);
+  --color-text-muted: var(--color-gray-400);
+  --color-border-light: #4a3f6b;
+  --color-border-medium: #5a4f7b;
+  --color-border-dark: #7a6f9b; */
+}
