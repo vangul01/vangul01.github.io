@@ -10,6 +10,10 @@
 [functions]
   node_bundler = "esbuild"
 
+[[edge_functions]]
+  function = "block-bots"
+  path = "/*"
+
 [[redirects]]
   from = '/api/*'
   to = '/.netlify/functions/:splat'

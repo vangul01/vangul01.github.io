@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
@@ -11,19 +9,18 @@ const keywords = "about, vangular, art, design";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <section class="content-container">
-      <div class="two-column-container">
-        <div class="image about-image">
+    <section class="section">
+      <div class="container grid-2">
+        <div>
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
           />
         </div>
 
-        <div class="text about-text">
-          <h4>Hello!</h4>
+        <div>
+          <h5>Hello!</h5>
           <br />
           <p>
             I'm Valerie and welcome to VANGULAR!
@@ -35,18 +32,18 @@ const keywords = "about, vangular, art, design";
             I love using vibrant colors and designs to ignite people's imaginations
             and create a sense of playfulness and community.
             <br /><br />
-            If you'd like to inquire about commissions, contact me at the link below.
+            If you'd like to inquire about a commission, you can contact me
+            <a class="link" href="/contact" target="_blank"> here. </a>
             Thanks for visiting my site, and I hope you see something that makes
             you smile☺ <br /><br />
           </p>
-          <h4 class="signature">
+          <h5>
             Lots of love,
             <br />
             Val
-          </h4>
+          </h5>
         </div>
       </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>

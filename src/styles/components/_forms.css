@@ -1,0 +1,106 @@
+/* ------------------ CONTACT FORM ------------------------ */
+
+#success-message {
+  margin-top: var(--spacing-md);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-background);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+}
+
+.form-field label {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+
+  /* padding: 0 var(--spacing-xs); */
+  color: var(--color-accent);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+  pointer-events: none;
+}
+
+.form-field textarea ~ label {
+  top: var(--spacing-sm);
+  transform: translateY(0);
+}
+
+.form-field input:focus ~ label,
+.form-field textarea:focus ~ label,
+.form-field input:not(:placeholder-shown) ~ label,
+.form-field textarea:not(:placeholder-shown) ~ label {
+  top: -0.5rem;
+  transform: scale(0.8);
+  color: var(--color-text-dark);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--color-text-dark);
+  border-radius: var(--border-radius-sm);
+  outline: none;
+}
+
+/* ------------------ NEWSLETTER FORM ------------------------ */
+
+.newsletter {
+  grid-column: span 2;
+  grid-row: 2;
+  text-align: center;
+
+  h4 {
+    font-size: var(--font-size-lg);
+  }
+
+  p {
+    /* margin-bottom: var(--spacing-md); */
+    color: var(--color-text-muted);
+    padding: 0 var(--spacing-md);
+  }
+}
+
+.newsletter form {
+  padding: var(--spacing-md) var(--spacing-md);
+}
+
+.newsletter button {
+  /* width: 100%; */
+  /* max-width: 400px; */
+  margin: var(--spacing-lg) 0 0 0;
+}
+
+.newsletter-input:focus {
+  /* outline: none; */
+  border-color: var(--color-secondary);
+}
+
+@media (width <= 768px) {
+  /* Newsletter takes full width below socials */
+  .newsletter {
+    padding: var(--spacing-md);
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (width <= 992px) {
+  .newsletter {
+    grid-column: span 2;
+  }
+}

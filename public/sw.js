@@ -7,7 +7,10 @@ const urlsToCache = [
   "/manifest.json",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
-  "/assets/images/web/logo.png",
+  "/assets/images/web/logo_eyewhites.png",
+  "favicon.ico",
+  "/scripts/main.js",
+  "/pages/index.html",
 ];
 
 // Install the service worker
@@ -21,7 +24,7 @@ self.addEventListener("install", (event) => {
         console.warn("Some resources failed to cache:", err);
         return await Promise.resolve();
       }
-    }),
+    })
   );
 });
 
@@ -30,6 +33,6 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches
       .match(event.request)
-      .then((response) => response || fetch(event.request)),
+      .then((response) => response || fetch(event.request))
   );
 });
