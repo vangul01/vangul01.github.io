@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
@@ -13,15 +11,14 @@ const keywords =
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <section class="content-container" id="collabs">
-      <div class="two-column-container">
-        <div class="image project-image">
+    <section class="section" id="collabs">
+      <div class="container grid-2">
+        <div>
           <Image src={dreamCollab} alt="EmmaLee & The Dream album art" />
         </div>
 
-        <div class="text project-text">
+        <div>
           <h4>EmmaLee & The Dream</h4>
           <br />
           <p>
@@ -43,12 +40,12 @@ const keywords =
         </div>
       </div>
 
-      <div class="two-column-container">
-        <div class="image project-image">
+      <div class="container grid-2">
+        <div>
           <Image src={crewCollab} alt="The Crew Rowing Co. logo" />
         </div>
 
-        <div class="text project-text">
+        <div>
           <h4>The Crew</h4>
           <br />
           <p>
@@ -67,5 +64,4 @@ const keywords =
       </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>

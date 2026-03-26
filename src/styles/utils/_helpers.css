@@ -1,0 +1,88 @@
+/* ===== Grid/flexbox Utilities ===== */
+/* ALIGNMENT UTILITIES */
+.span-12 {
+  grid-column: span 12;
+}
+.span-8 {
+  grid-column: span 8;
+}
+.span-6 {
+  grid-column: span 6;
+}
+.span-4 {
+  grid-column: span 4;
+}
+.span-3 {
+  grid-column: span 3;
+}
+
+/* .mt-md {
+  margin-top: var(--spacing-md);
+}
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+} */
+
+.center {
+  text-align: center;
+  justify-self: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+/* ----------------UNIVERSAL CLASSES---------------- */
+
+.heading {
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-2xl) var(--spacing-2xl);
+  overflow: auto;
+}
+
+.image {
+  display: flex;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  object-fit: contain;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.text {
+  flex: 1; /* Allows the text container to take up remaining space */
+  display: inline-block;
+  justify-content: center;
+  margin: auto;
+  max-width: var(--max-text-width);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  text-align: justify;
+  text-justify: auto;
+}
+
+.link {
+  color: var(--color-info);
+}
+
+.link:hover {
+  color: var(--color-text-light);
+}
+
+.hidden {
+  display: none;
+}

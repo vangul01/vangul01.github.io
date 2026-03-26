@@ -23,11 +23,11 @@ Checkout page
 */
 
 import { updateUI, updateCartCount } from "./cart/cart.js";
-import { clearCart, addToCart } from "./cart/cart-storage.js";
+import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
 import { initTheme } from "./color-theme.js";
-
-// import { loadCart, saveCart, clearStoredCart } from "./cart/cart-storage.js";
+import { initContactForm, initNewsletterForm } from "./form-submission.js";
+import { initProductPage } from "./product.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -35,9 +35,16 @@ if (typeof document !== "undefined") {
     initTheme();
     initNav();
 
+    // Initialize forms
+    initNewsletterForm();
+    initContactForm();
+
     // Initialize cart UI
     updateUI();
     updateCartCount();
+
+    // Initialize product page features
+    initProductPage();
 
     // EDIT THIS!
     // Add-to cart-button data send. Needs product data from stripe to work

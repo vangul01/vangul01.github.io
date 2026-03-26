@@ -1,0 +1,17 @@
+/* universal */
+.product-card {
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  transition: transform var(--transition-normal);
+  background-color: var(--color-background);
+  /* display: flex;
+  flex-direction: column;
+  color: inherit; */
+}
+
+.product-card:hover {
+  /* transform: translateY(-4px); */
+  background-color: var(--color-background-alt);
+  box-shadow: var(--shadow-md);
+}

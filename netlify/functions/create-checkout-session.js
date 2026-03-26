@@ -1,5 +1,15 @@
-import { stripe } from "../../src/lib/stripe.js";
+// Import Stripe from "stripe" to create a checkout session in a Netlify function.
+import Stripe from "stripe";
 
+const secretKey = process.env.SECRET_STRIPE_KEY;
+if (!secretKey) {
+  throw new Error("Missing Stripe secret key");
+}
+const stripe = new Stripe(secretKey, {
+  apiVersion: "2025-02-24.acacia",
+});
+
+// This function will be called when the client requests to create a checkout session.
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };

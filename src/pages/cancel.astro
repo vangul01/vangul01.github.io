@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Order Cancelled | VANGULAR";
@@ -8,9 +6,8 @@ const keywords = "order cancelled, payment failure";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <div class="content-container">
+    <div class="container column flex-center">
       <h3>Payment Canceled</h3>
       <h4>Your payment was not completed. Please try again.</h4>
       <a href="/cart"
@@ -20,5 +17,4 @@ const keywords = "order cancelled, payment failure";
       >
     </div>
   </main>
-  <Footer />
 </BaseLayout>
