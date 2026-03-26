@@ -1,5 +1,15 @@
-import { stripe } from "../../src/lib/stripe.js";
+// Import Stripe using Stripe secret key from environment variables to authenticate with the Stripe API.
+import Stripe from "stripe";
 
+const secretKey = process.env.SECRET_STRIPE_KEY;
+if (!secretKey) {
+  throw new Error("Missing Stripe secret key");
+}
+const stripe = new Stripe(secretKey, {
+  apiVersion: "2025-02-24.acacia",
+});
+
+// The handler function processes incoming requests to retrieve Stripe prices.
 export async function handler(event) {
   try {
     const { priceIds } = JSON.parse(event.body);
