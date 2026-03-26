@@ -8,11 +8,14 @@ const { pageTitle, keywords } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-  <Head pageTitle={pageTitle} keywords={keywords}/>
+  <Head pageTitle={pageTitle} keywords={keywords} />
   <body>
     <Header />
     <slot />
     <Footer />
-    <script type="module" defer src={new URL("../scripts/main.js", import.meta.url).pathname}></script>
+    <script
+      type="module"
+      defer
+      src={new URL("../scripts/main.js", import.meta.url).pathname}></script>
   </body>
 </html>

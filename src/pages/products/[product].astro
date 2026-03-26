@@ -4,7 +4,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 // import { Image } from "astro:assets";
 // import defaultProduct from "../assets/images/web/logo_eyewhites.png";
 
-import { getStripePrice } from "../../lib/stripe-client";
 import { client } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
 
@@ -118,46 +117,3 @@ const keywords = `vangular, ${product.name}, art, products`;
     </section>
   </main>
 </BaseLayout>
-
-<script>
-  import {
-    initZoom,
-    initThumbnails,
-    initKeyboardNav,
-  } from "../../scripts/product.js";
-  document.addEventListener("DOMContentLoaded", () => {
-    initZoom();
-    initThumbnails();
-    initKeyboardNav();
-  });
-
-  import { getStripePrice } from "../../lib/stripe-client";
-
-  async function loadPrice() {
-    const priceElement = document.getElementById("product-price");
-    const priceId = priceElement?.dataset.priceId;
-
-    if (priceId) {
-      try {
-        const price = await getStripePrice(priceId);
-        priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
-
-        // Update the add-to-cart button's price data
-        const addToCartBtn = document.getElementById("add-to-cart");
-        if (addToCartBtn) {
-          addToCartBtn.dataset.price = String(price.amount);
-        }
-      } catch (error) {
-        console.error("Error loading price:", error);
-        priceElement.textContent = "Price unavailable";
-      }
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    loadPrice();
-    initZoom();
-    initThumbnails();
-    initKeyboardNav();
-  });
-</script>

@@ -1,71 +1,97 @@
-export function initZoom() {
-  const container = document.querySelector(".zoom-container");
-  const image = document.getElementById("main-product-image");
+// For product image zoom and thumbnail interactions
+// Adding basic price fetching from Stripe for dynamic pricing display.
 
-  if (container && image) {
-    container.addEventListener("mousemove", (e) => {
-      const bounds = container.getBoundingClientRect();
-      // Calculate mouse position as percentages
-      const x = (e.clientX - bounds.left) / bounds.width;
-      const y = (e.clientY - bounds.top) / bounds.height;
+import { getStripePrice } from "../lib/stripe-client";
 
-      // Update image position
-      image.style.transformOrigin = `${x * 100}% ${y * 100}%`;
-      image.style.transform = "scale(2)";
-    });
+export async function initProductPage() {
+  const priceElement = document.getElementById("product-price");
+  const addToCartBtn = document.getElementById("add-to-cart");
 
-    container.addEventListener("mouseleave", () => {
-      image.style.transformOrigin = "center center";
-      image.style.transform = "scale(1)";
-    });
+  if (!priceElement || !addToCartBtn) return;
+
+  const priceId = priceElement.dataset.priceId;
+  if (!priceId) return;
+
+  try {
+    const price = await getStripePrice(priceId);
+
+    priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
+
+    addToCartBtn.dataset.price = String(price.amount);
+  } catch (err) {
+    console.error("Error loading price:", err);
+    priceElement.textContent = "Price unavailable";
   }
 }
 
-export function initThumbnails() {
-  const mainImage = document.getElementById("main-product-image");
-  const thumbnails = document.querySelectorAll(".thumbnail");
+// export function initZoom() {
+//   const container = document.querySelector(".zoom-container");
+//   const image = document.getElementById("main-product-image");
 
-  // Set first thumbnail as active by default
-  thumbnails[0]?.classList.add("active");
+//   if (container && image) {
+//     container.addEventListener("mousemove", (e) => {
+//       const bounds = container.getBoundingClientRect();
+//       // Calculate mouse position as percentages
+//       const x = (e.clientX - bounds.left) / bounds.width;
+//       const y = (e.clientY - bounds.top) / bounds.height;
 
-  thumbnails.forEach((thumb) => {
-    thumb.addEventListener("click", () => {
-      // Update main image with fade effect
-      mainImage.style.opacity = "0";
-      const newImageUrl = thumb.getAttribute("data-image-url");
+//       // Update image position
+//       image.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+//       image.style.transform = "scale(2)";
+//     });
 
-      if (newImageUrl && mainImage) {
-        setTimeout(() => {
-          mainImage.src = newImageUrl;
-          mainImage.style.opacity = "1";
-        }, 200);
-      }
+//     container.addEventListener("mouseleave", () => {
+//       image.style.transformOrigin = "center center";
+//       image.style.transform = "scale(1)";
+//     });
+//   }
+// }
 
-      // Update active thumbnail state
-      thumbnails.forEach((t) => t.classList.remove("active"));
-      thumb.classList.add("active");
-    });
-  });
-}
+// export function initThumbnails() {
+//   const mainImage = document.getElementById("main-product-image");
+//   const thumbnails = document.querySelectorAll(".thumbnail");
 
-// Optional: Keyboard navigation
-export function initKeyboardNav() {
-  document.addEventListener("keydown", (e) => {
-    const active = document.querySelector(".thumbnail.active");
-    if (!active) return;
+//   // Set first thumbnail as active by default
+//   thumbnails[0]?.classList.add("active");
 
-    const currentIndex = parseInt(active.getAttribute("data-index") || "0");
-    let nextIndex;
+//   thumbnails.forEach((thumb) => {
+//     thumb.addEventListener("click", () => {
+//       // Update main image with fade effect
+//       mainImage.style.opacity = "0";
+//       const newImageUrl = thumb.getAttribute("data-image-url");
 
-    if (e.key === "ArrowLeft") {
-      nextIndex = currentIndex - 1;
-    } else if (e.key === "ArrowRight") {
-      nextIndex = currentIndex + 1;
-    } else {
-      return;
-    }
+//       if (newImageUrl && mainImage) {
+//         setTimeout(() => {
+//           mainImage.src = newImageUrl;
+//           mainImage.style.opacity = "1";
+//         }, 200);
+//       }
 
-    const nextThumb = document.querySelector(`[data-index="${nextIndex}"]`);
-    if (nextThumb) nextThumb.click();
-  });
-}
+//       // Update active thumbnail state
+//       thumbnails.forEach((t) => t.classList.remove("active"));
+//       thumb.classList.add("active");
+//     });
+//   });
+// }
+
+// // Optional: Keyboard navigation
+// export function initKeyboardNav() {
+//   document.addEventListener("keydown", (e) => {
+//     const active = document.querySelector(".thumbnail.active");
+//     if (!active) return;
+
+//     const currentIndex = parseInt(active.getAttribute("data-index") || "0");
+//     let nextIndex;
+
+//     if (e.key === "ArrowLeft") {
+//       nextIndex = currentIndex - 1;
+//     } else if (e.key === "ArrowRight") {
+//       nextIndex = currentIndex + 1;
+//     } else {
+//       return;
+//     }
+
+//     const nextThumb = document.querySelector(`[data-index="${nextIndex}"]`);
+//     if (nextThumb) nextThumb.click();
+//   });
+// }

@@ -123,6 +123,9 @@
   --spacing-clamp-lg: clamp(1.5rem, 3vw, 3rem); /* 24px - 48px */
   --spacing-clamp-xl: clamp(2rem, 4vw, 4rem); /* 32px - 64px */
 
+  /* text-to-screen ratio */
+  --text-ratio: 65ch;
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
