@@ -13,7 +13,7 @@ const links = siteNavigation.headerLinks;
   <nav class="header-nav">
     <div class="logo-container">
       <img src={vangularLogo.src} alt="" />
-      <a href={links.logo[0].href} class="nav-logo">
+      <a href={links.logo[0].href} class="header-title header-link">
         {links.logo[0].name}
       </a>
     </div>
@@ -25,7 +25,7 @@ const links = siteNavigation.headerLinks;
             <a
               href={href}
               id="nav-link"
-              class={currentPath === href ? "active" : ""}
+              class={`header-link ${currentPath === href ? "active" : ""}`}
             >
               {name}
             </a>
@@ -37,7 +37,7 @@ const links = siteNavigation.headerLinks;
     <div class="nav-cart-container">
       <a
         href={links.cart[0].href}
-        class={`nav-cart-button ${currentPath === links.cart[0].href ? "active" : ""}`}
+        class={`header-link ${currentPath === links.cart[0].href ? "active" : ""}`}
       >
         <i class="fa fa-shopping-cart"></i>
         <span id="cart-icon-count"></span>

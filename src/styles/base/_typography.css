@@ -35,7 +35,6 @@ h5,
 h6 {
   font-family: var(--font-primary, inherit);
   color: var(--color-text-primary, inherit);
-  /* letter-spacing: 2px; */
   text-transform: uppercase;
   text-align: center;
   text-wrap: balance;
@@ -60,12 +59,14 @@ h6 {
   font-size: calc(var(--font-size-base) + 0.1dvw);
 }
 
-button,
-input,
-label {
-  /* line-height: calc(var(--font-size-base) + 0.5dvw); */
-  line-height: 1;
+/* ------------------- Buttons ------------------- */
+button {
+  transition: var(--transition-normal);
 }
+
+/* button:hover { */
+/* transform: scale(1.1); */
+/* } */
 
 /* ------------------- Links ------------------- */
 a {
@@ -78,6 +79,13 @@ a:hover {
 }
 
 /* ------------------- Form Fields ------------------- */
+button,
+input,
+label {
+  /* line-height: calc(var(--font-size-base) + 0.5dvw); */
+  line-height: 1;
+}
+
 input,
 textarea {
   background-color: var(--color-input-bg);

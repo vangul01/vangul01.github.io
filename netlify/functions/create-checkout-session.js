@@ -1,4 +1,4 @@
-// Import Stripe from "stripe" to create a checkout session in a Netlify function.
+// Import Stripe using secret key from environment variables to authenticate with the Stripe API.
 import Stripe from "stripe";
 
 const secretKey = process.env.SECRET_STRIPE_KEY;

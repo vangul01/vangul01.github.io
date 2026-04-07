@@ -4,8 +4,8 @@
   width: 100%; /* Changed from 100vw to prevent horizontal scroll */
   height: var(--header-height);
   background-color: var(--color-header);
-  /* border-bottom: 5px solid var(--color-primary); */
-  /* box-shadow: var(--shadow-sm); */
+  box-shadow: var(--shadow-md);
+  backdrop-filter: var(--blur);
   z-index: 2000;
   top: 0;
   display: flex;
@@ -14,19 +14,11 @@
   padding: 0 1rem;
 }
 
-/* Hover transition and color for entire nav bar */
-button:hover {
-  color: var(--color-text-light);
-  transition: var(--transition-normal);
-}
-
 .logo-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-family: var(--font-primary);
-
-  /* font-size: calc(14px + 1rem); */
   font-size: var(--font-size-lg);
   font-weight: bold;
 }
@@ -38,29 +30,29 @@ button:hover {
   align-items: center;
 }
 
+/* javascript */
 .nav-links {
   position: fixed;
   top: 0;
   right: -100%; /* Start fully off-screen */
   margin: 0;
   padding-top: var(--header-height);
-
   /* padding-bottom: var(--spacing-xl); */
   gap: 0;
   flex-direction: column;
-  background-color: var(--color-header);
+  font-size: inherit;
+  font-family: inherit;
   color: inherit;
   width: 25%;
   height: 100%;
   text-align: center;
-  font-size: var(--font-size-base);
-  font-family: var(--font-secondary);
+
   z-index: 1000;
 
   /* overflow: hidden; */
-  transition: var(--transition-normal);
 }
 
+/* Margin for links in vertical nav bar */
 .nav-item {
   margin: 2rem 0;
 }
@@ -79,51 +71,53 @@ button:hover {
   font-size: var(--font-size-base);
   font-family: var(--font-secondary);
   z-index: 1002;
-
-  i {
-    font-size: 1.5rem;
-  }
 }
 
-.nav-cart-button {
+/* Vangular */
+.header-title {
+  font-size: var(--font-size-xl);
+}
+
+/* Used to be .nav-cart-button */
+.header-link {
   display: flex;
   align-items: center;
   gap: 5px;
+  color: var(--color-text-secondary);
 }
 
 /* Highlight current page */
-.nav-links a.active,
-.nav-cart-button.active {
+.header-link.active {
   color: var(--color-text-light);
-  font-weight: bold;
+  font-style: italic;
   position: relative;
 }
 
 .nav-toggle {
+  color: var(--color-text-secondary);
   display: flex;
   justify-content: center;
   align-items: center;
   background: none;
   border: none;
   cursor: pointer;
-  color: inherit;
   visibility: visible;
   z-index: 1002;
   opacity: 1;
+}
 
-  /* transition:
-      opacity 0.3s ease,
-      transform 0.3s ease,
-      visibility 0s linear 0s; */
+.nav-toggle:hover {
+  color: var(--color-text-light);
 }
 
 /* Smooth rotation */
 .nav-toggle i {
-  transition: transform 0.3s ease;
+  transition: var(--transition-slow);
 }
 
 .nav-toggle.vertical i {
   transform: rotate(90deg);
+  color: var(--color-text-light);
 }
 
 /* Overlay when sidebar is open */
@@ -135,10 +129,13 @@ button:hover {
   width: 100%;
   height: 100%;
   background-color: var(--color-overlay);
-  opacity: 0;
+  backdrop-filter: var(--blur);
+  top: var(--header-height);
+  /* opacity: 0; */
   visibility: hidden;
   transition:
     opacity 0.3s ease-in-out,
+    transform 0.3s ease,
     visibility 0.3s;
 }
 
@@ -150,6 +147,7 @@ button:hover {
 }
 
 /* Javascript makes it so you can't scroll with overlay */
+/* PSA: When I'm over a link in vertical nav bar I can scroll */
 .nav-overlay.no-scroll {
   /* Prevent scrolling */
   overflow: hidden;
@@ -164,10 +162,10 @@ button:hover {
     opacity: 0;
     visibility: hidden;
     transform: scale(0.8);
-    transition:
+    /* transition:
       opacity 0.3s ease,
       transform 0.3s ease,
-      visibility 0s linear 0.3s;
+      visibility 0s linear 0.3s; */
     display: none;
   }
 
@@ -176,7 +174,6 @@ button:hover {
     padding: 0;
     height: auto;
     width: auto;
-    background-color: transparent;
     flex-direction: row;
     display: flex;
     align-items: center;

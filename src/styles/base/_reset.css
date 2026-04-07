@@ -94,7 +94,7 @@ table {
 }
 
 /* ------------------- Anchor Defaults ------------------- */
-/* A elements that don't have a class get default styles.
+/* "a" elements that don't have a class get default styles.
 Note: currentColor keyword dynamically picks up the current text color
 of the parent element, which often changes in dark mode.  */
 a:not([class]) {

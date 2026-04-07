@@ -81,3 +81,42 @@
     font-size: 1rem;
   }
 } */
+
+/* Footer Media */
+@media (width <= 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin: 0;
+  }
+
+  /* Keep socials on top */
+  .social-section {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Quick Links and Shop sections in two columns at bottom */
+  .footer-section:not(.social-section, .newsletter) {
+    grid-column: span 1;
+    grid-row: 3;
+  }
+}
+
+@media (width <= 992px) {
+  /* Footer */
+  .footer {
+    padding: 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 var(--spacing-lg);
+    padding: var(--spacing-lg);
+    border-top: var(--border-secondary);
+  }
+
+  .social-section {
+    grid-column: span 4;
+  }
+}
