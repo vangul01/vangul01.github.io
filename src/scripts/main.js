@@ -25,14 +25,14 @@ Checkout page
 import { updateUI, updateCartCount } from "./cart/cart.js";
 import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
-import { initTheme } from "./color-theme.js";
+// import { initTheme } from "./color-theme.js";
 import { initContactForm, initNewsletterForm } from "./form-submission.js";
 import { initProductPage } from "./product.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     // Initialize global features
-    initTheme();
+    // initTheme();
     initNav();
 
     // Initialize forms

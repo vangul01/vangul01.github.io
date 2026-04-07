@@ -9,7 +9,7 @@
   --color-brand-primary: #372f49;
   --color-brand-secondary: #ed8282;
   --color-brand-accent: #f3d2c1;
-  --color-brand-light: rgba(255, 251, 251, 0.292);
+  --color-brand-light: rgba(217, 199, 236, 0.292);
 
   /* Neutral Colors */
   --color-light: #f8f9fa;
@@ -103,6 +103,9 @@
   /* Input Fields */
   --input-width-max: 25rem; /* 400px */
   --input-width-min: 4rem; /* 64px */
+
+  /* Button Width */
+  --button-width: 12.5rem; /* 200px */
 
   /* Container Widths */
   --container-width-max: 75rem; /* 1200px */

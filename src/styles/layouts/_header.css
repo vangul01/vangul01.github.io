@@ -93,6 +93,11 @@
   position: relative;
 }
 
+/* So that the numbers next to cart don't slant for readability */
+#cart-icon-count {
+  font-style: normal;
+}
+
 .nav-toggle {
   color: var(--color-text-secondary);
   display: flex;
