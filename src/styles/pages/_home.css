@@ -1,14 +1,25 @@
-/* ----------------HOME---------------- */
-.hero-section {
-  position: relative;
-  width: 100dvw;
-
-  /* width: 100%; */
-  height: 100dvh;
-  overflow: hidden;
-
-  /* Hide any overflow to prevent scrollbars */
+/* ----------------PORTAL---------------- */
+.portal-video {
+  width: 100%;
+  height: auto;
+  max-width: 1500px;
+  margin: 0 auto;
 }
+
+.portal {
+  background: transparent;
+  min-height: 100vh;
+}
+
+.overlay-image {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ----------------HOME---------------- */
 
 .hero-image {
   position: absolute;
@@ -34,11 +45,10 @@
   transform: translate(-50%, -50%);
   text-align: center;
 
-  /* Optional: add text shadow or background for better visibility */
   text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
 
   p {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-clamp-lg);
     letter-spacing: 3px;
   }
 }

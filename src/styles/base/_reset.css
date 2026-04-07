@@ -70,16 +70,11 @@ svg {
   height: auto;
 }
 
-/* ------------------- Inputs, Buttons, Textareas, Selects ------------------- */
+/* ------------------- Inputs, Textareas, Selects ------------------- */
 input,
 textarea {
-  resize: none;
-}
-
-input {
-  max-width: var(--input-width-max);
-  min-width: var(--input-width-min);
   width: 100%;
+  outline: none;
 }
 
 /* Make sure textareas without a rows attribute are not tiny */
