@@ -21,6 +21,18 @@
 
 /* ----------------HOME---------------- */
 
+.title {
+  font-size: var(--font-size-clamp-3xl);
+  color: var(--color-brand-primary);
+  text-shadow: 3px 3px 6px rgba(125, 70, 106, 0.569);
+}
+
+.description {
+  font-size: var(--font-size-clamp-lg);
+  color: var(--color-brand-accent);
+  text-shadow: 2px 2px 4px rgba(104, 196, 224, 0.65);
+}
+
 .hero-image {
   position: absolute;
   top: 0;
@@ -47,8 +59,8 @@
 
   text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
 
-  p {
+  /* p {
     font-size: var(--font-size-clamp-lg);
     letter-spacing: 3px;
-  }
+  } */
 }

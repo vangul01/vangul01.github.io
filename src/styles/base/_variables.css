@@ -5,8 +5,11 @@
 /* ----------- COLOR PALETTE ----------- */
 /* Primary Brand Colors - purple, pink, orange/yellow */
 :root {
+  color-scheme: light dark; /* Critical step to enable light-dark() */
+
   /* Main brand colors (purple) */
-  --color-brand-primary: #372f49;
+  --color-brand-primary: #3c2d49;
+  /* #372f49;  */
   --color-brand-secondary: #ed8282;
   --color-brand-accent: #f3d2c1;
   --color-brand-light: rgba(217, 199, 236, 0.292);
@@ -22,6 +25,7 @@
 
   /* Alert Colors */
   --color-error: #dd5d5d;
+  /* #dd5451; slightly darker*/
   --color-success: #a1d86a;
   --color-warning: #eceb92;
   --color-info: #00899e;
@@ -83,6 +87,8 @@
   --font-size-clamp-xl: clamp(1.5rem, 1.5vw + 1rem, 2.25rem);
   /* 32px - 48px */
   --font-size-clamp-2xl: clamp(2rem, 2vw + 1rem, 3rem);
+  /* 48px - 72px */
+  --font-size-clamp-3xl: clamp(3rem, 3vw + 1rem, 5rem);
 
   /* Spacing */
   /* Spacing Scale (1rem = 16px base) */

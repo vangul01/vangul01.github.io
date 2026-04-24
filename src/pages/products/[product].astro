@@ -97,7 +97,7 @@ const keywords = `vangular, ${product.name}, art, products`;
                 data-quantity="1"
                 data-product-url={`${product.slug}`}
               >
-                Add to Cart
+                <span class="button-label"> Add to Cart </span>
               </button>
             )
           }
@@ -118,17 +118,17 @@ const keywords = `vangular, ${product.name}, art, products`;
             role="button"
             onclick="window.history.back()"
           >
-            Go Back
+            <span class="button-label"> Go Back </span>
           </button>
         </a>
         <a href="/merch">
           <button class="button button-secondary" role="button">
-            Keep Shopping
+            <span class="button-label"> Keep Shopping </span>
           </button>
         </a>
         <a href="/cart">
           <button class="button button-primary" role="button">
-            Go To Cart
+            <span class="button-label"> Go To Cart </span>
           </button>
         </a>
       </div>
