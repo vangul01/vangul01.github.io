@@ -1,7 +1,9 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { Image } from "astro:assets";
+import dreamCollab from "../assets/images/web/dreams.png";
+import crewCollab from "../assets/images/web/crew_logo.jpg";
 
 const pageTitle = "Collabs | VANGULAR";
 const keywords =
@@ -9,23 +11,15 @@ const keywords =
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <div class="heading">
-      <h2>Collabs</h2>
-    </div>
-
-    <section class="content-container" id="collabs">
-      <div class="two-column-container">
-        <div class="image project-image">
-          <img
-            src="/images/web/dream.jpg"
-            alt="EmmaLee & The Dream album art"
-          />
+    <section class="section" id="collabs">
+      <div class="container grid-2">
+        <div class="image-container">
+          <Image src={dreamCollab} alt="EmmaLee & The Dream album art" />
         </div>
 
-        <div class="text project-text">
-          <h3>EmmaLee & The Dream</h3>
+        <div class="text-container">
+          <h4>EmmaLee & The Dream</h4>
           <br />
           <p>
             Digital collage-styled album art for EmmaLee & The Dream's first EP,
@@ -33,6 +27,7 @@ const keywords =
             based in Brooklyn, New York.
 
             <a
+              class="link"
               href="https://emmaleekidwell.com/emmalee-%26-the-dream/"
               target="_blank"
             >
@@ -45,20 +40,20 @@ const keywords =
         </div>
       </div>
 
-      <div class="two-column-container">
-        <div class="image project-image">
-          <img src="/images/web/crew_logo.jpg" alt="The Crew Rowing Co. logo" />
+      <div class="container grid-2">
+        <div class="image-container">
+          <Image src={crewCollab} alt="The Crew Rowing Co. logo" />
         </div>
 
-        <div class="text project-text">
-          <h3>The Crew</h3>
+        <div class="text-container">
+          <h4>The Crew</h4>
           <br />
           <p>
             Primary logo for LGBTQ+ friendly rowing company The Crew. The Crew
             focuses on empowering women through inclusive and accessible rowing
             classes and is based in Malden, Massachusetts.
 
-            <a href="https://www.inthecrew.com/" target="_blank"
+            <a class="link" href="https://www.inthecrew.com/" target="_blank"
               >Visit The Crew's website here.
             </a>
 
@@ -69,5 +64,4 @@ const keywords =
       </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>

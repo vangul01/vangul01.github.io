@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Newsletter Status | VANGULAR";
+const keywords = "subscription error";
+---
+
+<!-- I'd like to have a success footer here which highlights connecting
+ on social media and signing up to newsletter -->
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <div class="container column flex-center">
+      <h3>Thanks for Subscribing!</h3>
+      <br /><br />
+      <p>Sorry, your subscription was unsuccessful!</p>
+    </div>
+    <a href="/home"
+      ><button class="button button-primary" role="button">
+        <span class="button-label"> Back to Vangular</span>
+      </button></a
+    >
+    <a href="javascript:window.close()"
+      ><button class="button button-primary" role="button">
+        <span class="button-label"> Close this Window</span>
+      </button></a
+    >
+  </main>
+</BaseLayout>

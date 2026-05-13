@@ -22,38 +22,41 @@ Checkout page
 
 */
 
-import {
-  addToCart,
-  clearCart,
-  updateUI,
-  updateCartCount,
-} from "./cart/cart.js";
+import { updateUI, updateCartCount } from "./cart/cart.js";
+import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
-import { initContactForm } from "./contact-form.js";
-import { proceedToPayment } from "./stripe.js";
+// import { initTheme } from "./color-theme.js";
+import { initContactForm, initNewsletterForm } from "./form-submission.js";
+import { initProductPage } from "./product.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     // Initialize global features
+    // initTheme();
     initNav();
+
+    // Initialize forms
+    initNewsletterForm();
     initContactForm();
 
     // Initialize cart UI
     updateUI();
     updateCartCount();
 
-    // Clear cart button
-    document.querySelector("#clear-cart")?.addEventListener("click", () => {
-      clearCart();
-    });
+    // Initialize product page features
+    initProductPage();
 
-    // Add to cart buttons
+    // EDIT THIS!
+    // Add-to cart-button data send. Needs product data from stripe to work
     document.querySelectorAll("#add-to-cart").forEach((button) => {
       button.addEventListener("click", function () {
         const product = {
-          id: this.dataset.id,
+          priceId: this.dataset.priceId, // For Stripe Checkout
           name: this.dataset.name,
           price: parseFloat(this.dataset.price),
+          image: this.dataset.image,
+          quantity: parseInt(this.dataset.quantity) || 1,
+          productUrl: this.dataset.productUrl,
         };
 
         addToCart(product);
@@ -64,12 +67,45 @@ if (typeof document !== "undefined") {
       });
     });
 
-    // Proceed to payment button
-    document
-      .querySelector("#proceed-to-payment")
-      //   ?.addEventListener("click", proceedToPayment);
-      ?.addEventListener("click", () => {
-        alert("All products currently unavailable for purchase.");
-      });
+    // // Theme toggle
+    // const themeToggle = document.getElementById("theme-toggle");
+    // if (themeToggle) {
+    //   themeToggle.addEventListener("click", () => {
+    //     const current =
+    //       localStorage.getItem("theme") === "dark" ? "light" : "dark";
+    //     setTheme(current);
+    //   });
+    // }
+
+    // // On page load, set theme to user's saved preference, or system preference if not set
+    // const savedTheme = localStorage.getItem("theme");
+    // if (savedTheme) {
+    //   setTheme(savedTheme);
+    // } else {
+    //   const prefersDark = window.matchMedia(
+    //     "(prefers-color-scheme: dark)"
+    //   ).matches;
+    //   setTheme(prefersDark ? "dark" : "light");
+    // }
+
+    // document.getElementById("theme-toggle").addEventListener("click", () => {
+    //   const current =
+    //     localStorage.getItem("theme") === "dark" ? "light" : "dark";
+    //   setTheme(current);
+    // });
   });
+
+  // Register service worker
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => {
+          console.log("Service Worker registered!");
+        })
+        .catch((error) => {
+          console.log("Service Worker registration failed:", error);
+        });
+    });
+  }
 }

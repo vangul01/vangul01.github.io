@@ -1,0 +1,55 @@
+/* Display, flex, grid, position, width,
+max-width, margin, padding */
+
+/* ----------------UNIVERSAL CLASSES---------------- */
+.heading {
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-clamp-xl) var(--spacing-clamp-xl);
+  overflow: auto;
+}
+
+.image-container {
+  display: flex;
+  padding: var(--spacing-clamp-lg);
+  /* padding-inline: var(--spacing-clamp-lg); */
+  /* padding-block: var(--spacing-clamp-lg); */
+  /* object-fit: contain; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  margin: auto;
+
+  flex-direction: column;
+  gap: var(--spacing-clamp-lg);
+}
+
+.image-container img {
+  width: 30rem;
+  max-width: 100%; /* Ensures the image scales properly */
+  height: auto; /* Maintains aspect ratio */
+  border-radius: var(--border-radius-md);
+
+  /* object-fit: contain; */
+  /* background-color: var(--color-background); */
+}
+
+.text-container {
+  margin: auto;
+  padding: var(--spacing-clamp-lg);
+
+  /* padding-inline: var(--spacing-clamp-lg);
+  padding-block: var(--spacing-clamp-lg); */
+  /* text-align: justify; */
+
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: var(--spacing-clamp-lg); */
+}
+
+/* ----------------ABOUT ---------------- */
+
+/* .signature h5 {
+  text-align: right;
+} */
+/* filler */

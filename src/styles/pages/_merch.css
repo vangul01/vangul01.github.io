@@ -1,0 +1,39 @@
+/* ----------------GALLERY / MERCH---------------- */
+
+.category-section {
+  margin-bottom: var(--spacing-clamp-xl);
+}
+
+.category-title {
+  font-size: var(--font-size-clamp-xl);
+  margin-bottom: var(--spacing-clamp-lg);
+  padding-bottom: var(--spacing-clamp-sm);
+  border-bottom: var(--border-secondary);
+}
+
+.product-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--border-radius-sm);
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: var(--spacing-clamp-sm) 0;
+  text-align: center;
+}
+
+.featured-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: var(--color-brand-accent);
+  color: var(--color-text-light);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-clamp-sm);
+  margin-top: var(--spacing-clamp-xs);
+}

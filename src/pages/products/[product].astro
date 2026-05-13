@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// import { Image } from "astro:assets";
+// import defaultProduct from "../assets/images/web/logo_eyewhites.png";
+
+import { client } from "../../lib/sanity-client";
+import type { Product } from "../../types/sanity-schema";
+
+export async function getStaticPaths() {
+  const query = `*[_type == "product"]{
+    _id,
+    "slug": slug.current,
+    name,
+    description,
+    materials,
+    dimensions,
+    quantity,
+    stripePriceId,
+    "images": images[].asset->url,
+    category,
+    featured
+  }`;
+
+  const products = (await client.fetch(query)) as Product[];
+
+  return products.map((product: Product) => ({
+    params: { product: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const pageTitle = `${product.name} | VANGULAR`;
+const keywords = `vangular, ${product.name}, art, products`;
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <section class="section" id="product-page">
+      <div class="container grid-2">
+        <div>
+          <div>
+            <img
+              id="main-product-image"
+              src={product.images?.[0] ||
+                "/src/assets/images/web/logo_eyewhites.png"}
+              alt={product.name}
+              loading="eager"
+            />
+          </div>
+
+          {
+            product.images?.length > 1 && (
+              <div class="product-thumbnails" role="list">
+                {product.images.map((imageUrl, index) => (
+                  <img
+                    src={imageUrl}
+                    alt={`${product.name} view ${index + 1}`}
+                    class={`thumbnail ${index === 0 ? "active" : ""}`}
+                    data-image-url={imageUrl}
+                    data-index={index}
+                    loading="lazy"
+                  />
+                ))}
+              </div>
+            )
+          }
+        </div>
+
+        <div class="container">
+          <h3>{product.name}</h3>
+
+          {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
+
+          <div>
+            <p id="product-price" data-price-id={product.stripePriceId}>
+              Loading price<span class="dots"></span>
+            </p>
+            <p>{product.quantity} Available</p>
+          </div>
+
+          <!-- disable the button to start , maybe I can make it clear
+           instead of red -->
+          {
+            product.quantity > 0 && (
+              <button
+                class="button button-primary"
+                id="add-to-cart"
+                data-price-id={product.stripePriceId}
+                data-name={product.name}
+                data-image={product.images?.[0]}
+                data-quantity="1"
+                data-product-url={`${product.slug}`}
+              >
+                <span class="button-label"> Add to Cart </span>
+              </button>
+            )
+          }
+
+          <div>
+            <p>{product.description}</p>
+            <h4>Details</h4>
+            {product.materials && <p>Materials: {product.materials}</p>}
+            {product.dimensions && <p>Dimensions: {product.dimensions}</p>}
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <a href="#">
+          <button
+            class="button button-tertiary"
+            role="button"
+            onclick="window.history.back()"
+          >
+            <span class="button-label"> Go Back </span>
+          </button>
+        </a>
+        <a href="/merch">
+          <button class="button button-secondary" role="button">
+            <span class="button-label"> Keep Shopping </span>
+          </button>
+        </a>
+        <a href="/cart">
+          <button class="button button-primary" role="button">
+            <span class="button-label"> Go To Cart </span>
+          </button>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

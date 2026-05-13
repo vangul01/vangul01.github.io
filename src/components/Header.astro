@@ -1,14 +1,19 @@
 ---
+// make this a dynamic read of sanity data
+
+import vangularLogo from "/src/assets/images/web/logo_transparent.png";
 import { siteNavigation } from "../config/navigation";
 
+// Get the current path
+const currentPath = Astro.url.pathname;
 const links = siteNavigation.headerLinks;
 ---
 
 <header>
   <nav class="header-nav">
     <div class="logo-container">
-      <img src="/images/web/logo.png" alt="" />
-      <a href={links.logo[0].href} class="nav-logo">
+      <img src={vangularLogo.src} alt="" />
+      <a href={links.logo[0].href} class="header-title header-link">
         {links.logo[0].name}
       </a>
     </div>
@@ -17,7 +22,11 @@ const links = siteNavigation.headerLinks;
       {
         links.mainNav.map(({ name, href }) => (
           <li class="nav-item">
-            <a href={href} id="nav-link">
+            <a
+              href={href}
+              id="nav-link"
+              class={`header-link ${currentPath === href ? "active" : ""}`}
+            >
               {name}
             </a>
           </li>
@@ -25,10 +34,13 @@ const links = siteNavigation.headerLinks;
       }
     </ul>
 
-    <div class="cart-container">
-      <a href={links.cart[0].href} class="cart-button">
+    <div class="nav-cart-container">
+      <a
+        href={links.cart[0].href}
+        class={`header-link ${currentPath === links.cart[0].href ? "active" : ""}`}
+      >
         <i class="fa fa-shopping-cart"></i>
-        <span id="cart-count"></span>
+        <span id="cart-icon-count"></span>
       </a>
 
       <button class="nav-toggle" aria-label="toggle navigation">

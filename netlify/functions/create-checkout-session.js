@@ -1,0 +1,60 @@
+// Import Stripe using secret key from environment variables to authenticate with the Stripe API.
+import Stripe from "stripe";
+
+const secretKey = process.env.SECRET_STRIPE_KEY;
+if (!secretKey) {
+  throw new Error("Missing Stripe secret key");
+}
+const stripe = new Stripe(secretKey, {
+  apiVersion: "2025-02-24.acacia",
+});
+
+// This function will be called when the client requests to create a checkout session.
+export async function handler(event) {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
+
+  try {
+    // Parse the request body to get the items array
+    const { items } = JSON.parse(event.body);
+    console.log("Items received:", items);
+
+    if (!Array.isArray(items) || items.length === 0) {
+      throw new Error("No items provided");
+    }
+
+    // Create a Stripe Checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: items.map((item) => ({
+        price: item.priceId,
+        quantity: item.quantity,
+        // adjustable_quantity: {
+        //   enabled: true,
+        //   minimum: 1,
+        //   maximum: 10,
+        // },
+      })),
+      mode: "payment",
+      success_url: `${process.env.PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.PUBLIC_SITE_URL}/cancel`,
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
+    });
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        url: session.url, // Return the redirect URL
+      }),
+    };
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
+  }
+}
