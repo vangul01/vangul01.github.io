@@ -14,6 +14,16 @@ export const client = createClient({
   useCdn: false,
 });
 
+// Create safe sanity fetch for offline testing - do I have to disable this in production?
+export async function safeSanityFetch(query: string) {
+  try {
+    return await client.fetch(query);
+  } catch (error) {
+    console.warn("Sanity is offline, returning empty data", error);
+    return [];
+  }
+}
+
 const builder = imageUrlBuilder(client);
 
 export function getSanityImageURL(source: any) {
@@ -34,7 +44,7 @@ export async function getAllProducts(): Promise<Product[]> {
         quantity
       }`;
 
-  const products = await client.fetch(query);
+  const products = await safeSanityFetch(query);
   // TypeScript knows the return type from the function signature
   return products;
 }
@@ -47,7 +57,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
         "images": images[].asset->url
       }`;
 
-  return await client.fetch(query);
+  return await safeSanityFetch(query);
 }
 
 export async function getCollabs(): Promise<Collaboration[]> {
@@ -68,5 +78,5 @@ export async function getCollabs(): Promise<Collaboration[]> {
     completedDate
   }`;
 
-  return await client.fetch(query);
+  return await safeSanityFetch(query);
 }

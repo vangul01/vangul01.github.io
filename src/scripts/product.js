@@ -15,12 +15,25 @@ export async function initProductPage() {
   try {
     const price = await getStripePrice(priceId);
 
-    priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
+    // Success! Update price and enable button
+    if (price) {
+      priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
+      addToCartBtn.dataset.price = String(price.amount);
 
-    addToCartBtn.dataset.price = String(price.amount);
+      addToCartBtn.disabled = false;
+      addToCartBtn.innerText = "Add to Cart";
+      addToCartBtn.classList.remove("button-disable");
+    } else {
+      console.error("Stripe price unfetcheded, add-to-cart button disabled.");
+    }
   } catch (err) {
     console.error("Error loading price:", err);
-    priceElement.textContent = "Price unavailable";
+    priceElement.textContent = "Price currently unavailable";
+
+    // Disable add to cart button if price fetch fails
+    addToCartBtn.disabled = true;
+    addToCartBtn.innerText = "Unavailable";
+    addToCartBtn.classList.add("button-disable");
   }
 }
 

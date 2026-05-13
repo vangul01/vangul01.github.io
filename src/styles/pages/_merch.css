@@ -1,13 +1,13 @@
 /* ----------------GALLERY / MERCH---------------- */
 
 .category-section {
-  margin-bottom: var(--spacing-3xl);
+  margin-bottom: var(--spacing-clamp-xl);
 }
 
 .category-title {
-  font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-lg);
-  padding-bottom: var(--spacing-sm);
+  font-size: var(--font-size-clamp-xl);
+  margin-bottom: var(--spacing-clamp-lg);
+  padding-bottom: var(--spacing-clamp-sm);
   border-bottom: var(--border-secondary);
 }
 
@@ -24,38 +24,16 @@
 }
 
 .product-info {
-  padding: var(--spacing-sm) 0;
+  padding: var(--spacing-clamp-sm) 0;
   text-align: center;
 }
 
 .featured-badge {
   display: inline-block;
   padding: 2px 8px;
-  background-color: var(--color-accent);
+  background-color: var(--color-brand-accent);
   color: var(--color-text-light);
   border-radius: var(--border-radius-sm);
-  font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
-}
-
-@media (width <= 992px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (width <= 768px) {
-  /* merch.astro */
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-
-  .category-section {
-    margin-bottom: var(--spacing-2xl);
-  }
-
-  .category-title {
-    font-size: var(--font-size-lg);
-  }
+  font-size: var(--font-size-clamp-sm);
+  margin-top: var(--spacing-clamp-xs);
 }

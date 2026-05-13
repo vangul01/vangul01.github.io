@@ -122,8 +122,13 @@ export default function CartIsland() {
           <p className="cart-items-subtotal">
             Subtotal ${formatPrice(finalPrice)} USD
           </p>
-          <p className="subtotal-disclaimer">
+          <p className="disclaimer">
             Taxes and shipping calculated at checkout
+          </p>
+          <p className="disclaimer">
+            All payments will be processed by stripe.com, a secure third-party
+            payment processor. We do not store any of your payment information
+            on our servers.
           </p>
         </div>
 
@@ -133,11 +138,11 @@ export default function CartIsland() {
           </a>
 
           <button
-            className="button button-primary"
-            onClick={handleCheckout}
+            className="button button-primary button-disable"
+            // onClick={handleCheckout}
             id="proceed-to-payment"
           >
-            Proceed to Checkout
+            <span class="button-label"> Proceed to Checkout</span>
           </button>
         </div>
       </div>

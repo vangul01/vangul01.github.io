@@ -4,46 +4,41 @@
 .container {
   width: min(100% - 2rem, var(--container-width-max));
   margin-inline: auto;
-  padding-inline: var(--spacing-lg);
+  padding: var(--spacing-clamp-lg);
+  /* padding-inline: var(--spacing-clamp-lg);
+  padding-block: var(--spacing-clamp-lg); */
+  background-color: var(--color-brand-light);
+  border-radius: var(--spacing-clamp-md);
 }
 
 .container-narrow {
   width: min(100%, var(--container-width-narrow));
   margin-inline: auto;
-  padding-inline: var(--spacing-lg);
+  /* padding-inline: var(--spacing-clamp-lg); */
+  padding: var(--spacing-clamp-lg);
+
 }
 
 .section {
-  margin-block: var(--spacing-2xl);
-  padding-block: var(--spacing-2xl);
+  margin-block: var(--spacing-clamp-xl);
+  /* padding-block: var(--spacing-clamp-xl); */
+  padding: var(--spacing-clamp-xl);
   overflow: hidden;
 }
 
 .section-sm {
-  padding-block: var(--spacing-lg);
-  margin-block: var(--spacing-lg);
+  margin-block: var(--spacing-clamp-lg);
+  /* padding-block: var(--spacing-clamp-lg); */
+  padding: var(--spacing-clamp-lg);
   overflow: hidden;
 }
-
-/* GLOBAL CONTAINER */
-/* .container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: var(--spacing-lg, 1.5rem);
-  row-gap: var(--spacing-xl, 2rem);
-  width: min(100% - 2rem, var(--container-width-max));
-  margin: 0 auto;
-  padding: 0 1rem; */
-/* grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); */
-/* max-width: var(--container-width-max); */
-/* } */
 
 /* ------------------------------------------------------------ */
 /* FLEX UTILITIES */
 /* ------------------------------------------------------------ */
 .flex {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 .flex-center {
@@ -51,19 +46,24 @@
   /* flex-wrap: wrap; */
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
+}
+
+.center {
+  text-align: center;
+  justify-self: center;
 }
 
 .row {
   display: flex;
   flex-direction: row;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 .space-between {
@@ -76,37 +76,54 @@
   flex-wrap: wrap;
 }
 
+/* ALIGNMENT UTILITIES */
+/* .span-12 {
+  grid-column: span 12;
+}
+.span-8 {
+  grid-column: span 8;
+}
+.span-6 {
+  grid-column: span 6;
+}
+.span-4 {
+  grid-column: span 4;
+}
+.span-3 {
+  grid-column: span 3;
+} */
+
 /* ------------------------------------------------------------ */
 /* GRID SYSTEM */
 /* ------------------------------------------------------------ */
 .grid {
   display: grid;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
   align-items: center;
 }
 
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 .grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 .grid-auto {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
+  gap: var(--spacing-clamp-lg);
 }
 
 /* ----------------GALLERY / MERCH---------------- */
@@ -114,8 +131,8 @@
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
-  gap: var(--spacing-xl);
-  padding: var(--spacing-xl) 0;
+  gap: var(--spacing-clamp-xl);
+  padding: var(--spacing-clamp-xl) 0;
   max-width: var(--container-width-max);
   margin: 0 auto;
   justify-content: center;
@@ -152,10 +169,10 @@
   grid-template-columns:
     minmax(400px, 3fr) minmax(var(--thumbnail), 1fr)
     minmax(var(--thumbnail), 1fr);
-  gap: var(--spacing-xl);
+  gap: var(--spacing-clamp-xl);
   width: 100%;
   align-items: center;
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  font-size: var(--font-size-base);
+  padding: var(--spacing-clamp-md);
+  margin-bottom: var(--spacing-clamp-lg);
+  font-size: var(--font-size-clamp-base);
 }
