@@ -2,7 +2,7 @@
 .product-card {
   border: var(--border-secondary);
   border-radius: var(--border-radius-md);
-  padding: var(--spacing-md);
+  padding: var(--spacing-clamp-md);
   transition: transform var(--transition-normal);
   background-color: var(--color-background);
   /* display: flex;

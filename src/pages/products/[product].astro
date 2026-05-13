@@ -79,11 +79,13 @@ const keywords = `vangular, ${product.name}, art, products`;
 
           <div>
             <p id="product-price" data-price-id={product.stripePriceId}>
-              Loading price...
+              Loading price<span class="dots"></span>
             </p>
             <p>{product.quantity} Available</p>
           </div>
 
+          <!-- disable the button to start , maybe I can make it clear
+           instead of red -->
           {
             product.quantity > 0 && (
               <button
@@ -95,7 +97,7 @@ const keywords = `vangular, ${product.name}, art, products`;
                 data-quantity="1"
                 data-product-url={`${product.slug}`}
               >
-                Add to Cart
+                <span class="button-label"> Add to Cart </span>
               </button>
             )
           }
@@ -110,9 +112,25 @@ const keywords = `vangular, ${product.name}, art, products`;
       </div>
 
       <div class="container">
-        <a href="#" class="link" onclick="window.history.back()"> Go Back </a>
-        <br />
-        <a href="/cart" class="link"> Go To Cart </a>
+        <a href="#">
+          <button
+            class="button button-tertiary"
+            role="button"
+            onclick="window.history.back()"
+          >
+            <span class="button-label"> Go Back </span>
+          </button>
+        </a>
+        <a href="/merch">
+          <button class="button button-secondary" role="button">
+            <span class="button-label"> Keep Shopping </span>
+          </button>
+        </a>
+        <a href="/cart">
+          <button class="button button-primary" role="button">
+            <span class="button-label"> Go To Cart </span>
+          </button>
+        </a>
       </div>
     </section>
   </main>

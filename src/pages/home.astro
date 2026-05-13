@@ -30,9 +30,11 @@ const keywords =
         />
       </div> -->
       <div class="container column flex-center">
-        <p>Welcome to</p>
-        <h1>Vangular</h1>
-        <p>Art and Designs for the Existential and Absurd</p>
+        <p class="description">Welcome to</p>
+        <h1 class="title">Vangular</h1>
+        <p class="description">
+          Art and Designs for the Existential and Absurd
+        </p>
       </div>
     </section>
 
@@ -40,7 +42,7 @@ const keywords =
 
     <section class="section">
       <div class="container grid-2">
-        <div class="column">
+        <div class="text-container">
           <h3>Featured Artwork</h3>
           <br />
           <p>
@@ -52,13 +54,13 @@ const keywords =
           </p>
           <br />
           <a href="/merch"
-            ><button class="button button-primary" role="button"
-              >Explore All Art</button
-            ></a
+            ><button class="button button-secondary" role="button">
+              <span class="button-label"> View More </span>
+            </button></a
           >
         </div>
 
-        <div>
+        <div class="image-container">
           <Image src={featuredArt} alt="Featured Artwork" />
         </div>
       </div>
@@ -66,14 +68,14 @@ const keywords =
 
     <section class="section">
       <div class="container grid-2">
-        <div>
+        <div class="image-container">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
           />
         </div>
 
-        <div class="column">
+        <div class="text-container">
           <h3>About Vangular</h3>
           <br />
           <p>
@@ -85,9 +87,9 @@ const keywords =
           </p>
           <br />
           <a href="/about"
-            ><button class="button button-primary" role="button"
-              >Learn More</button
-            ></a
+            ><button class="button button-secondary" role="button">
+              <span class="button-label"> Learn More </span>
+            </button></a
           >
         </div>
       </div>
@@ -95,7 +97,7 @@ const keywords =
 
     <section class="section">
       <div class="container grid-2">
-        <div class="column">
+        <div class="text-container">
           <h3>Collabs & Commissions</h3>
           <br />
           <p>
@@ -108,13 +110,13 @@ const keywords =
           </p>
           <br />
           <a href="/contact"
-            ><button class="button button-primary" role="button"
-              >Let's Work Together!</button
-            ></a
+            ><button class="button button-secondary" role="button">
+              <span class="button-label"> Let's Work Together! </span>
+            </button></a
           >
         </div>
 
-        <div>
+        <div class="image-container">
           <Image src={collab} alt="EmmaLee Collaboration" />
         </div>
       </div>

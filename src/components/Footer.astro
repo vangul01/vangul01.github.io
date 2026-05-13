@@ -1,14 +1,14 @@
 ---
 import { siteNavigation } from "../config/navigation";
 import NewsletterForm from "./NewsletterForm.astro";
-
+//
 const currentYear = new Date().getFullYear();
 
 const footerLinks = siteNavigation.footerLinks;
 ---
 
 <footer class="footer">
-  <div class="footer-grid">
+  <div class="grid-4">
     <!-- Social Links -->
     <div class="social-section">
       <ul class="social-links">
@@ -35,16 +35,17 @@ const footerLinks = siteNavigation.footerLinks;
         {
           footerLinks.quickLinks.map(({ name, href }) => (
             <li>
-              <a href={href}>{name}</a>
+              <a href={href} class="footer-link">
+                {name}
+              </a>
             </li>
           ))
         }
-        <!-- <li><a href="#" class="contact-link"> Contact </a></li> -->
       </ul>
     </div>
 
     <!-- Shop Links -->
-    <div class="footer-section">
+    <!-- <div class="footer-section">
       <h4 class="footer-title">Shop</h4>
       <ul class="link-list">
         {
@@ -55,13 +56,13 @@ const footerLinks = siteNavigation.footerLinks;
           ))
         }
       </ul>
-    </div>
+    </div> -->
 
     <!-- Newsletter -->
     <div class="footer-section newsletter">
       <h4 class="footer-title">Stay Updated</h4>
       <p>Subscribe to get special offers and updates!</p>
-      <NewsletterForm/>
+      <NewsletterForm />
     </div>
   </div>
 

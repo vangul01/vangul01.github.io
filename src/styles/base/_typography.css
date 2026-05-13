@@ -1,27 +1,45 @@
+/* Text Rendering!
+Font size, line height, colors, backgrounds,
+styles, text-align */
+
 /* ------------------- Core Body Typography ------------------- */
 body {
   font-family: var(--font-secondary, Arial, sans-serif);
-  font-size: var(--font-size-base, 1rem);
+  font-size: var(--font-size-clamp-base, 1rem);
   color: var(--color-text-muted);
   background-image: url("/src/assets/images/web/holographic_background.webp");
+  /* background-image: light-dark(url("/src/assets/images/web/holographic_background.webp"), url("/src/assets/images/web/holographic_background_darkmode.webp")); */
   background-size: cover;
-  display: grid;
   letter-spacing: var(--letter-spacing);
   line-height: var(--line-height);
-  /* grid-template-rows: var(--height-header, 70px) 1fr auto; */
+  display: grid;
+  grid-template-rows: var(--height-header, 70px) 1fr auto;
 }
-/* ------------------- Main Element ------------------- */
+
+/* ------------------- Page Elements ------------------- */
+header {
+  grid-row: 1;
+}
+
 main {
   position: relative;
+
+  grid-row: 2;
+}
+
+footer {
+  grid-row: 3;
+  padding: var(--spacing-clamp-lg);
 }
 
 /* ------------------- Paragraphs ------------------- */
 /* Ideal range for characters is 50ch-75ch. Margin setting centers text */
 p {
+  font-size: var(--font-size-clamp-base);
   overflow-wrap: break-word;
   text-wrap: pretty;
   max-width: var(--text-ratio);
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 /* ------------------- Headings ------------------- */
@@ -35,70 +53,79 @@ h5,
 h6 {
   font-family: var(--font-primary, inherit);
   color: var(--color-text-primary, inherit);
-  /* letter-spacing: 2px; */
   text-transform: uppercase;
   text-align: center;
   text-wrap: balance;
   line-height: 1;
 }
 h1 {
-  font-size: calc(var(--font-size-base) + 9dvw);
+  font-size: var(--font-size-clamp-2xl);
 }
 h2 {
-  font-size: calc(var(--font-size-base) + 3.5dvw);
+  font-size: var(--font-size-clamp-xl);
 }
 h3 {
-  font-size: calc(var(--font-size-base) + 1.5dvw);
+  font-size: var(--font-size-clamp-lg);
 }
-h4 {
-  font-size: calc(var(--font-size-base) + 0.5dvw);
-}
-h5 {
-  font-size: calc(var(--font-size-base) + 0.25dvw);
-}
+h4,
+h5,
 h6 {
-  font-size: calc(var(--font-size-base) + 0.1dvw);
+  font-size: var(--font-size-clamp-base);
 }
 
-button,
-input,
-label {
-  /* line-height: calc(var(--font-size-base) + 0.5dvw); */
-  line-height: 1;
-}
-
-/* ------------------- Links ------------------- */
+/* ------------------- Links and Buttons ------------------- */
 a {
-  transition: color var(--transition-normal);
+  transition: var(--transition-normal);
+  cursor: pointer;
 }
 
 a:hover {
   color: var(--color-text-light);
-  transition: var(--transition-normal);
+  /* transition: var(--transition-normal); */
+}
+
+button {
+  cursor: pointer;
 }
 
 /* ------------------- Form Fields ------------------- */
 input,
 textarea {
+  max-width: var(--input-width-max);
+  min-width: var(--input-width-min);
   background-color: var(--color-input-bg);
-  color: var(--color-input-text);
-  border: var(--border-tertiary);
-  border-radius: var(--border-radius-sm);
-  padding: var(--spacing-xs) var(--spacing-xs);
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-clamp-sm) var(--spacing-clamp-sm);
   font-family: var(--font-secondary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-clamp-base);
+  outline: none;
+}
+
+label {
+  padding: 0 var(--spacing-clamp-sm);
 }
 
 /* ----------- DARK THEME ----------- */
-.dark,
-[data-theme="dark"] {
-  --color-site-background: radial-gradient(
-    var(--color-primary-light),
-    var(--color-primary-dark)
-  );
-  background: var(--color-site-background) no-repeat center center fixed;
+/* @media (prefers-color-scheme: dark) {
+  background-image: url("/src/assets/images/web/holographic_background_darkmode.webp");
+} */
 
-  /* @media (prefers-color-scheme: dark) {
+/* .dark,
+[data-theme="dark"] {
+  body.dark { */
+/* background-size: cover; */
+/* background-color: #0d0950;
+    color: #fff; */
+/* } */
+/* --color-site-background: radial-gradient(
+    var(--color-brand-primary),
+    var(--color-brand-primary)
+  ); */
+/* background: var(--color-site-background) no-repeat center center fixed; */
+
+/* @media (prefers-color-scheme: dark) {
   body {
     background: var(--c-white);
     color: var(--c-black);
@@ -110,10 +137,10 @@ textarea {
   }
 } */
 
-  /* --color-text-primary: var(--color-gray-200);
+/* --color-text-primary: var(--color-gray-200);
   --color-text-secondary: var(--color-gray-300);
   --color-text-muted: var(--color-gray-400);
   --color-border-light: #4a3f6b;
   --color-border-medium: #5a4f7b;
   --color-border-dark: #7a6f9b; */
-}
+/* } */
