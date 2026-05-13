@@ -12,9 +12,9 @@ max-width, margin, padding */
 
 .image-container {
   display: flex;
-  padding-left: var(--spacing-clamp-lg);
-  padding-right: var(--spacing-clamp-lg);
-  padding-bottom: var(--spacing-clamp-lg);
+  padding: var(--spacing-clamp-lg);
+  /* padding-inline: var(--spacing-clamp-lg); */
+  /* padding-block: var(--spacing-clamp-lg); */
   /* object-fit: contain; */
   /* justify-content: center; */
   /* align-items: center; */
@@ -36,8 +36,10 @@ max-width, margin, padding */
 
 .text-container {
   margin: auto;
-  padding-left: var(--spacing-clamp-lg);
-  padding-right: var(--spacing-clamp-lg);
+  padding: var(--spacing-clamp-lg);
+
+  /* padding-inline: var(--spacing-clamp-lg);
+  padding-block: var(--spacing-clamp-lg); */
   /* text-align: justify; */
 
   /* display: flex; */

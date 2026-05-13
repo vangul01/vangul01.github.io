@@ -7,10 +7,8 @@ body {
   font-family: var(--font-secondary, Arial, sans-serif);
   font-size: var(--font-size-clamp-base, 1rem);
   color: var(--color-text-muted);
-  background-image: light-dark(
-    url("/src/assets/images/web/holographic_background.webp"),
-    url("/src/assets/images/web/holographic_background_darkmode.webp")
-  );
+  background-image: url("/src/assets/images/web/holographic_background.webp");
+  /* background-image: light-dark(url("/src/assets/images/web/holographic_background.webp"), url("/src/assets/images/web/holographic_background_darkmode.webp")); */
   background-size: cover;
   letter-spacing: var(--letter-spacing);
   line-height: var(--line-height);

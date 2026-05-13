@@ -29,7 +29,7 @@
 
 .description {
   font-size: var(--font-size-clamp-lg);
-  color: var(--color-brand-accent);
+  color: var(--color-brand-secondary);
   text-shadow: 2px 2px 4px rgba(104, 196, 224, 0.65);
 }
 

@@ -89,6 +89,12 @@ cause Stripes price wasn't obtained */
   box-shadow: 0 0 0 0;
   top: 5px;
   left: 5px;
+
+  .button-label {
+    font-style: normal;
+    font-weight: normal;
+  }
+
 }
 
 /* ------------------- CART PAGE ------------------- */

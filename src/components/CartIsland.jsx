@@ -138,8 +138,8 @@ export default function CartIsland() {
           </a>
 
           <button
-            className="button button-primary"
-            onClick={handleCheckout}
+            className="button button-primary button-disable"
+            // onClick={handleCheckout}
             id="proceed-to-payment"
           >
             <span class="button-label"> Proceed to Checkout</span>

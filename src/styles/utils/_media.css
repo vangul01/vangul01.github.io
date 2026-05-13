@@ -12,9 +12,9 @@
 
 @media (width >= 64em) {
   /* 1024px */
-  .container {
+  /* .container {
     padding: var(--spacing-clamp-lg);
-  }
+  } */
 }
 
 @media (width <= 992px) {
@@ -82,10 +82,11 @@
 
 @media (width >= 768px) {
   /* Content container increase padding on bigger screens */
-  .container {
-    padding-top: 0;
-    padding: var(--spacing-clamp-xl) var(--spacing-clamp-xl);
-  }
+  /* .container { */
+    /* padding-top: 0; */
+    /* padding-inline: var(--spacing-clamp-xl); */
+    /* padding-block: var(--spacing-clamp-xl); */
+  /* } */
 }
 
 @media (width <= 768px) {
