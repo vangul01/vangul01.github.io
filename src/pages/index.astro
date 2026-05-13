@@ -1,14 +1,33 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PortalLayout from "../layouts/PortalLayout.astro";
+import blinkingEyeVideo from "../assets/videos/blinking_eye.mp4";
+// import blinkingEyeWebm from "../assets/videos/blinking_eye.webm";
+
+import { Image } from "astro:assets";
+import eyeImage from "../assets/images/web/logo_transparent.png";
 
 const pageTitle = "Welcome to VANGULAR!";
 const keywords = "Vangular, enter, portal";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<PortalLayout pageTitle={pageTitle} keywords={keywords}>
   <main class="portal">
     <a href="/home" class="overlay-image">
-      <img src="/images/web/blinking_eye.gif" alt="image of an eye" />
+      <Image
+        src={eyeImage}
+        alt="Large eye illustration"
+        class="eye-background"
+      />
+      <!-- <video
+        autoplay
+        loop
+        muted
+        playsinline
+        width="1500"
+        height="844"
+        class="portal-video"
+      >        <source src={blinkingEyeVideo} type="video/mp4" />
+      </video> -->
     </a>
   </main>
-</BaseLayout>
+</PortalLayout>

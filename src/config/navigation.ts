@@ -15,11 +15,19 @@ export const siteNavigation = {
       { name: "Merch", href: "/merch" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
+      { name: "Contact Us", href: "/contact" },
     ],
     shop: [
       { name: "All Products", href: "/merch" },
       { name: "New Arrivals", href: "/merch/new" },
       { name: "Best Sellers", href: "/merch/best" },
+    ],
+    help: [
+      { name: "Contact Us", href: "/contact" },
+      { name: "Shipping Info", href: "/" },
+      { name: "Privacy Policy", href: "/" },
+      { name: "Refund Policy", href: "/" },
+      { name: "FAQ", href: "/" },
     ],
     social: [
       { name: "Etsy", href: "https://etsy.com/shop/vangular/", icon: "etsy" },
@@ -38,7 +46,7 @@ export const siteNavigation = {
         href: "https://youtube.com/@vangular.designs",
         icon: "youtube",
       },
-      // { name: "TikTok", href: "https://tiktok.com/@vangular", icon: "tiktok"}
+      //   { name: "TikTok", href: "https://tiktok.com/@vangular", icon: "tiktok" },
     ],
   },
 };

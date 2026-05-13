@@ -1,0 +1,154 @@
+/* ------------------------------------------------------------ */
+/* RESPONSIVE HELPERS */
+/* ------------------------------------------------------------ */
+
+/* Grid goes to two columns on larger screens */
+@media (width >= 48em) {
+  /* 768px */
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 64em) {
+  /* 1024px */
+  /* .container {
+    padding: var(--spacing-clamp-lg);
+  } */
+}
+
+@media (width <= 992px) {
+  /* This makes the elements stack vertically on smaller screens, maintaining a user-friendly layout. */
+  .grid-2 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed from center to flex-start */
+    width: 100%;
+    gap: 1rem;
+    padding-top: 0; /* Reset any top padding */
+    margin-top: 0; /* Reset any top margin */
+  }
+}
+
+@media (max-width: 900px) {
+  /* .container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  [class*="span-"] {
+    grid-column: span 6;
+  } */
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .flex,
+  .row {
+    flex-direction: column;
+  }
+}
+
+/* ------------------- Media Queries ------------------- */
+@media (width <= 992px) {
+  /* Footer */
+  .footer {
+    padding: 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 var(--spacing-clamp-lg);
+    padding: var(--spacing-clamp-lg);
+    border-top: var(--border-secondary);
+  }
+
+  .social-section {
+    grid-column: span 4;
+  }
+
+  .newsletter {
+    grid-column: span 2;
+  }
+
+  /* Merch */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ------------------- MEDIA QUERIES ----------------------- */
+
+@media (width >= 768px) {
+  /* Content container increase padding on bigger screens */
+  /* .container { */
+    /* padding-top: 0; */
+    /* padding-inline: var(--spacing-clamp-xl); */
+    /* padding-block: var(--spacing-clamp-xl); */
+  /* } */
+}
+
+@media (width <= 768px) {
+  /* footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-clamp-md);
+    margin: 0;
+  }
+
+  /* Keep socials on top */
+  .social-section {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Quick Links and Shop sections in two columns at bottom */
+  .footer-section:not(.social-section, .newsletter) {
+    grid-column: span 1;
+    grid-row: 3;
+  }
+
+  /* Newsletter takes full width below socials */
+  .newsletter {
+    padding: var(--spacing-clamp-md);
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* merch.astro */
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-clamp-lg);
+  }
+
+  .category-section {
+    margin-bottom: var(--spacing-clamp-xl);
+  }
+
+  .category-title {
+    font-size: var(--font-size-clamp-lg);
+  }
+
+  .cart-buttons {
+    flex-direction: column-reverse;
+    gap: var(--spacing-clamp-md);
+  }
+
+  .cart-buttons .button,
+  .cart-buttons .link {
+    width: 70%;
+  }
+
+  /* cart.astro */
+  .cart-products-grid,
+  .cart-titles {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--spacing-clamp-md);
+  }
+
+  .cart-product-image {
+    width: 80px;
+    height: 80px;
+  }
+}

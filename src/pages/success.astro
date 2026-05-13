@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "Order Success | VANGULAR";
@@ -8,18 +6,23 @@ const keywords =
   "order success, payment success, thank you, order confirmation";
 ---
 
+<!-- I'd like to have a success footer here which highlights connecting
+ on social media and signing up to newsletter -->
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
-    <div class="content-container">
-      <h2>Thank you for your order!</h2>
-      <h3>Your payment was successful</h3>
-      <a href="/merch"
-        ><button class="button button-primary" role="button"
-          >Continue Shopping</button
-        ></a
-      >
+    <div class="container column flex-center">
+      <h3>Thank you!</h3>
+      <h4>Your payment was successful :)</h4>
+      <br /><br />
+      <h5>
+        We've sent a confirmation email to [customer email address] with all the
+        details.
+      </h5>
     </div>
+    <a href="/home"
+      ><button class="button button-primary" role="button">
+        <span class="button-label"> Back to Vangular</span>
+      </button></a
+    >
   </main>
-  <Footer />
 </BaseLayout>

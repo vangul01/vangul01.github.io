@@ -1,0 +1,171 @@
+/* ------------------- BUTTONS ------------------- */
+/* VANGULAR SPECIAL: RAINBOW BUTTON */
+/* .btn-rainbow {
+  background: var(--gradient-vangular);
+  color: var(--c-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: 600;
+} */
+
+.button {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-clamp-base);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  /* background-color: var(--color-border); */
+  color: #000;
+  border: 3px solid;
+
+  /* padding: 0.25em 0.5em; */
+  /* padding: var(--spacing-clamp-sm) var(--spacing-clamp-md); */
+  padding: var(--spacing-clamp-lg);
+
+  box-shadow:
+    1px 1px 0 0,
+    2px 2px 0 0,
+    3px 3px 0 0,
+    4px 4px 0 0,
+    5px 5px 0 0;
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+
+  justify-content: center;
+  width: var(--button-width);
+  height: auto;
+}
+
+.button:hover {
+  /* transform: translateY(-2px); */
+  scale: 1.1;
+  /* opacity: 0.8; */
+  /* background-color: var(--color-button-hover); */
+
+  .button-label {
+    font-weight: bold;
+    font-style: italic;
+  }
+}
+
+.button:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+.button-formating {
+  /* display: flex; */
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.button-primary {
+  background-color: var(--color-button-primary);
+}
+
+.button-secondary {
+  background-color: var(--color-button-secondary);
+}
+
+.button-tertiary {
+  background-color: var(--color-button-tertiary);
+}
+
+/* Added by javascript in product.js! */
+/* If an item is not available to purchase
+cause Stripes price wasn't obtained */
+.button-disable,
+.button-disable:hover {
+  background-color: var(--color-error);
+  scale: 1;
+  opacity: 1;
+  cursor: default;
+  /* Apperance of being clicked down */
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+
+  .button-label {
+    font-style: normal;
+    font-weight: normal;
+  }
+
+}
+
+/* ------------------- CART PAGE ------------------- */
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  transition: all var(--transition-normal);
+  padding: var(--spacing-clamp-xs);
+  font-size: var(--font-size-clamp-base);
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between; /* Changed from flex-end to space-between */
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--spacing-clamp-md); /* Added padding to align with grid */
+
+  /* margin-top: var(--spacing-clamp-xl);
+    border-top: var(--border-tertiary); */
+}
+
+.cart-buttons .link {
+  font-size: var(--font-size-clamp-base);
+  padding: var(--spacing-clamp-sm) var(--spacing-clamp-md);
+}
+
+/* Ensure consistent button sizes */
+.cart-buttons .button,
+.cart-buttons .link {
+  min-width: var(--thumbnail);
+  text-align: center;
+  resize: none;
+}
+
+.quantity-btn {
+  background: none;
+  border: none;
+  border-radius: var(--border-radius-circle);
+  color: var(--color-text-muted);
+  width: var(--font-size-clamp-lg);
+  height: var(--font-size-clamp-lg);
+  transition: all var(--transition-normal);
+}
+
+.quantity-btn:hover {
+  color: var(--color-text-light);
+  background-color: var(--color-button-primary);
+}
+
+/* .minus {
+
+}
+
+.plus {
+
+} */
+
+/* ------------------- PRODUCT PAGES ----------------------- */
+
+.product-text .button {
+  /* bottom: 0;
+    left: 50%;
+    position: absolute; */
+
+  /* left: 50%; */
+  bottom: 0;
+  margin: var(--spacing-clamp-md) 0;
+}

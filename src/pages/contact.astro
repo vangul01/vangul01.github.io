@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "Contact | VANGULAR";
+const keywords = "Contact, Inquiry";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <section class="section">
+      <div class="container column flex-center">
+        <h2>Contact Vangular</h2>
+        <br />
+        <p>
+          We love hearing from you! Whether you have a question, feedback, or
+          just want to say hi, feel free to reach out. We value your input and
+          will respond as soon as possible.
+        </p>
+      </div>
+
+      <div class="container column flex-center">
+        <form
+          class="contact-form"
+          id="contact-form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden">
+            <label>
+              Don't fill this out if you're human: <input name="bot-field" />
+            </label>
+          </p>
+
+          <div class="form-field">
+            <input
+              type="text"
+              id="contact-first-name"
+              name="first-name"
+              placeholder=" "
+              autocomplete="given-name"
+              required
+            />
+            <label for="contact-first-name">First Name</label>
+          </div>
+
+          <div class="form-field">
+            <input
+              type="text"
+              id="contact-last-name"
+              name="last-name"
+              placeholder=" "
+              autocomplete="family-name"
+              required
+            />
+            <label for="contact-last-name">Last Name</label>
+          </div>
+
+          <div class="form-field">
+            <input
+              class="email"
+              type="email"
+              id="contact-email"
+              name="email"
+              placeholder=" "
+              autocomplete="email"
+              required
+            />
+            <label for="contact-email">Email</label>
+          </div>
+
+          <div class="form-field">
+            <textarea
+              id="contact-message"
+              name="message"
+              placeholder=" "
+              rows="5"
+              cols="50"
+              required></textarea>
+            <label for="contact-message">Message</label>
+          </div>
+
+          <button
+            type="submit"
+            class="button button-primary"
+            aria-label="Submit Contact Form"
+          >
+            <span class="button-label"> Submit </span>
+          </button>
+          <div id="contact-submit-message"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,36 @@
+/* ------------------ CONTACT FORM ------------------------ */
+#success-message {
+  margin-top: var(--spacing-clamp-md);
+  color: var(--color-success);
+  font-size: var(--font-size-clamp-sm);
+  text-align: center;
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: var(--spacing-clamp-lg);
+}
+
+.form-field label {
+  position: absolute;
+  left: var(--spacing-clamp-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-normal);
+  pointer-events: none;
+}
+
+.form-field textarea ~ label {
+  top: var(--spacing-clamp-sm);
+  transform: translateY(0);
+}
+
+.form-field input:focus ~ label,
+.form-field textarea:focus ~ label,
+.form-field input:not(:placeholder-shown) ~ label,
+.form-field textarea:not(:placeholder-shown) ~ label {
+  top: -0.45rem;
+  transform: scale(0.75);
+  color: var(--color-text-muted);
+}

@@ -1,10 +1,17 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { prodDetails } from "../config/prod-details";
 
-const prodInfo = prodDetails.featuredProd;
+import { Image } from "astro:assets";
+import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
+
+import featuredArt from "../assets/images/web/logo_eyewhites.png";
+import aboutMe from "../assets/images/web/about-home.png";
+import collab from "../assets/images/web/dreams.png";
+// import eyeImage from "../assets/images/web/eyecon.png";
+
+// Fetch featured products from Sanity
+const featuredProducts = await getFeaturedProducts();
+const collabs = await getCollabs();
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -12,64 +19,107 @@ const keywords =
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
-  <Header />
   <main>
     <!-- Welcome/Hero Section -->
-    <section class="hero-section">
-      <div class="overlay-text">
-        <p>Welcome to</p>
-        <h1>Vangular</h1>
-        <p>Art and Designs for the <br /> Existential and Absurd</p>
+    <section class="section">
+      <!-- <div>
+        <Image
+          src={eyeImage}
+          alt="Large eye illustration"
+          class="eye-background"
+        />
+      </div> -->
+      <div class="container column flex-center">
+        <p class="description">Welcome to</p>
+        <h1 class="title">Vangular</h1>
+        <p class="description">
+          Art and Designs for the Existential and Absurd
+        </p>
       </div>
     </section>
 
-    <section class="content-container">
-      <h2>New Arrivals</h2>
-      <p>
-        Explore high quality paintings and collages that are ready for purchase!
-      </p>
+    <!-- <button id="theme-toggle">Toggle Theme</button> -->
 
-      <div class="image-grid">
-        {
-          prodInfo.new.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} />
-            </a>
-          ))
-        }
-      </div>
+    <section class="section">
+      <div class="container grid-2">
+        <div class="text-container">
+          <h3>Featured Artwork</h3>
+          <br />
+          <p>
+            I love creating art that is vibrant, colorful, and a little absurd.
+            My work is inspired by my experiences, dreams, and the world around
+            me. I hope my art brings a sense of joy and wonder to your life.
+            Each piece is a reflection of my journey, a snapshot of my thoughts
+            and feelings, and I hope you can find a connection to it.
+          </p>
+          <br />
+          <a href="/merch"
+            ><button class="button button-secondary" role="button">
+              <span class="button-label"> View More </span>
+            </button></a
+          >
+        </div>
 
-      <div class="button-formating">
-        <a href="/merch"
-          ><button class="button button-primary" role="button"
-            >Shop New Arrivals</button
-          ></a
-        >
+        <div class="image-container">
+          <Image src={featuredArt} alt="Featured Artwork" />
+        </div>
       </div>
     </section>
 
-    <section class="content-container">
-      <h2>Best Sellers</h2>
-      <p>Check out best sellers across all categories!</p>
+    <section class="section">
+      <div class="container grid-2">
+        <div class="image-container">
+          <Image
+            src={aboutMe}
+            alt="Image of the artist VANGULAR aka Valerie Angulo"
+          />
+        </div>
 
-      <div class="image-grid">
-        {
-          prodInfo.popular.map(({ src, alt, href }) => (
-            <a href={href} class="product-card">
-              <img src={src} alt={alt} />
-            </a>
-          ))
-        }
+        <div class="text-container">
+          <h3>About Vangular</h3>
+          <br />
+          <p>
+            Hey I'm Valerie and welcome to VANGULAR! Vangular was born out of a
+            desire to create a space for my art and designs that are fun,
+            vibrant, and a little absurd. I love using colors and designs to
+            ignite people's imaginations and create a sense of playfulness and
+            community.
+          </p>
+          <br />
+          <a href="/about"
+            ><button class="button button-secondary" role="button">
+              <span class="button-label"> Learn More </span>
+            </button></a
+          >
+        </div>
       </div>
+    </section>
 
-      <div class="button-formating">
-        <a href="/merch"
-          ><button class="button button-primary" role="button"
-            >Shop Best Sellers</button
-          ></a
-        >
+    <section class="section">
+      <div class="container grid-2">
+        <div class="text-container">
+          <h3>Collabs & Commissions</h3>
+          <br />
+          <p>
+            Collaborations are a big part of my creative process. I love working
+            with other artists and designers to create something new and
+            exciting. Whether it's a joint art piece, a design project, or a
+            community event, I believe that collaboration is a powerful way to
+            connect and create. If you're interested in collaborating, please
+            reach out! I'm always open to new ideas and projects.
+          </p>
+          <br />
+          <a href="/contact"
+            ><button class="button button-secondary" role="button">
+              <span class="button-label"> Let's Work Together! </span>
+            </button></a
+          >
+        </div>
+
+        <div class="image-container">
+          <Image src={collab} alt="EmmaLee Collaboration" />
+        </div>
       </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>
