@@ -89,15 +89,16 @@ const keywords = `vangular, ${product.name}, art, products`;
           {
             product.quantity > 0 && (
               <button
-                class="button button-primary"
+                class="button button-disable button-check"
                 id="add-to-cart"
                 data-price-id={product.stripePriceId}
                 data-name={product.name}
                 data-image={product.images?.[0]}
                 data-quantity="1"
                 data-product-url={`${product.slug}`}
+                disabled
               >
-                <span class="button-label"> Add to Cart </span>
+                <span class="button-label"> Checking Availability </span>
               </button>
             )
           }

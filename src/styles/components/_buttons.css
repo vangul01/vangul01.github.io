@@ -13,6 +13,7 @@
   font-size: var(--font-size-clamp-base);
   letter-spacing: 2px;
   text-transform: uppercase;
+  width: var(--button-width);
 
   /* background-color: var(--color-border); */
   color: #000;
@@ -80,8 +81,9 @@
 /* If an item is not available to purchase
 cause Stripes price wasn't obtained */
 .button-disable,
-.button-disable:hover {
-  background-color: var(--color-error);
+.button-disable:hover,
+.button-check,
+.button-check:hover {
   scale: 1;
   opacity: 1;
   cursor: default;
@@ -94,7 +96,18 @@ cause Stripes price wasn't obtained */
     font-style: normal;
     font-weight: normal;
   }
+}
 
+/* Error state — stripe price failed to fetch */
+.button-disable,
+.button-disable:hover {
+  background-color: var(--color-error);
+}
+
+/* Loading/checking state — stripe price still loading */
+.button-check,
+.button-check:hover {
+  background-color: var(--color-button-tertiary);
 }
 
 /* ------------------- CART PAGE ------------------- */
