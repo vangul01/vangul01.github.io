@@ -8,7 +8,7 @@ body {
   font-size: var(--font-size-clamp-base, 1rem);
   color: var(--color-text-muted);
   background-color: #0d0a1a;
-  background-image: url("/images/holographic_background.webp");
+  background-image: var(--bg-url);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -20,7 +20,7 @@ body {
 
 @media (max-width: 768px) {
   body {
-    background-image: url("/images/holographic_background.webp");
+    background-image: var(--bg-url);
     background-position: 65% 0;
   }
 }
@@ -28,7 +28,7 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #05030d;
-    background-image: url("/images/holographic_background_darkmode.webp");
+    background-image: var(--bg-url-dark);
   }
 }
 

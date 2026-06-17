@@ -4,29 +4,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
 import type { Product } from "../types/sanity-schema";
 
+import logoFallback from "../assets/images/web/logo_eyewhites.png";
+
 const products = await getAllProducts();
-
-// Group products by category
-const productsByCategory = products.reduce(
-  (acc, product) => {
-    const category = product.category;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(product);
-    return acc;
-  },
-  {} as Record<Product["category"], Product[]>,
-);
-
-// Category display names
-// const categoryNames = {
-//   paintings: "Paintings",
-//   digital: "Digital Art",
-//   stationary: "Stationary",
-//   textiles: "Textiles",
-//   misc: "Miscellaneous",
-// };
 
 const pageTitle = "Merch | VANGULAR";
 const keywords = "art, merchandise, prints, digital art, paintings";
@@ -41,40 +21,27 @@ const keywords = "art, merchandise, prints, digital art, paintings";
             <h3>Check back soon for new merch!</h3>
           </div>
         ) : (
-          Object.entries(productsByCategory).map(
-            ([category, categoryProducts]) => {
-              // const typedCategory = category as keyof typeof categoryNames;
-              return (
+          <div class="container grid-4">
+            {products.map((product) => (
+              <a href={`/products/${product.slug}`}>
                 <div>
-                  {/* <div class="container column flex-center">
-                  <h3>{categoryNames[typedCategory]}</h3>
-                </div> */}
-
-                  <div class="container grid-4">
-                    {categoryProducts.map((product) => (
-                      <a href={`/products/${product.slug}`}>
-                        <div>
-                          <img
-                            src={
-                              product.images?.[0]
-                                ? getOptimizedImageUrl(product.images[0], 400)
-                                : "/images/logo_eyewhites.png"
-                            }
-                            alt={product.name}
-                            loading="lazy"
-                          />
-                        </div>
-
-                        <div>
-                          <h4>{product.name}</h4>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
+                  <img
+                    src={
+                      product.images?.[0]
+                        ? getOptimizedImageUrl(product.images[0], 400)
+                        : logoFallback.src
+                    }
+                    alt={product.name}
+                    loading="lazy"
+                  />
                 </div>
-              );
-            },
-          )
+
+                <div>
+                  <h4>{product.name}</h4>
+                </div>
+              </a>
+            ))}
+          </div>
         )
       }
     </section>

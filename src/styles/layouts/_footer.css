@@ -1,11 +1,10 @@
 /* ------------------- FOOTER ----------------------- */
 .footer {
-  background-image: url("/images/plantie_footer.png");
+  background-image: var(--footer-bg-url);
   background-position: bottom;
   background-repeat: repeat-x;
   background-size: auto 100%;
-  height: auto; /* Let content set the height */
-  /* Pushes footer to bottom */
+  height: auto;
   width: 100%;
 }
 

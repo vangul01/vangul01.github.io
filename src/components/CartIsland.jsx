@@ -9,7 +9,7 @@ import {
 import { handleCheckout } from "../scripts/cart/checkout.js";
 import "../styles/global.css";
 
-export default function CartIsland() {
+export default function CartIsland({ fallbackImage = "" }) {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function CartIsland() {
                 <img
                   className="cart-product-thumbnail"
                   src={
-                    item.image || "/images/logo_eyewhites.png"
+                    item.image || fallbackImage
                   }
                   alt={item.name}
                   loading="lazy"
