@@ -1,10 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
-// import { Image } from "astro:assets";
-// import defaultProduct from "../assets/images/web/logo_eyewhites.png";
-
-import { client } from "../../lib/sanity-client";
+import { client, getOptimizedImageUrl } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
 
 export async function getStaticPaths() {
@@ -47,8 +44,9 @@ const keywords = `vangular, ${product.name}, art, products`;
           <div>
             <img
               id="main-product-image"
-              src={product.images?.[0] ||
-                "/src/assets/images/web/logo_eyewhites.png"}
+              src={product.images?.[0]
+                ? getOptimizedImageUrl(product.images[0], 800)
+                : "/images/logo_eyewhites.png"}
               alt={product.name}
               loading="eager"
             />
@@ -59,7 +57,7 @@ const keywords = `vangular, ${product.name}, art, products`;
               <div class="product-thumbnails" role="list">
                 {product.images.map((imageUrl, index) => (
                   <img
-                    src={imageUrl}
+                    src={getOptimizedImageUrl(imageUrl, 150)}
                     alt={`${product.name} view ${index + 1}`}
                     class={`thumbnail ${index === 0 ? "active" : ""}`}
                     data-image-url={imageUrl}
@@ -116,19 +114,18 @@ const keywords = `vangular, ${product.name}, art, products`;
         <a href="#">
           <button
             class="button button-tertiary"
-            role="button"
             onclick="window.history.back()"
           >
             <span class="button-label"> Go Back </span>
           </button>
         </a>
         <a href="/merch">
-          <button class="button button-secondary" role="button">
+          <button class="button button-secondary">
             <span class="button-label"> Keep Shopping </span>
           </button>
         </a>
         <a href="/cart">
-          <button class="button button-primary" role="button">
+          <button class="button button-primary">
             <span class="button-label"> Go To Cart </span>
           </button>
         </a>

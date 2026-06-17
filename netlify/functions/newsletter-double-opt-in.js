@@ -64,9 +64,8 @@ export async function handler(event) {
     // --- 3. Send Double Opt-In email ---
     const subscribeBody = {
       email,
-      // includeListIds: `${process.env.PUBLIC_NEWSLETTER_LIST_IDS}`, // "test emails" list ID
-      includeListIds: [8],
-      templateId: 1, // default double opt-in template ID
+      includeListIds: [process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID], // "Pending Subscribers" list ID [8]
+      templateId: process.env.BREVO_DEFAULT_DOUBLE_OPT_IN_TEMPLATE_ID, // default double opt-in template ID - 1
       //   redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success-newsletter`,
       redirectionUrl: `${process.env.PUBLIC_SITE_URL}/.netlify/functions/newsletter-welcome-email?email={{params.email}}`,
     };

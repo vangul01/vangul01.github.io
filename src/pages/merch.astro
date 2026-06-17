@@ -1,11 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-import { getAllProducts } from "../lib/sanity-client";
+import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
 import type { Product } from "../types/sanity-schema";
-
-// import { Image } from "astro:assets";
-// import defaultProdPic from "/src/assets/images/web/logo_eyewhites.png";
 
 const products = await getAllProducts();
 
@@ -23,13 +20,13 @@ const productsByCategory = products.reduce(
 );
 
 // Category display names
-const categoryNames = {
-  paintings: "Paintings",
-  digital: "Digital Art",
-  stationary: "Stationary",
-  textiles: "Textiles",
-  misc: "Miscellaneous",
-};
+// const categoryNames = {
+//   paintings: "Paintings",
+//   digital: "Digital Art",
+//   stationary: "Stationary",
+//   textiles: "Textiles",
+//   misc: "Miscellaneous",
+// };
 
 const pageTitle = "Merch | VANGULAR";
 const keywords = "art, merchandise, prints, digital art, paintings";
@@ -39,38 +36,45 @@ const keywords = "art, merchandise, prints, digital art, paintings";
   <main>
     <section class="section">
       {
-        Object.entries(productsByCategory).map(
-          ([category, categoryProducts]) => {
-            const typedCategory = category as keyof typeof categoryNames;
-            return (
-              <div>
-                <div class="container column flex-center">
+        products.length === 0 ? (
+          <div class="container column flex-center">
+            <h3>Check back soon for new merch!</h3>
+          </div>
+        ) : (
+          Object.entries(productsByCategory).map(
+            ([category, categoryProducts]) => {
+              // const typedCategory = category as keyof typeof categoryNames;
+              return (
+                <div>
+                  {/* <div class="container column flex-center">
                   <h3>{categoryNames[typedCategory]}</h3>
-                </div>
+                </div> */}
 
-                <div class="container grid-4">
-                  {categoryProducts.map((product) => (
-                    <a href={`/products/${product.slug}`}>
-                      <div>
-                        <img
-                          src={
-                            product.images?.[0] ||
-                            "/src/assets/images/web/logo_eyewhites.png"
-                          }
-                          alt={product.name}
-                          loading="lazy"
-                        />
-                      </div>
+                  <div class="container grid-4">
+                    {categoryProducts.map((product) => (
+                      <a href={`/products/${product.slug}`}>
+                        <div>
+                          <img
+                            src={
+                              product.images?.[0]
+                                ? getOptimizedImageUrl(product.images[0], 400)
+                                : "/images/logo_eyewhites.png"
+                            }
+                            alt={product.name}
+                            loading="lazy"
+                          />
+                        </div>
 
-                      <div>
-                        <h4>{product.name}</h4>
-                      </div>
-                    </a>
-                  ))}
+                        <div>
+                          <h4>{product.name}</h4>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          },
+              );
+            },
+          )
         )
       }
     </section>

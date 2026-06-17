@@ -26,6 +26,7 @@ export function initNav() {
     navLinks.classList.remove("show-nav-links");
     navToggle.classList.remove("vertical");
     navOverlay.classList.remove("visible", "no-scroll");
+    document.body.classList.remove("no-scroll");
   }
 
   // Function to open the sidenav
@@ -33,6 +34,7 @@ export function initNav() {
     navLinks.classList.add("show-nav-links");
     navToggle.classList.add("vertical");
     navOverlay.classList.add("visible", "no-scroll");
+    document.body.classList.add("no-scroll");
   }
 
   // Only open the nav when the toggle is clicked
@@ -62,6 +64,7 @@ export function initNav() {
       if (navLinks.classList.contains("show-nav-links")) {
         // console.log("Keeping no-scroll because nav is open");
         navOverlay.classList.add("no-scroll");
+        document.body.classList.add("no-scroll");
       }
     }
   });
