@@ -57,6 +57,7 @@
   left: 5px;
 }
 
+/* CLASS NOT CURRENTLY USED */
 .button-formating {
   /* display: flex; */
   display: inline-block;
@@ -156,6 +157,8 @@ cause Stripes price wasn't obtained */
   width: var(--font-size-clamp-lg);
   height: var(--font-size-clamp-lg);
   transition: all var(--transition-normal);
+  text-align: center;
+  justify-content: center;
 }
 
 .quantity-btn:hover {
@@ -163,16 +166,9 @@ cause Stripes price wasn't obtained */
   background-color: var(--color-button-primary);
 }
 
-/* .minus {
-
-}
-
-.plus {
-
-} */
-
 /* ------------------- PRODUCT PAGES ----------------------- */
 
+/* CLASS NOT CURRENTLY USED */
 .product-text .button {
   /* bottom: 0;
     left: 50%;

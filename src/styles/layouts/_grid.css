@@ -11,12 +11,12 @@
   border-radius: var(--spacing-clamp-md);
 }
 
+/* CLASS NOT CURRENTLY USED */
 .container-narrow {
   width: min(100%, var(--container-width-narrow));
   margin-inline: auto;
   /* padding-inline: var(--spacing-clamp-lg); */
   padding: var(--spacing-clamp-lg);
-
 }
 
 .section {
@@ -26,6 +26,7 @@
   overflow: hidden;
 }
 
+/* CLASS NOT CURRENTLY USED */
 .section-sm {
   margin-block: var(--spacing-clamp-lg);
   /* padding-block: var(--spacing-clamp-lg); */
@@ -36,6 +37,7 @@
 /* ------------------------------------------------------------ */
 /* FLEX UTILITIES */
 /* ------------------------------------------------------------ */
+/* CLASS NOT CURRENTLY USED */
 .flex {
   display: flex;
   gap: var(--spacing-clamp-lg);
@@ -49,11 +51,13 @@
   gap: var(--spacing-clamp-lg);
 }
 
+/* CLASS NOT CURRENTLY USED */
 .center {
   text-align: center;
   justify-self: center;
 }
 
+/* CLASS NOT CURRENTLY USED */
 .row {
   display: flex;
   flex-direction: row;
@@ -66,36 +70,22 @@
   gap: var(--spacing-clamp-lg);
 }
 
+/* CLASS NOT CURRENTLY USED */
 .space-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* CLASS NOT CURRENTLY USED */
 .wrap {
   flex-wrap: wrap;
 }
 
-/* ALIGNMENT UTILITIES */
-/* .span-12 {
-  grid-column: span 12;
-}
-.span-8 {
-  grid-column: span 8;
-}
-.span-6 {
-  grid-column: span 6;
-}
-.span-4 {
-  grid-column: span 4;
-}
-.span-3 {
-  grid-column: span 3;
-} */
-
 /* ------------------------------------------------------------ */
 /* GRID SYSTEM */
 /* ------------------------------------------------------------ */
+/* CLASS NOT CURRENTLY USED */
 .grid {
   display: grid;
   gap: var(--spacing-clamp-lg);
@@ -103,11 +93,35 @@
 
 .grid-2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: var(--spacing-clamp-lg);
   align-items: center;
+  container-type: inline-size;
 }
 
+.grid-2 > .image-container {
+  order: -1;
+}
+
+.about-layout > .image-container {
+  order: 0;
+}
+
+.about-layout > .text-container {
+  order: -1;
+}
+
+@container (max-width: 39.99rem) {
+  .about-layout > .image-container {
+    order: -1;
+  }
+
+  .about-layout > .text-container {
+    order: 0;
+  }
+}
+
+/* CLASS NOT CURRENTLY USED */
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -116,10 +130,22 @@
 
 .grid-4 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-clamp-lg);
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
 }
 
+.grid-4 a {
+  text-decoration: none;
+}
+
+.grid-4 a img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--border-radius-md);
+}
+
+/* CLASS NOT CURRENTLY USED */
 .grid-auto {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -128,6 +154,7 @@
 
 /* ----------------GALLERY / MERCH---------------- */
 
+/* CLASS NOT CURRENTLY USED */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
@@ -138,6 +165,7 @@
   justify-content: center;
 }
 
+/* CLASS NOT CURRENTLY USED */
 .image-grid {
   display: flex;
   flex-wrap: wrap;

@@ -120,6 +120,11 @@
   transition: var(--transition-slow);
 }
 
+/* Standalone for JS resilience */
+.vertical i {
+  transform: rotate(90deg);
+}
+
 .nav-toggle.vertical i {
   transform: rotate(90deg);
   color: var(--color-text-light);
@@ -145,11 +150,23 @@
     visibility 0.3s;
 }
 
+/* Standalone for JS resilience */
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Javascript makes above visible */
 .nav-overlay.visible {
   opacity: 1;
   visibility: visible;
   overflow: hidden;
+}
+
+/* Standalone for JS resilience */
+.no-scroll {
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 /* Javascript makes it so you can't scroll with overlay */

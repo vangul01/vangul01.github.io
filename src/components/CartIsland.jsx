@@ -59,7 +59,7 @@ export default function CartIsland() {
         </div>
 
         {cart.map((item, idx) => (
-          <div className="cart-products-grid cart-row" key={item.priceId}>
+          <div className="cart-products-grid" key={item.priceId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
               <a
@@ -86,15 +86,15 @@ export default function CartIsland() {
             <div className="cart-product-quantity">
               <div className="quantity-controls">
                 <button
-                  className="quantity-btn minus"
+                  className="quantity-btn"
                   aria-label="Decrease quantity"
                   onClick={() => updateQuantity(idx, -1)}
                 >
-                  -
+                  −
                 </button>
                 <span className="quantity">{item.quantity}</span>
                 <button
-                  className="quantity-btn plus"
+                  className="quantity-btn"
                   aria-label="Increase quantity"
                   onClick={() => updateQuantity(idx, 1)}
                 >
@@ -111,17 +111,13 @@ export default function CartIsland() {
             </div>
             {/* Column 3: Total price */}
             <div className="cart-product-total-price">
-              <p className="cart-item-total">
-                ${formatPrice(item.price * item.quantity)}
-              </p>
+              <p>${formatPrice(item.price * item.quantity)}</p>
             </div>
           </div>
         ))}
 
         <div className="all-products-total-price">
-          <p className="cart-items-subtotal">
-            Subtotal ${formatPrice(finalPrice)} USD
-          </p>
+          <p>Subtotal ${formatPrice(finalPrice)} USD</p>
           <p className="disclaimer">
             Taxes and shipping calculated at checkout
           </p>
@@ -142,7 +138,7 @@ export default function CartIsland() {
             // onClick={handleCheckout}
             id="proceed-to-payment"
           >
-            <span class="button-label"> Proceed to Checkout</span>
+            <span className="button-label"> Proceed to Checkout</span>
           </button>
         </div>
       </div>
