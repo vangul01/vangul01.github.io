@@ -24,6 +24,7 @@ export function initNav() {
   // Function to close the sidenav
   function closeNav() {
     navLinks.classList.remove("show-nav-links");
+    navLinks.setAttribute("aria-hidden", "true");
     navToggle.classList.remove("vertical");
     navOverlay.classList.remove("visible", "no-scroll");
     document.body.classList.remove("no-scroll");
@@ -32,6 +33,7 @@ export function initNav() {
   // Function to open the sidenav
   function openNav() {
     navLinks.classList.add("show-nav-links");
+    navLinks.removeAttribute("aria-hidden");
     navToggle.classList.add("vertical");
     navOverlay.classList.add("visible", "no-scroll");
     document.body.classList.add("no-scroll");

@@ -69,8 +69,6 @@ const fontAwesome =
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-
-
   <!-- RSS Feed -->
   <link
     rel="alternate"
@@ -82,8 +80,10 @@ const fontAwesome =
   <!-- Canonical URL -->
   <link rel="canonical" href="https://vangular.com" />
 
-  <link href={font} rel="stylesheet" />
-  <link href={fontAwesome} rel="stylesheet" />
+  <link href={font} rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href={font} rel="stylesheet" /></noscript>
+  <link href={fontAwesome} rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href={fontAwesome} rel="stylesheet" /></noscript>
   <link href={favicon} rel="icon" type="image/x-icon" />
 
   <!-- PWA Icon -->
