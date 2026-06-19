@@ -8,25 +8,7 @@
   text-align: center;
   gap: var(--spacing-clamp-lg);
   padding: var(--spacing-clamp-md);
-
-  /* color: var(--color-text-muted); */
 }
-
-/* CLASS NOT CURRENTLY USED */
-.cart-list-container {
-  p {
-    padding-top: var(--spacing-clamp-md);
-  }
-}
-
-/* .cart-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: var(--spacing-clamp-xl);
-} */
 
 .cart-titles {
   text-align: left;
@@ -37,14 +19,6 @@
 .cart-titles > div:nth-child(3) {
   text-align: center;
 }
-
-/* CLASS NOT CURRENTLY USED */
-/* .cart-item {
-  display: flex;
-  align-items: center;
-  padding-bottom: var(--spacing-clamp-md);
-  border-bottom: var(--border-tertiary);
-} */
 
 .cart-item-name {
   font-weight: bold;
@@ -136,4 +110,59 @@
 .disclaimer {
   font-size: var(--font-size-clamp-sm);
   padding-top: var(--spacing-clamp-sm);
+}
+
+/* ------------------- CART PAGE BUTTONS ------------------- */
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  transition: all var(--transition-normal);
+  padding: var(--spacing-clamp-xs);
+  font-size: var(--font-size-clamp-base);
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between; /* Changed from flex-end to space-between */
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--spacing-clamp-md); /* Added padding to align with grid */
+
+  /* margin-top: var(--spacing-clamp-xl);
+    border-top: var(--border-tertiary); */
+}
+
+.cart-buttons .link {
+  font-size: var(--font-size-clamp-base);
+  padding: var(--spacing-clamp-sm) var(--spacing-clamp-md);
+}
+
+/* Ensure consistent button sizes */
+.cart-buttons .button,
+.cart-buttons .link {
+  min-width: var(--thumbnail);
+  text-align: center;
+  resize: none;
+}
+
+.quantity-btn {
+  background: none;
+  border: none;
+  border-radius: var(--border-radius-circle);
+  color: var(--color-text-muted);
+  width: var(--font-size-clamp-lg);
+  height: var(--font-size-clamp-lg);
+  transition: all var(--transition-normal);
+  text-align: center;
+  justify-content: center;
+}
+
+.quantity-btn:hover {
+  color: var(--color-text-light);
+  background-color: var(--color-button-primary);
 }

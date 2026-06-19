@@ -5,62 +5,23 @@
   width: min(100% - 2rem, var(--container-width-max));
   margin-inline: auto;
   padding: var(--spacing-clamp-lg);
-  /* padding-inline: var(--spacing-clamp-lg);
-  padding-block: var(--spacing-clamp-lg); */
   background-color: var(--color-brand-light);
   border-radius: var(--spacing-clamp-md);
 }
 
-/* CLASS NOT CURRENTLY USED */
-.container-narrow {
-  width: min(100%, var(--container-width-narrow));
-  margin-inline: auto;
-  /* padding-inline: var(--spacing-clamp-lg); */
-  padding: var(--spacing-clamp-lg);
-}
-
 .section {
   margin-block: var(--spacing-clamp-xl);
-  /* padding-block: var(--spacing-clamp-xl); */
   padding: var(--spacing-clamp-xl);
-  overflow: hidden;
-}
-
-/* CLASS NOT CURRENTLY USED */
-.section-sm {
-  margin-block: var(--spacing-clamp-lg);
-  /* padding-block: var(--spacing-clamp-lg); */
-  padding: var(--spacing-clamp-lg);
   overflow: hidden;
 }
 
 /* ------------------------------------------------------------ */
 /* FLEX UTILITIES */
 /* ------------------------------------------------------------ */
-/* CLASS NOT CURRENTLY USED */
-.flex {
-  display: flex;
-  gap: var(--spacing-clamp-lg);
-}
-
 .flex-center {
   display: flex;
-  /* flex-wrap: wrap; */
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-clamp-lg);
-}
-
-/* CLASS NOT CURRENTLY USED */
-.center {
-  text-align: center;
-  justify-self: center;
-}
-
-/* CLASS NOT CURRENTLY USED */
-.row {
-  display: flex;
-  flex-direction: row;
   gap: var(--spacing-clamp-lg);
 }
 
@@ -70,28 +31,10 @@
   gap: var(--spacing-clamp-lg);
 }
 
-/* CLASS NOT CURRENTLY USED */
-.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* CLASS NOT CURRENTLY USED */
-.wrap {
-  flex-wrap: wrap;
-}
-
 /* ------------------------------------------------------------ */
 /* GRID SYSTEM */
 /* ------------------------------------------------------------ */
-/* CLASS NOT CURRENTLY USED */
-.grid {
-  display: grid;
-  gap: var(--spacing-clamp-lg);
-}
-
-.grid-2 {
+.grid-responsive {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: var(--spacing-clamp-lg);
@@ -99,7 +42,7 @@
   container-type: inline-size;
 }
 
-.grid-2 > .image-container {
+.grid-responsive > .image-container {
   order: -1;
 }
 
@@ -143,13 +86,6 @@
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: var(--border-radius-md);
-}
-
-/* CLASS NOT CURRENTLY USED */
-.grid-auto {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-clamp-lg);
 }
 
 /* ----------------GALLERY / MERCH---------------- */

@@ -2,7 +2,6 @@
 /* RESPONSIVE HELPERS */
 /* ------------------------------------------------------------ */
 
-
 /* ------------------- Media Queries ------------------- */
 @media (width <= 992px) {
   /* Footer */
@@ -24,24 +23,9 @@
   .newsletter {
     grid-column: span 2;
   }
-
-  /* CLASS NOT CURRENTLY USED */
-  /* Merch */
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 /* ------------------- MEDIA QUERIES ----------------------- */
-
-@media (width >= 768px) {
-  /* Content container increase padding on bigger screens */
-  /* .container { */
-  /* padding-top: 0; */
-  /* padding-inline: var(--spacing-clamp-xl); */
-  /* padding-block: var(--spacing-clamp-xl); */
-  /* } */
-}
 
 @media (width <= 768px) {
   /* footer */
@@ -68,23 +52,6 @@
     padding: var(--spacing-clamp-md);
     grid-column: 1;
     grid-row: 2;
-  }
-
-  /* CLASS NOT CURRENTLY USED */
-  /* merch.astro */
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-clamp-lg);
-  }
-
-  /* CLASS NOT CURRENTLY USED */
-  .category-section {
-    margin-bottom: var(--spacing-clamp-xl);
-  }
-
-  /* CLASS NOT CURRENTLY USED */
-  .category-title {
-    font-size: var(--font-size-clamp-lg);
   }
 
   .cart-buttons {

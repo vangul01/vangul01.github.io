@@ -111,61 +111,6 @@ cause Stripes price wasn't obtained */
   background-color: var(--color-button-tertiary);
 }
 
-/* ------------------- CART PAGE ------------------- */
-.delete-btn {
-  background: none;
-  border: none;
-  color: var(--color-error);
-  transition: all var(--transition-normal);
-  padding: var(--spacing-clamp-xs);
-  font-size: var(--font-size-clamp-base);
-}
-
-.delete-btn:hover {
-  transform: scale(1.1);
-}
-
-.cart-buttons {
-  display: flex;
-  justify-content: space-between; /* Changed from flex-end to space-between */
-  align-items: center;
-  width: 100%;
-  padding: 0 var(--spacing-clamp-md); /* Added padding to align with grid */
-
-  /* margin-top: var(--spacing-clamp-xl);
-    border-top: var(--border-tertiary); */
-}
-
-.cart-buttons .link {
-  font-size: var(--font-size-clamp-base);
-  padding: var(--spacing-clamp-sm) var(--spacing-clamp-md);
-}
-
-/* Ensure consistent button sizes */
-.cart-buttons .button,
-.cart-buttons .link {
-  min-width: var(--thumbnail);
-  text-align: center;
-  resize: none;
-}
-
-.quantity-btn {
-  background: none;
-  border: none;
-  border-radius: var(--border-radius-circle);
-  color: var(--color-text-muted);
-  width: var(--font-size-clamp-lg);
-  height: var(--font-size-clamp-lg);
-  transition: all var(--transition-normal);
-  text-align: center;
-  justify-content: center;
-}
-
-.quantity-btn:hover {
-  color: var(--color-text-light);
-  background-color: var(--color-button-primary);
-}
-
 /* ------------------- PRODUCT PAGES ----------------------- */
 
 /* CLASS NOT CURRENTLY USED */
