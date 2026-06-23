@@ -4,19 +4,20 @@
   "description": "Art and design brand for the existential and absurd",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#372f49",
+  "background_color": "#190a2a",
+  "theme_color": "#190a2a",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/images/logo_eyewhites.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/favicon.svg",
+      "src": "/images/logo_eyewhites.png",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

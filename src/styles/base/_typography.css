@@ -7,13 +7,29 @@ body {
   font-family: var(--font-secondary, Arial, sans-serif);
   font-size: var(--font-size-clamp-base, 1rem);
   color: var(--color-text-muted);
-  background-image: url("/src/assets/images/web/holographic_background.webp");
-  /* background-image: light-dark(url("/src/assets/images/web/holographic_background.webp"), url("/src/assets/images/web/holographic_background_darkmode.webp")); */
+  background-color: #0d0a1a;
+  background-image: var(--bg-url);
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   letter-spacing: var(--letter-spacing);
   line-height: var(--line-height);
   display: grid;
   grid-template-rows: var(--height-header, 70px) 1fr auto;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-image: var(--bg-url);
+    background-position: 65% 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #05030d;
+    background-image: var(--bg-url-dark);
+  }
 }
 
 /* ------------------- Page Elements ------------------- */
@@ -107,40 +123,4 @@ label {
   padding: 0 var(--spacing-clamp-sm);
 }
 
-/* ----------- DARK THEME ----------- */
-/* @media (prefers-color-scheme: dark) {
-  background-image: url("/src/assets/images/web/holographic_background_darkmode.webp");
-} */
 
-/* .dark,
-[data-theme="dark"] {
-  body.dark { */
-/* background-size: cover; */
-/* background-color: #0d0950;
-    color: #fff; */
-/* } */
-/* --color-site-background: radial-gradient(
-    var(--color-brand-primary),
-    var(--color-brand-primary)
-  ); */
-/* background: var(--color-site-background) no-repeat center center fixed; */
-
-/* @media (prefers-color-scheme: dark) {
-  body {
-    background: var(--c-white);
-    color: var(--c-black);
-  }
-  .card {
-    background: var(--c-gray-100);
-    color: var(--c-black);
-    box-shadow: none;
-  }
-} */
-
-/* --color-text-primary: var(--color-gray-200);
-  --color-text-secondary: var(--color-gray-300);
-  --color-text-muted: var(--color-gray-400);
-  --color-border-light: #4a3f6b;
-  --color-border-medium: #5a4f7b;
-  --color-border-dark: #7a6f9b; */
-/* } */

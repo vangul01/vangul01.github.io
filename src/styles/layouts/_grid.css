@@ -5,58 +5,23 @@
   width: min(100% - 2rem, var(--container-width-max));
   margin-inline: auto;
   padding: var(--spacing-clamp-lg);
-  /* padding-inline: var(--spacing-clamp-lg);
-  padding-block: var(--spacing-clamp-lg); */
   background-color: var(--color-brand-light);
   border-radius: var(--spacing-clamp-md);
 }
 
-.container-narrow {
-  width: min(100%, var(--container-width-narrow));
-  margin-inline: auto;
-  /* padding-inline: var(--spacing-clamp-lg); */
-  padding: var(--spacing-clamp-lg);
-
-}
-
 .section {
   margin-block: var(--spacing-clamp-xl);
-  /* padding-block: var(--spacing-clamp-xl); */
   padding: var(--spacing-clamp-xl);
-  overflow: hidden;
-}
-
-.section-sm {
-  margin-block: var(--spacing-clamp-lg);
-  /* padding-block: var(--spacing-clamp-lg); */
-  padding: var(--spacing-clamp-lg);
   overflow: hidden;
 }
 
 /* ------------------------------------------------------------ */
 /* FLEX UTILITIES */
 /* ------------------------------------------------------------ */
-.flex {
-  display: flex;
-  gap: var(--spacing-clamp-lg);
-}
-
 .flex-center {
   display: flex;
-  /* flex-wrap: wrap; */
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-clamp-lg);
-}
-
-.center {
-  text-align: center;
-  justify-self: center;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
   gap: var(--spacing-clamp-lg);
 }
 
@@ -64,16 +29,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-clamp-lg);
-}
-
-.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.wrap {
-  flex-wrap: wrap;
 }
 
 /* ALIGNMENT UTILITIES */
@@ -96,18 +51,37 @@
 /* ------------------------------------------------------------ */
 /* GRID SYSTEM */
 /* ------------------------------------------------------------ */
-.grid {
+.grid-responsive {
   display: grid;
-  gap: var(--spacing-clamp-lg);
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: var(--spacing-clamp-lg);
   align-items: center;
+  container-type: inline-size;
 }
 
+.grid-responsive > .image-container {
+  order: -1;
+}
+
+.about-layout > .image-container {
+  order: 0;
+}
+
+.about-layout > .text-container {
+  order: -1;
+}
+
+@container (max-width: 41.3rem) {
+  .about-layout > .image-container {
+    order: -1;
+  }
+
+  .about-layout > .text-container {
+    order: 0;
+  }
+}
+
+/* CLASS NOT CURRENTLY USED */
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -116,18 +90,24 @@
 
 .grid-4 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-clamp-lg);
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
 }
 
-.grid-auto {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-clamp-lg);
+.grid-4 a {
+  text-decoration: none;
+}
+
+.grid-4 a img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--border-radius-md);
 }
 
 /* ----------------GALLERY / MERCH---------------- */
 
+/* CLASS NOT CURRENTLY USED */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
@@ -138,6 +118,7 @@
   justify-content: center;
 }
 
+/* CLASS NOT CURRENTLY USED */
 .image-grid {
   display: flex;
   flex-wrap: wrap;

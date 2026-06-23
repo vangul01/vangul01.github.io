@@ -50,10 +50,17 @@ if (typeof document !== "undefined") {
     // Add-to cart-button data send. Needs product data from stripe to work
     document.querySelectorAll("#add-to-cart").forEach((button) => {
       button.addEventListener("click", function () {
+        const price = parseFloat(this.dataset.price);
+
+        if (!price || price <= 0 || this.disabled) {
+          console.error("Cannot add to cart: price not available");
+          return;
+        }
+
         const product = {
           priceId: this.dataset.priceId, // For Stripe Checkout
           name: this.dataset.name,
-          price: parseFloat(this.dataset.price),
+          price: price,
           image: this.dataset.image,
           quantity: parseInt(this.dataset.quantity) || 1,
           productUrl: this.dataset.productUrl,
@@ -62,7 +69,7 @@ if (typeof document !== "undefined") {
         addToCart(product);
 
         // Visual feedback
-        this.textContent = "Added!";
+        this.textContent = "Item Added!";
         setTimeout(() => (this.textContent = "Add to Cart"), 1000);
       });
     });

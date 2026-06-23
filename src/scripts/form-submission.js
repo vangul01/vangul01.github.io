@@ -29,12 +29,12 @@ export function initContactForm() {
           throw new Error(
             json.message || "Message failed to send. Please try again.",
           );
-        contactMsg.textContent = json.message || "Message sent!";
+        contactMsg.textContent = "Message sent!";
+        console.log("Contact form response:", json.message);
         contactForm.reset();
       } catch (error) {
         console.error("Contact form error:", error);
-        contactMsg.textContent =
-          error.message || "Message failed to send. Please try again.";
+        contactMsg.textContent = "Message failed to send. Please try again.";
       }
     });
   }
@@ -71,12 +71,12 @@ export function initNewsletterForm() {
         const data = await response.json();
         if (!response.ok)
           throw new Error(data.message || "Failed to subscribe");
-
-        newsletterMsg.textContent = data.message || "Subscription successful!";
+        newsletterMsg.textContent = "Subscription successful!";
+        console.log("Newsletter subscription response:", data.message);
         newsletterForm.reset();
       } catch (error) {
-        newsletterMsg.textContent =
-          error.message || "Subscription failed. Please try again.";
+        newsletterMsg.textContent = "Subscription failed. Please try again.";
+        console.error("Newsletter subscription error:", error.message);
       }
     });
   }
