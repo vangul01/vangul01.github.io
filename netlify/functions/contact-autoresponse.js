@@ -61,7 +61,7 @@ export async function handler(event) {
         ],
 
         // templateId: parseInt(process.env.BREVO_TEMPLATE_ID), // Get from env var
-        templateId: 6, // <-- replace this with your Brevo template ID
+        templateId: process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID, // <-- replace this with your Brevo template ID
         // params: {
         //   // optional dynamic variables from your template
         //   FIRST_NAME: firstName || "",
@@ -76,7 +76,7 @@ export async function handler(event) {
     if (!response.ok) {
       console.error("Brevo error (response not ok): ", data);
       throw new Error(
-        data.message || "Message failed to send. Please try again."
+        data.message || "Message failed to send. Please try again.",
       );
     }
 

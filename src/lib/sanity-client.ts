@@ -49,6 +49,16 @@ export async function getAllProducts(): Promise<Product[]> {
   return products;
 }
 
+export function getOptimizedImageUrl(
+  url: string,
+  width = 600,
+  quality = 80,
+): string {
+  if (!url || !url.includes("sanity")) return url;
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}auto=format&w=${width}&q=${quality}&fit=max`;
+}
+
 export async function getFeaturedProducts(): Promise<Product[]> {
   const query = `*[_type == "product"]{
         _id,

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CartIsland from "../components/CartIsland.jsx";
+import logoFallback from "../assets/images/web/logo_eyewhites.png";
 
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
@@ -23,7 +24,7 @@ different colored dividers/other styling things, min width?
         </p>
       </div>
 
-      <CartIsland client:load />
+      <CartIsland client:load fallbackImage={logoFallback.src} />
     </section>
   </main>
 </BaseLayout>

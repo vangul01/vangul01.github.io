@@ -35,7 +35,7 @@ const fontAwesome =
   <meta name="apple-mobile-web-app-title" content="Vangular" />
   <meta name="application-name" content="Vangular" />
   <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/images/logo_eyewhites.png" />
   <!-- Manifest -->
   <link rel="manifest" href="/manifest.json" />
 
@@ -66,8 +66,6 @@ const fontAwesome =
 
   <!-- Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
   <!-- RSS Feed -->
   <link
@@ -80,8 +78,10 @@ const fontAwesome =
   <!-- Canonical URL -->
   <link rel="canonical" href="https://vangular.com" />
 
-  <link href={font} rel="stylesheet" />
-  <link href={fontAwesome} rel="stylesheet" />
+  <link href={font} rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href={font} rel="stylesheet" /></noscript>
+  <link href={fontAwesome} rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href={fontAwesome} rel="stylesheet" /></noscript>
   <link href={favicon} rel="icon" type="image/x-icon" />
 
   <!-- PWA Icon -->
@@ -89,7 +89,7 @@ const fontAwesome =
     rel="icon"
     type="image/png"
     sizes="192x192"
-    href="/src/assets/images/web/logo_eyewhites.png"
+    href="/images/logo_eyewhites.png"
   />
 
   <meta name="author" content="Valerie Angulo" />

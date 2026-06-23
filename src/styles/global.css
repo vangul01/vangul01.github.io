@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 /* Base Imports */
 @import url("./base/_reset.css");
 @import url("./base/_typography.css");
@@ -15,7 +14,6 @@
 /* Pages */
 @import url("./pages/_cart.css");
 @import url("./pages/_home.css");
-@import url("./pages/_merch.css");
 @import url("./pages/_product.css");
 /* Utils */
 @import url("./utils/_helpers.css");

@@ -5,3 +5,9 @@
 .hidden {
   display: none;
 }
+
+/* Standalone for JS resilience — used with .header-link.active and .thumbnail.active */
+.active {
+  font-weight: bold;
+  opacity: 1;
+}

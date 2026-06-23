@@ -20,6 +20,7 @@
 
 /* ------------- */
 
+/* CLASS NOT CURRENTLY USED */
 .product-text {
   display: flex;
   flex-direction: column;
@@ -40,6 +41,7 @@
   }
 }
 
+/* CLASS NOT CURRENTLY USED */
 .product-image {
   display: flex;
   flex-direction: column;
@@ -50,31 +52,11 @@
   margin-top: 0;
 }
 
-.zoom-container {
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  height: 500px;
-  cursor: zoom-in;
-
-  /* border-radius: var(--border-radius-sm); */
-
-  /* margin-top: 0; */
-}
-
 #main-product-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-
-  /* border: var(--border-tertiary); */
-
-  /* border-radius: var(--border-radius-lg); */
   transition: transform 0.3s ease;
-
-  /* transition:
-    transform 0.1s ease-out,
-    opacity 0.2s ease; */
 }
 
 .product-thumbnails {

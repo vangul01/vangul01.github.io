@@ -17,6 +17,7 @@ export default defineConfig({
     service: {
       entrypoint: "astro/assets/services/sharp",
     },
+    domains: ["cdn.sanity.io"],
   },
 
   // To whitelist ngrok domain

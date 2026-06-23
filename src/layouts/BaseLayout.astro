@@ -1,15 +1,24 @@
 ---
+import { getImage } from "astro:assets";
 import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
+import bgImage from "../assets/images/web/holographic_background.webp";
+import bgImageDark from "../assets/images/web/holographic_background_darkmode.webp";
+
 const { pageTitle, keywords } = Astro.props;
+
+const optimizedBg = await getImage({ src: bgImage, format: "webp", widths: [1920] });
+const optimizedBgDark = await getImage({ src: bgImageDark, format: "webp", widths: [1920] });
 ---
 
 <!doctype html>
 <html lang="en">
   <Head pageTitle={pageTitle} keywords={keywords} />
-  <body>
+  <body
+    style={`--bg-url: url("${optimizedBg.src}"); --bg-url-dark: url("${optimizedBgDark.src}");`}
+  >
     <Header />
     <slot />
     <Footer />

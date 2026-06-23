@@ -41,7 +41,16 @@ const keywords =
     <!-- <button id="theme-toggle">Toggle Theme</button> -->
 
     <section class="section">
-      <div class="container grid-2">
+      <div class="container grid-responsive">
+        <div class="image-container">
+          <Image
+            src={featuredArt}
+            alt="Featured Artwork"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+
         <div class="text-container">
           <h3>Featured Artwork</h3>
           <br />
@@ -54,24 +63,22 @@ const keywords =
           </p>
           <br />
           <a href="/merch"
-            ><button class="button button-secondary" role="button">
+            ><button class="button button-secondary">
               <span class="button-label"> View More </span>
             </button></a
           >
-        </div>
-
-        <div class="image-container">
-          <Image src={featuredArt} alt="Featured Artwork" />
         </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container grid-2">
+      <div class="container grid-responsive about-layout">
         <div class="image-container">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
 
@@ -87,7 +94,7 @@ const keywords =
           </p>
           <br />
           <a href="/about"
-            ><button class="button button-secondary" role="button">
+            ><button class="button button-secondary">
               <span class="button-label"> Learn More </span>
             </button></a
           >
@@ -96,7 +103,16 @@ const keywords =
     </section>
 
     <section class="section">
-      <div class="container grid-2">
+      <div class="container grid-responsive">
+        <div class="image-container">
+          <Image
+            src={collab}
+            alt="EmmaLee Collaboration"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+
         <div class="text-container">
           <h3>Collabs & Commissions</h3>
           <br />
@@ -110,14 +126,10 @@ const keywords =
           </p>
           <br />
           <a href="/contact"
-            ><button class="button button-secondary" role="button">
+            ><button class="button button-secondary">
               <span class="button-label"> Let's Work Together! </span>
             </button></a
           >
-        </div>
-
-        <div class="image-container">
-          <Image src={collab} alt="EmmaLee Collaboration" />
         </div>
       </div>
     </section>

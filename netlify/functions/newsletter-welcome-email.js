@@ -23,8 +23,8 @@ export async function handler(event) {
           attributes: {
             "DOUBLE_OPT-IN": "1",
           },
-          listIds: [17], // ID of your confirmed subscribers list
-          unlinkListIds: [8], // ID of your pending subscribers list
+          listIds: [process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID], // ID of your confirmed subscribers list - [17]
+          unlinkListIds: [process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID], // ID of your pending subscribers list - [8]
         }),
       },
     );
@@ -41,7 +41,7 @@ export async function handler(event) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        templateId: 9, // Your welcome email template ID
+        templateId: process.env.BREVO_WELCOME_EMAIL_TEMPLATE_ID, // Your welcome email template ID - 9
         to: [{ email }],
       }),
     });

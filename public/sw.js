@@ -1,38 +1,34 @@
-const CACHE_NAME = "vangular-cache-v1";
+const CACHE_NAME = "vangular-cache-v2";
 
-// What files should be available offline
-const urlsToCache = [
-  "/",
-  "/styles/global.css",
-  "/manifest.json",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/assets/images/web/logo_eyewhites.png",
-  "favicon.ico",
-  "/scripts/main.js",
-  "/pages/index.html",
-];
+self.addEventListener("install", () => {
+  self.skipWaiting();
+});
 
-// Install the service worker
-self.addEventListener("install", (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      // First try to add all resources
-      try {
-        return await cache.addAll(urlsToCache);
-      } catch (err) {
-        console.warn("Some resources failed to cache:", err);
-        return await Promise.resolve();
-      }
-    })
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        }),
+      ),
+    ),
   );
 });
 
-// Use cached content when offline
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((response) => response || fetch(event.request))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const cachedResponse = await cache.match(event.request);
+      try {
+        const networkResponse = await fetch(event.request);
+        if (networkResponse.ok) {
+          cache.put(event.request, networkResponse.clone());
+        }
+        return networkResponse;
+      } catch {
+        return cachedResponse;
+      }
+    }),
   );
 });
