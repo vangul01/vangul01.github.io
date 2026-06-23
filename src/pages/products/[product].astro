@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
-import { client, getOptimizedImageUrl } from "../../lib/sanity-client";
+// import { Image } from "astro:assets";
+// import defaultProduct from "../assets/images/web/logo_eyewhites.png";
+
+import { client } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
-import logoFallback from "../../assets/images/web/logo_eyewhites.png";
 
 export async function getStaticPaths() {
   const query = `*[_type == "product"]{
@@ -40,14 +42,13 @@ const keywords = `vangular, ${product.name}, art, products`;
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
     <section class="section" id="product-page">
-      <div class="container grid-responsive">
+      <div class="container grid-2">
         <div>
           <div>
             <img
               id="main-product-image"
-              src={product.images?.[0]
-                ? getOptimizedImageUrl(product.images[0], 800)
-                : logoFallback.src}
+              src={product.images?.[0] ||
+                "/src/assets/images/web/logo_eyewhites.png"}
               alt={product.name}
               loading="eager"
             />
@@ -58,7 +59,7 @@ const keywords = `vangular, ${product.name}, art, products`;
               <div class="product-thumbnails" role="list">
                 {product.images.map((imageUrl, index) => (
                   <img
-                    src={getOptimizedImageUrl(imageUrl, 150)}
+                    src={imageUrl}
                     alt={`${product.name} view ${index + 1}`}
                     class={`thumbnail ${index === 0 ? "active" : ""}`}
                     data-image-url={imageUrl}
@@ -88,16 +89,15 @@ const keywords = `vangular, ${product.name}, art, products`;
           {
             product.quantity > 0 && (
               <button
-                class="button button-disable button-check"
+                class="button button-primary"
                 id="add-to-cart"
                 data-price-id={product.stripePriceId}
                 data-name={product.name}
                 data-image={product.images?.[0]}
                 data-quantity="1"
                 data-product-url={`${product.slug}`}
-                disabled
               >
-                <span class="button-label"> Checking Availability </span>
+                <span class="button-label"> Add to Cart </span>
               </button>
             )
           }
@@ -115,18 +115,19 @@ const keywords = `vangular, ${product.name}, art, products`;
         <a href="#">
           <button
             class="button button-tertiary"
+            role="button"
             onclick="window.history.back()"
           >
             <span class="button-label"> Go Back </span>
           </button>
         </a>
         <a href="/merch">
-          <button class="button button-secondary">
+          <button class="button button-secondary" role="button">
             <span class="button-label"> Keep Shopping </span>
           </button>
         </a>
         <a href="/cart">
-          <button class="button button-primary">
+          <button class="button button-primary" role="button">
             <span class="button-label"> Go To Cart </span>
           </button>
         </a>

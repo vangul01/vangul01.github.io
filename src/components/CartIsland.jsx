@@ -9,7 +9,7 @@ import {
 import { handleCheckout } from "../scripts/cart/checkout.js";
 import "../styles/global.css";
 
-export default function CartIsland({ fallbackImage = "" }) {
+export default function CartIsland() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function CartIsland({ fallbackImage = "" }) {
         </div>
 
         {cart.map((item, idx) => (
-          <div className="cart-products-grid" key={item.priceId}>
+          <div className="cart-products-grid cart-row" key={item.priceId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
               <a
@@ -69,7 +69,7 @@ export default function CartIsland({ fallbackImage = "" }) {
                 <img
                   className="cart-product-thumbnail"
                   src={
-                    item.image || fallbackImage
+                    item.image || "/src/assets/images/web/logo_eyewhites.png"
                   }
                   alt={item.name}
                   loading="lazy"
@@ -86,15 +86,15 @@ export default function CartIsland({ fallbackImage = "" }) {
             <div className="cart-product-quantity">
               <div className="quantity-controls">
                 <button
-                  className="quantity-btn"
+                  className="quantity-btn minus"
                   aria-label="Decrease quantity"
                   onClick={() => updateQuantity(idx, -1)}
                 >
-                  −
+                  -
                 </button>
                 <span className="quantity">{item.quantity}</span>
                 <button
-                  className="quantity-btn"
+                  className="quantity-btn plus"
                   aria-label="Increase quantity"
                   onClick={() => updateQuantity(idx, 1)}
                 >
@@ -111,13 +111,17 @@ export default function CartIsland({ fallbackImage = "" }) {
             </div>
             {/* Column 3: Total price */}
             <div className="cart-product-total-price">
-              <p>${formatPrice(item.price * item.quantity)}</p>
+              <p className="cart-item-total">
+                ${formatPrice(item.price * item.quantity)}
+              </p>
             </div>
           </div>
         ))}
 
         <div className="all-products-total-price">
-          <p>Subtotal ${formatPrice(finalPrice)} USD</p>
+          <p className="cart-items-subtotal">
+            Subtotal ${formatPrice(finalPrice)} USD
+          </p>
           <p className="disclaimer">
             Taxes and shipping calculated at checkout
           </p>
@@ -138,7 +142,7 @@ export default function CartIsland({ fallbackImage = "" }) {
             // onClick={handleCheckout}
             id="proceed-to-payment"
           >
-            <span className="button-label"> Proceed to Checkout</span>
+            <span class="button-label"> Proceed to Checkout</span>
           </button>
         </div>
       </div>

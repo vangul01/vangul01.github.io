@@ -1,21 +1,14 @@
 ---
-import { getImage } from "astro:assets";
 import { siteNavigation } from "../config/navigation";
 import NewsletterForm from "./NewsletterForm.astro";
-
-import plantieFooter from "../assets/images/web/plantie_footer.png";
-
+//
 const currentYear = new Date().getFullYear();
-const footerLinks = siteNavigation.footerLinks;
 
-const optimizedPlantie = await getImage({ src: plantieFooter, widths: [600] });
+const footerLinks = siteNavigation.footerLinks;
 ---
 
-<footer
-  class="footer"
-  style={`--footer-bg-url: url("${optimizedPlantie.src}");`}
->
-  <div class="footer-grid">
+<footer class="footer">
+  <div class="grid-4">
     <!-- Social Links -->
     <div class="social-section">
       <ul class="social-links">
@@ -50,6 +43,20 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [600] });
         }
       </ul>
     </div>
+
+    <!-- Shop Links -->
+    <!-- <div class="footer-section">
+      <h4 class="footer-title">Shop</h4>
+      <ul class="link-list">
+        {
+          footerLinks.shop.map(({ name, href }) => (
+            <li>
+              <a href={href}>{name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div> -->
 
     <!-- Newsletter -->
     <div class="footer-section newsletter">

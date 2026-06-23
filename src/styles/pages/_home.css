@@ -1,5 +1,4 @@
 /* ----------------PORTAL---------------- */
-/* CLASS NOT CURRENTLY USED */
 .portal-video {
   width: 100%;
   height: auto;
@@ -20,12 +19,6 @@
   justify-content: center;
 }
 
-.overlay-image:focus-visible {
-  outline: 3px solid var(--color-brand-secondary);
-  outline-offset: 4px;
-  border-radius: 8px;
-}
-
 /* ----------------HOME---------------- */
 
 .title {
@@ -40,7 +33,6 @@
   text-shadow: 2px 2px 4px rgba(104, 196, 224, 0.65);
 }
 
-/* CLASS NOT CURRENTLY USED */
 .hero-image {
   position: absolute;
   top: 0;
@@ -57,7 +49,6 @@
   object-fit: contain; /* or 'contain' if you want to see the whole eye */
 }
 
-/* CLASS NOT CURRENTLY USED */
 .overlay-text {
   z-index: 2;
   position: absolute;

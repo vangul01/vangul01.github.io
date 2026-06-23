@@ -1,40 +1,7 @@
 /* ------------------ CONTACT FORM ------------------------ */
-/* src/pages/contact.astro has class contact-form */
-.contact-form {
-  max-width: 500px;
-  text-align: center;
-}
-
-.newsletter-form {
-  max-width: 400px;
-  margin: auto;
-  padding: var(--spacing-clamp-lg);
-  background-color: var(--color-background);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  gap: 10px;
-  text-align: center;
-}
-
-.newsletter-form input {
-  width: 100%;
-  padding: var(--spacing-clamp-sm);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-clamp-md);
-  margin-bottom: var(--spacing-clamp-lg);
-}
-
 #success-message {
   margin-top: var(--spacing-clamp-md);
   color: var(--color-success);
-  font-size: var(--font-size-clamp-sm);
-  text-align: right;
-}
-
-#error-message {
-  margin-top: var(--spacing-clamp-md);
-  color: var(--color-error);
   font-size: var(--font-size-clamp-sm);
   text-align: center;
 }
