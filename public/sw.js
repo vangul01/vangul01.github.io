@@ -63,7 +63,7 @@ async function cacheFirst(request, cacheName) {
   if (cached) return cached;
   const response = await fetch(request);
   // Allow opaque (cross-origin) for fonts.googleapis.com CSS
-  if (response.ok || response.type === "opaque") {
+  if (response.ok) {
     const cache = await caches.open(cacheName);
     cache.put(request, response.clone());
   }
@@ -74,7 +74,7 @@ async function cacheFirst(request, cacheName) {
 async function staleWhileRevalidate(request, cacheName) {
   const cached = await caches.match(request);
   const fetchPromise = fetch(request).then((response) => {
-    if (response.ok || response.type === "opaque") {
+    if (response.ok) {
       const clonedResponse = response.clone();
       caches
         .open(cacheName)
