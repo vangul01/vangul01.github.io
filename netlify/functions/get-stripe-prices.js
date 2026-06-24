@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 // Import Stripe using secret key from environment variables to authenticate with the Stripe API.
 import Stripe from "stripe";
 

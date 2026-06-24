@@ -11,12 +11,13 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@astrojs/netlify@^6.2.5",
-        "npm:@astrojs/react@^4.3.0",
+        "npm:@astrojs/netlify@8",
+        "npm:@astrojs/react@6",
         "npm:@sanity/client@^6.29.0",
         "npm:@sanity/image-url@^1.1.0",
         "npm:@stripe/stripe-js@^6.1.0",
-        "npm:astro@^5.3.0",
+        "npm:@vitejs/plugin-react@^6.0.3",
+        "npm:astro@^7.0.2",
         "npm:netlify-plugin-csp-generator@^1.6.1",
         "npm:prettier-plugin-astro@~0.14.1",
         "npm:prettier@^3.6.2",
@@ -25,7 +26,8 @@
         "npm:stripe@18",
         "npm:stylelint-config-standard@39",
         "npm:stylelint-prettier@^5.0.3",
-        "npm:stylelint@^16.24.0"
+        "npm:stylelint@^16.24.0",
+        "npm:vite@^8.1.0"
       ]
     }
   }

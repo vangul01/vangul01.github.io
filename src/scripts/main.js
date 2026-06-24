@@ -73,33 +73,6 @@ if (typeof document !== "undefined") {
         setTimeout(() => (this.textContent = "Add to Cart"), 1000);
       });
     });
-
-    // // Theme toggle
-    // const themeToggle = document.getElementById("theme-toggle");
-    // if (themeToggle) {
-    //   themeToggle.addEventListener("click", () => {
-    //     const current =
-    //       localStorage.getItem("theme") === "dark" ? "light" : "dark";
-    //     setTheme(current);
-    //   });
-    // }
-
-    // // On page load, set theme to user's saved preference, or system preference if not set
-    // const savedTheme = localStorage.getItem("theme");
-    // if (savedTheme) {
-    //   setTheme(savedTheme);
-    // } else {
-    //   const prefersDark = window.matchMedia(
-    //     "(prefers-color-scheme: dark)"
-    //   ).matches;
-    //   setTheme(prefersDark ? "dark" : "light");
-    // }
-
-    // document.getElementById("theme-toggle").addEventListener("click", () => {
-    //   const current =
-    //     localStorage.getItem("theme") === "dark" ? "light" : "dark";
-    //   setTheme(current);
-    // });
   });
 
   // Register service worker
