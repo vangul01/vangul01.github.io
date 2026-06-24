@@ -68,9 +68,7 @@ export default function CartIsland({ fallbackImage = "" }) {
               >
                 <img
                   className="cart-product-thumbnail"
-                  src={
-                    item.image || fallbackImage
-                  }
+                  src={item.image || fallbackImage}
                   alt={item.name}
                   loading="lazy"
                 />
@@ -134,8 +132,8 @@ export default function CartIsland({ fallbackImage = "" }) {
           </a>
 
           <button
-            className="button button-primary button-disable"
-            // onClick={handleCheckout}
+            className="button button-primary"
+            onClick={handleCheckout}
             id="proceed-to-payment"
           >
             <span className="button-label"> Proceed to Checkout</span>
