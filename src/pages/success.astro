@@ -14,10 +14,7 @@ const keywords =
       <h3>Thank you!</h3>
       <h4>Your payment was successful :)</h4>
       <br /><br />
-      <h5>
-        We've sent a confirmation email to [customer email address] with all the
-        details.
-      </h5>
+      <h5>We've sent you a confirmation email with your purchase details.</h5>
     </div>
     <a href="/home"
       ><button class="button button-primary">
@@ -26,3 +23,9 @@ const keywords =
     >
   </main>
 </BaseLayout>
+
+<script is:inline>
+  if (window.location.search.includes("session_id")) {
+    localStorage.removeItem("cartItems");
+  }
+</script>

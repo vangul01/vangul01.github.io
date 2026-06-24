@@ -31,7 +31,7 @@ self.addEventListener("fetch", (event) => {
   // Respond only to GET requests - no POST or Stripe
   if (request.method !== "GET") return;
 
-  // Don't cache Netlify Functions (CRITICAL: Stripe safety) or Stripe (CRITICAL: never cache payments)
+  // CRITICAL: Don't cache Netlify Functions or Stripe!
   const url = new URL(request.url);
 
   if (
@@ -57,12 +57,12 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Images, fonts, videos (safe, fast refresh)
+// Images, fonts, videos (stable + offline friendly)
 async function cacheFirst(request, cacheName) {
   const cached = await caches.match(request);
   if (cached) return cached;
   const response = await fetch(request);
-  // Allow opaque (cross-origin) for fonts.googleapis.com CSS
+  // Allow opaque responses (cross-origin assets/CDNs)
   if (response.ok || response.type === "opaque") {
     const cache = await caches.open(cacheName);
     cache.put(request, response.clone());
@@ -74,6 +74,7 @@ async function cacheFirst(request, cacheName) {
 async function staleWhileRevalidate(request, cacheName) {
   const cached = await caches.match(request);
   const fetchPromise = fetch(request).then((response) => {
+    // Allow opaque responses (cross-origin assets/CDNs)
     if (response.ok || response.type === "opaque") {
       const clonedResponse = response.clone();
       caches
@@ -85,7 +86,7 @@ async function staleWhileRevalidate(request, cacheName) {
   return cached || fetchPromise;
 }
 
-// HTML pages (safe, fast refresh)
+// HTML pages
 async function networkFirst(request, cacheName) {
   try {
     const response = await fetch(request);
