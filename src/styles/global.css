@@ -1,4 +1,5 @@
 /* Base Imports */
+@import url("./base/_fonts.css");
 @import url("./base/_reset.css");
 @import url("./base/_typography.css");
 @import url("./base/_variables.css");

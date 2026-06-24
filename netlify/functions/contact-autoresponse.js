@@ -1,36 +1,3 @@
-/*
-Logic:
-- Netlify form emails me message
-- Send autoresponse email via Brevo API
-- Add user to contact list in Brevo
-
-Does process.env.SECRET_BREVO_API_KEY work in production?
-
-Of interest:
-    How to create or update a contact:
-    https://api.brevo.com/v3/contacts
-
-
-    const updateResponse = await fetch(
-      `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`,
-      {
-        method: "POST",
-        headers: {
-          "api-key": process.env.SECRET_BREVO_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          attributes: {
-            "FIRST_NAME": firstName || "",
-            "LAST_NAME": lastName || "",
-            email,
-          },
-          listIds: [?], // ID of contacts list
-        }),
-      },
-    );
-*/
-
 export async function handler(event) {
   try {
     const { firstName, lastName, email, message } = JSON.parse(event.body);
@@ -60,8 +27,7 @@ export async function handler(event) {
           },
         ],
 
-        // templateId: parseInt(process.env.BREVO_TEMPLATE_ID), // Get from env var
-        templateId: process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID, // <-- replace this with your Brevo template ID
+        templateId: Number(process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID),
         // params: {
         //   // optional dynamic variables from your template
         //   FIRST_NAME: firstName || "",
