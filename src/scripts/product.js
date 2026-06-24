@@ -21,7 +21,7 @@ export async function initProductPage() {
       addToCartBtn.dataset.price = String(price.amount);
       addToCartBtn.disabled = false;
       addToCartBtn.innerText = "Add to Cart";
-      addToCartBtn.classList.remove("button-disable button-check");
+      addToCartBtn.classList.remove("button-disable", "button-check");
       addToCartBtn.classList.add("button-primary");
     } else {
       console.error("Stripe price unfetcheded, add-to-cart button disabled.");

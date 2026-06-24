@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export async function handler(event) {
   try {
     // Get email from query parameter
@@ -23,8 +25,8 @@ export async function handler(event) {
           attributes: {
             "DOUBLE_OPT-IN": "1",
           },
-          listIds: [process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID], // ID of your confirmed subscribers list - [17]
-          unlinkListIds: [process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID], // ID of your pending subscribers list - [8]
+          listIds: [Number(process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID)],
+          unlinkListIds: [Number(process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID)],
         }),
       },
     );
@@ -41,7 +43,7 @@ export async function handler(event) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        templateId: process.env.BREVO_WELCOME_EMAIL_TEMPLATE_ID, // Your welcome email template ID - 9
+        templateId: Number(process.env.BREVO_WELCOME_EMAIL_TEMPLATE_ID),
         to: [{ email }],
       }),
     });

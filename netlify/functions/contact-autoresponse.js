@@ -31,6 +31,8 @@ Of interest:
     );
 */
 
+import "dotenv/config";
+
 export async function handler(event) {
   try {
     const { firstName, lastName, email, message } = JSON.parse(event.body);
@@ -60,8 +62,7 @@ export async function handler(event) {
           },
         ],
 
-        // templateId: parseInt(process.env.BREVO_TEMPLATE_ID), // Get from env var
-        templateId: process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID, // <-- replace this with your Brevo template ID
+        templateId: Number(process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID),
         // params: {
         //   // optional dynamic variables from your template
         //   FIRST_NAME: firstName || "",
