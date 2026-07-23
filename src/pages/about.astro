@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
 import aboutMe from "../assets/images/web/square_me.png";
+import aboutVangular from "../assets/images/web/logo_eyewhites.png";
 
 const pageTitle = "About | VANGULAR";
 const keywords = "about, vangular, art, design";
@@ -13,6 +14,27 @@ const keywords = "about, vangular, art, design";
     <section class="section">
       <div class="container grid-responsive">
         <div class="image-container">
+          <Image src={aboutVangular} alt="Image of rainbow eye Vangular logo" />
+        </div>
+
+        <div class="text-container">
+          <h5>Welcome to Vangular!</h5>
+          <br />
+          <p>
+            Vangular is a New York-based creative studio by artist and designer
+            Val Angulo. Rooted in curiosity and play, the studio brings together
+            abstract art, colorful illustration, collage, poetry, and design,
+            combining beauty with functionality to invite connection, joy and
+            wonder. <br />
+            <br />
+            Vangular collaborates with small businesses, fellow creatives, and organizations
+            on visual identities, logos, illustrations, and commissioned artwork.
+          </p>
+        </div>
+      </div>
+
+      <div class="container grid-responsive reverse-layout">
+        <div class="image-container">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
@@ -20,28 +42,19 @@ const keywords = "about, vangular, art, design";
         </div>
 
         <div class="text-container">
-          <h5>Hello!</h5>
+          <h5>About the Artist</h5>
           <br />
           <p>
-            I'm Valerie and welcome to VANGULAR!
-            <br /><br />
-            I'm a Brooklyn-based visual artist who collaborates with small businesses
-            and other artists to create fun and inspiring logos and designs tailored
-            to their needs.
-            <br /><br />
-            I love using vibrant colors and designs to ignite people's imaginations
-            and create a sense of playfulness and community.
-            <br /><br />
-            If you'd like to inquire about a commission, you can contact me
-            <a class="link" href="/contact" target="_blank"> here. </a>
-            Thanks for visiting my site, and I hope you see something that makes
-            you smile☺ <br /><br />
-          </p>
-          <h5>
-            Lots of love,
+            Val Angulo is a New York-based multidisciplinary artist and software
+            engineer working across painting, digital media, collage, and
+            poetry. Using vivid color, organic forms, and eye-like motifs, she
+            creates immersive visual worlds that feel warm, alive, and
+            interconnected.<br />
             <br />
-            Val
-          </h5>
+            If you’d like to inquire about commissions or collaborations, you can
+            reach Val at contact@vangular.com or reach out via the
+            <a class="link" href="/contact" target="_blank"> contact page</a>.
+          </p>
         </div>
       </div>
     </section>

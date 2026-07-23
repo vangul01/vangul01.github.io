@@ -4,6 +4,7 @@
 .container {
   width: min(100% - 2rem, var(--container-width-max));
   margin-inline: auto;
+  margin-block: var(--spacing-clamp-lg);
   padding: var(--spacing-clamp-lg);
   background-color: var(--color-brand-light);
   border-radius: var(--spacing-clamp-md);
@@ -46,30 +47,30 @@
   order: -1;
 }
 
-.about-layout > .image-container {
+.reverse-layout > .image-container {
   order: 0;
 }
 
-.about-layout > .text-container {
+.reverse-layout > .text-container {
   order: -1;
 }
 
-@container (max-width: 41.3rem) {
-  .about-layout > .image-container {
+@container (max-width: 42rem) {
+  .reverse-layout > .image-container {
     order: -1;
   }
 
-  .about-layout > .text-container {
+  .reverse-layout > .text-container {
     order: 0;
   }
 }
 
 /* CLASS NOT CURRENTLY USED */
-.grid-3 {
+/* .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-clamp-lg);
-}
+} */
 
 .grid-4 {
   display: grid;
@@ -77,11 +78,18 @@
   grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
 }
 
-.grid-4 a {
+/* .grid-4 a and .grid-4 a img rules to also target .grid-4 > div and .grid-4 > div img,
+so collab cards without links still get the same square image treatment. */
+.grid-4 a,
+.grid-4 > div {
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-clamp-sm);
 }
 
-.grid-4 a img {
+.grid-4 a img,
+.grid-4 > div img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
