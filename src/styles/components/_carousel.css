@@ -1,0 +1,98 @@
+/* ------------------- CAROUSEL ----------------------- */
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-gray-700);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-slide-link {
+  display: block;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--color-text-light);
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--border-radius-circle);
+  font-size: var(--font-size-clamp-lg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast), background var(--transition-fast);
+  line-height: 1;
+}
+
+.carousel:hover .carousel-btn {
+  opacity: 1;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-prev {
+  left: var(--spacing-clamp-sm);
+}
+
+.carousel-next {
+  right: var(--spacing-clamp-sm);
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: var(--spacing-clamp-xs);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--spacing-clamp-xs);
+  z-index: 2;
+  padding: var(--spacing-clamp-xs);
+}
+
+.carousel-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: var(--border-radius-circle);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  padding: 0;
+}
+
+.carousel-dot.active {
+  background: var(--color-text-light);
+  border-color: var(--color-text-light);
+  transform: scale(1.3);
+}
+
+.carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+}

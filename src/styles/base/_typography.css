@@ -55,7 +55,8 @@ p {
   overflow-wrap: break-word;
   text-wrap: pretty;
   max-width: var(--text-ratio);
-  /* margin: 0 auto; */
+  /* margin-inline: auto; */
+  margin-block-end: var(--spacing-clamp-sm);
 }
 
 /* ------------------- Headings ------------------- */
@@ -122,5 +123,3 @@ textarea {
 label {
   padding: 0 var(--spacing-clamp-sm);
 }
-
-

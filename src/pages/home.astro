@@ -3,15 +3,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
 import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
+import Carousel from "../components/Carousel.astro";
 
-import featuredArt from "../assets/images/web/logo_eyewhites.png";
 import aboutMe from "../assets/images/web/about-home.png";
-import collab from "../assets/images/web/dreams.png";
-// import eyeImage from "../assets/images/web/eyecon.png";
+import featuredArt from "../assets/images/web/logo_eyewhites.png";
+import collabFallback from "../assets/images/web/dreams.png";
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
 const collabs = await getCollabs();
+
+const featuredSlides = featuredProducts
+  .filter((p) => p.images?.[0])
+  .map((p) => ({
+    image: p.images[0],
+    title: p.name,
+    link: `/products/${p.slug}`,
+  }));
+
+const collabSlides = collabs
+  .filter((c) => c.images?.[0])
+  .map((c) => ({
+    image: c.images[0],
+    title: c.title,
+  }));
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -34,12 +49,16 @@ const keywords =
     <section class="section">
       <div class="container grid-responsive">
         <div class="image-container">
-          <Image
-            src={featuredArt}
-            alt="Featured Artwork"
-            widths={[400, 600, 800]}
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          {featuredSlides.length > 0 ? (
+            <Carousel items={featuredSlides} id="featured-art" />
+          ) : (
+            <Image
+              src={featuredArt}
+              alt="Featured Artwork"
+              widths={[400, 600, 800]}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          )}
         </div>
 
         <div class="text-container">
@@ -62,7 +81,7 @@ const keywords =
       </div>
 
       <div class="container grid-responsive reverse-layout">
-        <div class="image-container">
+        <div class="image-container image-container--bottom">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
@@ -92,12 +111,16 @@ const keywords =
 
       <div class="container grid-responsive">
         <div class="image-container">
-          <Image
-            src={collab}
-            alt="EmmaLee Collaboration"
-            widths={[400, 600, 800]}
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          {collabSlides.length > 0 ? (
+            <Carousel items={collabSlides} id="collabs" />
+          ) : (
+            <Image
+              src={collabFallback}
+              alt="EmmaLee Collaboration"
+              widths={[400, 600, 800]}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          )}
         </div>
 
         <div class="text-container">

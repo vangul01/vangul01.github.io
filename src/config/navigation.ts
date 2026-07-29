@@ -15,7 +15,6 @@ export const siteNavigation = {
       { name: "Merch", href: "/merch" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
-      { name: "Contact Us", href: "/contact" },
     ],
     shop: [
       { name: "All Products", href: "/merch" },
@@ -23,11 +22,11 @@ export const siteNavigation = {
       { name: "Best Sellers", href: "/merch/best" },
     ],
     help: [
-      { name: "Contact Us", href: "/contact" },
-      { name: "Shipping Info", href: "/" },
-      { name: "Privacy Policy", href: "/" },
-      { name: "Refund Policy", href: "/" },
-      { name: "FAQ", href: "/" },
+      { name: "FAQ", href: "/info/faq" },
+      { name: "Shipping & Returns", href: "/info/shipping" },
+      { name: "Terms & Conditions", href: "/info/terms" },
+      { name: "Privacy Policy", href: "/info/privacy" },
+      { name: "Contact", href: "/info/contact" },
     ],
     social: [
       { name: "Etsy", href: "https://etsy.com/shop/vangular/", icon: "etsy" },

@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LastUpdated from "../../components/LastUpdated.astro";
+
+const pageTitle = "Privacy Policy | VANGULAR";
+const keywords = "Privacy Policy, VANGULAR";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <section class="section">
+      <div class="container column flex-center">
+        <h2>Privacy Policy</h2>
+
+        <h4>What Information We Collect</h4>
+        <p>
+          We collect information you provide directly to us, such as your name,
+          email address, and any other information you choose to share.
+        </p>
+
+        <h4>Why We Collect Information</h4>
+        <p>
+          We collect information to provide and improve our services,
+          communicate with you, and protect our users.
+        </p>
+
+        <h4>How We Process Payments</h4>
+        <p>
+          We use Stripe to process payments. Stripe is a third-party payment
+          processor that handles all payment transactions securely.
+        </p>
+
+        <h4>Cookies and Local Storage</h4>
+        <p>
+          We use cookies and local storage to enhance your experience on our
+          website and to gather information about how you use our site.
+        </p>
+
+        <h4>Analytics</h4>
+        <p>
+          We may use analytics tools to understand how users interact with our
+          website and to improve our services.
+        </p>
+
+        <h4>Email Newsletter</h4>
+        <p>
+          If you subscribe to our email newsletter, we will collect your email
+          address and any other information you choose to share.
+        </p>
+
+        <p>
+          If you have any questions that are not answered here, please reach out
+          to us at <a class="link" href="mailto:info@vangular.com"
+            >info@vangular.com</a
+          >.
+        </p>
+
+        <LastUpdated fileUrl={import.meta.url} />
+      </div>
+    </section>
+  </main>
+</BaseLayout>

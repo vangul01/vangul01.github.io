@@ -110,6 +110,9 @@
 .disclaimer {
   font-size: var(--font-size-clamp-sm);
   padding-top: var(--spacing-clamp-sm);
+  max-width: none;
+  text-align: center;
+  margin-inline: auto;
 }
 
 /* ------------------- CART PAGE BUTTONS ------------------- */

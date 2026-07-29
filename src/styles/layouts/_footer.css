@@ -9,41 +9,21 @@
 }
 
 .footer-link {
-  color: var(--color-brand-accent);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-clamp-base);
-  /* transition: var(--transition-fast); */
 }
 
 .footer-link:hover {
-  font-weight: bold;
+  /* font-weight: bold; */
   color: var(--color-text-light);
 }
 
-/* .grid-4  */
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-clamp-xl);
+.footer-container {
+  max-width: var(--container-width-narrow);
+  margin: 0 auto;
   padding: var(--spacing-clamp-xl);
-  margin: 0 var(--spacing-clamp-xl);
-  /* min-height: 200px; Ensures footer has a minimum height */
-}
-
-.footer-section {
-  display: inline;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  border-radius: var(--border-radius-lg);
-  background-color: var(--color-footer);
-  backdrop-filter: var(--blur-soft);
-  box-shadow: var(--shadow-sm);
-  column-fill: auto;
-  font-size: var(--font-size-clamp-sm);
-  padding: var(--spacing-clamp-lg);
-
-  ul {
-    text-align: left;
-  }
+  gap: var(--spacing-clamp-xl);
+  align-items: center;
 }
 
 .footer-title {
@@ -60,13 +40,10 @@
   }
 }
 
-.social-section {
-  grid-column: 1 / -1;
-  grid-row: 1;
+/* Row 1: Social Links */
+.footer-social {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* padding-bottom: var(--spacing-clamp-lg); */
+  justify-content: center;
 }
 
 .social-links {
@@ -83,36 +60,81 @@
   width: var(--social-icon-size);
   height: var(--social-icon-size);
   border-radius: var(--border-radius-circle);
-  background-color: var(--color-brand-primary);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(217, 199, 236, 0.15) 0%,
+    rgba(60, 45, 73, 0.4) 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--color-text-light);
-  border: var(--border-primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .social-link:hover {
-  background-color: var(--color-brand-light);
-  color: var(--color-text-primary);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(217, 199, 236, 0.25) 0%,
+    rgba(60, 45, 73, 0.6) 100%
+  );
+  color: var(--color-text-light);
   box-shadow: var(--shadow-md);
-  /* border-color: var(--color-brand-primary); */
   transform: scale(1.1);
-  border: var(--border-primary);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-/* Quick Links and Shop sections */
-.footer-section:not(.social-section, .newsletter) {
-  grid-column: span 1;
-  grid-row: 2;
-}
-
-.newsletter {
-  grid-column: span 2;
-  grid-row: 2;
+/* Row 2: Newsletter */
+.footer-newsletter {
   text-align: center;
   color: var(--color-brand-primary);
+  /* background-color: var(--color-footer); */
+  backdrop-filter: var(--blur-soft);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-clamp-lg);
+  width: 100%;
+
+  background-color: var(--color-brand-light);
+  /* background: radial-gradient(
+    ellipse at center,
+    rgba(217, 199, 236, 0.08) 70%,
+    rgba(217, 199, 236, 0.25) 0%
+    transparent 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--spacing-clamp-md); */
+}
+
+/* Row 3: Links (2-column grid) */
+.footer-links-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-clamp-xs);
+  width: 100%;
+  background-color: var(--color-footer);
+  backdrop-filter: var(--blur-soft);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-clamp-xl);
+}
+
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: var(--color-footer);
+  backdrop-filter: var(--blur-soft);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-clamp-lg); */
 }
 
 .footer-bottom {
-  /* padding: var(--spacing-clamp-md); */
   font-size: var(--font-size-clamp-sm);
   text-align: center;
   color: var(--color-text-light);
+  padding-bottom: var(--spacing-clamp-md);
 }

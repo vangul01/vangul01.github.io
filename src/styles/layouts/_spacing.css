@@ -21,10 +21,14 @@ max-width, margin, padding */
 }
 
 .image-container img {
-  width: 30rem;
-  max-width: 100%; /* Ensures the image scales properly */
-  height: auto; /* Maintains aspect ratio */
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: var(--border-radius-md);
+}
+
+.image-container--bottom img {
+  object-position: bottom;
 }
 
 .text-container {

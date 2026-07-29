@@ -15,12 +15,9 @@
   text-transform: uppercase;
   width: var(--button-width);
 
-  /* background-color: var(--color-border); */
   color: #000;
   border: 3px solid;
 
-  /* padding: 0.25em 0.5em; */
-  /* padding: var(--spacing-clamp-sm) var(--spacing-clamp-md); */
   padding: var(--spacing-clamp-lg);
 
   box-shadow:
@@ -33,10 +30,12 @@
   user-select: none;
   touch-action: manipulation;
   transition: opacity 0.15s;
-
-  justify-content: center;
-  width: var(--button-width);
   height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
 }
 
 .button:hover {

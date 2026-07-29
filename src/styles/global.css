@@ -6,6 +6,7 @@
 /* Component Imports */
 @import url("./components/_buttons.css");
 @import url("./components/_cards.css");
+@import url("./components/_carousel.css");
 @import url("./components/_forms.css");
 /* Layout Imports */
 @import url("./layouts/_footer.css");
@@ -16,6 +17,7 @@
 @import url("./pages/_cart.css");
 @import url("./pages/_home.css");
 @import url("./pages/_product.css");
+@import url("./pages/_faq.css");
 /* Utils */
 @import url("./utils/_helpers.css");
 @import url("./utils/_media.css");
