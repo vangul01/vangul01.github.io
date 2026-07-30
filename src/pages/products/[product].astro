@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     description,
     materials,
     dimensions,
-    quantity,
+    inStock,
     stripePriceId,
     "images": images[].asset->url,
     category,
@@ -71,43 +71,72 @@ const keywords = `vangular, ${product.name}, art, products`;
           }
         </div>
 
-        <div class="container">
+        <div class="container product-text">
           <h3>{product.name}</h3>
 
-          {product.quantity === 0 && <h3>*Currently unavailable*</h3>}
-
-          <div>
-            <p id="product-price" data-price-id={product.stripePriceId}>
-              Loading price<span class="dots"></span>
-            </p>
-            <p>{product.quantity} Available</p>
-          </div>
-
-          <!-- disable the button to start , maybe I can make it clear
-           instead of red -->
+          <h4>Price</h4>
           {
-            product.quantity > 0 && (
+            product.inStock && (
+              <p id="product-price" data-price-id={product.stripePriceId}>
+                Loading price
+                <span class="dots" />
+              </p>
+            )
+          }
+
+          <h4>Description</h4>
+          <p>{product.description}</p>
+
+          {
+            product.inStock && (
+              <>
+                <p>Each print is made to order just for you.</p>
+                <p>
+                  Printing and packing takes 3 to 5 business days before
+                  shipping.
+                </p>
+              </>
+            )
+          }
+
+          {
+            !product.inStock && (
+              <p>
+                This item is currently out of stock and not available for
+                purchase.
+              </p>
+            )
+          }
+
+          <h4>Details</h4>
+          {product.materials && <p>Materials: {product.materials}</p>}
+          {product.dimensions && <p>Dimensions: {product.dimensions}</p>}
+
+          {
+            product.inStock ? (
               <button
                 class="button button-disable button-check"
                 id="add-to-cart"
                 data-price-id={product.stripePriceId}
                 data-name={product.name}
                 data-image={product.images?.[0]}
-                data-quantity="1"
                 data-product-url={`${product.slug}`}
+                data-instock="true"
                 disabled
               >
                 <span class="button-label"> Checking Availability </span>
               </button>
+            ) : (
+              <button
+                class="button button-disable"
+                id="add-to-cart"
+                data-instock="false"
+                disabled
+              >
+                <span class="button-label"> Unavailable </span>
+              </button>
             )
           }
-
-          <div>
-            <p>{product.description}</p>
-            <h4>Details</h4>
-            {product.materials && <p>Materials: {product.materials}</p>}
-            {product.dimensions && <p>Dimensions: {product.dimensions}</p>}
-          </div>
         </div>
       </div>
 

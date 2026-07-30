@@ -4,12 +4,14 @@ import type { Product, Collaboration } from "../types/sanity-schema";
 
 console.log(
   "Initializing Sanity client with dataset:",
-  import.meta.env.PUBLIC_SANITY_DATASET,
+  import.meta.env.DEV ? "development" : import.meta.env.PUBLIC_SANITY_DATASET,
 );
 
 export const client = createClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
-  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+  dataset: import.meta.env.DEV
+    ? "development"
+    : import.meta.env.PUBLIC_SANITY_DATASET,
   apiVersion: "2024-04-12",
   useCdn: false,
 });
@@ -41,7 +43,7 @@ export async function getAllProducts(): Promise<Product[]> {
         "images": images[].asset->url,
         stripePriceId,
         materials,
-        quantity
+        inStock
       }`;
 
   const products = await safeSanityFetch(query);
