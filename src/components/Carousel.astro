@@ -1,10 +1,16 @@
 ---
 import { getOptimizedImageUrl } from "../lib/sanity-client";
 
-export interface CarouselItem {
+interface CarouselItem {
   image: string;
   title?: string;
   link?: string;
+}
+
+interface Props {
+  items?: CarouselItem[];
+  id?: string;
+  interval?: number;
 }
 
 const { items = [], id = "carousel", interval = 5000 } = Astro.props;
@@ -43,7 +49,10 @@ const slides = items.filter((item) => item.image);
 
       {slides.length > 1 && (
         <>
-          <button class="carousel-btn carousel-prev" aria-label="Previous slide">
+          <button
+            class="carousel-btn carousel-prev"
+            aria-label="Previous slide"
+          >
             ‹
           </button>
           <button class="carousel-btn carousel-next" aria-label="Next slide">
@@ -57,7 +66,7 @@ const slides = items.filter((item) => item.image);
                 role="tab"
                 aria-label={`Go to slide ${i + 1}`}
                 aria-selected={i === 0}
-              ></button>
+              />
             ))}
           </div>
         </>
@@ -68,41 +77,50 @@ const slides = items.filter((item) => item.image);
 
 <script>
   class Carousel {
-    constructor(el) {
-      this.el = el;
-      this.track = el.querySelector(".carousel-track");
-      this.slides = el.querySelectorAll(".carousel-slide");
-      this.prevBtn = el.querySelector(".carousel-prev");
-      this.nextBtn = el.querySelector(".carousel-next");
-      this.dots = el.querySelectorAll(".carousel-dot");
+    slides: NodeListOf<HTMLElement>;
+    dots: NodeListOf<HTMLElement>;
+    track: HTMLElement;
+    current: number;
+    interval: number;
+    timer: ReturnType<typeof setInterval> | undefined;
+
+    constructor(el: HTMLElement) {
+      this.slides = el.querySelectorAll<HTMLElement>(".carousel-slide");
+      this.dots = el.querySelectorAll<HTMLElement>(".carousel-dot");
+      this.track = el.querySelector(".carousel-track")!;
       this.current = 0;
-      this.interval = parseInt(el.dataset.interval) || 5000;
+      this.interval = parseInt(el.dataset.interval || "", 10) || 5000;
 
       if (this.slides.length < 2) return;
 
-      this.prevBtn?.addEventListener("click", () => this.go(this.current - 1));
-      this.nextBtn?.addEventListener("click", () => this.go(this.current + 1));
-      this.dots.forEach((dot) =>
-        dot.addEventListener("click", () =>
-          this.go(parseInt(dot.dataset.index)),
-        ),
+      el.querySelector(".carousel-prev")?.addEventListener("click", () =>
+        this.go(this.current - 1),
+      );
+      el.querySelector(".carousel-next")?.addEventListener("click", () =>
+        this.go(this.current + 1),
       );
 
-      this.el.addEventListener("mouseenter", () => this.stop());
-      this.el.addEventListener("mouseleave", () => this.start());
+      this.dots.forEach((dot) => {
+        const index = parseInt(dot.dataset.index || "", 10);
+        if (!Number.isNaN(index)) {
+          dot.addEventListener("click", () => this.go(index));
+        }
+      });
 
-      this.dots[0]?.classList.add("active");
+      el.addEventListener("mouseenter", () => this.stop());
+      el.addEventListener("mouseleave", () => this.start());
+
       this.start();
     }
 
-    go(index) {
+    go(index: number) {
       this.current =
         ((index % this.slides.length) + this.slides.length) %
         this.slides.length;
       this.track.style.transform = `translateX(-${this.current * 100}%)`;
       this.dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === this.current);
-        dot.setAttribute("aria-selected", i === this.current);
+        dot.setAttribute("aria-selected", String(i === this.current));
       });
     }
 
@@ -116,5 +134,112 @@ const slides = items.filter((item) => item.image);
     }
   }
 
-  document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
+  document
+    .querySelectorAll<HTMLElement>(".carousel")
+    .forEach((el) => new Carousel(el));
 </script>
+
+<style>
+  /* ------------------- CAROUSEL ----------------------- */
+  .carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-gray-700);
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    position: relative;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .carousel-slide-link {
+    display: block;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--color-text-light);
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--border-radius-circle);
+    font-size: var(--font-size-clamp-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition:
+      opacity var(--transition-fast),
+      background var(--transition-fast);
+    line-height: 1;
+  }
+
+  .carousel:hover .carousel-btn {
+    opacity: 1;
+  }
+
+  .carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .carousel-prev {
+    left: var(--spacing-clamp-sm);
+  }
+
+  .carousel-next {
+    right: var(--spacing-clamp-sm);
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: var(--spacing-clamp-xs);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--spacing-clamp-xs);
+    z-index: 2;
+    padding: var(--spacing-clamp-xs);
+  }
+
+  .carousel-dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: var(--border-radius-circle);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background var(--transition-fast),
+      transform var(--transition-fast);
+    padding: 0;
+  }
+
+  .carousel-dot.active {
+    background: var(--color-text-light);
+    border-color: var(--color-text-light);
+    transform: scale(1.3);
+  }
+
+  .carousel-dot:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+</style>

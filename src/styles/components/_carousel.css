@@ -1,5 +1,4 @@
-/* ------------------- CAROUSEL ----------------------- */
-.carousel {
+/* .carousel {
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -45,7 +44,9 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity var(--transition-fast), background var(--transition-fast);
+  transition:
+    opacity var(--transition-fast),
+    background var(--transition-fast);
   line-height: 1;
 }
 
@@ -83,7 +84,9 @@
   border: 1px solid rgba(255, 255, 255, 0.6);
   background: transparent;
   cursor: pointer;
-  transition: background var(--transition-fast), transform var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast);
   padding: 0;
 }
 
@@ -95,4 +98,4 @@
 
 .carousel-dot:hover {
   background: rgba(255, 255, 255, 0.4);
-}
+} */

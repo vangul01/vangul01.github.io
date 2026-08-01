@@ -1,15 +1,3 @@
-/*
-/api/* (Astro endpoints) 	Network-only 	Same reasoning—any server-side logic that touches Stripe or inventory must be live.
-Non-GET requests globally 	Network-only 	Belt-and-suspenders: even if a URL slips through the hostname checks, POST/PUT/DELETE are never cached.
-
-
-One last thing: the React Island (cart page)
-
-Your cart island hydrates client-side and talks to your Netlify function for Stripe prices. Because the island's JS bundle lives under /_astro/, it gets the Cache-First rule (safe, because the filename is hashed). But the data it fetches at runtime hits /.netlify/functions/…, which is Network-only. So the island's code loads instantly from cache, but every price and checkout session is always live. No special handling needed—the routing rules above already cover it.
-
-This setup should get you the Lighthouse PWA/Performance points, a genuinely offline-capable shell, and zero risk of a cached Stripe token or stale checkout session making it to a customer. And six months from now when Astro 8 drops, you'll npm update, deploy, and never think about the service worker again.
-*/
-
 const CACHE_VERSION = "v2";
 const CACHES = {
   pages: `pages-${CACHE_VERSION}`,
