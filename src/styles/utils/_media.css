@@ -54,16 +54,6 @@
     grid-row: 2;
   }
 
-  .cart-buttons {
-    flex-direction: column-reverse;
-    gap: var(--spacing-clamp-md);
-  }
-
-  .cart-buttons .button,
-  .cart-buttons .link {
-    width: 70%;
-  }
-
   /* cart.astro */
   .cart-products-grid,
   .cart-titles {

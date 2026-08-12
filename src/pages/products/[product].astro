@@ -90,9 +90,9 @@ const keywords = `vangular, ${product.name}, art, products`;
           {
             product.inStock && (
               <>
-                <p>Each print is made to order just for you.</p>
+                <p>Each print is made to order just for you!</p>
                 <p>
-                  Printing and packing takes 3 to 5 business days before
+                  Printing and packing takes approximately 1 week before
                   shipping.
                 </p>
               </>
@@ -112,53 +112,57 @@ const keywords = `vangular, ${product.name}, art, products`;
           {product.materials && <p>Materials: {product.materials}</p>}
           {product.dimensions && <p>Dimensions: {product.dimensions}</p>}
 
-          {
-            product.inStock ? (
-              <button
-                class="button button-disable button-check"
-                id="add-to-cart"
-                data-price-id={product.stripePriceId}
-                data-name={product.name}
-                data-image={product.images?.[0]}
-                data-product-url={`${product.slug}`}
-                data-instock="true"
-                disabled
-              >
-                <span class="button-label"> Checking Availability </span>
-              </button>
-            ) : (
-              <button
-                class="button button-disable"
-                id="add-to-cart"
-                data-instock="false"
-                disabled
-              >
-                <span class="button-label"> Unavailable </span>
-              </button>
-            )
-          }
+          <div class="button-group">
+            {
+              product.inStock ? (
+                <button
+                  class="button button-disable button-check"
+                  id="add-to-cart"
+                  data-price-id={product.stripePriceId}
+                  data-name={product.name}
+                  data-image={product.images?.[0]}
+                  data-product-url={`${product.slug}`}
+                  data-instock="true"
+                  disabled
+                >
+                  <span class="button-label"> Checking Availability </span>
+                </button>
+              ) : (
+                <button
+                  class="button button-disable"
+                  id="add-to-cart"
+                  data-instock="false"
+                  disabled
+                >
+                  <span class="button-label"> Unavailable </span>
+                </button>
+              )
+            }
+          </div>
         </div>
       </div>
 
       <div class="container">
-        <a href="#">
-          <button
-            class="button button-tertiary"
-            onclick="window.history.back()"
-          >
-            <span class="button-label"> Go Back </span>
-          </button>
-        </a>
-        <a href="/merch">
-          <button class="button button-secondary">
-            <span class="button-label"> Keep Shopping </span>
-          </button>
-        </a>
-        <a href="/cart">
-          <button class="button button-primary">
-            <span class="button-label"> Go To Cart </span>
-          </button>
-        </a>
+        <div class="button-group">
+          <a href="#">
+            <button
+              class="button button-tertiary"
+              onclick="window.history.back()"
+            >
+              <span class="button-label"> Go Back </span>
+            </button>
+          </a>
+          <a href="/merch">
+            <button class="button button-secondary">
+              <span class="button-label"> Keep Shopping </span>
+            </button>
+          </a>
+          <a href="/cart">
+            <button class="button button-primary">
+              <span class="button-label"> Go To Cart </span>
+            </button>
+          </a>
+        </div>
       </div>
     </section>
   </main>

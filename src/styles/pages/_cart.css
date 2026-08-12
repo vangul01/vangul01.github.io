@@ -129,30 +129,6 @@
   transform: scale(1.1);
 }
 
-.cart-buttons {
-  display: flex;
-  justify-content: space-between; /* Changed from flex-end to space-between */
-  align-items: center;
-  width: 100%;
-  padding: 0 var(--spacing-clamp-md); /* Added padding to align with grid */
-
-  /* margin-top: var(--spacing-clamp-xl);
-    border-top: var(--border-tertiary); */
-}
-
-.cart-buttons .link {
-  font-size: var(--font-size-clamp-base);
-  padding: var(--spacing-clamp-sm) var(--spacing-clamp-md);
-}
-
-/* Ensure consistent button sizes */
-.cart-buttons .button,
-.cart-buttons .link {
-  min-width: var(--thumbnail);
-  text-align: center;
-  resize: none;
-}
-
 .quantity-btn {
   background: none;
   border: none;

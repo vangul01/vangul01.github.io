@@ -40,9 +40,11 @@ export default function CartIsland({ fallbackImage = "" }) {
     return (
       <div className="container empty-cart">
         <h4>Your cart is empty!</h4>
-        <a href="/merch" className="button button-primary">
-          Continue Shopping
-        </a>
+        <div className="button-group">
+          <a href="/merch" className="button button-primary">
+            Continue Shopping
+          </a>
+        </div>
       </div>
     );
   }
@@ -126,13 +128,12 @@ export default function CartIsland({ fallbackImage = "" }) {
           </p>
         </div>
 
-        <div className="cart-buttons">
-          <a href="/merch" className="link">
-            Continue Shopping
+        <div className="button-group">
+          <a href="/merch" className="button button-secondary">
+            <span className="button-label">Continue Shopping</span>
           </a>
 
           <button
-            // className="button button-primary button-disable"
             className="button button-primary"
             onClick={handleCheckout}
             id="proceed-to-payment"
