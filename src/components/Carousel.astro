@@ -11,10 +11,15 @@ interface Props {
   items?: CarouselItem[];
   id?: string;
   interval?: number;
+  fallback?: string;
 }
 
-const { items = [], id = "carousel", interval = 5000 } = Astro.props;
+const { items = [], id = "carousel", interval = 5000, fallback = "" } =
+  Astro.props;
 const slides = items.filter((item) => item.image);
+const imgErrorHandler = fallback
+  ? `this.onerror=null;this.src='${fallback}'`
+  : undefined;
 ---
 
 {
@@ -27,20 +32,25 @@ const slides = items.filter((item) => item.image);
     >
       <div class="carousel-track">
         {slides.map((item, i) => (
-          <div class="carousel-slide" data-index={i}>
+          <div
+            class={`carousel-slide${i === 0 ? " active" : ""}`}
+            data-index={i}
+          >
             {item.link ? (
               <a href={item.link} class="carousel-slide-link">
                 <img
                   src={getOptimizedImageUrl(item.image, 600)}
-                  alt=""
+                  alt={item.title || ""}
                   loading={i === 0 ? "eager" : "lazy"}
+                  onerror={imgErrorHandler}
                 />
               </a>
             ) : (
               <img
                 src={getOptimizedImageUrl(item.image, 600)}
-                alt=""
+                alt={item.title || ""}
                 loading={i === 0 ? "eager" : "lazy"}
+                onerror={imgErrorHandler}
               />
             )}
           </div>
@@ -61,7 +71,7 @@ const slides = items.filter((item) => item.image);
           <div class="carousel-dots" role="tablist" aria-label="Slides">
             {slides.map((_, i) => (
               <button
-                class="carousel-dot"
+                class={`carousel-dot${i === 0 ? " active" : ""}`}
                 data-index={i}
                 role="tab"
                 aria-label={`Go to slide ${i + 1}`}
@@ -79,7 +89,6 @@ const slides = items.filter((item) => item.image);
   class Carousel {
     slides: NodeListOf<HTMLElement>;
     dots: NodeListOf<HTMLElement>;
-    track: HTMLElement;
     current: number;
     interval: number;
     timer: ReturnType<typeof setInterval> | undefined;
@@ -87,7 +96,6 @@ const slides = items.filter((item) => item.image);
     constructor(el: HTMLElement) {
       this.slides = el.querySelectorAll<HTMLElement>(".carousel-slide");
       this.dots = el.querySelectorAll<HTMLElement>(".carousel-dot");
-      this.track = el.querySelector(".carousel-track")!;
       this.current = 0;
       this.interval = parseInt(el.dataset.interval || "", 10) || 5000;
 
@@ -114,14 +122,20 @@ const slides = items.filter((item) => item.image);
     }
 
     go(index: number) {
-      this.current =
+      const next =
         ((index % this.slides.length) + this.slides.length) %
         this.slides.length;
-      this.track.style.transform = `translateX(-${this.current * 100}%)`;
+
+      // Swap active class — CSS handles the fade
+      this.slides[this.current].classList.remove("active");
+      this.slides[next].classList.add("active");
+
       this.dots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === this.current);
-        dot.setAttribute("aria-selected", String(i === this.current));
+        dot.classList.toggle("active", i === next);
+        dot.setAttribute("aria-selected", String(i === next));
       });
+
+      this.current = next;
     }
 
     start() {
@@ -140,7 +154,7 @@ const slides = items.filter((item) => item.image);
 </script>
 
 <style>
-  /* ------------------- CAROUSEL ----------------------- */
+  /* Don't revert to position:absolute cause that will cause the image to disappear */
   .carousel {
     position: relative;
     width: 100%;
@@ -149,25 +163,42 @@ const slides = items.filter((item) => item.image);
     background-color: var(--color-gray-700);
   }
 
+  /* Grid with one shared cell so stacked slides still size the track */
   .carousel-track {
-    display: flex;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: grid;
+    aspect-ratio: 1;
   }
 
+  /* grid-area 1/1 means the carousel is always square */
   .carousel-slide {
-    min-width: 100%;
-    position: relative;
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition:
+      opacity 0.6s ease,
+      visibility 0s linear 0.6s;
+  }
+  .carousel-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+    z-index: 1;
   }
 
   .carousel-slide img {
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
     object-fit: cover;
     display: block;
   }
 
   .carousel-slide-link {
     display: block;
+    height: 100%;
   }
 
   .carousel-btn {

@@ -122,3 +122,21 @@ cause Stripes price wasn't obtained */
   bottom: 0;
   margin: var(--spacing-clamp-md) 0;
 }
+
+/* ------------------- BUTTON GROUPS ----------------------- */
+/* Consistent layout for 1, 2, or 3 action buttons */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-clamp-md);
+  width: 100%;
+  margin-block: var(--spacing-clamp-md);
+  margin-inline: auto;
+}
+
+.button-group .button {
+  margin-inline: 0;
+  flex: 0 0 auto;
+}

@@ -49,16 +49,22 @@ const keywords =
     <section class="section">
       <div class="container grid-responsive">
         <div class="image-container">
-          {featuredSlides.length > 0 ? (
-            <Carousel items={featuredSlides} id="featured-art" />
-          ) : (
-            <Image
-              src={featuredArt}
-              alt="Featured Artwork"
-              widths={[400, 600, 800]}
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          )}
+          {
+            featuredSlides.length > 0 ? (
+              <Carousel
+                items={featuredSlides}
+                id="featured-art"
+                fallback={featuredArt.src}
+              />
+            ) : (
+              <Image
+                src={featuredArt}
+                alt="Featured Artwork"
+                widths={[400, 600, 800]}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            )
+          }
         </div>
 
         <div class="text-container">
@@ -111,16 +117,22 @@ const keywords =
 
       <div class="container grid-responsive">
         <div class="image-container">
-          {collabSlides.length > 0 ? (
-            <Carousel items={collabSlides} id="collabs" />
-          ) : (
-            <Image
-              src={collabFallback}
-              alt="EmmaLee Collaboration"
-              widths={[400, 600, 800]}
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          )}
+          {
+            collabSlides.length > 0 ? (
+              <Carousel
+                items={collabSlides}
+                id="collabs"
+                fallback={collabFallback.src}
+              />
+            ) : (
+              <Image
+                src={collabFallback}
+                alt="EmmaLee Collaboration"
+                widths={[400, 600, 800]}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            )
+          }
         </div>
 
         <div class="text-container">

@@ -1,12 +1,19 @@
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const CACHES = {
   pages: `pages-${CACHE_VERSION}`,
   assets: `assets-${CACHE_VERSION}`,
   images: `images-${CACHE_VERSION}`,
 };
 
-self.addEventListener("install", () => {
+const OFFLINE_URL = "/status/offline/";
+
+self.addEventListener("install", (event) => {
   self.skipWaiting();
+  event.waitUntil(
+    caches
+      .open(CACHES.pages)
+      .then((cache) => cache.add(OFFLINE_URL)),
+  );
 });
 
 self.addEventListener("activate", (event) => {
@@ -97,6 +104,8 @@ async function networkFirst(request, cacheName) {
     return response;
   } catch {
     const cached = await caches.match(request);
-    return cached || new Response("Offline", { status: 503 });
+    if (cached) return cached;
+    const offline = await caches.match(OFFLINE_URL);
+    return offline || new Response("Offline", { status: 503 });
   }
 }
