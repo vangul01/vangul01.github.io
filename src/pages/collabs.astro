@@ -2,8 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
-import dreamCollab from "../assets/images/web/dreams.png";
-import crewCollab from "../assets/images/web/crew_logo.jpg";
+import logoFallback from "../assets/images/web/logo_eyewhites.png";
+
+import { getCollabs, getOptimizedImageUrl } from "../lib/sanity-client";
+// import type { Collab } from "../types/sanity-schema";
+
+const collabs = await getCollabs();
 
 const pageTitle = "Collabs | VANGULAR";
 const keywords =
@@ -12,55 +16,71 @@ const keywords =
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
-    <section class="section" id="collabs">
-      <div class="container grid-responsive">
-        <div class="image-container">
-          <Image src={dreamCollab} alt="EmmaLee & The Dream album art" />
-        </div>
+    <section class="section">
+      {
+        collabs.length === 0 ? (
+          <div class="container column flex-center">
+            <h3>
+              We're having issues showing our collaborations at the moment.
+              Please check back later!
+            </h3>
+          </div>
+        ) : (
+          <div class="container grid-4">
+            {collabs.map((collab) =>
+              collab.clientLink ? (
+                <a class="link" href={collab.clientLink} target="_blank">
+                  <div>
+                    <img
+                      src={
+                        collab.images?.[0]
+                          ? getOptimizedImageUrl(collab.images[0], 400)
+                          : logoFallback.src
+                      }
+                      alt={collab.title}
+                      loading="lazy"
+                    />
+                  </div>
 
-        <div class="text-container">
-          <h4>EmmaLee & The Dream</h4>
-          <br />
-          <p>
-            Digital collage-styled album art for EmmaLee & The Dream's first EP,
-            Unsustainable. EmmaLee & the Dream is a three-woman no-man band
-            based in Brooklyn, New York.
+                  <div>
+                    <h4>{collab.title}</h4>
+                  </div>
+                </a>
+              ) : (
+                <div>
+                  <div>
+                    <img
+                      src={
+                        collab.images?.[0]
+                          ? getOptimizedImageUrl(collab.images[0], 400)
+                          : logoFallback.src
+                      }
+                      alt={collab.title}
+                      loading="lazy"
+                    />
+                  </div>
 
-            <a
-              class="link"
-              href="https://emmaleekidwell.com/emmalee-%26-the-dream/"
-              target="_blank"
-            >
-              Visit the band's website here.
-            </a>
+                  <div>
+                    <h4>{collab.title}</h4>
+                  </div>
+                </div>
+              ),
+            )}
+          </div>
+        )
+      }
 
-            <!-- "Really sick review!!" -EmmaLee, Frontwoman of E&D
-                            <br><br> -->
-          </p>
-        </div>
-      </div>
-
-      <div class="container grid-responsive">
-        <div class="image-container">
-          <Image src={crewCollab} alt="The Crew Rowing Co. logo" />
-        </div>
-
-        <div class="text-container">
-          <h4>The Crew</h4>
-          <br />
-          <p>
-            Primary logo for LGBTQ+ friendly rowing company The Crew. The Crew
-            focuses on empowering women through inclusive and accessible rowing
-            classes and is based in Malden, Massachusetts.
-
-            <a class="link" href="https://www.inthecrew.com/" target="_blank"
-              >Visit The Crew's website here.
-            </a>
-
-            <!-- "Really sick review!!" -Brynly, Founder of The Crew
-                            <br><br> -->
-          </p>
-        </div>
+      <div class="container column flex-center">
+        <h3>Want to collaborate?</h3>
+        <br />
+        <p>
+          If you're interested in collaborating with me, you can reach me at <a
+            class="link"
+            href="mailto:contact@vangular.com">contact@vangular.com</a
+          > or reach out via the
+          <a class="link" href="info/contact" target="_blank"> contact page</a>.
+          Can't wait to hear about your project!
+        </p>
       </div>
     </section>
   </main>

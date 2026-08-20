@@ -3,15 +3,31 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
 import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
+import Carousel from "../components/Carousel.astro";
 
-import featuredArt from "../assets/images/web/logo_eyewhites.png";
 import aboutMe from "../assets/images/web/about-home.png";
-import collab from "../assets/images/web/dreams.png";
-// import eyeImage from "../assets/images/web/eyecon.png";
+import featuredArt from "../assets/images/web/logo_eyewhites.png";
+import collabFallback from "../assets/images/web/dreams.png";
+import footerImage from "../assets/images/web/Footer_Image.png";
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
 const collabs = await getCollabs();
+
+const featuredSlides = featuredProducts
+  .filter((p) => p.images?.[0])
+  .map((p) => ({
+    image: p.images[0],
+    title: p.name,
+    link: `/products/${p.slug}`,
+  }));
+
+const collabSlides = collabs
+  .filter((c) => c.images?.[0])
+  .map((c) => ({
+    image: c.images[0],
+    title: c.title,
+  }));
 
 const pageTitle = "Home | VANGULAR";
 const keywords =
@@ -21,15 +37,16 @@ const keywords =
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
     <!-- Welcome/Hero Section -->
-    <section class="section">
-      <!-- <div>
+    <section class="section hero-section">
+      <div class="hero-image">
         <Image
-          src={eyeImage}
-          alt="Large eye illustration"
-          class="eye-background"
+          src={footerImage}
+          alt="VANGULAR artwork"
+          widths={[800, 1200, 1600]}
+          sizes="100vw"
         />
-      </div> -->
-      <div class="container column flex-center">
+      </div>
+      <div class="overlay-text column flex-center">
         <p class="description">Welcome to</p>
         <h1 class="title">Vangular</h1>
         <p class="description">
@@ -38,17 +55,25 @@ const keywords =
       </div>
     </section>
 
-    <!-- <button id="theme-toggle">Toggle Theme</button> -->
-
     <section class="section">
       <div class="container grid-responsive">
         <div class="image-container">
-          <Image
-            src={featuredArt}
-            alt="Featured Artwork"
-            widths={[400, 600, 800]}
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          {
+            featuredSlides.length > 0 ? (
+              <Carousel
+                items={featuredSlides}
+                id="featured-art"
+                fallback={featuredArt.src}
+              />
+            ) : (
+              <Image
+                src={featuredArt}
+                alt="Featured Artwork"
+                widths={[400, 600, 800]}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            )
+          }
         </div>
 
         <div class="text-container">
@@ -62,18 +87,18 @@ const keywords =
             and feelings, and I hope you can find a connection to it.
           </p>
           <br />
-          <a href="/merch"
-            ><button class="button button-secondary">
-              <span class="button-label"> View More </span>
-            </button></a
-          >
+          <div class="button-group">
+            <a href="/merch"
+              ><button class="button button-secondary">
+                <span class="button-label"> View More </span>
+              </button></a
+            >
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="container grid-responsive about-layout">
-        <div class="image-container">
+      <div class="container grid-responsive reverse-layout">
+        <div class="image-container image-container--bottom">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
@@ -93,24 +118,34 @@ const keywords =
             community.
           </p>
           <br />
-          <a href="/about"
-            ><button class="button button-secondary">
-              <span class="button-label"> Learn More </span>
-            </button></a
-          >
+          <div class="button-group">
+            <a href="/about"
+              ><button class="button button-secondary">
+                <span class="button-label"> Learn More </span>
+              </button></a
+            >
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="section">
       <div class="container grid-responsive">
         <div class="image-container">
-          <Image
-            src={collab}
-            alt="EmmaLee Collaboration"
-            widths={[400, 600, 800]}
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          {
+            collabSlides.length > 0 ? (
+              <Carousel
+                items={collabSlides}
+                id="collabs"
+                fallback={collabFallback.src}
+              />
+            ) : (
+              <Image
+                src={collabFallback}
+                alt="EmmaLee Collaboration"
+                widths={[400, 600, 800]}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            )
+          }
         </div>
 
         <div class="text-container">
@@ -125,11 +160,13 @@ const keywords =
             reach out! I'm always open to new ideas and projects.
           </p>
           <br />
-          <a href="/contact"
-            ><button class="button button-secondary">
-              <span class="button-label"> Let's Work Together! </span>
-            </button></a
-          >
+          <div class="button-group">
+            <a href="/contact"
+              ><button class="button button-secondary">
+                <span class="button-label"> Let's Work Together! </span>
+              </button></a
+            >
+          </div>
         </div>
       </div>
     </section>

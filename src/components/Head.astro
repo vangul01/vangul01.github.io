@@ -99,4 +99,17 @@ const fontAwesome =
   />
   <meta name="keywords" content={keywords} />
   <title>{pageTitle}</title>
+
+  <!-- Cloudflare Web Analytics -->
+  {import.meta.env.PUBLIC_CLOUDFLARE_TOKEN && (
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({
+        token: import.meta.env.PUBLIC_CLOUDFLARE_TOKEN,
+      })}
+    />
+  )}
+  <!-- End Cloudflare Web Analytics -->
 </head>

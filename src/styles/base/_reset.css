@@ -6,7 +6,9 @@
    ========================================================== */
 
 /* ------------------- Box Sizing & Margin Reset ------------------- */
+
 /* Apply box-sizing to all elements and remove default margin/padding/border */
+
 /* Border-box ensures padding and borders don't increase width */
 *,
 *::before,
@@ -15,12 +17,12 @@
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
 
 /* ------------------- Font Smoothing & Text Size Adjust ------------------- */
+
 /* Prevent font size inflation */
 html {
   -webkit-text-size-adjust: none;
@@ -41,7 +43,6 @@ h3,
 h4,
 h5,
 h6,
-p,
 figure,
 blockquote,
 dl,
@@ -58,7 +59,9 @@ a {
 }
 
 /* ------------------- Images, Media, SVG ------------------- */
+
 /* Ensures the image doesn't exceed its container's width */
+
 /* Automatically adjusts the height to maintain aspect ratio */
 img,
 picture,
@@ -89,15 +92,17 @@ table {
 }
 
 /* ------------------- Anchor Defaults ------------------- */
+
 /* "a" elements that don't have a class get default styles.
 Note: currentColor keyword dynamically picks up the current text color
 of the parent element, which often changes in dark mode.  */
 a:not([class]) {
   text-decoration-skip-ink: auto;
-  color: currentColor;
+  color: currentcolor;
 }
 
 /* ------------------- Scroll Margin for Anchors ------------------- */
+
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 5ex;

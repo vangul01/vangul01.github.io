@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageTitle = "You're offline | VANGULAR";
+const keywords = "offline, no internet connection, PWA";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <div class="container column flex-center">
+      <h3>You're offline</h3>
+      <br /><br />
+      <p>
+        Looks like you've lost your connection. No worries — your cart and
+        settings are saved right on your device. Try again once you're back
+        online.
+      </p>
+    </div>
+    <div class="button-group">
+      <button
+        class="button button-primary"
+        id="retry-offline"
+        onclick="location.reload()"
+      >
+        <span class="button-label"> Try Again </span>
+      </button>
+      <a href="/home"
+        ><button class="button button-secondary">
+          <span class="button-label"> Back to Vangular </span>
+        </button></a
+      >
+    </div>
+  </main>
+</BaseLayout>

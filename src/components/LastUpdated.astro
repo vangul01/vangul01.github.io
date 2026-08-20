@@ -1,0 +1,15 @@
+---
+import fs from "fs";
+
+const { fileUrl } = Astro.props;
+const filePath = new URL(fileUrl).pathname;
+const stats = fs.statSync(filePath);
+const lastUpdated = stats.mtime;
+const formattedDate = lastUpdated.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<p class="last-updated">Last updated: {formattedDate}</p>

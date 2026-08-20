@@ -4,6 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
 import type { Product } from "../types/sanity-schema";
 
+// import { Image } from "astro:assets";
 import logoFallback from "../assets/images/web/logo_eyewhites.png";
 
 const products = await getAllProducts();

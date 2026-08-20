@@ -1,23 +1,28 @@
 /* ----------------PORTAL---------------- */
+
 /* CLASS NOT CURRENTLY USED */
-.portal-video {
+
+/* .portal-video {
   width: 100%;
   height: auto;
   max-width: 1500px;
   margin: 0 auto;
-}
+} */
 
 .portal {
   background: transparent;
-  min-height: 100vh;
+  height: 100%;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 .overlay-image {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .overlay-image:focus-visible {
@@ -26,50 +31,60 @@
   border-radius: 8px;
 }
 
-/* ----------------HOME---------------- */
-
-.title {
-  font-size: var(--font-size-clamp-3xl);
-  color: var(--color-brand-primary);
-  text-shadow: 3px 3px 6px rgba(125, 70, 106, 0.569);
+.hero-section {
+  position: relative;
+  margin-block: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.description {
-  font-size: var(--font-size-clamp-lg);
-  color: var(--color-brand-secondary);
-  text-shadow: 2px 2px 4px rgba(104, 196, 224, 0.65);
-}
-
-/* CLASS NOT CURRENTLY USED */
+/* HERO */
 .hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
-  text-align: center;
+  line-height: 0;
 }
 
-.eye-background {
-  width: 70dvw;
+.hero-image img {
+  display: block;
+  width: 100%;
   height: auto;
-  align-items: center;
-  object-fit: contain; /* or 'contain' if you want to see the whole eye */
+  object-fit: contain;
+  object-position: center;
 }
 
-/* CLASS NOT CURRENTLY USED */
 .overlay-text {
   z-index: 2;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
   text-align: center;
-
   text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
 
   /* p {
     font-size: var(--font-size-clamp-lg);
     letter-spacing: 3px;
   } */
+}
+
+.eye-background {
+  width: 70dvw;
+  max-width: 85dvw;
+  max-height: 85dvh;
+  height: auto;
+  align-items: center;
+  object-fit: contain;
+}
+
+/* ----------------HOME---------------- */
+
+.title {
+  font-size: var(--font-size-clamp-3xl);
+  color: var(--color-brand-primary);
+  text-shadow: 3px 3px 6px rgb(125 70 106 / 56.9%);
+}
+
+.description {
+  font-size: var(--font-size-clamp-lg);
+  color: var(--color-brand-secondary);
+  text-shadow: 2px 2px 4px rgb(104 196 224 / 65%);
 }

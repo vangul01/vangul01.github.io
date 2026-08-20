@@ -9,6 +9,11 @@ export async function initProductPage() {
 
   if (!priceElement || !addToCartBtn) return;
 
+  // If the button is already rendered as "Unavailable" by the server,
+  // skip the Stripe fetch entirely
+  const isInStock = addToCartBtn.dataset.instock !== "false";
+  if (!isInStock) return;
+
   const priceId = priceElement.dataset.priceId;
   if (!priceId) return;
 

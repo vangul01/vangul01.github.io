@@ -1,0 +1,203 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LastUpdated from "../../components/LastUpdated.astro";
+
+const pageTitle = "FAQ | VANGULAR";
+const keywords = "FAQ, VANGULAR, frequently asked questions";
+---
+
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <section class="section">
+      <div class="container column flex-center">
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>Orders</h3>
+
+        <details class="faq-item">
+          <summary><h4>When will my order ship?</h4></summary>
+          <p>
+            Orders are typically processed within 1-3 business days. You will
+            receive a confirmation email with tracking information once your
+            order has shipped.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>Do you ship internationally?</h4></summary>
+          <p>
+            Yes, we ship worldwide. International shipping times and costs vary
+            depending on the destination. Please see our Shipping page for
+            details.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>Can I cancel or change my order?</h4></summary>
+          <p>
+            You may cancel or modify your order within 24 hours of placing it.
+            Please contact us as soon as possible with your order number.
+          </p>
+        </details>
+
+        <h3>Payment</h3>
+
+        <details class="faq-item">
+          <summary><h4>What payment methods do you accept?</h4></summary>
+          <p>
+            We accept all major credit cards (Visa, Mastercard, American
+            Express, Discover), PayPal, and Apple Pay. All payments are
+            processed securely through Stripe.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary
+            ><h4>Is it safe to use my credit card on your site?</h4></summary
+          >
+          <p>
+            Absolutely. We use Stripe, a PCI-compliant payment processor, to
+            handle all transactions. Your payment information is encrypted and
+            never stored on our servers.
+          </p>
+        </details>
+
+        <h3>Artwork</h3>
+
+        <details class="faq-item">
+          <summary><h4>Are your artworks original?</h4></summary>
+          <p>
+            Each piece is an original creation. Limited edition prints are
+            numbered and signed by the artist.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>Are prints signed?</h4></summary>
+          <p>
+            Yes, all prints are hand-signed by the artist and include a
+            certificate of authenticity.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>What materials do you use?</h4></summary>
+          <p>
+            We use high-quality archival paper and inks to ensure your artwork
+            lasts for generations. Specific materials are listed in each product
+            description.
+          </p>
+        </details>
+
+        <h3>Custom Orders</h3>
+
+        <details class="faq-item">
+          <summary><h4>Do you accept custom orders?</h4></summary>
+          <p>
+            Yes, we welcome custom commissions. Please contact us with your
+            vision and we will discuss feasibility, timeline, and pricing.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>How do I request a custom order?</h4></summary>
+          <p>
+            Reach out through our Contact page or email us directly. Include as
+            much detail as possible about what you are looking for.
+          </p>
+        </details>
+
+        <h3>Care Instructions</h3>
+
+        <details class="faq-item">
+          <summary><h4>How do I care for my artwork?</h4></summary>
+          <p>
+            Keep your artwork out of direct sunlight, away from moisture, and
+            avoid extreme temperature changes. Framing behind UV-protective
+            glass is recommended.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>Can I frame my artwork?</h4></summary>
+          <p>
+            Absolutely. We recommend professional framing to preserve and
+            display your piece. Most standard frame sizes will accommodate our
+            prints.
+          </p>
+        </details>
+
+        <h3>Copyright and Usage</h3>
+
+        <details class="faq-item">
+          <summary><h4>Who owns the copyright to your artworks?</h4></summary>
+          <p>
+            All rights remain with the artist. Purchase of a print does not
+            transfer copyright.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary
+            ><h4>Can I use your artworks for commercial purposes?</h4></summary
+          >
+          <p>
+            Commercial use requires a separate licensing agreement. Please
+            contact us to discuss licensing options.
+          </p>
+        </details>
+
+        <h3>Returns</h3>
+
+        <details class="faq-item">
+          <summary><h4>What is your return policy?</h4></summary>
+          <p>
+            We accept returns within 14 days of delivery for unused items in
+            original condition. Please see our Shipping page for full details.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>What if my item arrives damaged?</h4></summary>
+          <p>
+            If your order arrives damaged, please contact us within 48 hours
+            with photos of the damage and we will make it right.
+          </p>
+        </details>
+
+        <h3>Digital Products</h3>
+
+        <details class="faq-item">
+          <summary><h4>How do downloads work?</h4></summary>
+          <p>
+            After purchase, you will receive an email with a download link.
+            Digital files are available for immediate download from your
+            account.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary><h4>Can I get a refund on digital products?</h4></summary>
+          <p>
+            Due to the nature of digital products, all sales are final. Please
+            review product details carefully before purchasing.
+          </p>
+        </details>
+
+        <h3>Contact</h3>
+
+        <details class="faq-item">
+          <summary><h4>How do I get in touch?</h4></summary>
+          <p>
+            If you have any questions that are not answered here, please reach
+            out to us at <a class="link" href="mailto:info@vangular.com"
+              >info@vangular.com</a
+            >.
+          </p>
+        </details>
+
+        <LastUpdated fileUrl={import.meta.url} />
+      </div>
+    </section>
+  </main>
+</BaseLayout>

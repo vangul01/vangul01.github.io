@@ -1,5 +1,7 @@
 /* ------------------- BUTTONS ------------------- */
+
 /* VANGULAR SPECIAL: RAINBOW BUTTON */
+
 /* .btn-rainbow {
   background: var(--gradient-vangular);
   color: var(--c-white);
@@ -14,15 +16,9 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   width: var(--button-width);
-
-  /* background-color: var(--color-border); */
   color: #000;
   border: 3px solid;
-
-  /* padding: 0.25em 0.5em; */
-  /* padding: var(--spacing-clamp-sm) var(--spacing-clamp-md); */
   padding: var(--spacing-clamp-lg);
-
   box-shadow:
     1px 1px 0 0,
     2px 2px 0 0,
@@ -33,16 +29,19 @@
   user-select: none;
   touch-action: manipulation;
   transition: opacity 0.15s;
-
-  justify-content: center;
-  width: var(--button-width);
   height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
 }
 
 .button:hover {
   /* transform: translateY(-2px); */
   scale: 1.1;
+
   /* opacity: 0.8; */
+
   /* background-color: var(--color-button-hover); */
 
   .button-label {
@@ -71,14 +70,34 @@
 }
 
 .button-secondary {
-  background-color: var(--color-button-secondary);
+  background-color: var(--color-button-tertiary);
+  border-width: 1px;
 }
 
+.button-secondary:hover {
+  scale: 1;
+}
+
+/* Near-link — the quietest action */
 .button-tertiary {
-  background-color: var(--color-button-tertiary);
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--color-brand-primary);
+  text-transform: none;
+  letter-spacing: 1px;
+}
+
+.button-tertiary:hover {
+  scale: 1;
+  background-color: transparent;
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* Added by javascript in product.js! */
+
 /* If an item is not available to purchase
 cause Stripes price wasn't obtained */
 .button-disable,
@@ -88,6 +107,7 @@ cause Stripes price wasn't obtained */
   scale: 1;
   opacity: 1;
   cursor: default;
+
   /* Apperance of being clicked down */
   box-shadow: 0 0 0 0;
   top: 5px;
@@ -122,4 +142,23 @@ cause Stripes price wasn't obtained */
   /* left: 50%; */
   bottom: 0;
   margin: var(--spacing-clamp-md) 0;
+}
+
+/* ------------------- BUTTON GROUPS ----------------------- */
+
+/* Consistent layout for 1, 2, or 3 action buttons */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-clamp-md);
+  width: 100%;
+  margin-block: var(--spacing-clamp-md);
+  margin-inline: auto;
+}
+
+.button-group .button {
+  margin-inline: 0;
+  flex: 0 0 auto;
 }

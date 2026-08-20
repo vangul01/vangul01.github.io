@@ -37,6 +37,7 @@
   right: -100%; /* Start fully off-screen */
   margin: 0;
   padding-top: var(--header-height);
+
   /* padding-bottom: var(--spacing-clamp-xl); */
   gap: 0;
   flex-direction: column;
@@ -46,7 +47,6 @@
   width: 25%;
   height: 100%;
   text-align: center;
-
   z-index: 1000;
 
   /* overflow: hidden; */
@@ -131,6 +131,7 @@
 }
 
 /* Overlay when sidebar is open */
+
 /* Opacity and transition needed for smooth viz */
 .nav-overlay {
   position: fixed;
@@ -170,6 +171,7 @@
 }
 
 /* Javascript makes it so you can't scroll with overlay */
+
 /* PSA: When I'm over a link in vertical nav bar I can scroll */
 .nav-overlay.no-scroll {
   /* Prevent scrolling */

@@ -1,4 +1,5 @@
 /* CLASS NOT CURRENTLY USED */
+
 /* universal */
 .product-card {
   border: var(--border-secondary);
@@ -6,6 +7,7 @@
   padding: var(--spacing-clamp-md);
   transition: transform var(--transition-normal);
   background-color: var(--color-background);
+
   /* display: flex;
   flex-direction: column;
   color: inherit; */
