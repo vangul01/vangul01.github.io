@@ -1,5 +1,7 @@
 /* ----------------PORTAL---------------- */
+
 /* CLASS NOT CURRENTLY USED */
+
 /* .portal-video {
   width: 100%;
   height: auto;
@@ -56,7 +58,6 @@
   position: absolute;
   inset: 0;
   text-align: center;
-
   text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
 
   /* p {
@@ -79,11 +80,11 @@
 .title {
   font-size: var(--font-size-clamp-3xl);
   color: var(--color-brand-primary);
-  text-shadow: 3px 3px 6px rgba(125, 70, 106, 0.569);
+  text-shadow: 3px 3px 6px rgb(125 70 106 / 56.9%);
 }
 
 .description {
   font-size: var(--font-size-clamp-lg);
   color: var(--color-brand-secondary);
-  text-shadow: 2px 2px 4px rgba(104, 196, 224, 0.65);
+  text-shadow: 2px 2px 4px rgb(104 196 224 / 65%);
 }

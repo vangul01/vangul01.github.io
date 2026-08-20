@@ -1,23 +1,24 @@
 /* ------------------------------------------------------------ */
+
 /* CONTAINERS + SECTIONS */
+
 /* ------------------------------------------------------------ */
 .container {
   width: min(100% - 2rem, var(--container-width-max));
   margin-inline: auto;
   margin-block: var(--spacing-clamp-lg);
   padding: var(--spacing-clamp-lg);
+
   /* background-color: var(--color-brand-light); */
   background: radial-gradient(
     ellipse at center,
-    /* transparent 0%,
-    rgba(217, 199, 236, 0.08) 50%,
-    rgba(217, 199, 236, 0.25) 100% */
-    rgba(217, 199, 236, 0.08) 70%,
-    rgba(217, 199, 236, 0.25) 0% transparent 100%
+    rgb(217 199 236 / 8%) 70%,
+    rgb(217 199 236 / 25%) 0%,
+    transparent 100%
   );
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgb(255 255 255 / 8%);
   border-radius: var(--spacing-clamp-md);
 }
 
@@ -28,7 +29,9 @@
 }
 
 /* ------------------------------------------------------------ */
+
 /* FLEX UTILITIES */
+
 /* ------------------------------------------------------------ */
 .flex-center {
   display: flex;
@@ -44,7 +47,9 @@
 }
 
 /* ------------------------------------------------------------ */
+
 /* GRID SYSTEM */
+
 /* ------------------------------------------------------------ */
 .grid-responsive {
   display: grid;
@@ -66,7 +71,9 @@
   order: -1;
 }
 
-@container (max-width: 42rem) {
+/* Matches the auto-fit collapse point (2 x 20rem min column + 1.5rem min gap),
+   so the reverse layout never swaps sides while still in two columns. */
+@container (max-width: 41.5rem) {
   .reverse-layout > .image-container {
     order: -1;
   }
@@ -77,6 +84,7 @@
 }
 
 /* CLASS NOT CURRENTLY USED */
+
 /* .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

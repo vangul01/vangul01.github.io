@@ -1,5 +1,7 @@
 /* ------------------- BUTTONS ------------------- */
+
 /* VANGULAR SPECIAL: RAINBOW BUTTON */
+
 /* .btn-rainbow {
   background: var(--gradient-vangular);
   color: var(--c-white);
@@ -14,12 +16,9 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   width: var(--button-width);
-
   color: #000;
   border: 3px solid;
-
   padding: var(--spacing-clamp-lg);
-
   box-shadow:
     1px 1px 0 0,
     2px 2px 0 0,
@@ -31,7 +30,6 @@
   touch-action: manipulation;
   transition: opacity 0.15s;
   height: auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +39,9 @@
 .button:hover {
   /* transform: translateY(-2px); */
   scale: 1.1;
+
   /* opacity: 0.8; */
+
   /* background-color: var(--color-button-hover); */
 
   .button-label {
@@ -97,6 +97,7 @@
 }
 
 /* Added by javascript in product.js! */
+
 /* If an item is not available to purchase
 cause Stripes price wasn't obtained */
 .button-disable,
@@ -106,6 +107,7 @@ cause Stripes price wasn't obtained */
   scale: 1;
   opacity: 1;
   cursor: default;
+
   /* Apperance of being clicked down */
   box-shadow: 0 0 0 0;
   top: 5px;
@@ -143,6 +145,7 @@ cause Stripes price wasn't obtained */
 }
 
 /* ------------------- BUTTON GROUPS ----------------------- */
+
 /* Consistent layout for 1, 2, or 3 action buttons */
 .button-group {
   display: flex;
