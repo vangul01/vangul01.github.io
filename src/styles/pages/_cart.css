@@ -37,9 +37,9 @@
   gap: var(--spacing-clamp-lg);
 }
 
-.cart-product-link {
-  transition: opacity var(--transition-normal);
-}
+/* .cart-product-link { */
+/* transition: opacity var(--transition-normal); */
+/* } */
 
 .cart-product-link:hover {
   opacity: 0.8;
