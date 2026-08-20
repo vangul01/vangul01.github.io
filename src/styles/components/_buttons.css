@@ -70,11 +70,30 @@
 }
 
 .button-secondary {
-  background-color: var(--color-button-secondary);
+  background-color: var(--color-button-tertiary);
+  border-width: 1px;
 }
 
+.button-secondary:hover {
+  scale: 1;
+}
+
+/* Near-link — the quietest action */
 .button-tertiary {
-  background-color: var(--color-button-tertiary);
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--color-brand-primary);
+  text-transform: none;
+  letter-spacing: 1px;
+}
+
+.button-tertiary:hover {
+  scale: 1;
+  background-color: transparent;
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* Added by javascript in product.js! */

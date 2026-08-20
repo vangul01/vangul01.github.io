@@ -3,12 +3,12 @@ import { getImage } from "astro:assets";
 import { siteNavigation } from "../config/navigation";
 import NewsletterForm from "./NewsletterForm.astro";
 
-import plantieFooter from "../assets/images/web/plantie_footer.png";
+import plantieFooter from "../assets/images/web/Footer_Image.png";
 
 const currentYear = new Date().getFullYear();
 const footerLinks = siteNavigation.footerLinks;
 
-const optimizedPlantie = await getImage({ src: plantieFooter, widths: [600] });
+const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
 ---
 
 <footer
@@ -79,6 +79,6 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [600] });
 
   <!-- Footer Bottom -->
   <div class="footer-bottom">
-    <p>© {currentYear} VANGULAR. All rights reserved.</p>
+    <p class="copyright">© {currentYear} VANGULAR. All rights reserved.</p>
   </div>
 </footer>

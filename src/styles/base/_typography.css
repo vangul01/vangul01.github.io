@@ -39,13 +39,11 @@ header {
 
 main {
   position: relative;
-
   grid-row: 2;
 }
 
 footer {
   grid-row: 3;
-  padding: var(--spacing-clamp-lg);
 }
 
 /* ------------------- Paragraphs ------------------- */
