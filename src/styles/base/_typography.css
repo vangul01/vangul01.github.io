@@ -18,7 +18,7 @@ body {
   grid-template-rows: var(--height-header, 70px) 1fr auto;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   body {
     background-image: var(--bg-url);
     background-position: 65% 0;
@@ -39,27 +39,30 @@ header {
 
 main {
   position: relative;
-
   grid-row: 2;
 }
 
 footer {
   grid-row: 3;
-  padding: var(--spacing-clamp-lg);
 }
 
 /* ------------------- Paragraphs ------------------- */
+
 /* Ideal range for characters is 50ch-75ch. Margin setting centers text */
 p {
   font-size: var(--font-size-clamp-base);
   overflow-wrap: break-word;
   text-wrap: pretty;
   max-width: var(--text-ratio);
-  /* margin: 0 auto; */
+
+  /* margin-inline: auto; */
+  margin-block-end: var(--spacing-clamp-sm);
 }
 
 /* ------------------- Headings ------------------- */
+
 /* Set shorter line heights on headings and interactive elements */
+
 /* This makes line-height equal to font-size */
 h1,
 h2,
@@ -74,15 +77,19 @@ h6 {
   text-wrap: balance;
   line-height: 1;
 }
+
 h1 {
   font-size: var(--font-size-clamp-2xl);
 }
+
 h2 {
   font-size: var(--font-size-clamp-xl);
 }
+
 h3 {
   font-size: var(--font-size-clamp-lg);
 }
+
 h4,
 h5,
 h6 {
@@ -97,6 +104,7 @@ a {
 
 a:hover {
   color: var(--color-text-light);
+
   /* transition: var(--transition-normal); */
 }
 
@@ -122,5 +130,3 @@ textarea {
 label {
   padding: 0 var(--spacing-clamp-sm);
 }
-
-

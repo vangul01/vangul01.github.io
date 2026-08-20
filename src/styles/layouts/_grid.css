@@ -1,11 +1,25 @@
 /* ------------------------------------------------------------ */
+
 /* CONTAINERS + SECTIONS */
+
 /* ------------------------------------------------------------ */
 .container {
   width: min(100% - 2rem, var(--container-width-max));
   margin-inline: auto;
+  margin-block: var(--spacing-clamp-lg);
   padding: var(--spacing-clamp-lg);
-  background-color: var(--color-brand-light);
+
+  /* background-color: var(--color-brand-light); */
+
+  background: radial-gradient(
+    ellipse at center,
+    rgb(217 199 236 / 8%) 0%,
+    rgb(217 199 236 / 25%) 70%,
+    transparent 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 8%);
   border-radius: var(--spacing-clamp-md);
 }
 
@@ -16,7 +30,9 @@
 }
 
 /* ------------------------------------------------------------ */
+
 /* FLEX UTILITIES */
+
 /* ------------------------------------------------------------ */
 .flex-center {
   display: flex;
@@ -49,7 +65,9 @@
 } */
 
 /* ------------------------------------------------------------ */
+
 /* GRID SYSTEM */
+
 /* ------------------------------------------------------------ */
 .grid-responsive {
   display: grid;
@@ -63,30 +81,33 @@
   order: -1;
 }
 
-.about-layout > .image-container {
+.reverse-layout > .image-container {
   order: 0;
 }
 
-.about-layout > .text-container {
+.reverse-layout > .text-container {
   order: -1;
 }
 
-@container (max-width: 41.3rem) {
-  .about-layout > .image-container {
+/* Matches the auto-fit collapse point (2 x 20rem min column + 1.5rem min gap),
+   so the reverse layout never swaps sides while still in two columns. */
+@container (max-width: 41.5rem) {
+  .reverse-layout > .image-container {
     order: -1;
   }
 
-  .about-layout > .text-container {
+  .reverse-layout > .text-container {
     order: 0;
   }
 }
 
 /* CLASS NOT CURRENTLY USED */
-.grid-3 {
+
+/* .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-clamp-lg);
-}
+} */
 
 .grid-4 {
   display: grid;
@@ -94,11 +115,18 @@
   grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
 }
 
-.grid-4 a {
+/* .grid-4 a and .grid-4 a img rules to also target .grid-4 > div and .grid-4 > div img,
+so collab cards without links still get the same square image treatment. */
+.grid-4 a,
+.grid-4 > div {
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-clamp-sm);
 }
 
-.grid-4 a img {
+.grid-4 a img,
+.grid-4 > div img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;

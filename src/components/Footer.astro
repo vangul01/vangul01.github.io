@@ -3,21 +3,21 @@ import { getImage } from "astro:assets";
 import { siteNavigation } from "../config/navigation";
 import NewsletterForm from "./NewsletterForm.astro";
 
-import plantieFooter from "../assets/images/web/plantie_footer.png";
+import plantieFooter from "../assets/images/web/Footer_Image.png";
 
 const currentYear = new Date().getFullYear();
 const footerLinks = siteNavigation.footerLinks;
 
-const optimizedPlantie = await getImage({ src: plantieFooter, widths: [600] });
+const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
 ---
 
 <footer
   class="footer"
   style={`--footer-bg-url: url("${optimizedPlantie.src}");`}
 >
-  <div class="footer-grid">
-    <!-- Social Links -->
-    <div class="social-section">
+  <div class="footer-container column">
+    <!-- Row 1: Social Links -->
+    <div class="footer-social">
       <ul class="social-links">
         {
           footerLinks.social.map(({ name, href, icon }) => (
@@ -35,32 +35,50 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [600] });
       </ul>
     </div>
 
-    <!-- Quick Links -->
-    <div class="footer-section">
-      <h4 class="footer-title">Links</h4>
-      <ul class="link-list">
-        {
-          footerLinks.quickLinks.map(({ name, href }) => (
-            <li>
-              <a href={href} class="footer-link">
-                {name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <!-- Newsletter -->
-    <div class="footer-section newsletter">
+    <!-- Row 2: Newsletter -->
+    <div class="footer-newsletter">
       <h4 class="footer-title">Stay Updated</h4>
       <p>Subscribe to get special offers and updates!</p>
       <NewsletterForm />
     </div>
+
+    <!-- Row 3: Links -->
+    <!-- <div class="container"> -->
+    <div class="footer-links-row">
+      <div class="footer-links-col">
+        <h4 class="footer-title">Quick Links</h4>
+        <ul class="link-list">
+          {
+            footerLinks.quickLinks.map(({ name, href }) => (
+              <li>
+                <a href={href} class="footer-link">
+                  {name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4 class="footer-title">Helpful Links</h4>
+        <ul class="link-list">
+          {
+            footerLinks.help.map(({ name, href }) => (
+              <li>
+                <a href={href} class="footer-link">
+                  {name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+    <!-- </div> -->
   </div>
 
   <!-- Footer Bottom -->
   <div class="footer-bottom">
-    <p>© {currentYear} VANGULAR. All rights reserved.</p>
+    <p class="copyright">© {currentYear} VANGULAR. All rights reserved.</p>
   </div>
 </footer>

@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 /*
 Logic:
 1. Make sure input is valid
@@ -5,6 +7,12 @@ Logic:
 3. If not, send Double Opt-In email via Brevo API
 */
 export async function handler(event) {
+  console.log(
+    "BREVO_KEY_PREFIX:",
+    process.env.SECRET_BREVO_API_KEY?.slice(0, 12),
+  );
+  console.log("BREVO_KEY_EXISTS:", !!process.env.SECRET_BREVO_API_KEY);
+  console.log("BREVO_LIST_ID:", process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID);
   try {
     // --- 1. Method guard ---
     if (event.httpMethod !== "POST") {

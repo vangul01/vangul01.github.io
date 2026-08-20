@@ -24,9 +24,11 @@
   "devDependencies": {
     "@astrojs/react": "^6.0.0",
     "@vitejs/plugin-react": "^6.0.3",
+    "postcss-html": "^2.0.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "stylelint": "^16.24.0",
+    "stylelint-config-html": "^2.0.0",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-prettier": "^5.0.3",
     "vite": "^8.1.0"

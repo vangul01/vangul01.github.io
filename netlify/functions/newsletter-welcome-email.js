@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export async function handler(event) {
   try {
     // Get email from query parameter
@@ -24,9 +26,7 @@ export async function handler(event) {
             "DOUBLE_OPT-IN": "1",
           },
           listIds: [Number(process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID)],
-          unlinkListIds: [
-            Number(process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID),
-          ],
+          unlinkListIds: [Number(process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID)],
         }),
       },
     );

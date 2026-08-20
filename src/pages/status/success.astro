@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const pageTitle = "Order Success | VANGULAR";
+const keywords =
+  "order success, payment success, thank you, order confirmation";
+---
+
+<!-- I'd like to have a success footer here which highlights connecting
+ on social media and signing up to newsletter -->
+<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+  <main>
+    <div class="container column flex-center">
+      <h3>Your payment was successful :)</h3>
+      <h5>
+        Thanks for your order! We've sent you a confirmation email with your
+        purchase details.
+      </h5>
+    </div>
+    <div class="button-group">
+      <a href="/home"
+        ><button class="button button-primary">
+          <span class="button-label"> Back to Vangular</span>
+        </button></a
+      >
+    </div>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  if (window.location.search.includes("session_id")) {
+    localStorage.removeItem("cartItems");
+  }
+</script>

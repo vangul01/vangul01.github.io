@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pageTitle = "Order Cancelled | VANGULAR";
 const keywords = "order cancelled, payment failure";
@@ -10,11 +10,13 @@ const keywords = "order cancelled, payment failure";
     <div class="container column flex-center">
       <h3>Payment Canceled</h3>
       <h4>Your payment was not completed. Please try again.</h4>
-      <a href="/cart"
-        ><button class="button button-primary">
-          <span class="button-label"> Go Back to Cart </span>
-        </button></a
-      >
+      <div class="button-group">
+        <a href="/cart"
+          ><button class="button button-primary">
+            <span class="button-label"> Go Back to Cart </span>
+          </button></a
+        >
+      </div>
     </div>
   </main>
 </BaseLayout>

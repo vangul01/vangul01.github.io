@@ -1,0 +1,291 @@
+---
+import { getOptimizedImageUrl } from "../lib/sanity-client";
+
+interface CarouselItem {
+  image: string;
+  title?: string;
+  link?: string;
+}
+
+interface Props {
+  items?: CarouselItem[];
+  id?: string;
+  interval?: number;
+  fallback?: string;
+}
+
+const {
+  items = [],
+  id = "carousel",
+  interval = 5000,
+  fallback = "",
+} = Astro.props;
+const slides = items.filter((item) => item.image);
+const imgErrorHandler = fallback
+  ? `this.onerror=null;this.src='${fallback}'`
+  : undefined;
+---
+
+{
+  slides.length > 0 && (
+    <div
+      class="carousel"
+      data-carousel-id={id}
+      data-interval={interval}
+      data-slides={slides.length}
+    >
+      <div class="carousel-track">
+        {slides.map((item, i) => (
+          <div
+            class={`carousel-slide${i === 0 ? " active" : ""}`}
+            data-index={i}
+          >
+            {item.link ? (
+              <a href={item.link} class="carousel-slide-link">
+                <img
+                  src={getOptimizedImageUrl(item.image, 600)}
+                  alt={item.title || ""}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  onerror={imgErrorHandler}
+                />
+              </a>
+            ) : (
+              <img
+                src={getOptimizedImageUrl(item.image, 600)}
+                alt={item.title || ""}
+                loading={i === 0 ? "eager" : "lazy"}
+                onerror={imgErrorHandler}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {slides.length > 1 && (
+        <>
+          <button
+            class="carousel-btn carousel-prev"
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <button class="carousel-btn carousel-next" aria-label="Next slide">
+            ›
+          </button>
+          <div class="carousel-dots" role="tablist" aria-label="Slides">
+            {slides.map((_, i) => (
+              <button
+                class={`carousel-dot${i === 0 ? " active" : ""}`}
+                data-index={i}
+                role="tab"
+                aria-label={`Go to slide ${i + 1}`}
+                aria-selected={i === 0}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+<script>
+  class Carousel {
+    slides: NodeListOf<HTMLElement>;
+    dots: NodeListOf<HTMLElement>;
+    current: number;
+    interval: number;
+    timer: ReturnType<typeof setInterval> | undefined;
+
+    constructor(el: HTMLElement) {
+      this.slides = el.querySelectorAll<HTMLElement>(".carousel-slide");
+      this.dots = el.querySelectorAll<HTMLElement>(".carousel-dot");
+      this.current = 0;
+      this.interval = parseInt(el.dataset.interval || "", 10) || 5000;
+
+      if (this.slides.length < 2) return;
+
+      el.querySelector(".carousel-prev")?.addEventListener("click", () =>
+        this.go(this.current - 1),
+      );
+      el.querySelector(".carousel-next")?.addEventListener("click", () =>
+        this.go(this.current + 1),
+      );
+
+      this.dots.forEach((dot) => {
+        const index = parseInt(dot.dataset.index || "", 10);
+        if (!Number.isNaN(index)) {
+          dot.addEventListener("click", () => this.go(index));
+        }
+      });
+
+      el.addEventListener("mouseenter", () => this.stop());
+      el.addEventListener("mouseleave", () => this.start());
+
+      this.start();
+    }
+
+    go(index: number) {
+      const next =
+        ((index % this.slides.length) + this.slides.length) %
+        this.slides.length;
+
+      // Swap active class — CSS handles the fade
+      this.slides[this.current].classList.remove("active");
+      this.slides[next].classList.add("active");
+
+      this.dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === next);
+        dot.setAttribute("aria-selected", String(i === next));
+      });
+
+      this.current = next;
+    }
+
+    start() {
+      this.stop();
+      this.timer = setInterval(() => this.go(this.current + 1), this.interval);
+    }
+
+    stop() {
+      clearInterval(this.timer);
+    }
+  }
+
+  document
+    .querySelectorAll<HTMLElement>(".carousel")
+    .forEach((el) => new Carousel(el));
+</script>
+
+<style>
+  /* Don't revert to position:absolute cause that will cause the image to disappear */
+  .carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-gray-700);
+  }
+
+  /* Grid with one shared cell so stacked slides still size the track */
+  .carousel-track {
+    display: grid;
+    aspect-ratio: 1;
+  }
+
+  /* grid-area 1/1 means the carousel is always square */
+  .carousel-slide {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition:
+      opacity 0.6s ease,
+      visibility 0s linear 0.6s;
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+    z-index: 1;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .carousel-slide-link {
+    display: block;
+    height: 100%;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: rgb(0 0 0 / 40%);
+    color: var(--color-text-light);
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--border-radius-circle);
+    font-size: var(--font-size-clamp-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition:
+      opacity var(--transition-fast),
+      background var(--transition-fast);
+    line-height: 1;
+  }
+
+  .carousel:hover .carousel-btn {
+    opacity: 1;
+  }
+
+  .carousel-btn:hover {
+    background: rgb(0 0 0 / 70%);
+  }
+
+  .carousel-prev {
+    left: var(--spacing-clamp-sm);
+  }
+
+  .carousel-next {
+    right: var(--spacing-clamp-sm);
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: var(--spacing-clamp-xs);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--spacing-clamp-xs);
+    z-index: 2;
+    padding: var(--spacing-clamp-xs);
+  }
+
+  .carousel-dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border: none;
+    background: rgb(255 255 255 / 45%);
+    clip-path: polygon(
+      50% 33%,
+      61% 12%,
+      84% 12%,
+      100% 30%,
+      100% 55%,
+      50% 100%,
+      0% 55%,
+      0% 30%,
+      16% 12%,
+      39% 12%
+    );
+    cursor: pointer;
+    transition:
+      background var(--transition-fast),
+      transform var(--transition-fast);
+    padding: 0;
+  }
+
+  .carousel-dot.active {
+    background: var(--color-brand-secondary);
+    transform: scale(1.25);
+  }
+
+  .carousel-dot:hover {
+    background: rgb(255 255 255 / 70%);
+  }
+</style>
