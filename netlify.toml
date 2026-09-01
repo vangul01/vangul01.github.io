@@ -1,6 +1,9 @@
 [build]
   # Clears Vite/Astro cache before each Netlify deploy to prevent stale build artifacts
   command = "rm -rf node_modules/.cache .astro && npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
   publish = "dist"          # Directory to publish (output folder)
   functions = "netlify/functions"
 
