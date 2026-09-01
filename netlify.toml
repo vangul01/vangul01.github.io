@@ -1,11 +1,11 @@
 [build]
   # Clears Vite/Astro cache before each Netlify deploy to prevent stale build artifacts
   command = "rm -rf node_modules/.cache .astro && npm run build"
-
-[build.environment]
-  NODE_VERSION = "20"
   publish = "dist"          # Directory to publish (output folder)
   functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22.12.0"
 
 [dev]
   framework = "astro"
@@ -13,10 +13,6 @@
 
 [functions]
   node_bundler = "esbuild"
-
-[[edge_functions]]
-  function = "block-bots"
-  path = "/*"
 
 [[redirects]]
   from = '/api/*'
