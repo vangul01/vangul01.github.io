@@ -162,6 +162,7 @@ const imgErrorHandler = fallback
   .carousel {
     position: relative;
     width: 100%;
+    aspect-ratio: 1;
     overflow: hidden;
     border-radius: var(--border-radius-md);
     background-color: var(--color-gray-700);
@@ -170,7 +171,8 @@ const imgErrorHandler = fallback
   /* Grid with one shared cell so stacked slides still size the track */
   .carousel-track {
     display: grid;
-    aspect-ratio: 1;
+    width: 100%;
+    height: 100%;
   }
 
   /* grid-area 1/1 means the carousel is always square */
