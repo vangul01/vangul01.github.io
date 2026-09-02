@@ -59,11 +59,6 @@
   inset: 0;
   text-align: center;
   text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
-
-  /* p {
-    font-size: var(--font-size-clamp-lg);
-    letter-spacing: 3px;
-  } */
 }
 
 .eye-background {
