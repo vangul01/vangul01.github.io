@@ -25,14 +25,13 @@ Checkout page
 import { updateUI, updateCartCount } from "./cart/cart.js";
 import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
-// import { initTheme } from "./color-theme.js";
 import { initContactForm, initNewsletterForm } from "./form-submission.js";
 import { initProductPage } from "./product.js";
+import { initCarousels } from "./carousel.js";
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     // Initialize global features
-    // initTheme();
     initNav();
 
     // Initialize forms
@@ -45,6 +44,9 @@ if (typeof document !== "undefined") {
 
     // Initialize product page features
     initProductPage();
+
+    // Initialize carousels
+    initCarousels();
 
     // EDIT THIS!
     // Add-to cart-button data send. Needs product data from stripe to work
