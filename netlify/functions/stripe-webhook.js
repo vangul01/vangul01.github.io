@@ -11,6 +11,12 @@ const brevoSenderEmail =
   process.env.BREVO_SENDER_EMAIL ||
   process.env.BREVO_NOTIFICATION_EMAIL ||
   "contact@vangular.com";
+const orderConfirmationTemplateId = Number(
+  process.env.BREVO_ORDER_CONFIRMATION_TEMPLATE_ID,
+);
+const orderNotificationTemplateId = Number(
+  process.env.BREVO_ORDER_NOTIFICATION_TEMPLATE_ID,
+);
 
 if (!secretKey) {
   throw new Error("Missing Stripe secret key");
@@ -91,6 +97,30 @@ export async function handler(event) {
       break;
     }
 
+    case "charge.succeeded": {
+      const charge = stripeEvent.data.object;
+      console.log(
+        "Charge succeeded:",
+        charge.id,
+        "amount ",
+        charge.amount ? charge.amount / 100 : charge.amount,
+        charge.currency,
+      );
+      break;
+    }
+
+    case "charge.updated": {
+      const charge = stripeEvent.data.object;
+      console.log(
+        "Charge updated:",
+        charge.id,
+        "status",
+        charge.status,
+        charge.refunded ? "(refunded)" : "",
+      );
+      break;
+    }
+
     default:
       console.log(`Unhandled event type: ${stripeEvent.type}`);
   }
@@ -101,75 +131,60 @@ export async function handler(event) {
   };
 }
 
-function buildOrderHtml({ title, intro, session, items }) {
+function buildOrderParams(session, items) {
   const { customer_details, shipping_details, amount_total } = session;
+
+  const total = amount_total ? `$${(amount_total / 100).toFixed(2)}` : "N/A";
+  const firstName =
+    (customer_details?.name &&
+      customer_details.name.split(" ")[0].replace(/[^a-zA-Z0-9 ]/g, "")) ||
+    "there";
+  const address = shipping_details?.address
+    ? [
+        shipping_details.address.line1,
+        shipping_details.address.city,
+        shipping_details.address.state,
+        shipping_details.address.postal_code,
+      ]
+        .filter(Boolean)
+        .join(", ") || "Not provided"
+    : "Not provided";
 
   const itemsHtml = items
     .map(
       (item) =>
         `<tr>
-          <td style="padding:8px;border-bottom:1px solid #ddd;">${item.description || "Item"}</td>
-          <td style="padding:8px;border-bottom:1px solid #ddd;text-align:center;">${item.quantity}</td>
-          <td style="padding:8px;border-bottom:1px solid #ddd;text-align:right;">$${((item.amount_total || 0) / 100).toFixed(2)}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #eee;color:rgb(55,47,73);">${item.description || "Item"} &times; ${item.quantity ?? 1}</td>
+          <td align="right" style="padding:8px 0;border-bottom:1px solid #eee;color:rgb(55,47,73);white-space:nowrap;">$${((item.amount_total || 0) / 100).toFixed(2)}</td>
         </tr>`,
     )
     .join("");
 
-  const total = amount_total ? `$${(amount_total / 100).toFixed(2)}` : "N/A";
-  const name = customer_details?.name || "Not provided";
-  const email = customer_details?.email || "Not provided";
-  const address = shipping_details?.address
-    ? `${shipping_details.address.line1 || ""}, ${shipping_details.address.city || ""}, ${shipping_details.address.state || ""} ${shipping_details.address.postal_code || ""}`
-    : "Not provided";
-
   return {
-    itemsHtml,
-    total,
-    html: `
-    <h2>${title}</h2>
-    <p>${intro}</p>
-
-    <p><strong>Order Total:</strong> ${total}</p>
-
-    <h3>Customer</h3>
-    <p><strong>Name:</strong> ${name}</p>
-    <p><strong>Email:</strong> ${email}</p>
-
-    <h3>Shipping Address</h3>
-    <p>${address}</p>
-
-    <h3>Items</h3>
-    <table style="width:100%;border-collapse:collapse;">
-      <thead>
-        <tr style="background:#f5f5f5;">
-          <th style="padding:8px;text-align:left;">Item</th>
-          <th style="padding:8px;text-align:center;">Qty</th>
-          <th style="padding:8px;text-align:right;">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${itemsHtml}
-      </tbody>
-    </table>
-  `,
+    ORDER_TOTAL: total,
+    ORDER_SUBTOTAL: total,
+    CUSTOMER_FIRST_NAME: firstName,
+    CUSTOMER_NAME: customer_details?.name || "Not provided",
+    CUSTOMER_EMAIL: customer_details?.email || "Not provided",
+    SHIPPING_ADDRESS: address,
+    SITE_LINK: process.env.PUBLIC_SITE_URL || "https://www.vangular.com",
+    CONTACT_LINK: `${process.env.PUBLIC_SITE_URL || "https://www.vangular.com"}/info/contact`,
+    ITEMS_HTML: itemsHtml,
   };
 }
 
 async function sendOrderNotification(session, items) {
   const { payment_status } = session;
-  const { html, total } = buildOrderHtml({
-    title: "New Order Received!",
-    intro:
-      "A new purchase has been made on your store. Begin order fulfillment.",
-    session,
-    items,
-  });
+  const total = session.amount_total
+    ? `$${(session.amount_total / 100).toFixed(2)}`
+    : "N/A";
 
   const emailPayload = {
     sender: { name: "Vangular Orders", email: brevoSenderEmail },
     to: [{ email: adminEmail }],
     subject: `New Order — ${total}${session.customer_details?.name ? ` from ${session.customer_details.name}` : ""}`,
-    htmlContent: html,
+    templateId: orderNotificationTemplateId,
+    params: buildOrderParams(session, items),
   };
 
   await sendBrevo(emailPayload, `Order notification (${payment_status})`);
@@ -182,19 +197,16 @@ async function sendOrderConfirmation(session, items) {
     return;
   }
 
-  const { html, total } = buildOrderHtml({
-    title: "Order Confirmation — VANGULAR",
-    intro:
-      "Thank you for your order! Your purchase was received and our team has begun the fulfillment process. We'll send you tracking information once your items ship.",
-    session,
-    items,
-  });
+  const total = session.amount_total
+    ? `$${(session.amount_total / 100).toFixed(2)}`
+    : "N/A";
 
   const emailPayload = {
     sender: { name: "VANGULAR", email: brevoSenderEmail },
     to: [{ email: buyerEmail, name: session.customer_details?.name || undefined }],
     subject: `Your VANGULAR order is confirmed — ${total}`,
-    htmlContent: html,
+    templateId: orderConfirmationTemplateId,
+    params: buildOrderParams(session, items),
   };
 
   await sendBrevo(emailPayload, "Buyer order confirmation");
