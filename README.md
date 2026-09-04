@@ -84,6 +84,27 @@ PUBLIC_SITE_URL="https://your-ngrok-url.ngrok-free.app"
 
 4. Update Stripe webhook endpoints in Stripe Dashboard with new ngrok URL
 
+### Local Stripe webhook testing (no ngrok needed)
+
+Use the Stripe CLI to forward webhook events to your local functions without
+managing a permanent webhook endpoint or ngrok tunnel:
+
+```bash
+# 1. Serve the site + Netlify functions locally (use this, not `astro dev`)
+netlify dev
+
+# 2. In another terminal, forward Stripe test events to the local webhook
+stripe listen --forward-to localhost:8888/.netlify/functions/stripe-webhook
+
+# 3. `stripe listen` prints a signing secret like:
+#    whsec_xxxxxxxxxxxx
+# Copy that value into your local .env as SECRET_STRIPE_WEBHOOK_SECRET for this
+# session (it changes each time you run `stripe listen`).
+```
+
+Then trigger the webhook locally with `stripe trigger checkout.session.completed`
+or by completing a real (test-mode) checkout.
+
 ## 💾 Sanity CMS
 
 1. Start Sanity studio:
