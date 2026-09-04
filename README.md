@@ -90,8 +90,8 @@ Use the Stripe CLI to forward webhook events to your local functions without
 managing a permanent webhook endpoint or ngrok tunnel:
 
 ```bash
-# 1. Serve the site + Netlify functions locally (use this, not `astro dev`)
-netlify dev
+# 1. Serve the site + Netlify functions locally on port 8888
+netlify dev --port=8888
 
 # 2. In another terminal, forward Stripe test events to the local webhook
 stripe listen --forward-to localhost:8888/.netlify/functions/stripe-webhook
@@ -104,6 +104,33 @@ stripe listen --forward-to localhost:8888/.netlify/functions/stripe-webhook
 
 Then trigger the webhook locally with `stripe trigger checkout.session.completed`
 or by completing a real (test-mode) checkout.
+
+> Never put a `stripe listen` (CLI) signing secret into a deployed Netlify site's
+> environment variables. Only the secret revealed on the endpoint's page in the
+> Stripe Dashboard (`w: Developers > Webhooks > your endpoint > Reveal secret`)
+> belongs there. The CLI secret and the Dashboard secret both start with `whsec_`
+> but are different — mixing them up makes every delivery fail with a `400`.
+
+### Local Stripe webhook testing with ngrok (public HTTPS URL)
+
+Use this when you need a public HTTPS URL for a real webhook endpoint (e.g. to
+point a Stripe Dashboard webhook at your machine):
+
+```bash
+# 1. Serve the site + Netlify functions locally on port 8888
+netlify dev --port=8888
+
+# 2. Tunnel localhost to a public URL
+ngrok http 8888            # or: ngrok http --url=your-name.ngrok-free.app 8888
+
+# 3. Stripe Dashboard > Developers > Webhooks (test mode) > Add endpoint
+#    URL: https://<your-ngrok-url>.ngrok-free.app/.netlify/functions/stripe-webhook
+#    Select the checkout.session.completed event type, then Reveal secret and
+#    copy that whsec_... into local .env as SECRET_STRIPE_WEBHOOK_SECRET
+```
+
+Each webhook endpoint has its own signing secret. Keep this ngrok endpoint's
+secret in local `.env` and rely on `stripe listen` (above) otherwise.
 
 ## 💾 Sanity CMS
 

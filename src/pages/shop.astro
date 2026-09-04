@@ -9,8 +9,8 @@ import logoFallback from "../assets/images/web/logo_eyewhites.png";
 
 const products = await getAllProducts();
 
-const pageTitle = "Merch | VANGULAR";
-const keywords = "art, merchandise, prints, digital art, paintings";
+const pageTitle = "Shop | VANGULAR";
+const keywords = "art prints, digital art, paintings, shop, store";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
@@ -19,7 +19,7 @@ const keywords = "art, merchandise, prints, digital art, paintings";
       {
         products.length === 0 ? (
           <div class="container column flex-center">
-            <h3>Check back soon for new merch!</h3>
+            <h3>Check back soon for new products!</h3>
           </div>
         ) : (
           <div class="container grid-4">
