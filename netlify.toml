@@ -8,8 +8,12 @@
   NODE_VERSION = "22.13.0"
 
 [dev]
-  framework = "astro"
-  targetPort = 4321
+  # framework = "astro"
+  # targetPort = 4321
+  # This guarantees netlify dev gets a foreground child it can proxy and kill cleanly.
+  # command = "ASTRO_DEV_BACKGROUND=0 astro dev --port 4321"
+
+  framework = "#static"
 
 [functions]
   node_bundler = "esbuild"
@@ -18,3 +22,13 @@
   from = '/api/*'
   to = '/.netlify/functions/:splat'
   status = 200
+
+[[redirects]]
+  from = '/merch'
+  to = '/shop'
+  status = 301
+
+[[redirects]]
+  from = '/merch/*'
+  to = '/shop/:splat'
+  status = 301

@@ -45,11 +45,7 @@ export async function handler(event) {
 
   let stripeEvent;
   try {
-    stripeEvent = stripe.webhooks.constructEvent(
-      rawBody,
-      sig,
-      webhookSecret,
-    );
+    stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
   } catch (err) {
     console.error("Webhook signature verification failed:", err.message);
     return { statusCode: 400, body: `Webhook Error: ${err.message}` };
@@ -71,9 +67,7 @@ export async function handler(event) {
           // Send the buyer a confirmation that their order was received
           await sendOrderConfirmation(session, lineItems.data);
         } else {
-          console.log(
-            "No Brevo API key set — skipping email notifications.",
-          );
+          console.log("No Brevo API key set — skipping email notifications.");
         }
       } catch (err) {
         console.error("Failed to process completed session:", err);
@@ -134,7 +128,13 @@ export async function handler(event) {
 function buildOrderParams(session, items) {
   const { customer_details, shipping_details, amount_total } = session;
 
-  const total = amount_total ? `$${(amount_total / 100).toFixed(2)}` : "N/A";
+  const formatMoney = (amount) =>
+    typeof amount === "number" ? `$${(amount / 100).toFixed(2)}` : "N/A";
+
+  const total = formatMoney(amount_total);
+  const subtotal = formatMoney(session.amount_subtotal);
+  const shipping = formatMoney(session.total_details?.amount_shipping);
+  const tax = formatMoney(session.total_details?.amount_tax);
   const firstName =
     (customer_details?.name &&
       customer_details.name.split(" ")[0].replace(/[^a-zA-Z0-9 ]/g, "")) ||
@@ -155,14 +155,16 @@ function buildOrderParams(session, items) {
       (item) =>
         `<tr>
           <td style="padding:8px 0;border-bottom:1px solid #eee;color:rgb(55,47,73);">${item.description || "Item"} &times; ${item.quantity ?? 1}</td>
-          <td align="right" style="padding:8px 0;border-bottom:1px solid #eee;color:rgb(55,47,73);white-space:nowrap;">$${((item.amount_total || 0) / 100).toFixed(2)}</td>
+          <td align="right" style="padding:8px 0;border-bottom:1px solid #eee;color:rgb(55,47,73);white-space:nowrap;">${formatMoney(item.amount_subtotal ?? item.amount_total)}</td>
         </tr>`,
     )
     .join("");
 
   return {
     ORDER_TOTAL: total,
-    ORDER_SUBTOTAL: total,
+    ORDER_SUBTOTAL: subtotal,
+    SHIPPING_COST: shipping,
+    TAX_AMOUNT: tax,
     CUSTOMER_FIRST_NAME: firstName,
     CUSTOMER_NAME: customer_details?.name || "Not provided",
     CUSTOMER_EMAIL: customer_details?.email || "Not provided",
@@ -203,7 +205,9 @@ async function sendOrderConfirmation(session, items) {
 
   const emailPayload = {
     sender: { name: "VANGULAR", email: brevoSenderEmail },
-    to: [{ email: buyerEmail, name: session.customer_details?.name || undefined }],
+    to: [
+      { email: buyerEmail, name: session.customer_details?.name || undefined },
+    ],
     subject: `Your VANGULAR order is confirmed — ${total}`,
     templateId: orderConfirmationTemplateId,
     params: buildOrderParams(session, items),

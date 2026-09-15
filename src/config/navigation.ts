@@ -3,7 +3,7 @@ export const siteNavigation = {
     logo: [{ name: "VANGULAR", href: "/" }],
     mainNav: [
       { name: "Home", href: "/home" },
-      { name: "Merch", href: "/merch" },
+      { name: "Shop", href: "/shop" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
     ],
@@ -12,14 +12,14 @@ export const siteNavigation = {
   footerLinks: {
     quickLinks: [
       { name: "Home", href: "/home" },
-      { name: "Merch", href: "/merch" },
+      { name: "Shop", href: "/shop" },
       { name: "About", href: "/about" },
       { name: "Collabs", href: "/collabs" },
     ],
     shop: [
-      { name: "All Products", href: "/merch" },
-      { name: "New Arrivals", href: "/merch/new" },
-      { name: "Best Sellers", href: "/merch/best" },
+      { name: "All Products", href: "/shop" },
+      { name: "New Arrivals", href: "/shop/new" },
+      { name: "Best Sellers", href: "/shop/best" },
     ],
     help: [
       { name: "FAQ", href: "/info/faq" },

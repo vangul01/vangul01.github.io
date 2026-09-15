@@ -2,15 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
-import type { Product } from "../types/sanity-schema";
+// import type { Product } from "../types/sanity-schema";
 
 // import { Image } from "astro:assets";
-import logoFallback from "../assets/images/web/logo_eyewhites.png";
+import missingImage from "../assets/images/web/missing_image_fallback.png";
 
 const products = await getAllProducts();
 
-const pageTitle = "Merch | VANGULAR";
-const keywords = "art, merchandise, prints, digital art, paintings";
+const pageTitle = "Shop | VANGULAR";
+const keywords = "art prints, digital art, paintings, shop, store";
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
@@ -19,7 +19,7 @@ const keywords = "art, merchandise, prints, digital art, paintings";
       {
         products.length === 0 ? (
           <div class="container column flex-center">
-            <h3>Check back soon for new merch!</h3>
+            <h3>Check back soon for new products!</h3>
           </div>
         ) : (
           <div class="container grid-4">
@@ -30,7 +30,7 @@ const keywords = "art, merchandise, prints, digital art, paintings";
                     src={
                       product.images?.[0]
                         ? getOptimizedImageUrl(product.images[0], 400)
-                        : logoFallback.src
+                        : missingImage.src
                     }
                     alt={product.name}
                     loading="lazy"

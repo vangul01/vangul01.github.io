@@ -71,7 +71,8 @@ export function initNewsletterForm() {
         const data = await response.json();
         if (!response.ok)
           throw new Error(data.message || "Failed to subscribe");
-        newsletterMsg.textContent = "Subscription successful!";
+        newsletterMsg.textContent =
+          data.message || "Subscription successful!";
         console.log("Newsletter subscription response:", data.message);
         newsletterForm.reset();
       } catch (error) {

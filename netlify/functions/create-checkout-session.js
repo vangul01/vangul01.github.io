@@ -11,6 +11,15 @@ const stripe = new Stripe(secretKey, {
   apiVersion: "2025-02-24.acacia",
 });
 
+// Shipping rates are created in the Stripe Dashboard and referenced by ID.
+const standardShippingRate = process.env.STRIPE_SHIPPING_RATE_STANDARD;
+const freeShippingRate = process.env.STRIPE_SHIPPING_RATE_FREE;
+const FREE_SHIPPING_THRESHOLD = 7500; // $75.00 in cents
+
+if (!standardShippingRate || !freeShippingRate) {
+  throw new Error("Missing Stripe shipping rate env vars");
+}
+
 // This function will be called when the client requests to create a checkout session.
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
@@ -26,6 +35,26 @@ export async function handler(event) {
       throw new Error("No items provided");
     }
 
+    // Retrieve prices so the order subtotal is known before choosing shipping
+    const prices = await Promise.all(
+      items.map((item) => stripe.prices.retrieve(item.priceId)),
+    );
+    const subtotal = prices.reduce(
+      (sum, price, index) =>
+        sum + (price.unit_amount ?? 0) * items[index].quantity,
+      0,
+    );
+
+    // Free standard shipping on orders over $75, otherwise a flat rate
+    const shippingOptions = [
+      {
+        shipping_rate:
+          subtotal >= FREE_SHIPPING_THRESHOLD
+            ? freeShippingRate
+            : standardShippingRate,
+      },
+    ];
+
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -39,6 +68,8 @@ export async function handler(event) {
         // },
       })),
       mode: "payment",
+      automatic_tax: { enabled: true },
+      shipping_options: shippingOptions,
       success_url: `${process.env.PUBLIC_SITE_URL}/status/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.PUBLIC_SITE_URL}/status/cancel`,
       shipping_address_collection: {

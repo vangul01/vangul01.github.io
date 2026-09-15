@@ -24,7 +24,6 @@ export async function getStripePrices(
   priceIds: string[],
 ): Promise<Record<string, StripePrice>> {
   // Add debug logging
-  console.log("Sanity Dataset:", import.meta.env.PUBLIC_SANITY_DATASET);
   console.log("Requesting price(s) for:", priceIds);
 
   const url = getNetlifyFunctionUrl("/.netlify/functions/get-stripe-prices");

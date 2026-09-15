@@ -2,9 +2,10 @@ import "dotenv/config";
 
 /*
 Logic:
-1. Make sure input is valid
-2. Check if email is already in Double Opt-In Subscribers list
-3. If not, send Double Opt-In email via Brevo API
+1. Validate input
+2. Check if the email is already a member of the confirmed newsletter list
+3. If not, send the Double Opt-In email via Brevo API. On confirmation,
+   Brevo adds the contact directly to the confirmed list.
 */
 export async function handler(event) {
   console.log(
@@ -12,7 +13,10 @@ export async function handler(event) {
     process.env.SECRET_BREVO_API_KEY?.slice(0, 12),
   );
   console.log("BREVO_KEY_EXISTS:", !!process.env.SECRET_BREVO_API_KEY);
-  console.log("BREVO_LIST_ID:", process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID);
+  console.log(
+    "BREVO_LIST_ID:",
+    process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID,
+  );
   try {
     // --- 1. Method guard ---
     if (event.httpMethod !== "POST") {
@@ -45,6 +49,10 @@ export async function handler(event) {
     }
 
     // --- 3. Check if already subscribed ---
+    const confirmedListId = Number(
+      process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID,
+    );
+
     const checkSubscribed = await fetch(
       `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`,
       {
@@ -55,12 +63,12 @@ export async function handler(event) {
       },
     );
 
-    // If contact exists (200) and is already opted in
+    // If contact exists and is already in the confirmed list
     if (checkSubscribed.ok) {
       const contact = await checkSubscribed.json();
-      const optIn = contact.attributes?.["DOUBLE_OPT-IN"] || "0";
+      const listIds = contact.listIds || [];
 
-      if (optIn === "1") {
+      if (listIds.includes(confirmedListId)) {
         return {
           statusCode: 200,
           body: JSON.stringify({ message: "You're already subscribed!" }),
@@ -69,13 +77,12 @@ export async function handler(event) {
       }
     }
 
-    // --- 3. Send Double Opt-In email ---
+    // --- 4. Send Double Opt-In email ---
     const subscribeBody = {
       email,
-      includeListIds: [Number(process.env.BREVO_PENDING_SUBSCRIBERS_LIST_ID)],
+      includeListIds: [confirmedListId],
       templateId: Number(process.env.BREVO_DEFAULT_DOUBLE_OPT_IN_TEMPLATE_ID),
-      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/success-newsletter`,
-      //   redirectionUrl: `${process.env.PUBLIC_SITE_URL}/.netlify/functions/newsletter-welcome-email?email={{params.email}}`,
+      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/status/success-newsletter`,
     };
 
     const response = await fetch(
@@ -90,7 +97,7 @@ export async function handler(event) {
       },
     );
 
-    // --- 6. Handle Brevo response ---
+    // --- 5. Handle Brevo response ---
     if (response.ok) {
       return {
         statusCode: 200,
