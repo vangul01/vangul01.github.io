@@ -6,7 +6,7 @@ import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import Carousel from "../components/Carousel.astro";
 
 import aboutMe from "../assets/images/web/about-home.png";
-import featuredArt from "../assets/images/web/logo_eyewhites.png";
+import featuredArtFallback from "../assets/images/web/logo_fallback.png";
 import collabFallback from "../assets/images/web/dreams.png";
 import footerImage from "../assets/images/web/Hero_Image.png";
 
@@ -63,11 +63,11 @@ const keywords =
               <Carousel
                 items={featuredSlides}
                 id="featured-art"
-                fallback={featuredArt.src}
+                fallback={featuredArtFallback.src}
               />
             ) : (
               <Image
-                src={featuredArt}
+                src={featuredArtFallback}
                 alt="Featured Artwork"
                 widths={[400, 600, 800]}
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -161,7 +161,7 @@ const keywords =
           </p>
           <br />
           <div class="button-group">
-            <a href="/contact"
+            <a href="/info/contact"
               ><button class="button button-secondary">
                 <span class="button-label"> Let's Work Together! </span>
               </button></a

@@ -2,10 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
-import type { Product } from "../types/sanity-schema";
+// import type { Product } from "../types/sanity-schema";
 
 // import { Image } from "astro:assets";
-import logoFallback from "../assets/images/web/logo_eyewhites.png";
+import missingImage from "../assets/images/web/missing_image_fallback.png";
 
 const products = await getAllProducts();
 
@@ -30,7 +30,7 @@ const keywords = "art prints, digital art, paintings, shop, store";
                     src={
                       product.images?.[0]
                         ? getOptimizedImageUrl(product.images[0], 400)
-                        : logoFallback.src
+                        : missingImage.src
                     }
                     alt={product.name}
                     loading="lazy"
