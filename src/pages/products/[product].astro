@@ -14,6 +14,7 @@ export async function getStaticPaths() {
     materials,
     dimensions,
     inStock,
+    stripeProductId,
     stripePriceId,
     "images": images[].asset->url,
     category,
@@ -77,7 +78,7 @@ const keywords = `vangular, ${product.name}, art, products`;
           <h4>Price</h4>
           {
             product.inStock && (
-              <p id="product-price" data-price-id={product.stripePriceId}>
+              <p id="product-price" data-product-id={product.stripeProductId}>
                 Loading price
                 <span class="dots" />
               </p>
@@ -118,7 +119,7 @@ const keywords = `vangular, ${product.name}, art, products`;
                 <button
                   class="button button-disable button-check"
                   id="add-to-cart"
-                  data-price-id={product.stripePriceId}
+                  data-product-id={product.stripeProductId}
                   data-name={product.name}
                   data-image={product.images?.[0]}
                   data-product-url={`${product.slug}`}

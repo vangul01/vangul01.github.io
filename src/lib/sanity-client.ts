@@ -1,5 +1,4 @@
 import { createClient } from "@sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
 import type { Product, Collaboration } from "../types/sanity-schema";
 
 console.log(
@@ -26,12 +25,6 @@ export async function safeSanityFetch(query: string) {
   }
 }
 
-const builder = imageUrlBuilder(client);
-
-export function getSanityImageURL(source: any) {
-  return builder.image(source);
-}
-
 export async function getAllProducts(): Promise<Product[]> {
   const query = `*[_type == "product"]{
         _id,
@@ -41,6 +34,7 @@ export async function getAllProducts(): Promise<Product[]> {
         category,
         featured,
         "images": images[].asset->url,
+        stripeProductId,
         stripePriceId,
         materials,
         inStock

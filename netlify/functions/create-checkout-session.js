@@ -2,6 +2,7 @@ import "dotenv/config";
 
 // Import Stripe using secret key from environment variables to authenticate with the Stripe API.
 import Stripe from "stripe";
+import { resolveDefaultPrice } from "./lib/resolve-default-price.js";
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 if (!secretKey) {
@@ -35,13 +36,16 @@ export async function handler(event) {
       throw new Error("No items provided");
     }
 
-    // Retrieve prices so the order subtotal is known before choosing shipping
+    // Resolve each item to its current chargeable price (product id -> default
+    // price, or explicit price override) so checkout never uses stale prices.
     const prices = await Promise.all(
-      items.map((item) => stripe.prices.retrieve(item.priceId)),
+      items.map((item) =>
+        resolveDefaultPrice(stripe, item.productId ?? item.priceId),
+      ),
     );
     const subtotal = prices.reduce(
       (sum, price, index) =>
-        sum + (price.unit_amount ?? 0) * items[index].quantity,
+        sum + (price.unitAmount ?? 0) * items[index].quantity,
       0,
     );
 
@@ -58,8 +62,8 @@ export async function handler(event) {
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: items.map((item) => ({
-        price: item.priceId,
+      line_items: items.map((item, index) => ({
+        price: prices[index].id,
         quantity: item.quantity,
         // adjustable_quantity: {
         //   enabled: true,

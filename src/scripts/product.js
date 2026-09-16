@@ -14,11 +14,11 @@ export async function initProductPage() {
   const isInStock = addToCartBtn.dataset.instock !== "false";
   if (!isInStock) return;
 
-  const priceId = priceElement.dataset.priceId;
-  if (!priceId) return;
+  const productId = priceElement.dataset.productId;
+  if (!productId) return;
 
   try {
-    const price = await getStripePrice(priceId);
+    const price = await getStripePrice(productId);
 
     // Success! Update price and enable button
     if (price) {

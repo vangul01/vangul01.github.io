@@ -22,7 +22,7 @@ Checkout page
 
 */
 
-import { updateUI, updateCartCount } from "./cart/cart.js";
+import { updateCartCount } from "./cart/cart.js";
 import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
 import { initContactForm, initNewsletterForm } from "./form-submission.js";
@@ -39,7 +39,6 @@ if (typeof document !== "undefined") {
     initContactForm();
 
     // Initialize cart UI
-    updateUI();
     updateCartCount();
 
     // Initialize product page features
@@ -60,7 +59,7 @@ if (typeof document !== "undefined") {
         }
 
         const product = {
-          priceId: this.dataset.priceId, // For Stripe Checkout
+          productId: this.dataset.productId, // For Stripe Checkout
           name: this.dataset.name,
           price: price,
           image: this.dataset.image,

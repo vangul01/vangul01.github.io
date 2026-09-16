@@ -68,6 +68,21 @@ STRIPE_SECRET_KEY="sk_test_..."
   reports.
 - Checkout is restricted to US addresses (`allowed_countries: ["US"]`).
 
+## 💳 Pricing Model (MVP: 1 price per product)
+
+- Each Sanity product has exactly **one price**, controlled entirely in Stripe.
+- `stripeProductId` (`prod_...`) is the required Sanity↔Stripe primary key.
+- Stripe's **default price** on that product is the single source of truth for
+  pricing. It is resolved live at render/checkout time and never stored in
+  Sanity, so repointing the default (or editing a price) in the Dashboard
+  updates the store immediately.
+- `stripePriceId` (`price_...`) is optional and currently unused as an override —
+  a placeholder for a future "special/variant price" feature. It only takes
+  effect if deliberately passed as an override.
+- **Do not create multiple prices per product yet** — the store only sells the
+  product's default price. Add variant support before relying on multi-price
+  products.
+
 3. Start development server:
 
 ```bash

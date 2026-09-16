@@ -1,5 +1,3 @@
-// Should I import checkout.js into here??
-
 import React, { useEffect, useState } from "react";
 import {
   loadCart,
@@ -61,7 +59,7 @@ export default function CartIsland({ fallbackImage = "" }) {
         </div>
 
         {cart.map((item, idx) => (
-          <div className="cart-products-grid" key={item.priceId}>
+          <div className="cart-products-grid" key={item.productId || item.priceId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
               <a

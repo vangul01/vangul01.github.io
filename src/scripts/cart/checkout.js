@@ -3,7 +3,6 @@ import { loadCart } from "../cart/cart-storage.js";
 export async function handleCheckout() {
   try {
     const cartItems = loadCart();
-    // const siteUrl = import.meta.env.PUBLIC_SITE_URL || "http://localhost:8888";
 
     if (!cartItems.length) {
       alert("Your cart is empty. Please add items before checking out.");
@@ -19,7 +18,7 @@ export async function handleCheckout() {
         },
         body: JSON.stringify({
           items: cartItems.map((item) => ({
-            priceId: item.priceId,
+            productId: item.productId || item.priceId,
             quantity: item.quantity,
           })),
         }),
@@ -38,21 +37,3 @@ export async function handleCheckout() {
     alert("There was a problem starting checkout. Please try again.");
   }
 }
-
-// export async function getStripePrice(priceId) {
-//   try {
-//     const response = await fetch("/.netlify/functions/get-stripe-prices", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ priceId }),
-//     });
-
-//     if (!response.ok) throw new Error("Failed to fetch price");
-//     return await response.json();
-//   } catch (error) {
-//     console.error("Error fetching price:", error);
-//     throw error;
-//   }
-// }
