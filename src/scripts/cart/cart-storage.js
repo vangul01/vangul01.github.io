@@ -12,10 +12,9 @@ export function saveCart(cart) {
 }
 
 ///////////////////////////// Cart operations
-// Existing carts saved before the productId switch still carry priceId; fall
-// back to it so old cart items keep working through migration.
+// Cart items are keyed by the Stripe product id (the Sanity primary key).
 function getItemKey(item) {
-  return item.productId || item.priceId;
+  return item.productId;
 }
 
 export function addToCart(product) {

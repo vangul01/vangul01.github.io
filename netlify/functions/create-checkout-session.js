@@ -40,7 +40,7 @@ export async function handler(event) {
     // price, or explicit price override) so checkout never uses stale prices.
     const prices = await Promise.all(
       items.map((item) =>
-        resolveDefaultPrice(stripe, item.productId ?? item.priceId),
+        resolveDefaultPrice(stripe, item.productId),
       ),
     );
     const subtotal = prices.reduce(

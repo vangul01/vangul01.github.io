@@ -35,7 +35,6 @@ export async function getAllProducts(): Promise<Product[]> {
         featured,
         "images": images[].asset->url,
         stripeProductId,
-        stripePriceId,
         materials,
         inStock
       }`;

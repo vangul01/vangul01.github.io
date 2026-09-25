@@ -59,7 +59,7 @@ export default function CartIsland({ fallbackImage = "" }) {
         </div>
 
         {cart.map((item, idx) => (
-          <div className="cart-products-grid" key={item.productId || item.priceId}>
+          <div className="cart-products-grid" key={item.productId}>
             {/* Column 1: Image, Name, Price per item */}
             <div className="cart-product-info">
               <a

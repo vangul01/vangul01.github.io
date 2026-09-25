@@ -18,7 +18,7 @@ export async function handleCheckout() {
         },
         body: JSON.stringify({
           items: cartItems.map((item) => ({
-            productId: item.productId || item.priceId,
+            productId: item.productId,
             quantity: item.quantity,
           })),
         }),

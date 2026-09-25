@@ -10,7 +10,6 @@ export interface SanityProduct {
   dimensions?: string;
   inStock: boolean;
   stripeProductId: string;
-  stripePriceId?: string;
   images: {
     asset: {
       url: string;
@@ -50,7 +49,6 @@ export interface Product {
   dimensions?: string;
   inStock: boolean;
   stripeProductId: string;
-  stripePriceId?: string;
   images: string[];
   category: SanityProduct["category"];
   featured?: SanityProduct["featured"];
