@@ -87,20 +87,42 @@ export async function handler(event) {
         }
         // Provision (ensure-exists only) an unpublished Sanity draft so the
         // product is visible in Sanity Studio but NOT on the live site until
-        // it is authored and published.
-        await client.createIfNotExists({
-          _id: draftId,
-          _type: "product",
-          stripeProductId: product.id,
-          name: `${product.name || "Untitled product"} _DRAFT`,
-          slug: { current: slugify(product.name) },
-          inStock: false,
-          archived: false,
-          category: "misc",
-        });
-        console.log(
-          `Provisioned Sanity draft ${draftId} in dataset "${dataset}"`,
+        // it is authored and published. Skip when a published doc already
+        // carries this stripeProductId (e.g. docs created under legacy ids
+        // before the webhook existed) — otherwise every product.updated would
+        // spawn a duplicate.
+        const existingPublished = await client.fetch(
+          `*[_type == "product" && stripeProductId == $id && !(_id in path("drafts.**"))][0]{_id, archived}`,
+          { id: product.id },
         );
+        if (!existingPublished) {
+          await client.createIfNotExists({
+            _id: draftId,
+            _type: "product",
+            stripeProductId: product.id,
+            name: `${product.name || "Untitled product"} _DRAFT`,
+            slug: { current: slugify(product.name) },
+            inStock: false,
+            archived: false,
+            category: "misc",
+          });
+          console.log(
+            `Provisioned Sanity draft ${draftId} in dataset "${dataset}"`,
+          );
+        } else if (existingPublished.archived === true) {
+          // Reactivated in Stripe: bring the published doc back on the shop.
+          // inStock stays a manual Sanity decision and is left untouched.
+          await client
+            .patch(existingPublished._id, { set: { archived: false } })
+            .commit();
+          console.log(
+            `Reactivated ${product.id} (${existingPublished._id}) in dataset "${dataset}"`,
+          );
+        } else {
+          console.log(
+            `Skipping draft for ${product.id}: published doc ${existingPublished._id} already has this stripeProductId`,
+          );
+        }
         break;
       }
 
