@@ -77,6 +77,10 @@ SITE_URL="http://localhost:4321"
   pricing. It is resolved live at render/checkout time and never stored in
   Sanity, so repointing the default (or editing a price) in the Dashboard
   updates the store immediately.
+- Checkout accepts only Stripe product ids (`prod_...`) and re-pulls each
+  product's current default price from Stripe — client-supplied prices and
+  explicit price ids (`price_...`) are rejected. Quantities are clamped to
+  1–10 server-side.
 - **Do not create multiple prices per product yet** — the store only sells the
   product's default price. Add variant support before relying on multi-price
   products.

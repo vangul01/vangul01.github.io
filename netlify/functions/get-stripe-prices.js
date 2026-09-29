@@ -13,21 +13,21 @@ const stripe = new Stripe(secretKey, {
 });
 
 // The handler function processes incoming requests to retrieve current Stripe
-// prices. Identifiers may be product ids (prod_...) or explicit price ids
-// (price_...); either resolves to the price the store actually charges.
+// prices. Identifiers are Stripe product ids (prod_...); each resolves to the
+// product's current default price — the price the store actually charges.
 export async function handler(event) {
   try {
-    const { priceIds } = JSON.parse(event.body);
+    const { productIds } = JSON.parse(event.body);
 
-    if (!Array.isArray(priceIds)) {
-      throw new Error("priceIds must be an array");
+    if (!Array.isArray(productIds)) {
+      throw new Error("productIds must be an array");
     }
 
     const resolved = await Promise.all(
-      priceIds.map((id) => resolveDefaultPrice(stripe, id)),
+      productIds.map((id) => resolveDefaultPrice(stripe, id)),
     );
 
-    const formattedPrices = priceIds.reduce(
+    const formattedPrices = productIds.reduce(
       (acc, id, index) => ({
         ...acc,
         [id]: resolved[index],

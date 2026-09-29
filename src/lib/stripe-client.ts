@@ -18,13 +18,13 @@ function getNetlifyFunctionUrl(path: string) {
 }
 
 /**
- * Fetch one or more Stripe prices from Netlify function
+ * Fetch one or more Stripe prices (by product id) from Netlify function
  */
 export async function getStripePrices(
-  priceIds: string[],
+  productIds: string[],
 ): Promise<Record<string, StripePrice>> {
   // Add debug logging
-  console.log("Requesting price(s) for:", priceIds);
+  console.log("Requesting price(s) for:", productIds);
 
   const url = getNetlifyFunctionUrl("/.netlify/functions/get-stripe-prices");
 
@@ -32,7 +32,7 @@ export async function getStripePrices(
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priceIds }),
+      body: JSON.stringify({ productIds }),
     });
 
     if (!response.ok) {
@@ -53,9 +53,9 @@ export async function getStripePrices(
 }
 
 /**
- * Fetch a single Stripe price by ID
+ * Fetch a single Stripe price by product id
  */
-export async function getStripePrice(priceId: string): Promise<StripePrice> {
-  const prices = await getStripePrices([priceId]);
-  return prices[priceId];
+export async function getStripePrice(productId: string): Promise<StripePrice> {
+  const prices = await getStripePrices([productId]);
+  return prices[productId];
 }

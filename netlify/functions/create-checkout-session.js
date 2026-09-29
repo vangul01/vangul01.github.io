@@ -36,16 +36,32 @@ export async function handler(event) {
       throw new Error("No items provided");
     }
 
-    // Resolve each item to its current chargeable price (product id -> default
-    // price, or explicit price override) so checkout never uses stale prices.
+    // Trust only the Stripe product id and a sane quantity. Prices are always
+    // re-pulled from Stripe's current default price for the product, so any
+    // client-supplied price or explicit price id is ignored.
+    const sanitizedItems = items.map((item, index) => {
+      const productId =
+        typeof item?.productId === "string" ? item.productId.trim() : "";
+      if (!productId.startsWith("prod_")) {
+        throw new Error(`Invalid product id for item ${index + 1}`);
+      }
+      const quantity = Math.max(
+        1,
+        Math.min(Math.round(Number(item?.quantity)) || 1, 10),
+      );
+      return { productId, quantity };
+    });
+
+    // Resolve each item to its current chargeable price (product id -> the
+    // product's current default price) so checkout never uses stale prices.
     const prices = await Promise.all(
-      items.map((item) =>
+      sanitizedItems.map((item) =>
         resolveDefaultPrice(stripe, item.productId),
       ),
     );
     const subtotal = prices.reduce(
       (sum, price, index) =>
-        sum + (price.unitAmount ?? 0) * items[index].quantity,
+        sum + (price.unitAmount ?? 0) * sanitizedItems[index].quantity,
       0,
     );
 
@@ -62,7 +78,7 @@ export async function handler(event) {
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: items.map((item, index) => ({
+      line_items: sanitizedItems.map((item, index) => ({
         price: prices[index].id,
         quantity: item.quantity,
         // adjustable_quantity: {
