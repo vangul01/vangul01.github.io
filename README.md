@@ -128,17 +128,33 @@ managing a permanent webhook endpoint or ngrok tunnel:
 # 1. Serve the site + Netlify functions locally on port 8888
 netlify dev --port=8888
 
-# 2. In another terminal, forward Stripe test events to the local webhook
-stripe listen --forward-to localhost:8888/.netlify/functions/stripe-orders-webhook
+# 2. Forward Stripe test events to the LOCAL function that owns them. A single
+#    `stripe listen` forwards EVERY event to one URL, so give each function its
+#    own listener — otherwise stripe-orders-webhook never sees arrivals and
+#    stripe-product-sync drowns in payment events.
 
-# 3. `stripe listen` prints a signing secret like:
-#    whsec_xxxxxxxxxxxx
-# Copy that value into your local .env as SECRET_STRIPE_WEBHOOK_SECRET for this
-# session (it changes each time you run `stripe listen`).
+# Order emails — run this for stripe-orders-webhook:
+stripe listen --forward-to localhost:8888/.netlify/functions/stripe-orders-webhook \
+  --events checkout.session.completed
+
+# Product provisioning — run a SECOND listener in another terminal (full
+#    instructions in the product-provisioning section below):
+stripe listen --forward-to localhost:8888/.netlify/functions/stripe-product-sync \
+  --events product.created,product.updated,product.deleted
+
+# 3. EACH listener prints its own session signing secret (whsec_..., changes
+#    every run). Copy the orders one into local .env as
+#    SECRET_STRIPE_WEBHOOK_SECRET and the product one into local .env as
+#    SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET, then RESTART `netlify dev`
+#    (functions only read env at startup). A secret mismatch returns a 400 on
+#    every delivery.
 ```
 
-Then trigger the webhook locally with `stripe trigger checkout.session.completed`
-or by completing a real (test-mode) checkout.
+To verify emails, complete a real (test-mode) checkout — `stripe trigger
+checkout.session.completed` emits a fake session with no line items, so
+`listLineItems` throws and no email is sent. Emails only fire when
+`SECRET_BREVO_API_KEY` is set; otherwise the logs show "No Brevo API key set —
+skipping email notifications."
 
 > Never put a `stripe listen` (CLI) signing secret into a deployed Netlify site's
 > environment variables. Only the secret revealed on the endpoint's page in the

@@ -15,6 +15,7 @@
         "npm:@astrojs/react@6",
         "npm:@sanity/client@^6.29.0",
         "npm:@sanity/image-url@^1.1.0",
+        "npm:@sanity/webhook@^4.0.4",
         "npm:@stripe/stripe-js@^6.1.0",
         "npm:@vitejs/plugin-react@^6.0.3",
         "npm:astro@^7.0.2",
