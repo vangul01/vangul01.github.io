@@ -37,6 +37,17 @@ function slugify(name) {
   return slug || `product-${Date.now()}`;
 }
 
+async function archiveProduct(client, productId, liveId, draftId, dataset) {
+  const patch = { set: { archived: true, inStock: false } };
+  await Promise.allSettled([
+    client.patch(liveId, patch).commit(),
+    client.patch(draftId, patch).commit(),
+  ]);
+  console.log(
+    `Auto-archived ${productId} (${liveId}, ${draftId}) in dataset "${dataset}"`,
+  );
+}
+
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
@@ -69,6 +80,11 @@ export async function handler(event) {
     switch (stripeEvent.type) {
       case "product.created":
       case "product.updated": {
+        if (product.active === false) {
+          // Deactivated in Stripe: hide it from the shop (same as delete).
+          await archiveProduct(client, product.id, liveId, draftId, dataset);
+          break;
+        }
         // Provision (ensure-exists only) an unpublished Sanity draft so the
         // product is visible in Sanity Studio but NOT on the live site until
         // it is authored and published.
@@ -91,14 +107,7 @@ export async function handler(event) {
       case "product.deleted": {
         // Auto-archive any matching live doc and/or draft so the item
         // disappears from the shop without deleting Sanity data.
-        const patch = { set: { archived: true, inStock: false } };
-        await Promise.allSettled([
-          client.patch(liveId, patch).commit(),
-          client.patch(draftId, patch).commit(),
-        ]);
-        console.log(
-          `Auto-archived ${product.id} (${liveId}, ${draftId}) in dataset "${dataset}"`,
-        );
+        await archiveProduct(client, product.id, liveId, draftId, dataset);
         break;
       }
 

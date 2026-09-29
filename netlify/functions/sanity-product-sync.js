@@ -70,9 +70,10 @@ export async function handler(event) {
     return { statusCode: 400, body: "Invalid JSON body" };
   }
 
-  // 2. Only sync published product docs (filter set on the Sanity webhook,
-  //    but guard against drafts/deletes defensively).
-  if (payload.operation === "delete") {
+  // 2. Skip deletes (Sanity sends the operation as the sanity-operation
+  //    header, never in the payload body), and only sync published product
+  //    docs (filter set on the Sanity webhook, but guard against drafts).
+  if (event.headers["sanity-operation"] === "delete") {
     console.log("Skipping deleted Sanity document");
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }

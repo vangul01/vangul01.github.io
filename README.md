@@ -251,6 +251,51 @@ as the primary key.
   create an update loop. The draft is invisible to the site until published.
 - `product.deleted` auto-archives the matching Sanity doc (live + draft) so a
   Stripe-side delete removes the item from the shop without losing Sanity data.
+- `product.updated` with `active: false` (deactivated, not deleted) is treated
+  like a delete: it auto-archives the matching live + draft docs so a de-listed
+  Stripe product never stays on the shop (which would break checkout for it).
+
+### Canonical Sanity document ids
+
+Sanity docs use canonical ids derived from the Stripe product id:
+
+- Published: `product.<prodId>` (e.g. `product.prod_T4etzqd3uVerhv`)
+- Draft: `drafts.product.<prodId>`
+
+Both `stripe-product-sync` provisioning and the reconciliation tool only
+`createIfNotExists` under these ids. **Any manually-created doc with an
+arbitrary `_id`** (e.g. Studio-generated ids) that shares a `stripeProductId`
+with an auto-provisioned draft can create duplicates — one product, two Sanity
+docs, double listing on the shop. When creating products by hand, use the
+canonical ids above.
+
+### 3. Reconciling the catalog (backfill / drift)
+
+Webhooks only react to *future* events: any Stripe product that existed before
+the webhook endpoints were registered (or any one-sided change that missed a
+webhook) stays permanently out of sync, silently. `catalog-reconcile` diffs the
+two sides and repairs them:
+
+```bash
+# Report-only for the development dataset (Insomnia, GET request):
+#   URL:  http://localhost:8888/api/catalog-reconcile?dataset=development&repair=false
+#   Header: x-reconcile-key: <SECRET_CATALOG_KEY>
+
+# Apply repairs (provision missing drafts, archive orphans/deactivated):
+#   .../catalog-reconcile?dataset=development&repair=true
+```
+
+- `dataset` = `development` (test key) or `production` (live key); omit to run
+  both. `repair` defaults to `false` and the tool **never writes** otherwise.
+- Report buckets in the JSON response:
+  - `missing` — Stripe product with no Sanity doc/draft → repair creates
+    `drafts.product.<prodId>`.
+  - `orphans` — Sanity doc whose `stripeProductId` no longer exists in Stripe →
+    repair archives it (`archived: true`, `inStock: false`).
+  - `deactivated` — Stripe `active: false` but the Sanity doc isn't archived →
+    repair mirrors it to archive.
+- Useful for initial backfill and post-deploy audits; also prints a one-line
+  summary into the function logs.
 
 ### 2. Sanity → Stripe (publish sync + rebuild)
 
@@ -301,6 +346,7 @@ publishes never rebuild.
 | `SECRET_STRIPE_LIVE_KEY` | Stripe live key, used for prod-dataset publish sync |
 | `NETLIFY_BUILD_HOOK` | Netlify build hook URL for auto-rebuild |
 | `NETLIFY_AUTO_REBUILD` | `"false"` disables auto-rebuild (unset = enabled) |
+| `SECRET_CATALOG_KEY` | Token for the `x-reconcile-key` header of `/api/catalog-reconcile` |
 
 ### Production Netlify environment checklist
 
