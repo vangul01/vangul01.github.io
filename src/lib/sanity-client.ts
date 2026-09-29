@@ -7,7 +7,7 @@ console.log(
 );
 
 export const client = createClient({
-  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  projectId: process.env.SANITY_PROJECT_ID,
   dataset: import.meta.env.DEV
     ? "development"
     : import.meta.env.PUBLIC_SANITY_DATASET,
@@ -26,7 +26,7 @@ export async function safeSanityFetch(query: string) {
 }
 
 export async function getAllProducts(): Promise<Product[]> {
-  const query = `*[_type == "product"]{
+  const query = `*[_type == "product" && coalesce(archived, false) != true]{
         _id,
         name,
         "slug": slug.current,
@@ -36,7 +36,8 @@ export async function getAllProducts(): Promise<Product[]> {
         "images": images[].asset->url,
         stripeProductId,
         materials,
-        inStock
+        inStock,
+        "archived": coalesce(archived, false)
       }`;
 
   const products = await safeSanityFetch(query);
@@ -55,11 +56,12 @@ export function getOptimizedImageUrl(
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  const query = `*[_type == "product"]{
+  const query = `*[_type == "product" && coalesce(archived, false) != true]{
         _id,
         name,
         "slug": slug.current,
-        "images": images[].asset->url
+        "images": images[].asset->url,
+        "archived": coalesce(archived, false)
       }`;
 
   return await safeSanityFetch(query);

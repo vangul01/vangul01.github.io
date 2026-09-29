@@ -82,7 +82,7 @@ export async function handler(event) {
       email,
       includeListIds: [confirmedListId],
       templateId: Number(process.env.BREVO_DEFAULT_DOUBLE_OPT_IN_TEMPLATE_ID),
-      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/status/success-newsletter`,
+      redirectionUrl: `${process.env.SITE_URL}/status/success-newsletter`,
     };
 
     const response = await fetch(

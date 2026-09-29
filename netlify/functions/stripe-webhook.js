@@ -169,8 +169,8 @@ function buildOrderParams(session, items) {
     CUSTOMER_NAME: customer_details?.name || "Not provided",
     CUSTOMER_EMAIL: customer_details?.email || "Not provided",
     SHIPPING_ADDRESS: address,
-    SITE_LINK: process.env.PUBLIC_SITE_URL || "https://www.vangular.com",
-    CONTACT_LINK: `${process.env.PUBLIC_SITE_URL || "https://www.vangular.com"}/info/contact`,
+    SITE_LINK: process.env.SITE_URL || "https://www.vangular.com",
+    CONTACT_LINK: `${process.env.SITE_URL || "https://www.vangular.com"}/info/contact`,
     ITEMS_HTML: itemsHtml,
   };
 }

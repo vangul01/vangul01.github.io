@@ -6,7 +6,7 @@ import type { Product } from "../../types/sanity-schema";
 import missingImage from "../../assets/images/web/missing_image_fallback.png";
 
 export async function getStaticPaths() {
-  const query = `*[_type == "product"]{
+  const query = `*[_type == "product" && coalesce(archived, false) != true]{
     _id,
     "slug": slug.current,
     name,
@@ -17,7 +17,8 @@ export async function getStaticPaths() {
     stripeProductId,
     "images": images[].asset->url,
     category,
-    featured
+    featured,
+    "archived": coalesce(archived, false)
   }`;
 
   const products = (await client.fetch(query)) as Product[];
