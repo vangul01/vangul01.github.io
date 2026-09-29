@@ -7,7 +7,7 @@ console.log(
 );
 
 export const client = createClient({
-  projectId: process.env.SANITY_PROJECT_ID,
+  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.DEV
     ? "development"
     : import.meta.env.PUBLIC_SANITY_DATASET,

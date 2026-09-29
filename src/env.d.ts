@@ -8,12 +8,12 @@ declare module '@sanity/image-url';
 interface ImportMetaEnv {
   PUBLIC_SANITY_DATASET: string;
   PUBLIC_STRIPE_KEY: string;
+  PUBLIC_SANITY_PROJECT_ID: string;
 }
 
 // Server-only environment variables
 declare namespace NodeJS {
   interface ProcessEnv {
-    SANITY_PROJECT_ID: string;
     SANITY_WRITE_TOKEN: string;
     SANITY_PRODUCTION_DATASET: string;
     SANITY_DEVELOPMENT_DATASET: string;

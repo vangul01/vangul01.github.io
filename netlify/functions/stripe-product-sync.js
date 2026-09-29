@@ -5,7 +5,7 @@ import { createClient } from "@sanity/client";
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 const webhookSecret = process.env.SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET;
-const projectId = process.env.SANITY_PROJECT_ID;
+const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
 const writeToken = process.env.SANITY_WRITE_TOKEN;
 const productionDataset = process.env.SANITY_PRODUCTION_DATASET || "production";
 const developmentDataset =

@@ -48,7 +48,7 @@ npm install
 
 ```bash
 # .env.development
-SANITY_PROJECT_ID="your_project_id"
+PUBLIC_SANITY_PROJECT_ID="your_project_id"
 PUBLIC_SANITY_DATASET="development"
 PUBLIC_STRIPE_KEY="pk_test_..."
 SECRET_STRIPE_KEY="sk_test_..."
@@ -271,7 +271,7 @@ publishes never rebuild.
 
 | Variable | Purpose |
 |---|---|
-| `SANITY_PROJECT_ID` | Sanity project id (renamed from `PUBLIC_SANITY_PROJECT_ID`) |
+| `PUBLIC_SANITY_PROJECT_ID` | Sanity project id |
 | `SANITY_WRITE_TOKEN` | Sanity write token (Stripe→Sanity provisioning) |
 | `SANITY_PRODUCTION_DATASET` | Live-mode Stripe events → this dataset (default `production`) |
 | `SANITY_DEVELOPMENT_DATASET` | Test-mode Stripe events → this dataset (default `development`) |
@@ -298,7 +298,7 @@ In Netlify's **production context**, the sync pipeline needs these new vars
 | `NETLIFY_AUTO_REBUILD` | unset (enabled); set `"false"` only during bulk edits |
 
 Renamed vars to keep current: `SITE_URL=https://www.vangular.com`,
-`SANITY_PROJECT_ID`, `CLOUDFLARE_TOKEN`.
+`PUBLIC_SANITY_PROJECT_ID`, `CLOUDFLARE_TOKEN`.
 
 Gotchas:
 - `PUBLIC_SANITY_DATASET` must be `production` in the production context — the
@@ -343,7 +343,7 @@ Two known causes, in order of likelihood:
    Fix:
 
    ```bash
-   unset SITE_URL PUBLIC_STRIPE_KEY SECRET_STRIPE_KEY SANITY_PROJECT_ID PUBLIC_SANITY_DATASET
+   unset SITE_URL PUBLIC_STRIPE_KEY SECRET_STRIPE_KEY PUBLIC_SANITY_PROJECT_ID PUBLIC_SANITY_DATASET
    npm run build
    netlify dev --port=8888
    ```

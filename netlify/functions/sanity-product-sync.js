@@ -4,7 +4,7 @@ import { isValidSignature } from "@sanity/webhook";
 import { createClient } from "@sanity/client";
 import Stripe from "stripe";
 
-const projectId = process.env.SANITY_PROJECT_ID;
+const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
 const webhookSecret = process.env.SECRET_SANITY_WEBHOOK_KEY;
 const productionDataset =
   process.env.SANITY_PRODUCTION_DATASET || "production";
