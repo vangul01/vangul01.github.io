@@ -335,8 +335,14 @@ two sides and repairs them:
     *published* doc against the Stripe product, using the same transform
     `sanity-product-sync` applies on publish: `name` (minus ` _DRAFT`),
     `active` (= `!archived`), and `description` (`Materials | Dimensions`).
-    Surfaces name/description/active changes a missed webhook delivery would
-    otherwise swallow.
+    Sanity is authoritative on publish, so these rows are informational —
+    they show what the next publish will write to Stripe (e.g. legacy `Test`
+    names in Stripe, or descriptions that were never pushed). Surfaces a
+    missed webhook delivery that would otherwise swallow the change.
+  - `unlinked` — **report-only; never writes.** Published docs with no
+    `stripeProductId` (can't be bought from the cart, which keys off it).
+    Rare since the field is required in the schema, but surfaced rather than
+    hidden.
 - Useful for initial backfill and post-deploy audits; also prints a one-line
   summary into the function logs.
 

@@ -92,8 +92,21 @@ async function fetchSanityProducts(client) {
   ]);
   const byStripeId = new Map();
   const docsByStripeId = new Map();
+  const unlinked = [];
   for (const doc of [...published, ...drafts]) {
-    if (!doc.stripeProductId) continue;
+    if (!doc.stripeProductId) {
+      // Published docs without a stripeProductId can't be bought (the cart
+      // keys off it); surface them but never touch them.
+      if (!String(doc._id).startsWith("drafts.")) {
+        unlinked.push({
+          _id: doc._id,
+          name: doc.name,
+          archived: doc.archived,
+          inStock: doc.inStock,
+        });
+      }
+      continue;
+    }
     const entry = byStripeId.get(doc.stripeProductId) || {};
     if (String(doc._id).startsWith("drafts.")) entry.draft = doc;
     else entry.published = doc;
@@ -102,7 +115,7 @@ async function fetchSanityProducts(client) {
     list.push(doc);
     docsByStripeId.set(doc.stripeProductId, list);
   }
-  return { byStripeId, docsByStripeId };
+  return { byStripeId, docsByStripeId, unlinked };
 }
 
 function computeDuplicates(docsByStripeId) {
@@ -118,7 +131,12 @@ function computeDuplicates(docsByStripeId) {
     const unpairedDrafts = draftDocs.filter(
       (d) => !validDraftIds.has(d._id),
     );
-    if (publishedDocs.length <= 1 && unpairedDrafts.length === 0) continue;
+    // A lone draft (or several) with no published doc is the normal
+    // post-provisioning state and can never create a second listing, so it
+    // is not a duplicate. Flag only when it would sit *alongside* a
+    // published doc or when two published docs already share the id.
+    if (publishedDocs.length < 1) continue;
+    if (publishedDocs.length === 1 && unpairedDrafts.length === 0) continue;
     const items = [];
     publishedDocs.forEach((d, i) => {
       items.push({
@@ -190,6 +208,7 @@ async function reconcileDataset(name, { dataset, stripeKey }, repair) {
     deactivated: [],
     duplicates: [],
     contentDrift: [],
+    unlinked: [],
   };
   let provisioned = 0;
   let archived = 0;
@@ -205,7 +224,8 @@ async function reconcileDataset(name, { dataset, stripeKey }, repair) {
   const client = createSanityClient({ projectId, dataset, token: writeToken });
 
   const stripeProducts = await listAllStripeProducts(stripe);
-  const { byStripeId, docsByStripeId } = await fetchSanityProducts(client);
+  const { byStripeId, docsByStripeId, unlinked } =
+    await fetchSanityProducts(client);
   const stripeIds = new Set(stripeProducts.map((p) => p.id));
 
   report.stripeProductCount = stripeProducts.length;
@@ -296,10 +316,12 @@ async function reconcileDataset(name, { dataset, stripeKey }, repair) {
   report.deactivated = deactivatedSource;
   report.duplicates = duplicatesSource;
   report.contentDrift = contentDriftSource;
+  report.unlinked = unlinked;
 
   console.log(
     `[catalog-reconcile] ${name}: ${stripeProducts.length} Stripe products, ` +
-      `${byStripeId.size} Sanity docs, ${missingSource.length} missing, ` +
+      `${byStripeId.size} linked Sanity docs, ${unlinked.length} unlinked, ` +
+      `${missingSource.length} missing, ` +
       `${orphansSource.length} orphans, ${deactivatedSource.length} deactivated, ` +
       `${duplicatesSource.length} duplicate groups, ${contentDriftSource.length} content drift ` +
       `(repair=${repair}: provisioned ${provisioned}, archived ${archived})`,

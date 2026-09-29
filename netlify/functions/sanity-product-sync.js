@@ -118,13 +118,14 @@ export async function handler(event) {
   const stripe = createStripeClient(stripeKey);
 
   // 5. Update the Stripe product: name (minus _DRAFT), description,
-  //    first image, and archive state matching Sanity.
+  //    first image, and archive state matching Sanity. Description is always
+  //    sent so that removing materials/dimensions in Sanity also clears the
+  //    stale text in Stripe (null resets it Stripe-side).
   const update = {
     name: stripDraftSuffix(doc.name),
     active: !doc.archived,
+    description: buildDescription(doc) || null,
   };
-  const description = buildDescription(doc);
-  if (description) update.description = description;
   if (doc.images && doc.images.length > 0) {
     update.images = [doc.images[0]];
   }
