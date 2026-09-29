@@ -1,16 +1,14 @@
 import "dotenv/config";
 
 // Import Stripe using secret key from environment variables to authenticate with the Stripe API.
-import Stripe from "stripe";
+import { createStripeClient } from "./lib/stripe.js";
 import { resolveDefaultPrice } from "./lib/resolve-default-price.js";
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 if (!secretKey) {
   throw new Error("Missing Stripe secret key");
 }
-const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-02-24.acacia",
-});
+const stripe = createStripeClient(secretKey);
 
 // Shipping rates are created in the Stripe Dashboard and referenced by ID.
 const standardShippingRate = process.env.STRIPE_SHIPPING_RATE_STANDARD;

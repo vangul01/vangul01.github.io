@@ -1,6 +1,7 @@
 import "dotenv/config";
 
-import Stripe from "stripe";
+import { createStripeClient } from "./lib/stripe.js";
+import { sendBrevoEmail } from "./lib/brevo.js";
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 const webhookSecret = process.env.SECRET_STRIPE_WEBHOOK_SECRET;
@@ -25,9 +26,7 @@ if (!webhookSecret) {
   throw new Error("Missing Stripe webhook signing secret");
 }
 
-const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-02-24.acacia",
-});
+const stripe = createStripeClient(secretKey);
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
@@ -217,19 +216,10 @@ async function sendOrderConfirmation(session, items) {
 }
 
 async function sendBrevo(emailPayload, label) {
-  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": brevoKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(emailPayload),
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    console.error(`Failed to send ${label} email:`, error);
-  } else {
+  try {
+    await sendBrevoEmail(emailPayload);
     console.log(`${label} email sent to`, emailPayload.to?.[0]?.email);
+  } catch (err) {
+    console.error(`Failed to send ${label} email:`, err.message);
   }
 }

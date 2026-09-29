@@ -1,37 +1,12 @@
+import "dotenv/config";
+
+import { sendBrevoEmail } from "./lib/brevo.js";
+
 /*
 Logic:
-- Netlify form emails me message
+- Contact form submits to this function
 - Send autoresponse email via Brevo API
-- Add user to contact list in Brevo
-
-Does process.env.SECRET_BREVO_API_KEY work in production?
-
-Of interest:
-    How to create or update a contact:
-    https://api.brevo.com/v3/contacts
-
-
-    const updateResponse = await fetch(
-      `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`,
-      {
-        method: "POST",
-        headers: {
-          "api-key": process.env.SECRET_BREVO_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          attributes: {
-            "FIRST_NAME": firstName || "",
-            "LAST_NAME": lastName || "",
-            email,
-          },
-          listIds: [?], // ID of contacts list
-        }),
-      },
-    );
 */
-
-import "dotenv/config";
 
 export async function handler(event) {
   try {
@@ -45,41 +20,15 @@ export async function handler(event) {
       };
     }
 
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "api-key": process.env.SECRET_BREVO_API_KEY,
-        "content-type": "application/json",
+    const data = await sendBrevoEmail({
+      to: [{ email }],
+      templateId: Number(process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID),
+      params: {
+        FIRST_NAME: firstName || "",
+        LAST_NAME: lastName || "",
+        MESSAGE: message || "",
       },
-
-      body: JSON.stringify({
-        // sender: { name: "Vangular TEST!", email: "contact@vangular.com" }, //process.env.BREVO_SENDER_EMAIL
-        to: [
-          {
-            email,
-            // name: `${firstName} ${lastName}`.trim(),
-          },
-        ],
-
-        templateId: Number(process.env.BREVO_CONTACT_AUTORESPONSE_TEMPLATE_ID),
-        // params: {
-        //   // optional dynamic variables from your template
-        //   FIRST_NAME: firstName || "",
-        //   LAST_NAME: lastName || "",
-        //   MESSAGE: message || "",
-        // },
-      }),
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error("Brevo error (response not ok): ", data);
-      throw new Error(
-        data.message || "Message failed to send. Please try again.",
-      );
-    }
 
     console.log("Brevo email sent successfully:", data);
     return {

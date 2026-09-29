@@ -1,8 +1,8 @@
 import "dotenv/config";
 
 import { isValidSignature } from "@sanity/webhook";
-import { createClient } from "@sanity/client";
-import Stripe from "stripe";
+import { createStripeClient } from "./lib/stripe.js";
+import { createSanityClient } from "./lib/sanity.js";
 
 const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
 const webhookSecret = process.env.SECRET_SANITY_WEBHOOK_KEY;
@@ -17,12 +17,7 @@ if (!webhookSecret) {
 }
 
 function getSanityClient(dataset) {
-  return createClient({
-    projectId,
-    dataset,
-    apiVersion: "2024-04-12",
-    useCdn: false,
-  });
+  return createSanityClient({ projectId, dataset });
 }
 
 function stripDraftSuffix(name) {
@@ -119,9 +114,7 @@ export async function handler(event) {
     return { statusCode: 500, body: "Missing Stripe key" };
   }
 
-  const stripe = new Stripe(stripeKey, {
-    apiVersion: "2025-02-24.acacia",
-  });
+  const stripe = createStripeClient(stripeKey);
 
   // 5. Update the Stripe product: name (minus _DRAFT), description,
   //    first image, and archive state matching Sanity.

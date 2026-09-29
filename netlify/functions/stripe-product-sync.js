@@ -1,7 +1,7 @@
 import "dotenv/config";
 
-import Stripe from "stripe";
-import { createClient } from "@sanity/client";
+import { createStripeClient } from "./lib/stripe.js";
+import { createSanityClient } from "./lib/sanity.js";
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 const webhookSecret = process.env.SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET;
@@ -21,18 +21,10 @@ if (!projectId || !writeToken) {
   throw new Error("Missing Sanity project id or write token");
 }
 
-const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-02-24.acacia",
-});
+const stripe = createStripeClient(secretKey);
 
 function getSanityClient(dataset) {
-  return createClient({
-    projectId,
-    dataset,
-    token: writeToken,
-    apiVersion: "2024-04-12",
-    useCdn: false,
-  });
+  return createSanityClient({ projectId, dataset, token: writeToken });
 }
 
 function slugify(name) {

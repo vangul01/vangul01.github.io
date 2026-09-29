@@ -129,7 +129,7 @@ managing a permanent webhook endpoint or ngrok tunnel:
 netlify dev --port=8888
 
 # 2. In another terminal, forward Stripe test events to the local webhook
-stripe listen --forward-to localhost:8888/.netlify/functions/stripe-webhook
+stripe listen --forward-to localhost:8888/.netlify/functions/stripe-orders-webhook
 
 # 3. `stripe listen` prints a signing secret like:
 #    whsec_xxxxxxxxxxxx
@@ -190,7 +190,7 @@ netlify dev --port=8888
 ngrok http 8888            # or: ngrok http --url=your-name.ngrok-free.app 8888
 
 # 3. Stripe Dashboard > Developers > Webhooks (test mode) > Add endpoint
-#    URL: https://<your-ngrok-url>.ngrok-free.app/.netlify/functions/stripe-webhook
+#    URL: https://<your-ngrok-url>.ngrok-free.app/.netlify/functions/stripe-orders-webhook
 #    Select the checkout.session.completed event type, then Reveal secret and
 #    copy that whsec_... into local .env as SECRET_STRIPE_WEBHOOK_SECRET
 ```
