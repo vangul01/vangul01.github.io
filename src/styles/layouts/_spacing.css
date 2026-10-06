@@ -23,7 +23,7 @@ max-width, margin, padding */
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--border-radius-md);
+  border-radius: 0;
 }
 
 .image-container--bottom img {

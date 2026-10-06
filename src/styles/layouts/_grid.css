@@ -20,7 +20,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: var(--spacing-clamp-md);
+  border-radius: 0;
 }
 
 .section {
@@ -113,12 +113,12 @@ so collab cards without links still get the same square image treatment. */
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--border-radius-md);
+  border-radius: 0;
 }
 
 .product-badge {
-  align-self: flex-start;
-  margin-block-start: calc(-1 * var(--spacing-clamp-sm));
+  align-self: center;
+  margin-block-start: 0;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   background: var(--color-brand-light);
@@ -173,7 +173,7 @@ so collab cards without links still get the same square image treatment. */
 .cart-products-grid {
   display: grid;
   grid-template-columns:
-    minmax(400px, 3fr) minmax(var(--thumbnail), 1fr)
+    minmax(25rem, 3fr) minmax(var(--thumbnail), 1fr)
     minmax(var(--thumbnail), 1fr);
   gap: var(--spacing-clamp-xl);
   width: 100%;

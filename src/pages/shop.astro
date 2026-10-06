@@ -37,13 +37,13 @@ const keywords = "art prints, digital art, paintings, shop, store";
                   />
                 </div>
 
-                {!product.inStock && (
-                  <span class="product-badge">Unavailable</span>
-                )}
-
                 <div>
                   <h4>{product.name}</h4>
                 </div>
+
+                {!product.inStock && (
+                  <span class="product-badge">Unavailable</span>
+                )}
               </a>
             ))}
           </div>

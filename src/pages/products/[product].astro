@@ -42,8 +42,8 @@ const keywords = `vangular, ${product.name}, art, products`;
   <main>
     <section class="section" id="product-page">
       <div class="container grid-responsive">
-        <div>
-          <div>
+        <div class="container product-images">
+          <div class="product-image-stage">
             <img
               id="main-product-image"
               src={product.images?.[0]
@@ -62,7 +62,7 @@ const keywords = `vangular, ${product.name}, art, products`;
                     src={getOptimizedImageUrl(imageUrl, 150)}
                     alt={`${product.name} view ${index + 1}`}
                     class={`thumbnail ${index === 0 ? "active" : ""}`}
-                    data-image-url={imageUrl}
+                    data-image-url={getOptimizedImageUrl(imageUrl, 800)}
                     data-index={index}
                     loading="lazy"
                   />
@@ -75,43 +75,30 @@ const keywords = `vangular, ${product.name}, art, products`;
         <div class="container product-text">
           <h3>{product.name}</h3>
 
-          <h4>Price</h4>
           {
             product.inStock && (
-              <p id="product-price" data-product-id={product.stripeProductId}>
+              <p
+                id="product-price"
+                class="product-price"
+                data-product-id={product.stripeProductId}
+              >
                 Loading price
                 <span class="dots" />
               </p>
             )
           }
 
-          <h4>Description</h4>
-          <p>{product.description}</p>
-
           {
-            product.inStock && (
+            !product.inStock && (
               <>
-                <p>Each print is made to order just for you!</p>
-                <p>
-                  Printing and packing takes approximately 1 week before
-                  shipping.
+                <span class="product-badge">Unavailable</span>
+                <p class="product-note">
+                  This item is currently out of stock and not available for
+                  purchase.
                 </p>
               </>
             )
           }
-
-          {
-            !product.inStock && (
-              <p>
-                This item is currently out of stock and not available for
-                purchase.
-              </p>
-            )
-          }
-
-          <h4>Details</h4>
-          {product.materials && <p>Materials: {product.materials}</p>}
-          {product.dimensions && <p>Dimensions: {product.dimensions}</p>}
 
           <div class="button-group">
             {
@@ -140,6 +127,39 @@ const keywords = `vangular, ${product.name}, art, products`;
               )
             }
           </div>
+
+          <p class="product-description">{product.description}</p>
+
+          {
+            product.inStock && (
+              <p class="product-note">
+                Each print is made to order just for you! Printing and packing
+                takes approximately 1 week before shipping.
+              </p>
+            )
+          }
+
+          {
+            (product.materials || product.dimensions) && (
+              <div class="product-details">
+                <h4>Details</h4>
+                <dl>
+                  {product.materials && (
+                    <div>
+                      <dt>Materials</dt>
+                      <dd>{product.materials}</dd>
+                    </div>
+                  )}
+                  {product.dimensions && (
+                    <div>
+                      <dt>Dimensions</dt>
+                      <dd>{product.dimensions}</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            )
+          }
         </div>
       </div>
 
