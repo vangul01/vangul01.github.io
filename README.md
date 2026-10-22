@@ -8,7 +8,6 @@ An e-commerce webstore with JAMstack architecture for art and design products.
 - **Sanity**: Headless CMS for product management
 - **Stripe**: Payment processing with embedded checkout
 - **Netlify**: Hosting and serverless functions
-- **ngrok**: Local development tunneling
 
 ## 📁 Project Structure
 
@@ -44,16 +43,29 @@ An e-commerce webstore with JAMstack architecture for art and design products.
 npm install
 ```
 
-2. Set up environment variables:
+2. Set up environment variables from `.env.example`:
 
 ```bash
-# .env.development
+# Local .env (development)
+SITE_URL="http://localhost:8888"
 PUBLIC_SANITY_PROJECT_ID="your_project_id"
-PUBLIC_SANITY_DATASET="development"
+SANITY_DATASET="development"
 PUBLIC_STRIPE_KEY="pk_test_..."
-SECRET_STRIPE_KEY="sk_test_..."
-SITE_URL="http://localhost:4321"
+STRIPE_KEY="sk_test_..."
+STRIPE_CHECKOUT_WEBHOOK_SECRET="whsec_..."
+STRIPE_PRODUCT_WEBHOOK_SECRET="whsec_..."
+SECRET_SANITY_WEBHOOK_KEY="your-sanity-webhook-secret"
+# SANITY_WRITE_TOKEN is intentionally not set by default; add it only while
+# testing Stripe -> Sanity provisioning or catalog repair.
 ```
+
+`SITE_URL` is always `https://` without a trailing slash in deployed contexts.
+The only exception is local development (`http://localhost:8888`). Never point
+it at a tunnel URL.
+
+Environment variables are scoped per Netlify deploy context. The full branch
+model and per-context values are documented in
+[Branch / deploy model](#-branch--deploy-model).
 
 ## 🇺🇸 Shipping & Tax (US/MVP)
 
@@ -103,26 +115,13 @@ netlify dev
 > prebuilt `dist/` and never rebuilds. After changing source, run
 > `npm run build` first (dist is compiled at build time — see Troubleshooting).
 
-2. In a new terminal, start ngrok tunnel:
+2. For local webhook testing, use the Stripe CLI (below). For public webhook
+   endpoints, use the **testing** deploy — not your machine.
 
-```bash
-# For randomly generated site: ngrok http 8888
-ngrok http --url=raccoon-allowed-wahoo.ngrok-free.app 8888
-```
-
-3. Copy the ngrok URL and update your environment:
-
-```bash
-# .env.development
-SITE_URL="https://your-ngrok-url.ngrok-free.app"
-```
-
-4. Update Stripe webhook endpoints in Stripe Dashboard with new ngrok URL
-
-### Local Stripe webhook testing (no ngrok needed)
+### Local Stripe webhook testing (Stripe CLI)
 
 Use the Stripe CLI to forward webhook events to your local functions without
-managing a permanent webhook endpoint or ngrok tunnel:
+a public tunnel:
 
 ```bash
 # 1. Serve the site + Netlify functions locally on port 8888
@@ -144,8 +143,8 @@ stripe listen --forward-to localhost:8888/.netlify/functions/stripe-product-sync
 
 # 3. EACH listener prints its own session signing secret (whsec_..., changes
 #    every run). Copy the orders one into local .env as
-#    SECRET_STRIPE_WEBHOOK_SECRET and the product one into local .env as
-#    SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET, then RESTART `netlify dev`
+#    STRIPE_CHECKOUT_WEBHOOK_SECRET and the product one into local .env as
+#    STRIPE_PRODUCT_WEBHOOK_SECRET, then RESTART `netlify dev`
 #    (functions only read env at startup). A secret mismatch returns a 400 on
 #    every delivery.
 ```
@@ -175,7 +174,7 @@ netlify dev --port=8888
 stripe listen --forward-to localhost:8888/.netlify/functions/stripe-product-sync
 
 # 3. `stripe listen` prints a signing secret (whsec_...) that changes every run.
-#    Copy it into local .env as SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET for THIS
+#    Copy it into local .env as STRIPE_PRODUCT_WEBHOOK_SECRET for THIS
 #    session, then restart `netlify dev` (functions only read env at startup).
 
 # 4. Trigger provisioning in a third terminal
@@ -193,26 +192,11 @@ stripe trigger product.created
 - This exercises the same function code as production, but is **not** a test of
   the deployed endpoint or live-mode delivery (drafts land in `development`).
 
-### Local Stripe webhook testing with ngrok (public HTTPS URL)
+### Deployed webhook testing
 
-Use this when you need a public HTTPS URL for a real webhook endpoint (e.g. to
-point a Stripe Dashboard webhook at your machine):
-
-```bash
-# 1. Serve the site + Netlify functions locally on port 8888
-netlify dev --port=8888
-
-# 2. Tunnel localhost to a public URL
-ngrok http 8888            # or: ngrok http --url=your-name.ngrok-free.app 8888
-
-# 3. Stripe Dashboard > Developers > Webhooks (test mode) > Add endpoint
-#    URL: https://<your-ngrok-url>.ngrok-free.app/.netlify/functions/stripe-orders-webhook
-#    Select the checkout.session.completed event type, then Reveal secret and
-#    copy that whsec_... into local .env as SECRET_STRIPE_WEBHOOK_SECRET
-```
-
-Each webhook endpoint has its own signing secret. Keep this ngrok endpoint's
-secret in local `.env` and rely on `stripe listen` (above) otherwise.
+Public webhook endpoints live on the **testing** deploy, not on a tunnel from
+your machine. See [Branch / deploy model](#-branch--deploy-model) for the
+testing URLs, signing secrets, and manual test flow.
 
 ## 💾 Sanity CMS
 
@@ -241,9 +225,10 @@ as the primary key.
 `netlify/functions/stripe-product-sync.js` listens for Stripe `product.created`,
 `product.updated` and `product.deleted` events.
 
-- **Mode routes to a dataset**: live-mode Stripe events → `SANITY_PRODUCTION_DATASET`
-  (default `production`); test-mode → `SANITY_DEVELOPMENT_DATASET`
-  (default `development`). Test products can never leak into the live site.
+- **One dataset per deploy**: `stripe-product-sync` writes to the deploy's
+  `SANITY_DATASET`. The testing deploy uses `development`; production uses
+  `production`. Stripe test webhooks point only at the testing deploy, so test
+  products cannot leak into the live site.
 - `product.created` / `product.updated` calls `createIfNotExists` on
   `drafts.product.<prodId>` with name `"<Stripe name> _DRAFT"` (slug from the
   clean name), `inStock: false`, `archived: false`, `category: "misc"`.
@@ -262,8 +247,10 @@ as the primary key.
 `_type == "product" && !(_id in path("drafts.**"))`), one webhook per dataset.
 
 - The dataset the webhook is applied to is sent as the `sanity-dataset` header.
-  Development-dataset webhooks use `SECRET_STRIPE_TEST_KEY`; production-dataset
-  webhooks use `SECRET_STRIPE_LIVE_KEY` (no query param needed).
+  It must match the deploy's `SANITY_DATASET` or the function logs a mismatch
+  and returns `200 { sync: "skipped" }`.
+- Stripe updates use the deploy's single `STRIPE_KEY` (test on testing, live on
+  production).
 - Updates the Stripe product: name (trailing ` _DRAFT` stripped), description
   built from `Materials`/`Dimensions` (e.g. `Materials: X | Dimensions: Y`),
   the first image, and `active` mirrored from Sanity `archived`.
@@ -275,12 +262,12 @@ After a **production** publish, the webhook fires a Netlify Build Hook so the
 static site reflects the freshly published Sanity content. Development
 publishes never rebuild.
 
-- `NETLIFY_BUILD_HOOK` — the Netlify Build Hook URL. Unset = no auto-rebuild
-  (changes appear on the next manual deploy).
-- `NETLIFY_AUTO_REBUILD` — set to `"false"` to suspend automatic rebuilds while
-  still syncing Stripe (e.g. during bulk edits). Unset = enabled. When disabled,
-  publishing still updates Stripe, but the site keeps its last built Sanity
-  snapshot until a rebuild happens some other way.
+- `NETLIFY_BUILD_HOOK` — the Netlify Build Hook URL for that context. Unset = no
+  auto-rebuild (changes appear on the next manual deploy).
+- `SANITY_REBUILD_ON_PUBLISH` — set to `"false"` to suspend automatic rebuilds
+  while still syncing Stripe (e.g. during bulk edits). Unset = enabled. When
+  disabled, publishing still updates Stripe, but the site keeps its last built
+  Sanity snapshot until a rebuild happens some other way.
 
 ### 3. Canonical Sanity document ids
 
@@ -307,16 +294,19 @@ webhook) stays permanently out of sync, silently. `catalog-reconcile` diffs the
 two sides and repairs them:
 
 ```bash
-# Report-only for the development dataset (Insomnia, GET request):
-#   URL:  http://localhost:8888/api/catalog-reconcile?dataset=development&repair=false
+# Report-only for the deploy's own SANITY_DATASET (Insomnia, GET request):
+#   URL:  http://localhost:8888/api/catalog-reconcile?repair=false
 #   Header: x-reconcile-key: <SECRET_CATALOG_KEY>
 
 # Apply repairs (provision missing drafts, archive orphans/deactivated):
-#   .../catalog-reconcile?dataset=development&repair=true
+#   .../catalog-reconcile?repair=true
 ```
 
-- `dataset` = `development` (test key) or `production` (live key); omit to run
-  both. `repair` defaults to `false` and the tool **never writes** otherwise.
+- The tool always uses the deploy's `SANITY_DATASET` + `STRIPE_KEY`; there is no
+  dataset selector. `repair` defaults to `false` and the tool **never writes**
+  otherwise.
+- `SANITY_WRITE_TOKEN` is required by this function and fails loudly if absent.
+  It is not set on staging or in the local `.env` by default.
 - Report buckets in the JSON response:
   - `missing` — Stripe product with no Sanity doc/draft → repair creates
     `drafts.product.<prodId>` (Stripe products with `active: false` are
@@ -350,51 +340,85 @@ two sides and repairs them:
 
 | Webhook | Endpoint | Events | Signing secret |
 |---|---|---|---|
-| Stripe → Sanity | `/.netlify/functions/stripe-product-sync` | `product.created`, `product.updated`, `product.deleted` | `SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET` (from the Stripe Dashboard endpoint) |
-| Sanity dev (applied to `development` dataset) | `/.netlify/functions/sanity-product-sync` | publish of product documents | `SECRET_SANITY_WEBHOOK_KEY` |
-| Sanity prod (applied to `production` dataset) | `/.netlify/functions/sanity-product-sync` | publish of product documents | `SECRET_SANITY_WEBHOOK_KEY` (same secret for both) |
+| Stripe → Sanity (testing deploy) | `/.netlify/functions/stripe-product-sync` | `product.created`, `product.updated`, `product.deleted` | `STRIPE_PRODUCT_WEBHOOK_SECRET` (from the Stripe Dashboard endpoint) |
+| Stripe checkout (testing deploy) | `/.netlify/functions/stripe-orders-webhook` | `checkout.session.completed` | `STRIPE_CHECKOUT_WEBHOOK_SECRET` |
+| Sanity dev (testing deploy, `development` dataset) | `/.netlify/functions/sanity-product-sync` | publish of product documents | `SECRET_SANITY_WEBHOOK_KEY` |
+| Sanity prod (production deploy, `production` dataset) | `/.netlify/functions/sanity-product-sync` | publish of product documents | `SECRET_SANITY_WEBHOOK_KEY` |
 
 ### Catalog sync environment variables
 
 | Variable | Purpose |
 |---|---|
-| `PUBLIC_SANITY_PROJECT_ID` | Sanity project id |
-| `SANITY_WRITE_TOKEN` | Sanity write token (Stripe→Sanity provisioning) |
-| `SANITY_PRODUCTION_DATASET` | Live-mode Stripe events → this dataset (default `production`) |
-| `SANITY_DEVELOPMENT_DATASET` | Test-mode Stripe events → this dataset (default `development`) |
-| `SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET` | Stripe product webhook signing secret |
-| `SECRET_SANITY_WEBHOOK_KEY` | Sanity webhook signing secret (used by both dataset webhooks) |
-| `SECRET_STRIPE_TEST_KEY` | Stripe test key, used for dev-dataset publish sync |
-| `SECRET_STRIPE_LIVE_KEY` | Stripe live key, used for prod-dataset publish sync |
+| `PUBLIC_SANITY_PROJECT_ID` | Sanity project id (build + functions) |
+| `SANITY_DATASET` | The single dataset for this deploy: `development` or `production` |
+| `STRIPE_KEY` | Stripe key for this deploy: test on testing, live on production |
+| `SANITY_WRITE_TOKEN` | Sanity write token (Stripe→Sanity provisioning + reconcile repair) |
+| `STRIPE_PRODUCT_WEBHOOK_SECRET` | Stripe product webhook signing secret |
+| `STRIPE_CHECKOUT_WEBHOOK_SECRET` | Stripe checkout webhook signing secret |
+| `SECRET_SANITY_WEBHOOK_KEY` | Sanity webhook signing secret |
 | `NETLIFY_BUILD_HOOK` | Netlify build hook URL for auto-rebuild |
-| `NETLIFY_AUTO_REBUILD` | `"false"` disables auto-rebuild (unset = enabled) |
+| `SANITY_REBUILD_ON_PUBLISH` | `"false"` disables auto-rebuild (unset = enabled) |
 | `SECRET_CATALOG_KEY` | Token for the `x-reconcile-key` header of `/api/catalog-reconcile` |
 
-### Production Netlify environment checklist
+### 🌿 Branch / deploy model
 
-In Netlify's **production context**, the sync pipeline needs these new vars
-(your existing checkout/Brevo/shipping vars stay unchanged):
+| Branch | Purpose | Stripe | Sanity dataset | Webhooks | Build hook | Write token |
+|---|---|---|---|---|---|---|
+| `dev` | Local only (`netlify dev` + Stripe CLI) | test | `development` | local CLI | none | not set by default |
+| `testing` | Stable test deploy | test `sk_test` | `development` | Stripe test + Sanity dev | testing hook | test value |
+| `staging` | Browse-only production preview | restricted live `rk_live` | `production` | none | unset | unset |
+| `main` | Production | live `sk_live` | `production` | Stripe live + Sanity prod | live hook | live value |
 
-| Variable | Value |
-|---|---|
-| `SECRET_STRIPE_LIVE_KEY` | `sk_live_...` — live Stripe key for the production-dataset sync |
-| `SECRET_STRIPE_TEST_KEY` | `sk_test_...` — so a development-dataset publish never 500s in the prod deploy |
-| `SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET` | signing secret from your live `stripe-product-sync` endpoint |
-| `SECRET_SANITY_WEBHOOK_KEY` | the shared secret from both Sanity webhooks |
-| `SANITY_WRITE_TOKEN` | Sanity write token |
-| `SECRET_CATALOG_KEY` | token for the `x-reconcile-key` header of `/api/catalog-reconcile` |
-| `NETLIFY_BUILD_HOOK` | the build hook URL (e.g. `sanity-publish-rebuild`) |
-| `NETLIFY_AUTO_REBUILD` | unset (enabled); set `"false"` only during bulk edits |
+Merge order: `dev -> testing -> staging -> main`. Deploy Previews are not used.
 
-Renamed vars to keep current: `SITE_URL=https://www.vangular.com`,
-`PUBLIC_SANITY_PROJECT_ID`, `CLOUDFLARE_TOKEN`.
+### Per-context Netlify values
 
-Gotchas:
-- `PUBLIC_SANITY_DATASET` must be `production` in the production context — the
-  built site reads it.
-- In production, `SECRET_STRIPE_KEY` (checkout) and `SECRET_STRIPE_LIVE_KEY`
-  (dataset sync) are both the live key — different vars, separate purposes.
-- The live key never goes in local `.env`; it lives only in Netlify production.
+| Variable | production (`main`) | testing | staging |
+|---|---|---|---|
+| `SITE_URL` | `https://www.vangular.com` | `https://testing--voluble-mermaid-026727.netlify.app` | `https://staging--voluble-mermaid-026727.netlify.app` |
+| `PUBLIC_SANITY_PROJECT_ID` | project id | project id | project id |
+| `SANITY_DATASET` | `production` | `development` | `production` |
+| `PUBLIC_STRIPE_KEY` | `pk_live` | `pk_test` | `pk_live` |
+| `STRIPE_KEY` | live `sk_live` | test `sk_test` | restricted live `rk_live` |
+| `NETLIFY_BUILD_HOOK` | live value | testing branch hook | unset |
+| `SANITY_WRITE_TOKEN` | live value | test value | unset |
+| `STRIPE_PRODUCT_WEBHOOK_SECRET` | live value | test value | unset |
+| `STRIPE_CHECKOUT_WEBHOOK_SECRET` | live value | test value | unset |
+| `SECRET_SANITY_WEBHOOK_KEY` | live value | test value | unset |
+| `SECRET_CATALOG_KEY` | value | value | unset |
+| `SANITY_REBUILD_ON_PUBLISH` | unset | unset | unset |
+
+Shipping-rate, Brevo, and `CLOUDFLARE_TOKEN` values stay per context as
+configured.
+
+Config notes:
+- `SITE_URL` is `https://` and has no trailing slash in every deployed context.
+  Local development is `http://localhost:8888`.
+- `staging` is intentionally browse-only: the restricted live key cannot create
+  checkouts, and no webhook/build/write secrets are set.
+- Env changes only apply after a new deploy. Function code changes must be
+  merged to `testing` and built before testing.
+- The `testing` branch must have a stable branch deploy URL enabled; do not use
+  Deploy Previews.
+
+### Testing-deploy webhook setup
+
+Stripe **test mode** endpoints, both pointing at the testing deploy. Each has
+its own signing secret.
+
+1. `https://testing--voluble-mermaid-026727.netlify.app/.netlify/functions/stripe-product-sync`
+   - Events: `product.created`, `product.updated`, `product.deleted`
+   - Secret → `STRIPE_PRODUCT_WEBHOOK_SECRET` on testing.
+2. `https://testing--voluble-mermaid-026727.netlify.app/.netlify/functions/stripe-orders-webhook`
+   - Event: `checkout.session.completed`
+   - Secret → `STRIPE_CHECKOUT_WEBHOOK_SECRET` on testing.
+
+Sanity **development** webhook:
+
+- URL: `https://testing--voluble-mermaid-026727.netlify.app/.netlify/functions/sanity-product-sync`
+- Dataset: `development`; header `sanity-dataset: development`.
+- Secret must equal `SECRET_SANITY_WEBHOOK_KEY` on testing.
+- Keep the current trigger/filter/projection settings unchanged for now.
 
 ## 📦 Building for Production
 
@@ -414,8 +438,8 @@ npm run preview
 
 1. Use development dataset in Sanity for testing
 2. Test payments with Stripe test mode
-3. Use ngrok for local checkout testing
-4. Deploy to Netlify for production
+3. Use the testing deploy for public webhook endpoints
+4. Merge `dev -> testing -> staging -> main` for production
 
 ## 🛠️ Troubleshooting
 
@@ -426,30 +450,30 @@ Two known causes, in order of likelihood:
 1. **Stale `dist/` build.** With `framework = "#static"` in `netlify.toml`,
    `netlify dev` serves whatever was last built — it never rebuilds. The
    dataset is compiled INTO the built JS at build time, so if you built while
-   the env was wrong, the old value stays until you rebuild (the price-fetch
-   code used to log `Sanity Dataset: <baked value>` to make this visible).
+   the env was wrong, the old value stays until you rebuild (the build log
+   prints `Initializing Sanity client with dataset: <value>`).
 
    Fix:
 
    ```bash
-   unset SITE_URL PUBLIC_STRIPE_KEY SECRET_STRIPE_KEY PUBLIC_SANITY_PROJECT_ID PUBLIC_SANITY_DATASET
+   unset SITE_URL PUBLIC_STRIPE_KEY STRIPE_KEY PUBLIC_SANITY_PROJECT_ID SANITY_DATASET
    npm run build
    netlify dev --port=8888
    ```
 
 2. **A shell session exporting the env var overrides `.env`.** Vite/Astro let an
    existing process env var beat the `.env` file, so a manual
-   `export PUBLIC_SANITY_DATASET=production` left in a terminal session wins.
+   `export SANITY_DATASET=production` left in a terminal session wins.
    `netlify dev` reveals this in its startup log — "Ignored .env file env var:
-   PUBLIC_SANITY_DATASET (defined in process)" is bad; "Injected .env file env
-   vars: ... `PUBLIC_SANITY_DATASET`" is good. It usually comes from an export
+   SANITY_DATASET (defined in process)" is bad; "Injected .env file env
+   vars: ... `SANITY_DATASET`" is good. It usually comes from an export
    in a long-lived session or the one that launched the dev server, and
    unsetting it in a different terminal does nothing.
 
    Diagnose:
 
    ```bash
-   printenv PUBLIC_SANITY_DATASET   # empty is good
+   printenv SANITY_DATASET   # empty is good
    ```
 
    Fix: unset the vars in the same shell that runs netlify dev, or open a fresh

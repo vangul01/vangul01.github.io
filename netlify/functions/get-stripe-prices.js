@@ -2,11 +2,9 @@ import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
 import { resolveDefaultPrice } from "./lib/resolve-default-price.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
+const secretKey = requireEnv("STRIPE_KEY");
 const stripe = createStripeClient(secretKey);
 
 // The handler function processes incoming requests to retrieve current Stripe

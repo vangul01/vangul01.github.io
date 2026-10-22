@@ -1,5 +1,9 @@
 import "dotenv/config";
 
+import { requireEnv } from "./lib/env.js";
+
+const siteUrl = requireEnv("SITE_URL");
+
 /*
 Logic:
 1. Validate input
@@ -73,7 +77,7 @@ export async function handler(event) {
       email,
       includeListIds: [confirmedListId],
       templateId: Number(process.env.BREVO_DEFAULT_DOUBLE_OPT_IN_TEMPLATE_ID),
-      redirectionUrl: `${process.env.SITE_URL}/status/success-newsletter`,
+      redirectionUrl: `${siteUrl}/status/success-newsletter`,
     };
 
     const response = await fetch(

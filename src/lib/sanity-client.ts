@@ -1,16 +1,16 @@
 import { createClient } from "@sanity/client";
 import type { Product, Collaboration } from "../types/sanity-schema";
 
-console.log(
-  "Initializing Sanity client with dataset:",
-  import.meta.env.DEV ? "development" : import.meta.env.PUBLIC_SANITY_DATASET,
-);
+const dataset = import.meta.env.SANITY_DATASET;
+if (!dataset) {
+  throw new Error("Missing required environment variable: SANITY_DATASET");
+}
+
+console.log("Initializing Sanity client with dataset:", dataset);
 
 export const client = createClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
-  dataset: import.meta.env.DEV
-    ? "development"
-    : import.meta.env.PUBLIC_SANITY_DATASET,
+  dataset,
   apiVersion: "2024-04-12",
   useCdn: false,
 });

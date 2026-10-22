@@ -3,18 +3,12 @@ import "dotenv/config";
 import { isValidSignature } from "@sanity/webhook";
 import { createStripeClient } from "./lib/stripe.js";
 import { createSanityClient } from "./lib/sanity.js";
+import { requireEnv } from "./lib/env.js";
 
-const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
-const webhookSecret = process.env.SECRET_SANITY_WEBHOOK_KEY;
-const productionDataset =
-  process.env.SANITY_PRODUCTION_DATASET || "production";
-
-if (!projectId) {
-  throw new Error("Missing Sanity project id");
-}
-if (!webhookSecret) {
-  throw new Error("Missing Sanity webhook signing secret");
-}
+const projectId = requireEnv("PUBLIC_SANITY_PROJECT_ID");
+const webhookSecret = requireEnv("SECRET_SANITY_WEBHOOK_KEY");
+const datasetEnv = requireEnv("SANITY_DATASET");
+const stripeKey = requireEnv("STRIPE_KEY");
 
 function getSanityClient(dataset) {
   return createSanityClient({ projectId, dataset });
@@ -44,6 +38,13 @@ export async function handler(event) {
 
   if (!dataset) {
     console.log("Missing sanity-dataset header; skipping");
+    return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
+  }
+
+  if (dataset !== datasetEnv) {
+    console.log(
+      `sanity-dataset mismatch (got ${dataset}, expected ${datasetEnv}); skipping`,
+    );
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
@@ -81,7 +82,6 @@ export async function handler(event) {
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
-  const isProduction = dataset === productionDataset;
   const client = getSanityClient(dataset);
 
   // 3. Fetch the freshly published doc with resolved image URLs
@@ -102,17 +102,6 @@ export async function handler(event) {
   if (!doc || !doc.stripeProductId) {
     console.log(`Nothing to sync to Stripe for ${payload._id}`);
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
-  }
-
-  // 4. Pick the right Stripe key: Sanity dev dataset -> test, prod -> live
-  const stripeKey = isProduction
-    ? process.env.SECRET_STRIPE_LIVE_KEY
-    : process.env.SECRET_STRIPE_TEST_KEY;
-  if (!stripeKey) {
-    console.error(
-      `Missing ${isProduction ? "SECRET_STRIPE_LIVE_KEY" : "SECRET_STRIPE_TEST_KEY"} for dataset "${dataset}"`,
-    );
-    return { statusCode: 500, body: "Missing Stripe key" };
   }
 
   const stripe = createStripeClient(stripeKey);
@@ -140,8 +129,9 @@ export async function handler(event) {
 
   // 6. Trigger a Netlify rebuild (production dataset only) so the static
   //    site reflects the freshly published Sanity content. Disabled when
-  //    NETLIFY_AUTO_REBUILD === "false" (e.g. during bulk edits).
-  if (isProduction && process.env.NETLIFY_AUTO_REBUILD !== "false") {
+  //    SANITY_REBUILD_ON_PUBLISH === "false" or NETLIFY_BUILD_HOOK is unset.
+  const isProduction = process.env.SANITY_DATASET === "production";
+  if (isProduction && process.env.SANITY_REBUILD_ON_PUBLISH !== "false") {
     if (process.env.NETLIFY_BUILD_HOOK) {
       try {
         const res = await fetch(process.env.NETLIFY_BUILD_HOOK, {
@@ -159,7 +149,7 @@ export async function handler(event) {
       );
     }
   } else {
-    console.log("Automatic rebuild disabled (dev dataset or flag off)");
+    console.log("Automatic rebuild disabled (non-production or flag off)");
   }
 
   return {

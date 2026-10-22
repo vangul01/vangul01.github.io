@@ -44,24 +44,6 @@ if (typeof document !== "undefined") {
     initProductPage();
     initCarousels();
 
-    // Debug: log which Sanity dataset and Stripe mode built this page
-    const pagePath = window.location.pathname;
-    if (pagePath === "/shop" || pagePath.startsWith("/products/")) {
-      const sanityDataset = import.meta.env.DEV
-        ? "development"
-        : import.meta.env.PUBLIC_SANITY_DATASET;
-      const stripeMode = import.meta.env.PUBLIC_STRIPE_KEY?.startsWith(
-        "pk_live",
-      )
-        ? "live"
-        : import.meta.env.PUBLIC_STRIPE_KEY?.startsWith("pk_test")
-          ? "test"
-          : "unset";
-      console.log(
-        `[VANGULAR DEBUG] Sanity dataset: ${sanityDataset} | Stripe mode: ${stripeMode}`,
-      );
-    }
-
     // EDIT THIS!
     // Add-to cart-button data send. Needs product data from stripe to work
     document.querySelectorAll("#add-to-cart").forEach((button) => {

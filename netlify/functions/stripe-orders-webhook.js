@@ -2,9 +2,10 @@ import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
 import { sendBrevoEmail } from "./lib/brevo.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-const webhookSecret = process.env.SECRET_STRIPE_WEBHOOK_SECRET;
+const secretKey = requireEnv("STRIPE_KEY");
+const webhookSecret = requireEnv("STRIPE_CHECKOUT_WEBHOOK_SECRET");
 const brevoKey = process.env.SECRET_BREVO_API_KEY;
 const adminEmail =
   process.env.BREVO_NOTIFICATION_EMAIL || "contact@vangular.com";
@@ -18,13 +19,7 @@ const orderConfirmationTemplateId = Number(
 const orderNotificationTemplateId = Number(
   process.env.BREVO_ORDER_NOTIFICATION_TEMPLATE_ID,
 );
-
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
-if (!webhookSecret) {
-  throw new Error("Missing Stripe webhook signing secret");
-}
+const siteUrl = requireEnv("SITE_URL");
 
 const stripe = createStripeClient(secretKey);
 
@@ -168,8 +163,8 @@ function buildOrderParams(session, items) {
     CUSTOMER_NAME: customer_details?.name || "Not provided",
     CUSTOMER_EMAIL: customer_details?.email || "Not provided",
     SHIPPING_ADDRESS: address,
-    SITE_LINK: process.env.SITE_URL || "https://www.vangular.com",
-    CONTACT_LINK: `${process.env.SITE_URL || "https://www.vangular.com"}/info/contact`,
+    SITE_LINK: siteUrl,
+    CONTACT_LINK: `${siteUrl}/info/contact`,
     ITEMS_HTML: itemsHtml,
   };
 }

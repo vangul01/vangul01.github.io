@@ -3,21 +3,16 @@ import "dotenv/config";
 // Import Stripe using secret key from environment variables to authenticate with the Stripe API.
 import { createStripeClient } from "./lib/stripe.js";
 import { resolveDefaultPrice } from "./lib/resolve-default-price.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
+const secretKey = requireEnv("STRIPE_KEY");
+const siteUrl = requireEnv("SITE_URL");
 const stripe = createStripeClient(secretKey);
 
 // Shipping rates are created in the Stripe Dashboard and referenced by ID.
-const standardShippingRate = process.env.STRIPE_SHIPPING_RATE_STANDARD;
-const freeShippingRate = process.env.STRIPE_SHIPPING_RATE_FREE;
+const standardShippingRate = requireEnv("STRIPE_SHIPPING_RATE_STANDARD");
+const freeShippingRate = requireEnv("STRIPE_SHIPPING_RATE_FREE");
 const FREE_SHIPPING_THRESHOLD = 7500; // $75.00 in cents
-
-if (!standardShippingRate || !freeShippingRate) {
-  throw new Error("Missing Stripe shipping rate env vars");
-}
 
 // This function will be called when the client requests to create a checkout session.
 export async function handler(event) {
@@ -88,8 +83,8 @@ export async function handler(event) {
       mode: "payment",
       automatic_tax: { enabled: true },
       shipping_options: shippingOptions,
-      success_url: `${process.env.SITE_URL}/status/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.SITE_URL}/status/cancel`,
+      success_url: `${siteUrl}/status/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/status/cancel`,
       shipping_address_collection: {
         allowed_countries: ["US"],
       },

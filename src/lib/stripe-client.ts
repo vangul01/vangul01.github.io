@@ -4,20 +4,6 @@ interface StripePrice {
 }
 
 /**
- * Helper to get the correct Netlify function URL
- */
-function getNetlifyFunctionUrl(path: string) {
-  if (typeof window !== "undefined") {
-    // Client-side: relative path works
-    return path;
-  }
-  // Server-side: use environment variable or default to localhost
-  const base =
-    process.env.URL || process.env.DEPLOY_PRIME_URL || "http://localhost:8888";
-  return `${base}${path}`;
-}
-
-/**
  * Fetch one or more Stripe prices (by product id) from Netlify function
  */
 export async function getStripePrices(
@@ -26,7 +12,7 @@ export async function getStripePrices(
   // Add debug logging
   console.log("Requesting price(s) for:", productIds);
 
-  const url = getNetlifyFunctionUrl("/.netlify/functions/get-stripe-prices");
+  const url = "/.netlify/functions/get-stripe-prices";
 
   try {
     const response = await fetch(url, {

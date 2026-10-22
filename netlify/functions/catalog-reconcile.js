@@ -4,32 +4,13 @@ import { timingSafeEqual } from "node:crypto";
 
 import { createStripeClient } from "./lib/stripe.js";
 import { createSanityClient } from "./lib/sanity.js";
+import { requireEnv } from "./lib/env.js";
 
-const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
-const reconcileKey = process.env.SECRET_CATALOG_KEY;
-const writeToken = process.env.SANITY_WRITE_TOKEN;
-const productionDataset =
-  process.env.SANITY_PRODUCTION_DATASET || "production";
-const developmentDataset =
-  process.env.SANITY_DEVELOPMENT_DATASET || "development";
-
-if (!projectId) {
-  throw new Error("Missing Sanity project id");
-}
-if (!reconcileKey) {
-  throw new Error("Missing SECRET_CATALOG_KEY");
-}
-
-const DATASETS = {
-  production: {
-    dataset: productionDataset,
-    stripeKey: process.env.SECRET_STRIPE_LIVE_KEY,
-  },
-  development: {
-    dataset: developmentDataset,
-    stripeKey: process.env.SECRET_STRIPE_TEST_KEY,
-  },
-};
+const projectId = requireEnv("PUBLIC_SANITY_PROJECT_ID");
+const reconcileKey = requireEnv("SECRET_CATALOG_KEY");
+const writeToken = requireEnv("SANITY_WRITE_TOKEN");
+const dataset = requireEnv("SANITY_DATASET");
+const stripeKey = requireEnv("STRIPE_KEY");
 
 function slugify(name) {
   const slug = String(name || "")
@@ -200,7 +181,7 @@ function computeContentDrift(stripeProducts, byStripeId) {
   return drift;
 }
 
-async function reconcileDataset(name, { dataset, stripeKey }, repair) {
+async function reconcileDataset({ dataset, stripeKey }, repair) {
   const report = {
     dataset,
     missing: [],
@@ -212,13 +193,6 @@ async function reconcileDataset(name, { dataset, stripeKey }, repair) {
   };
   let provisioned = 0;
   let archived = 0;
-
-  if (!stripeKey) {
-    report.error = `Missing ${
-      name === "production" ? "SECRET_STRIPE_LIVE_KEY" : "SECRET_STRIPE_TEST_KEY"
-    }`;
-    return { report, provisioned, archived };
-  }
 
   const stripe = createStripeClient(stripeKey);
   const client = createSanityClient({ projectId, dataset, token: writeToken });
@@ -274,10 +248,6 @@ async function reconcileDataset(name, { dataset, stripeKey }, repair) {
   const contentDriftSource = computeContentDrift(stripeProducts, byStripeId);
 
   if (repair) {
-    if (!writeToken) {
-      report.error = "Repair requested but SANITY_WRITE_TOKEN is not set";
-      return { report, provisioned, archived };
-    }
     for (const item of missingSource) {
       // Never draft deactivated Stripe products. They stay reported (visible
       // with active:false) but repair skips them.
@@ -319,7 +289,7 @@ async function reconcileDataset(name, { dataset, stripeKey }, repair) {
   report.unlinked = unlinked;
 
   console.log(
-    `[catalog-reconcile] ${name}: ${stripeProducts.length} Stripe products, ` +
+    `[catalog-reconcile] ${dataset}: ${stripeProducts.length} Stripe products, ` +
       `${byStripeId.size} linked Sanity docs, ${unlinked.length} unlinked, ` +
       `${missingSource.length} missing, ` +
       `${orphansSource.length} orphans, ${deactivatedSource.length} deactivated, ` +
@@ -339,44 +309,26 @@ export async function handler(event) {
   }
 
   const params = new URLSearchParams(event.queryStringParameters || {});
-  const requested = params.get("dataset");
   const repair = parseBool(params.get("repair"));
 
-  if (requested && !DATASETS[requested]) {
+  try {
+    const { report, provisioned, archived } = await reconcileDataset(
+      { dataset, stripeKey },
+      repair,
+    );
+
     return {
-      statusCode: 400,
-      body: JSON.stringify({
-        error: `Unknown dataset "${requested}" (use development or production)`,
-      }),
+      statusCode: 200,
+      body: JSON.stringify(
+        { dataset, repair, provisioned, archived, report },
+        null,
+        2,
+      ),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ dataset, error: err.message }, null, 2),
     };
   }
-
-  const names = requested ? [requested] : Object.keys(DATASETS);
-  const datasets = {};
-  let provisioned = 0;
-  let archived = 0;
-
-  for (const name of names) {
-    try {
-      const { report, provisioned: p, archived: a } = await reconcileDataset(
-        name,
-        DATASETS[name],
-        repair,
-      );
-      datasets[name] = report;
-      provisioned += p;
-      archived += a;
-    } catch (err) {
-      datasets[name] = { error: err.message };
-    }
-  }
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      { repair, provisioned, archived, datasets },
-      null,
-      2,
-    ),
-  };
 }

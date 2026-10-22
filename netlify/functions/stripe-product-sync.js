@@ -2,29 +2,18 @@ import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
 import { createSanityClient } from "./lib/sanity.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-const webhookSecret = process.env.SECRET_STRIPE_PRODUCT_WEBHOOK_SECRET;
-const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
-const writeToken = process.env.SANITY_WRITE_TOKEN;
-const productionDataset = process.env.SANITY_PRODUCTION_DATASET || "production";
-const developmentDataset =
-  process.env.SANITY_DEVELOPMENT_DATASET || "development";
-
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
-if (!webhookSecret) {
-  throw new Error("Missing Stripe product webhook signing secret");
-}
-if (!projectId || !writeToken) {
-  throw new Error("Missing Sanity project id or write token");
-}
+const secretKey = requireEnv("STRIPE_KEY");
+const webhookSecret = requireEnv("STRIPE_PRODUCT_WEBHOOK_SECRET");
+const projectId = requireEnv("PUBLIC_SANITY_PROJECT_ID");
+const writeToken = requireEnv("SANITY_WRITE_TOKEN");
+const dataset = requireEnv("SANITY_DATASET");
 
 const stripe = createStripeClient(secretKey);
 
-function getSanityClient(dataset) {
-  return createSanityClient({ projectId, dataset, token: writeToken });
+function getSanityClient(d) {
+  return createSanityClient({ projectId, dataset: d, token: writeToken });
 }
 
 function slugify(name) {
@@ -71,7 +60,6 @@ export async function handler(event) {
   }
 
   const product = stripeEvent.data.object;
-  const dataset = product.livemode ? productionDataset : developmentDataset;
   const client = getSanityClient(dataset);
   const liveId = `product.${product.id}`;
   const draftId = `drafts.${liveId}`;
