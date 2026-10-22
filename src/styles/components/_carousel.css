@@ -4,7 +4,7 @@
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
-  border-radius: var(--border-radius-md);
+  border-radius: 0;
   background-color: var(--color-gray-700);
   display: grid;
 }

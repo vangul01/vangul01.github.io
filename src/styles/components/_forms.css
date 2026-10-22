@@ -2,17 +2,17 @@
 
 /* src/pages/contact.astro has class contact-form */
 .contact-form {
-  max-width: 500px;
+  max-width: 31.25rem; /* 500px */
   text-align: center;
 }
 
 .newsletter-form {
-  max-width: 400px;
+  max-width: 25rem; /* 400px */
   margin: auto;
   padding: var(--spacing-clamp-lg);
-  background-color: var(--color-background);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
   gap: 10px;
   text-align: center;
 }
@@ -20,9 +20,9 @@
 .newsletter-form input {
   width: 100%;
   padding: var(--spacing-clamp-sm);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-clamp-md);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-clamp-base);
   margin-bottom: var(--spacing-clamp-lg);
 }
 

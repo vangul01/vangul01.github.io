@@ -124,8 +124,8 @@
   --button-width: 12.5rem; /* 200px */
 
   /* Container Widths */
-  --container-width-max: 75rem; /* 1200px */
-  --container-width-narrow: 60rem; /* 960px */
+  --container-width-max: 64rem; /* 1024px */
+  --container-width-narrow: 64rem; /* 1024px */
   --container-width-min: 15rem; /* 240px */
 
   /* Layout */
@@ -135,9 +135,9 @@
   /* --text-width-max: 35rem; */
 
   /* Misc */
-  --height-icon: 30px;
-  --thumbnail: 150px;
-  --social-icon-size: 50px;
+  --height-icon: 1.875rem; /* 30px */
+  --thumbnail: 9.375rem; /* 150px */
+  --social-icon-size: 3.125rem; /* 50px */
 }
 
 /* ----------- INDUSTRY STANDARD COLOR COUNT ----------- */

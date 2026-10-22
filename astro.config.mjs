@@ -21,14 +21,9 @@ export default defineConfig({
     domains: ["cdn.sanity.io"],
   },
 
-  // To whitelist ngrok domain
   vite: {
     server: {
-      allowedHosts: [
-        "localhost",
-        "127.0.0.1",
-        "raccoon-allowed-wahoo.ngrok-free.app",
-      ],
+      allowedHosts: ["localhost", "127.0.0.1"],
     },
   },
 });

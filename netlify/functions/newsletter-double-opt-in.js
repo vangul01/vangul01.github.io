@@ -1,5 +1,9 @@
 import "dotenv/config";
 
+import { requireEnv } from "./lib/env.js";
+
+const siteUrl = requireEnv("SITE_URL");
+
 /*
 Logic:
 1. Validate input
@@ -8,15 +12,6 @@ Logic:
    Brevo adds the contact directly to the confirmed list.
 */
 export async function handler(event) {
-  console.log(
-    "BREVO_KEY_PREFIX:",
-    process.env.SECRET_BREVO_API_KEY?.slice(0, 12),
-  );
-  console.log("BREVO_KEY_EXISTS:", !!process.env.SECRET_BREVO_API_KEY);
-  console.log(
-    "BREVO_LIST_ID:",
-    process.env.BREVO_CONFIRMED_SUBSCRIBERS_LIST_ID,
-  );
   try {
     // --- 1. Method guard ---
     if (event.httpMethod !== "POST") {
@@ -82,7 +77,7 @@ export async function handler(event) {
       email,
       includeListIds: [confirmedListId],
       templateId: Number(process.env.BREVO_DEFAULT_DOUBLE_OPT_IN_TEMPLATE_ID),
-      redirectionUrl: `${process.env.PUBLIC_SITE_URL}/status/success-newsletter`,
+      redirectionUrl: `${siteUrl}/status/success-newsletter`,
     };
 
     const response = await fetch(

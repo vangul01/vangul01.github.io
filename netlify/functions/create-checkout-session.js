@@ -1,15 +1,18 @@
 import "dotenv/config";
 
 // Import Stripe using secret key from environment variables to authenticate with the Stripe API.
-import Stripe from "stripe";
+import { createStripeClient } from "./lib/stripe.js";
+import { resolveDefaultPrice } from "./lib/resolve-default-price.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
-const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-02-24.acacia",
-});
+const secretKey = requireEnv("STRIPE_KEY");
+const siteUrl = requireEnv("SITE_URL");
+const stripe = createStripeClient(secretKey);
+
+// Shipping rates are created in the Stripe Dashboard and referenced by ID.
+const standardShippingRate = requireEnv("STRIPE_SHIPPING_RATE_STANDARD");
+const freeShippingRate = requireEnv("STRIPE_SHIPPING_RATE_FREE");
+const FREE_SHIPPING_THRESHOLD = 7500; // $75.00 in cents
 
 // Shipping rates are created in the Stripe Dashboard and referenced by ID.
 const standardShippingRate = process.env.STRIPE_SHIPPING_RATE_STANDARD;
@@ -35,13 +38,32 @@ export async function handler(event) {
       throw new Error("No items provided");
     }
 
-    // Retrieve prices so the order subtotal is known before choosing shipping
+    // Trust only the Stripe product id and a sane quantity. Prices are always
+    // re-pulled from Stripe's current default price for the product, so any
+    // client-supplied price or explicit price id is ignored.
+    const sanitizedItems = items.map((item, index) => {
+      const productId =
+        typeof item?.productId === "string" ? item.productId.trim() : "";
+      if (!productId.startsWith("prod_")) {
+        throw new Error(`Invalid product id for item ${index + 1}`);
+      }
+      const quantity = Math.max(
+        1,
+        Math.min(Math.round(Number(item?.quantity)) || 1, 10),
+      );
+      return { productId, quantity };
+    });
+
+    // Resolve each item to its current chargeable price (product id -> the
+    // product's current default price) so checkout never uses stale prices.
     const prices = await Promise.all(
-      items.map((item) => stripe.prices.retrieve(item.priceId)),
+      sanitizedItems.map((item) =>
+        resolveDefaultPrice(stripe, item.productId),
+      ),
     );
     const subtotal = prices.reduce(
       (sum, price, index) =>
-        sum + (price.unit_amount ?? 0) * items[index].quantity,
+        sum + (price.unitAmount ?? 0) * sanitizedItems[index].quantity,
       0,
     );
 
@@ -58,8 +80,8 @@ export async function handler(event) {
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: items.map((item) => ({
-        price: item.priceId,
+      line_items: sanitizedItems.map((item, index) => ({
+        price: prices[index].id,
         quantity: item.quantity,
         // adjustable_quantity: {
         //   enabled: true,
@@ -70,8 +92,8 @@ export async function handler(event) {
       mode: "payment",
       automatic_tax: { enabled: true },
       shipping_options: shippingOptions,
-      success_url: `${process.env.PUBLIC_SITE_URL}/status/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.PUBLIC_SITE_URL}/status/cancel`,
+      success_url: `${siteUrl}/status/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/status/cancel`,
       shipping_address_collection: {
         allowed_countries: ["US"],
       },

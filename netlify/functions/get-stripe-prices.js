@@ -1,36 +1,31 @@
 import "dotenv/config";
 
-// Import Stripe using secret key from environment variables to authenticate with the Stripe API.
-import Stripe from "stripe";
+import { createStripeClient } from "./lib/stripe.js";
+import { resolveDefaultPrice } from "./lib/resolve-default-price.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
-const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-02-24.acacia",
-});
+const secretKey = requireEnv("STRIPE_KEY");
+const stripe = createStripeClient(secretKey);
 
-// The handler function processes incoming requests to retrieve Stripe prices.
+// The handler function processes incoming requests to retrieve current Stripe
+// prices. Identifiers are Stripe product ids (prod_...); each resolves to the
+// product's current default price — the price the store actually charges.
 export async function handler(event) {
   try {
-    const { priceIds } = JSON.parse(event.body);
+    const { productIds } = JSON.parse(event.body);
 
-    if (!Array.isArray(priceIds)) {
-      throw new Error("priceIds must be an array");
+    if (!Array.isArray(productIds)) {
+      throw new Error("productIds must be an array");
     }
 
-    const prices = await Promise.all(
-      priceIds.map((id) => stripe.prices.retrieve(id)),
+    const resolved = await Promise.all(
+      productIds.map((id) => resolveDefaultPrice(stripe, id)),
     );
 
-    const formattedPrices = prices.reduce(
-      (acc, price) => ({
+    const formattedPrices = productIds.reduce(
+      (acc, id, index) => ({
         ...acc,
-        [price.id]: {
-          amount: price.unit_amount / 100,
-          currency: price.currency,
-        },
+        [id]: resolved[index],
       }),
       {},
     );

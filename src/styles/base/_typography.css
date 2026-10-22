@@ -119,7 +119,6 @@ textarea {
   min-width: var(--input-width-min);
   background-color: var(--color-input-bg);
   color: var(--color-text-secondary);
-  box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
   padding: var(--spacing-clamp-sm) var(--spacing-clamp-sm);
   font-family: var(--font-secondary);

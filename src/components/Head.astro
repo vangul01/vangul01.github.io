@@ -93,13 +93,13 @@ const fontAwesome =
   <title>{pageTitle}</title>
 
   <!-- Cloudflare Web Analytics -->
-  {import.meta.env.PUBLIC_CLOUDFLARE_TOKEN && (
+  {process.env.CLOUDFLARE_TOKEN && (
     <script
       is:inline
       type="module"
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon={JSON.stringify({
-        token: import.meta.env.PUBLIC_CLOUDFLARE_TOKEN,
+        token: process.env.CLOUDFLARE_TOKEN,
       })}
     />
   )}

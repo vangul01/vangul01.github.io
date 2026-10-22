@@ -28,18 +28,83 @@
   gap: var(--spacing-clamp-md);
   margin-top: 0; /* Reset any top margin */
 
-  /* padding: var(--spacing-clamp-lg); */
   h3 {
     text-align: left;
   }
 
   h4 {
-    margin: var(--spacing-clamp-md) 0;
+    text-align: left;
+    margin: 0;
   }
 
   p {
     font-size: var(--font-size-clamp-base);
   }
+}
+
+/* Price sits right under the title — no label, just the number */
+.product-price {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-clamp-xl);
+  line-height: 1;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Supporting copy: shipping note, out-of-stock notice */
+.product-note {
+  font-size: var(--font-size-clamp-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+.product-description {
+  margin: 0;
+}
+
+/* Spec list — label/value rows */
+.product-details {
+  dl {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-clamp-xs);
+    margin: 0;
+  }
+
+  h4 {
+    margin-block-end: var(--spacing-clamp-sm);
+  }
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-clamp-xs) var(--spacing-clamp-md);
+  }
+
+  dt {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-clamp-sm);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    min-width: 7rem;
+  }
+
+  dd {
+    margin: 0;
+    font-size: var(--font-size-clamp-base);
+    color: var(--color-text-primary);
+  }
+}
+
+/* Flex gap handles spacing here — button-group's own margin would double it */
+.product-text .button-group {
+  margin-block: 0;
+}
+
+/* Stretch both panels to equal height — image matches the text column */
+#product-page .grid-responsive {
+  align-items: stretch;
 }
 
 /* CLASS NOT CURRENTLY USED */
@@ -48,21 +113,36 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-clamp-md);
-  max-width: 600px;
+  max-width: 37.5rem; /* 600px */
   width: 100%;
   margin-top: 0;
+}
+
+/* Image column panel — solid purple, mirrors .product-text */
+.product-images {
+  background: var(--color-brand-primary);
+}
+
+/* Fixed square stage — consistent footprint regardless of source image;
+   transparent so the purple panel shows through letterboxing */
+.product-image-stage {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
 }
 
 #main-product-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.3s ease;
 }
 
 .product-thumbnails {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 80px);
+  grid-template-columns: repeat(auto-fit, 5rem);
   gap: var(--spacing-clamp-sm);
   justify-content: center;
   width: 100%;
@@ -70,24 +150,22 @@
 }
 
 .thumbnail {
-  width: 80px;
-  height: 80px;
+  width: 5rem; /* 80px */
+  height: 5rem; /* 80px */
   object-fit: cover;
   cursor: pointer;
   border: 2px solid transparent;
-  border-radius: var(--border-radius-sm);
-
-  /* transition: border-color 0.2s ease; */
+  border-radius: 0;
   transition: all 0.2s ease;
   opacity: 0.7;
 }
 
 .thumbnail:hover {
   opacity: 1;
-  border-color: var(--color-border-medium);
+  border-color: var(--color-border-light);
 }
 
 .thumbnail.active {
-  border-color: var(--color-border-dark);
+  border-color: var(--color-brand-accent);
   opacity: 1;
 }

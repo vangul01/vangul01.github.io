@@ -1,9 +1,11 @@
 import "dotenv/config";
 
-import Stripe from "stripe";
+import { createStripeClient } from "./lib/stripe.js";
+import { sendBrevoEmail } from "./lib/brevo.js";
+import { requireEnv } from "./lib/env.js";
 
-const secretKey = process.env.SECRET_STRIPE_KEY;
-const webhookSecret = process.env.SECRET_STRIPE_WEBHOOK_SECRET;
+const secretKey = requireEnv("STRIPE_KEY");
+const webhookSecret = requireEnv("STRIPE_CHECKOUT_WEBHOOK_SECRET");
 const brevoKey = process.env.SECRET_BREVO_API_KEY;
 const adminEmail =
   process.env.BREVO_NOTIFICATION_EMAIL || "contact@vangular.com";
@@ -17,17 +19,9 @@ const orderConfirmationTemplateId = Number(
 const orderNotificationTemplateId = Number(
   process.env.BREVO_ORDER_NOTIFICATION_TEMPLATE_ID,
 );
+const siteUrl = requireEnv("SITE_URL");
 
-if (!secretKey) {
-  throw new Error("Missing Stripe secret key");
-}
-if (!webhookSecret) {
-  throw new Error("Missing Stripe webhook signing secret");
-}
-
-const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-02-24.acacia",
-});
+const stripe = createStripeClient(secretKey);
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
@@ -169,8 +163,8 @@ function buildOrderParams(session, items) {
     CUSTOMER_NAME: customer_details?.name || "Not provided",
     CUSTOMER_EMAIL: customer_details?.email || "Not provided",
     SHIPPING_ADDRESS: address,
-    SITE_LINK: process.env.PUBLIC_SITE_URL || "https://www.vangular.com",
-    CONTACT_LINK: `${process.env.PUBLIC_SITE_URL || "https://www.vangular.com"}/info/contact`,
+    SITE_LINK: siteUrl,
+    CONTACT_LINK: `${siteUrl}/info/contact`,
     ITEMS_HTML: itemsHtml,
   };
 }
@@ -217,19 +211,10 @@ async function sendOrderConfirmation(session, items) {
 }
 
 async function sendBrevo(emailPayload, label) {
-  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": brevoKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(emailPayload),
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    console.error(`Failed to send ${label} email:`, error);
-  } else {
+  try {
+    await sendBrevoEmail(emailPayload);
     console.log(`${label} email sent to`, emailPayload.to?.[0]?.email);
+  } catch (err) {
+    console.error(`Failed to send ${label} email:`, err.message);
   }
 }
