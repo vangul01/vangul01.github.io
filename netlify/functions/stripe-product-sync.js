@@ -26,17 +26,6 @@ function slugify(name) {
   return slug || `product-${Date.now()}`;
 }
 
-async function archiveProduct(client, productId, liveId, draftId, dataset) {
-  const patch = { set: { archived: true, inStock: false } };
-  await Promise.allSettled([
-    client.patch(liveId, patch).commit(),
-    client.patch(draftId, patch).commit(),
-  ]);
-  console.log(
-    `Auto-archived ${productId} (${liveId}, ${draftId}) in dataset "${dataset}"`,
-  );
-}
-
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
@@ -60,70 +49,46 @@ export async function handler(event) {
   }
 
   const product = stripeEvent.data.object;
+
+  if (stripeEvent.type !== "product.created") {
+    console.log(`Ignoring Stripe event type: ${stripeEvent.type}`);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ received: true, ignored: stripeEvent.type }),
+    };
+  }
+
   const client = getSanityClient(dataset);
   const liveId = `product.${product.id}`;
   const draftId = `drafts.${liveId}`;
 
   try {
-    switch (stripeEvent.type) {
-      case "product.created":
-      case "product.updated": {
-        if (product.active === false) {
-          // Deactivated in Stripe: hide it from the shop (same as delete).
-          await archiveProduct(client, product.id, liveId, draftId, dataset);
-          break;
-        }
-        // Provision (ensure-exists only) an unpublished Sanity draft so the
-        // product is visible in Sanity Studio but NOT on the live site until
-        // it is authored and published. Skip when a published doc already
-        // carries this stripeProductId (e.g. docs created under legacy ids
-        // before the webhook existed) — otherwise every product.updated would
-        // spawn a duplicate.
-        const existingPublished = await client.fetch(
-          `*[_type == "product" && stripeProductId == $id && !(_id in path("drafts.**"))][0]{_id, archived}`,
-          { id: product.id },
-        );
-        if (!existingPublished) {
-          await client.createIfNotExists({
-            _id: draftId,
-            _type: "product",
-            stripeProductId: product.id,
-            name: `${product.name || "Untitled product"} _DRAFT`,
-            slug: { current: slugify(product.name) },
-            inStock: false,
-            archived: false,
-            category: "misc",
-          });
-          console.log(
-            `Provisioned Sanity draft ${draftId} in dataset "${dataset}"`,
-          );
-        } else if (existingPublished.archived === true) {
-          // Reactivated in Stripe: bring the published doc back on the shop.
-          // inStock stays a manual Sanity decision and is left untouched.
-          await client
-            .patch(existingPublished._id, { set: { archived: false } })
-            .commit();
-          console.log(
-            `Reactivated ${product.id} (${existingPublished._id}) in dataset "${dataset}"`,
-          );
-        } else {
-          console.log(
-            `Skipping draft for ${product.id}: published doc ${existingPublished._id} already has this stripeProductId`,
-          );
-        }
-        break;
-      }
-
-      case "product.deleted": {
-        // Auto-archive any matching live doc and/or draft so the item
-        // disappears from the shop without deleting Sanity data.
-        await archiveProduct(client, product.id, liveId, draftId, dataset);
-        break;
-      }
-
-      default:
-        console.log(`Unhandled Stripe event type: ${stripeEvent.type}`);
+    // Creation is Stripe-first only. Provision an unpublished Sanity draft so
+    // the product is visible in Sanity Studio but not on the live site until
+    // authored and published.
+    const existingPublished = await client.fetch(
+      `*[_type == "product" && stripeProductId == $id && !(_id in path("drafts.**"))][0]{_id}`,
+      { id: product.id },
+    );
+    if (existingPublished) {
+      console.log(
+        `Skipping draft for ${product.id}: published doc ${existingPublished._id} already has this stripeProductId`,
+      );
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ received: true }),
+      };
     }
+
+    await client.createIfNotExists({
+      _id: draftId,
+      _type: "product",
+      stripeProductId: product.id,
+      name: product.name || "Untitled product",
+      slug: { current: slugify(product.name) },
+      category: "misc",
+    });
+    console.log(`Provisioned Sanity draft ${draftId} in dataset "${dataset}"`);
   } catch (err) {
     console.error("Product provisioning error:", err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
