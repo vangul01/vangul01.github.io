@@ -14,18 +14,45 @@ function getSanityClient(dataset) {
   return createSanityClient({ projectId, dataset });
 }
 
-function stripDraftSuffix(name) {
-  if (typeof name === "string" && name.endsWith(" _DRAFT")) {
-    return name.slice(0, -" _DRAFT".length);
-  }
-  return name;
-}
-
 function buildDescription(doc) {
   const parts = [];
   if (doc.materials) parts.push(`Materials: ${doc.materials}`);
   if (doc.dimensions) parts.push(`Dimensions: ${doc.dimensions}`);
   return parts.join(" | ") || null;
+}
+
+function transformImageUrl(url) {
+  if (typeof url !== "string" || url.length === 0) return url;
+  try {
+    const u = new URL(url);
+    u.searchParams.set("w", "1200");
+    u.searchParams.set("fit", "max");
+    u.searchParams.set("fm", "jpg");
+    u.searchParams.set("q", "80");
+    return u.toString();
+  } catch {
+    const sep = url.includes("?") ? "&" : "?";
+    return `${url}${sep}w=1200&fit=max&fm=jpg&q=80`;
+  }
+}
+
+function triggerRebuild() {
+  const shouldRebuild =
+    Boolean(process.env.NETLIFY_BUILD_HOOK) &&
+    process.env.SANITY_REBUILD_ON_PUBLISH !== "false";
+  if (shouldRebuild && process.env.NETLIFY_BUILD_HOOK) {
+    fetch(process.env.NETLIFY_BUILD_HOOK, { method: "POST" })
+      .then((res) => {
+        console.log(
+          `Netlify rebuild triggered (${res.status} ${res.statusText})`,
+        );
+      })
+      .catch((err) => {
+        console.error("Netlify build hook failed:", err.message);
+      });
+    return;
+  }
+  console.log("Automatic rebuild disabled (missing hook or flag off)");
 }
 
 export async function handler(event) {
@@ -35,6 +62,7 @@ export async function handler(event) {
 
   const dataset = event.headers["sanity-dataset"];
   const signature = event.headers["sanity-webhook-signature"];
+  const sanityOperation = event.headers["sanity-operation"];
 
   if (!dataset) {
     console.log("Missing sanity-dataset header; skipping");
@@ -53,7 +81,6 @@ export async function handler(event) {
     : event.body;
 
   let valid;
-  // 1. Ensure it's a Sanity webhook signature
   try {
     valid = await isValidSignature(rawBody, signature, webhookSecret);
   } catch (err) {
@@ -64,6 +91,12 @@ export async function handler(event) {
     return { statusCode: 401, body: "Signature mismatch" };
   }
 
+  if (sanityOperation === "delete") {
+    console.log("delete payload", rawBody);
+    triggerRebuild();
+    return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
+  }
+
   let payload;
   try {
     payload = JSON.parse(rawBody);
@@ -71,20 +104,12 @@ export async function handler(event) {
     return { statusCode: 400, body: "Invalid JSON body" };
   }
 
-  // 2. Skip deletes (Sanity sends the operation as the sanity-operation
-  //    header, never in the payload body), and only sync published product
-  //    docs (filter set on the Sanity webhook, but guard against drafts).
-  if (event.headers["sanity-operation"] === "delete") {
-    console.log("Skipping deleted Sanity document");
-    return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
-  }
   if (payload._type !== "product" || String(payload._id || "").startsWith("drafts.")) {
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
   const client = getSanityClient(dataset);
 
-  // 3. Fetch the freshly published doc with resolved image URLs
   const doc = await client.fetch(
     `*[_id == $id][0]{
       _id,
@@ -92,8 +117,6 @@ export async function handler(event) {
       stripeProductId,
       materials,
       dimensions,
-      inStock,
-      archived,
       "images": images[].asset->url
     }`,
     { id: payload._id },
@@ -106,17 +129,22 @@ export async function handler(event) {
 
   const stripe = createStripeClient(stripeKey);
 
-  // 5. Update the Stripe product: name (minus _DRAFT), description,
-  //    first image, and archive state matching Sanity. Description is always
-  //    sent so that removing materials/dimensions in Sanity also clears the
-  //    stale text in Stripe (null resets it Stripe-side).
-  const update = {
-    name: stripDraftSuffix(doc.name),
-    active: !doc.archived,
-    description: buildDescription(doc) || null,
-  };
-  if (doc.images && doc.images.length > 0) {
-    update.images = [doc.images[0]];
+  const update = {};
+  if (typeof doc.name === "string" && doc.name.trim() !== "") {
+    update.name = doc.name;
+  }
+
+  const description = buildDescription(doc);
+  if (description) {
+    update.description = description;
+  } else {
+    update.description = "";
+  }
+
+  if (Array.isArray(doc.images) && doc.images.length > 0 && doc.images[0]) {
+    update.images = [transformImageUrl(doc.images[0])];
+  } else {
+    update.images = "";
   }
 
   try {
@@ -127,30 +155,7 @@ export async function handler(event) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 
-  // 6. Trigger a Netlify rebuild (production dataset only) so the static
-  //    site reflects the freshly published Sanity content. Disabled when
-  //    SANITY_REBUILD_ON_PUBLISH === "false" or NETLIFY_BUILD_HOOK is unset.
-  const isProduction = process.env.SANITY_DATASET === "production";
-  if (isProduction && process.env.SANITY_REBUILD_ON_PUBLISH !== "false") {
-    if (process.env.NETLIFY_BUILD_HOOK) {
-      try {
-        const res = await fetch(process.env.NETLIFY_BUILD_HOOK, {
-          method: "POST",
-        });
-        console.log(
-          `Netlify rebuild triggered (${res.status} ${res.statusText})`,
-        );
-      } catch (err) {
-        console.error("Netlify build hook failed:", err.message);
-      }
-    } else {
-      console.log(
-        "NETLIFY_BUILD_HOOK not set; skipping automatic rebuild",
-      );
-    }
-  } else {
-    console.log("Automatic rebuild disabled (non-production or flag off)");
-  }
+  triggerRebuild();
 
   return {
     statusCode: 200,
