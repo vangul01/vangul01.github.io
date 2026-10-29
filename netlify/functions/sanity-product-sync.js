@@ -10,8 +10,8 @@ const webhookSecret = requireEnv("SECRET_SANITY_WEBHOOK_KEY");
 const datasetEnv = requireEnv("SANITY_DATASET");
 const stripeKey = requireEnv("STRIPE_KEY");
 
-function getSanityClient(dataset) {
-  return createSanityClient({ projectId, dataset });
+function getSanityClient() {
+  return createSanityClient({ projectId, dataset: datasetEnv });
 }
 
 function buildDescription(doc) {
@@ -36,20 +36,19 @@ function transformImageUrl(url) {
   }
 }
 
-function triggerRebuild() {
+async function triggerRebuild() {
   const shouldRebuild =
     Boolean(process.env.NETLIFY_BUILD_HOOK) &&
     process.env.SANITY_REBUILD_ON_PUBLISH !== "false";
   if (shouldRebuild && process.env.NETLIFY_BUILD_HOOK) {
-    fetch(process.env.NETLIFY_BUILD_HOOK, { method: "POST" })
-      .then((res) => {
-        console.log(
-          `Netlify rebuild triggered (${res.status} ${res.statusText})`,
-        );
-      })
-      .catch((err) => {
-        console.error("Netlify build hook failed:", err.message);
-      });
+    try {
+      const res = await fetch(process.env.NETLIFY_BUILD_HOOK, { method: "POST" });
+      console.log(
+        `Netlify rebuild triggered (${res.status} ${res.statusText})`,
+      );
+    } catch (err) {
+      console.error("Netlify build hook failed:", err.message);
+    }
     return;
   }
   console.log("Automatic rebuild disabled (missing hook or flag off)");
@@ -60,19 +59,13 @@ export async function handler(event) {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  const dataset = event.headers["sanity-dataset"];
+  const datasetHeader = event.headers["sanity-dataset"];
   const signature = event.headers["sanity-webhook-signature"];
+  // sanity-operation comes from a header (not the payload body)
   const sanityOperation = event.headers["sanity-operation"];
 
-  if (!dataset) {
+  if (!datasetHeader) {
     console.log("Missing sanity-dataset header; skipping");
-    return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
-  }
-
-  if (dataset !== datasetEnv) {
-    console.log(
-      `sanity-dataset mismatch (got ${dataset}, expected ${datasetEnv}); skipping`,
-    );
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
@@ -80,6 +73,7 @@ export async function handler(event) {
     ? Buffer.from(event.body, "base64").toString("utf-8")
     : event.body;
 
+  // Verify signature first
   let valid;
   try {
     valid = await isValidSignature(rawBody, signature, webhookSecret);
@@ -91,9 +85,17 @@ export async function handler(event) {
     return { statusCode: 401, body: "Signature mismatch" };
   }
 
+  // Compare sanity-dataset header to SANITY_DATASET (from env) after signature verification
+  if (datasetHeader !== datasetEnv) {
+    console.log(
+      `sanity-dataset mismatch (got ${datasetHeader}, expected ${datasetEnv}); skipping`,
+    );
+    return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
+  }
+
   if (sanityOperation === "delete") {
     console.log("delete payload", rawBody);
-    triggerRebuild();
+    await triggerRebuild();
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
@@ -108,7 +110,7 @@ export async function handler(event) {
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
-  const client = getSanityClient(dataset);
+  const client = getSanityClient();
 
   const doc = await client.fetch(
     `*[_id == $id][0]{
@@ -135,6 +137,7 @@ export async function handler(event) {
   }
 
   const description = buildDescription(doc);
+  // Send "" to clear stale description in Stripe (do not omit or send null)
   if (description) {
     update.description = description;
   } else {
@@ -144,6 +147,7 @@ export async function handler(event) {
   if (Array.isArray(doc.images) && doc.images.length > 0 && doc.images[0]) {
     update.images = [transformImageUrl(doc.images[0])];
   } else {
+    // Send "" to clear stale images in Stripe (do not omit or send null)
     update.images = "";
   }
 
@@ -155,7 +159,7 @@ export async function handler(event) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 
-  triggerRebuild();
+  await triggerRebuild();
 
   return {
     statusCode: 200,
