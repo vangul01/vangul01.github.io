@@ -5,6 +5,7 @@ import { timingSafeEqual } from "node:crypto";
 import { createStripeClient } from "./lib/stripe.js";
 import { createSanityClient } from "./lib/sanity.js";
 import { requireEnv } from "./lib/env.js";
+import { productDraftId } from "./lib/sanity-ids.js";
 
 const projectId = requireEnv("PUBLIC_SANITY_PROJECT_ID");
 const reconcileKey = requireEnv("SECRET_CATALOG_KEY");
@@ -26,6 +27,7 @@ function parseBool(value) {
   return value === "true" || value === "1";
 }
 
+// #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION
 function stripDraftSuffix(name) {
   if (typeof name === "string" && name.endsWith(" _DRAFT")) {
     return name.slice(0, -" _DRAFT".length);
@@ -150,6 +152,7 @@ function computeContentDrift(stripeProducts, byStripeId) {
     const checks = [
       {
         field: "name",
+        // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION
         expected: stripDraftSuffix(published.name),
         actual: product.name,
       },
@@ -253,13 +256,10 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
       // with active:false) but repair skips them.
       if (item.active === false) continue;
       await client.createIfNotExists({
-        _id: `drafts.product.${item.stripeId}`,
+        _id: productDraftId(item.stripeId),
         _type: "product",
-        stripeProductId: item.stripeId,
-        name: `${item.name || "Untitled product"} _DRAFT`,
+        name: item.name || "Untitled product",
         slug: { current: slugify(item.name) },
-        inStock: false,
-        archived: false,
         category: "misc",
       });
       provisioned += 1;

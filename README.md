@@ -217,28 +217,22 @@ Note: Sanity files of interest for schema updates:
 ## 🔄 Catalog Sync (Stripe ↔ Sanity)
 
 Sanity owns all storefront content; Stripe owns identity, pricing and checkout.
-Two serverless webhooks keep them in sync, using `stripeProductId` (`prod_...`)
-as the primary key.
+Two serverless webhooks keep them in sync. The **Sanity document `_id` is the Stripe product ID** (`prod_...`; drafts as `drafts.prod_...`). The `stripeProductId` field is legacy and being removed during migration.
 
 ### 1. Stripe → Sanity (provisioning drafts)
 
-`netlify/functions/stripe-product-sync.js` listens for Stripe `product.created`,
-`product.updated` and `product.deleted` events.
+`netlify/functions/stripe-product-sync.js` listens for Stripe `product.created`
+events (Phase 2). 
 
 - **One dataset per deploy**: `stripe-product-sync` writes to the deploy's
   `SANITY_DATASET`. The testing deploy uses `development`; production uses
   `production`. Stripe test webhooks point only at the testing deploy, so test
   products cannot leak into the live site.
-- `product.created` / `product.updated` calls `createIfNotExists` on
-  `drafts.product.<prodId>` with name `"<Stripe name> _DRAFT"` (slug from the
-  clean name), `inStock: false`, `archived: false`, `category: "misc"`.
-  Ensure-exists only — it never overwrites authored content, so it cannot
-  create an update loop. The draft is invisible to the site until published.
-- `product.deleted` auto-archives the matching Sanity doc (live + draft) so a
-  Stripe-side delete removes the item from the shop without losing Sanity data.
-- `product.updated` with `active: false` (deactivated, not deleted) is treated
-  like a delete: it auto-archives the matching live + draft docs so a de-listed
-  Stripe product never stays on the shop (which would break checkout for it).
+- `product.created` provisions an unpublished Sanity draft with `_id` `drafts.prod_<prodId>`
+  (bare Stripe product ID). No `stripeProductId` field is written. If a doc already
+  exists for that Stripe product, it logs and returns 200 (idempotent). Ensure-exists
+  only — it never overwrites authored content.
+- Deletes/deactivations are not handled by this webhook in the new flow.
 
 ### 2. Sanity → Stripe (publish sync + rebuild)
 
@@ -247,44 +241,49 @@ as the primary key.
 `_type == "product" && !(_id in path("drafts.**"))`), one webhook per dataset.
 
 - The dataset the webhook is applied to is sent as the `sanity-dataset` header.
-  It must match the deploy's `SANITY_DATASET` or the function logs a mismatch
-  and returns `200 { sync: "skipped" }`.
+  It must match the deploy's `SANITY_DATASET` (verified after signature check) or
+  the function logs a mismatch and returns `200 { sync: "skipped" }` with no rebuild.
 - Stripe updates use the deploy's single `STRIPE_KEY` (test on testing, live on
   production).
-- Updates the Stripe product: name (trailing ` _DRAFT` stripped), description
-  built from `Materials`/`Dimensions` (e.g. `Materials: X | Dimensions: Y`),
-  the first image, and `active` mirrored from Sanity `archived`.
-- `inStock` stays a **manual** Sanity decision — never auto-set on publish.
+- Stripe product ID is resolved from `doc._id` if it starts with `prod_`; during
+  migration only, falls back to legacy `stripeProductId`. Non-Stripe docs are
+  skipped with `skipped: not a Stripe product`.
+- Updates the Stripe product: name (sent as-is), description built from
+  `Materials`/`Dimensions` (e.g. `Materials: X | Dimensions: Y`), first image
+  transformed to `w=1200&fit=max&fm=jpg&q=80`. Empty description/images are sent
+  as `""` to clear stale values. No `active` or `metadata` is sent.
+- Delete/unpublish events arrive via `sanity-operation: delete` header → no Stripe
+  writes, rebuild still triggered if configured.
+- `inStock`/`archived` are not used by the sync.
 
 ### Automatic Netlify rebuild
 
-After a **production** publish, the webhook fires a Netlify Build Hook so the
-static site reflects the freshly published Sanity content. Development
-publishes never rebuild.
+The webhook fires a Netlify Build Hook on publish and on unpublish/delete so the
+static site reflects changes. Rebuild is controlled by:
 
 - `NETLIFY_BUILD_HOOK` — the Netlify Build Hook URL for that context. Unset = no
   auto-rebuild (changes appear on the next manual deploy).
 - `SANITY_REBUILD_ON_PUBLISH` — set to `"false"` to suspend automatic rebuilds
   while still syncing Stripe (e.g. during bulk edits). Unset = enabled. When
   disabled, publishing still updates Stripe, but the site keeps its last built
-  Sanity snapshot until a rebuild happens some other way.
+  Sanity snapshot until a rebuild happens some other way. Rebuild is awaited and
+  failures are logged without throwing.
 
 ### 3. Canonical Sanity document ids
 
-Sanity docs use canonical ids derived from the Stripe product id:
+Sanity docs use the Stripe product ID as the document `_id`:
 
-- Published: `product.<prodId>` (e.g. `product.prod_T4etzqd3uVerhv`)
-- Draft: `drafts.product.<prodId>`
+- Published: `prod_<prodId>` (e.g. `prod_T4etzqd3uVerhv`)
+- Draft: `drafts.prod_<prodId>`
 
-Both `stripe-product-sync` and the reconciliation tool only `createIfNotExists`
-under these ids. `stripe-product-sync` also: skips provisioning when a published
-doc already carries the `stripeProductId` (e.g. docs created under legacy ids
-before the webhook existed), and **reactivates** a published doc
-(`archived: false`) when a previously-deactivated Stripe product flips back to
-`active`. **Any manually-created doc with an arbitrary `_id`** (e.g.
-Studio-generated ids) that shares a `stripeProductId` can still create
-duplicates — one product, two Sanity docs, double listing on the shop. When
-creating products by hand, use the canonical ids above.
+`stripe-product-sync` provisions drafts with bare IDs and does **not** set
+`stripeProductId`. `catalog-reconcile` repair provisions drafts with bare IDs via
+the helpers. The site lists products where `_id` matches `prod_*` (with a
+transitional fallback to legacy `stripeProductId` during migration). `sanity-product-sync`
+resolves the Stripe ID from `_id` when it starts with `prod_`. Bare IDs avoid
+token-less read restrictions in Sanity. Docs with UUID/_id containing `.` are
+treated as non-Stripe and skipped. Legacy `stripeProductId` checks are marked
+with `#LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION` for easy cleanup.
 
 ### 4. Reconciling the catalog (backfill / drift)
 
@@ -340,10 +339,10 @@ two sides and repairs them:
 
 | Webhook | Endpoint | Events | Signing secret |
 |---|---|---|---|
-| Stripe → Sanity (testing deploy) | `/.netlify/functions/stripe-product-sync` | `product.created`, `product.updated`, `product.deleted` | `STRIPE_PRODUCT_WEBHOOK_SECRET` (from the Stripe Dashboard endpoint) |
+| Stripe → Sanity (testing deploy) | `/.netlify/functions/stripe-product-sync` | `product.created` | `STRIPE_PRODUCT_WEBHOOK_SECRET` (from the Stripe Dashboard endpoint) |
 | Stripe checkout (testing deploy) | `/.netlify/functions/stripe-orders-webhook` | `checkout.session.completed` | `STRIPE_CHECKOUT_WEBHOOK_SECRET` |
-| Sanity dev (testing deploy, `development` dataset) | `/.netlify/functions/sanity-product-sync` | publish of product documents | `SECRET_SANITY_WEBHOOK_KEY` |
-| Sanity prod (production deploy, `production` dataset) | `/.netlify/functions/sanity-product-sync` | publish of product documents | `SECRET_SANITY_WEBHOOK_KEY` |
+| Sanity dev (testing deploy, `development` dataset) | `/.netlify/functions/sanity-product-sync` | create/update/delete of product documents (filter `_type == "product" && !(_id in path("drafts.**"))`) | `SECRET_SANITY_WEBHOOK_KEY` |
+| Sanity prod (production deploy, `production` dataset) | `/.netlify/functions/sanity-product-sync` | create/update/delete of product documents (filter `_type == "product" && !(_id in path("drafts.**"))`) | `SECRET_SANITY_WEBHOOK_KEY` |
 
 ### Catalog sync environment variables
 

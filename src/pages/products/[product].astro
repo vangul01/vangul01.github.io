@@ -6,7 +6,9 @@ import type { Product } from "../../types/sanity-schema";
 import missingImage from "../../assets/images/web/missing_image_fallback.png";
 
 export async function getStaticPaths() {
-  const query = `*[_type == "product" && coalesce(archived, false) != true]{
+  const query = `*[_type == "product" && coalesce(archived, false) != true && (
+    _id match "prod_*" || defined(stripeProductId)
+  )]{
     _id,
     "slug": slug.current,
     name,
@@ -14,7 +16,12 @@ export async function getStaticPaths() {
     materials,
     dimensions,
     inStock,
-    stripeProductId,
+    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - transitional alias during _id migration
+    "stripeProductId": select(
+      defined(stripeProductId) && !(_id match "prod_*") => stripeProductId,
+      _id match "prod_*" => _id,
+      stripeProductId
+    ),
     "images": images[].asset->url,
     category,
     featured,

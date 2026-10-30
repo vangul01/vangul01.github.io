@@ -3,6 +3,7 @@ import "dotenv/config";
 import { createStripeClient } from "./lib/stripe.js";
 import { createSanityClient } from "./lib/sanity.js";
 import { requireEnv } from "./lib/env.js";
+import { productDocId, productDraftId } from "./lib/sanity-ids.js";
 
 const secretKey = requireEnv("STRIPE_KEY");
 const webhookSecret = requireEnv("STRIPE_PRODUCT_WEBHOOK_SECRET");
@@ -59,20 +60,20 @@ export async function handler(event) {
   }
 
   const client = getSanityClient(dataset);
-  const liveId = `product.${product.id}`;
-  const draftId = `drafts.${liveId}`;
+  const stripeProductId = product.id;
+  const docId = productDocId(stripeProductId);
+  const draftId = productDraftId(stripeProductId);
 
   try {
-    // Creation is Stripe-first only. Provision an unpublished Sanity draft so
-    // the product is visible in Sanity Studio but not on the live site until
-    // authored and published.
-    const existingPublished = await client.fetch(
-      `*[_type == "product" && stripeProductId == $id && !(_id in path("drafts.**"))][0]{_id}`,
-      { id: product.id },
+    // Creation is Stripe-first only. Provision an unpublished Sanity draft with
+    // bare Stripe product ID as _id (drafts.prod_X). No stripeProductId field.
+    const existing = await client.fetch(
+      `*[_id in [$id, $draftId]]{_id}`,
+      { id: docId, draftId },
     );
-    if (existingPublished) {
+    if (existing && existing.length > 0) {
       console.log(
-        `Skipping draft for ${product.id}: published doc ${existingPublished._id} already has this stripeProductId`,
+        `duplicate: Sanity doc already exists for ${stripeProductId} (${existing[0]._id})`,
       );
       return {
         statusCode: 200,
@@ -80,10 +81,22 @@ export async function handler(event) {
       };
     }
 
+    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - looks for a legacy product doc
+    // (UUID/_id != prod_X) that has stripeProductId matching this Stripe product. Used only
+    // to warn during the _id -> Stripe ID migration. Remove once all docs use bare prod_X _ids.
+    const legacyDoc = await client.fetch(
+      `*[_type == "product" && stripeProductId == $id && _id != $id && _id != $draftId][0]{_id}`,
+      { id: stripeProductId, draftId },
+    );
+    if (legacyDoc) {
+      console.log(
+        `warning: legacy doc ${legacyDoc._id} has stripeProductId == ${stripeProductId} under a different _id`,
+      );
+    }
+
     await client.createIfNotExists({
       _id: draftId,
       _type: "product",
-      stripeProductId: product.id,
       name: product.name || "Untitled product",
       slug: { current: slugify(product.name) },
       category: "misc",

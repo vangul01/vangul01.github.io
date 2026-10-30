@@ -4,6 +4,7 @@ import { isValidSignature } from "@sanity/webhook";
 import { createStripeClient } from "./lib/stripe.js";
 import { createSanityClient } from "./lib/sanity.js";
 import { requireEnv } from "./lib/env.js";
+import { isStripeProductId } from "./lib/sanity-ids.js";
 
 const projectId = requireEnv("PUBLIC_SANITY_PROJECT_ID");
 const webhookSecret = requireEnv("SECRET_SANITY_WEBHOOK_KEY");
@@ -124,8 +125,25 @@ export async function handler(event) {
     { id: payload._id },
   );
 
-  if (!doc || !doc.stripeProductId) {
-    console.log(`Nothing to sync to Stripe for ${payload._id}`);
+  if (!doc) {
+    console.log("skipped: not a Stripe product");
+    return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
+  }
+
+  let stripeProductId = null;
+  if (isStripeProductId(doc._id)) {
+    stripeProductId = doc._id;
+  } else {
+    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - fall back to stripeProductId field
+    // for legacy UUID docs during the _id -> Stripe ID migration. Remove once all docs
+    // use bare prod_X _ids.
+    if (doc.stripeProductId) {
+      stripeProductId = doc.stripeProductId;
+    }
+  }
+
+  if (!stripeProductId) {
+    console.log("skipped: not a Stripe product");
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
@@ -152,8 +170,8 @@ export async function handler(event) {
   }
 
   try {
-    await stripe.products.update(doc.stripeProductId, update);
-    console.log(`Synced Stripe product ${doc.stripeProductId}`);
+    await stripe.products.update(stripeProductId, update);
+    console.log(`Synced Stripe product ${stripeProductId}`);
   } catch (err) {
     console.error("Stripe product update failed:", err.message);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };

@@ -26,7 +26,9 @@ export async function safeSanityFetch(query: string) {
 }
 
 export async function getAllProducts(): Promise<Product[]> {
-  const query = `*[_type == "product" && coalesce(archived, false) != true]{
+  const query = `*[_type == "product" && coalesce(archived, false) != true && (
+    _id match "prod_*" || defined(stripeProductId)
+  )]{
         _id,
         name,
         "slug": slug.current,
@@ -34,7 +36,12 @@ export async function getAllProducts(): Promise<Product[]> {
         category,
         featured,
         "images": images[].asset->url,
-        stripeProductId,
+        // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - transitional alias during _id migration
+        "stripeProductId": select(
+          defined(stripeProductId) && !(_id match "prod_*") => stripeProductId,
+          _id match "prod_*" => _id,
+          stripeProductId
+        ),
         materials,
         inStock,
         "archived": coalesce(archived, false)
