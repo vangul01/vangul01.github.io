@@ -1,18 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   loadCart,
   saveCart,
   calculateTotals,
 } from "../scripts/cart/cart-storage";
 import { handleCheckout } from "../scripts/cart/checkout.js";
+import { getStripePrices } from "../lib/stripe-client.ts";
 import "../styles/global.css";
+
+function statusNote(state) {
+  if (state === "unavailable") return "Currently unavailable and excluded from checkout.";
+  if (state === "inactive" || state === "not_found")
+    return "No longer available and excluded from checkout.";
+  return "";
+}
 
 export default function CartIsland({ fallbackImage = "" }) {
   const [cart, setCart] = useState([]);
+  const [statuses, setStatuses] = useState({});
+  const [checking, setChecking] = useState(true);
+  const [notice, setNotice] = useState("");
 
   useEffect(() => {
     setCart(loadCart());
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function run() {
+      if (!cart.length) {
+        setStatuses({});
+        setChecking(false);
+        return;
+      }
+      setChecking(true);
+      try {
+        const ids = [...new Set(cart.map((i) => i.productId).filter(Boolean))];
+        const res = await getStripePrices(ids);
+        if (!cancelled) setStatuses(res || {});
+      } catch (err) {
+        console.error("Cart status check failed:", err);
+        if (!cancelled) setStatuses({});
+      } finally {
+        if (!cancelled) setChecking(false);
+      }
+    }
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [cart]);
 
   function updateQuantity(idx, delta) {
     const newCart = [...cart];
@@ -34,6 +71,33 @@ export default function CartIsland({ fallbackImage = "" }) {
     }).format(price);
   }
 
+  const enriched = useMemo(
+    () =>
+      cart.map((item) => {
+        const status = statuses[item.productId] || { state: "not_found" };
+        const purchasable = status.state === "available";
+        const price =
+          purchasable && status.amount != null ? status.amount : item.price || 0;
+        return { item, status, purchasable, price };
+      }),
+    [cart, statuses],
+  );
+
+  const purchasableItems = enriched.filter((e) => e.purchasable);
+  const { price: finalPrice } = calculateTotals(
+    purchasableItems.map(({ item, price }) => ({ ...item, price })),
+  );
+
+  async function onCheckout() {
+    setNotice("");
+    const result = await handleCheckout(purchasableItems.map((e) => e.item));
+    if (result?.skipped?.length) {
+      setNotice(
+        "Some items were removed from checkout because they are no longer available.",
+      );
+    }
+  }
+
   if (!cart.length) {
     return (
       <div className="container empty-cart">
@@ -47,8 +111,6 @@ export default function CartIsland({ fallbackImage = "" }) {
     );
   }
 
-  const { price: finalPrice } = calculateTotals(cart);
-
   return (
     <>
       <div className="container">
@@ -58,9 +120,11 @@ export default function CartIsland({ fallbackImage = "" }) {
           <div>Total</div>
         </div>
 
-        {cart.map((item, idx) => (
-          <div className="cart-products-grid" key={item.productId}>
-            {/* Column 1: Image, Name, Price per item */}
+        {enriched.map(({ item, status, purchasable, price }, idx) => (
+          <div
+            className={`cart-products-grid ${purchasable ? "" : "cart-item-unavailable"}`}
+            key={item.productId}
+          >
             <div className="cart-product-info">
               <a
                 href={`/products/${item.productUrl}`}
@@ -76,17 +140,20 @@ export default function CartIsland({ fallbackImage = "" }) {
               <div className="cart-product-details">
                 <p className="cart-item-name">{item.name}</p>
                 <p className="cart-item-price">
-                  ${item.price?.toFixed(2) || 0} per item
+                  {checking ? "Checking availability..." : `$${formatPrice(price)} per item`}
                 </p>
+                {!checking && !purchasable && (
+                  <p className="cart-item-note">{statusNote(status.state)}</p>
+                )}
               </div>
             </div>
-            {/* Column 2: Quantity controls */}
             <div className="cart-product-quantity">
               <div className="quantity-controls">
                 <button
                   className="quantity-btn"
                   aria-label="Decrease quantity"
                   onClick={() => updateQuantity(idx, -1)}
+                  disabled={!purchasable}
                 >
                   −
                 </button>
@@ -95,6 +162,7 @@ export default function CartIsland({ fallbackImage = "" }) {
                   className="quantity-btn"
                   aria-label="Increase quantity"
                   onClick={() => updateQuantity(idx, 1)}
+                  disabled={!purchasable}
                 >
                   +
                 </button>
@@ -107,22 +175,19 @@ export default function CartIsland({ fallbackImage = "" }) {
                 <i className="fa fa-trash"></i>
               </button>
             </div>
-            {/* Column 3: Total price */}
             <div className="cart-product-total-price">
-              <p>${formatPrice(item.price * item.quantity)}</p>
+              <p>
+                {purchasable ? `$${formatPrice(price * item.quantity)}` : "—"}
+              </p>
             </div>
           </div>
         ))}
 
         <div className="all-products-total-price">
           <p>Subtotal ${formatPrice(finalPrice)} USD</p>
+          {notice && <p className="disclaimer">{notice}</p>}
           <p className="disclaimer">
             Taxes and shipping calculated at checkout
-          </p>
-          <p className="disclaimer">
-            All payments will be processed by stripe.com, a secure third-party
-            payment processor. We do not store any of your payment information
-            on our servers.
           </p>
         </div>
 
@@ -133,8 +198,9 @@ export default function CartIsland({ fallbackImage = "" }) {
 
           <button
             className="button button-primary"
-            onClick={handleCheckout}
+            onClick={onCheckout}
             id="proceed-to-payment"
+            disabled={checking || purchasableItems.length === 0}
           >
             <span className="button-label"> Proceed to Checkout</span>
           </button>

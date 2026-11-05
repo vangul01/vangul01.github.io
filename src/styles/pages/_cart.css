@@ -145,3 +145,13 @@
   color: var(--color-text-light);
   background-color: var(--color-button-primary);
 }
+
+.cart-item-unavailable {
+  opacity: 0.6;
+}
+
+.cart-item-note {
+  font-size: var(--font-size-clamp-sm);
+  color: var(--color-text-alt);
+  margin-top: var(--spacing-clamp-xs);
+}
