@@ -2,9 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
-// import type { Product } from "../types/sanity-schema";
-
-// import { Image } from "astro:assets";
 import missingImage from "../assets/images/web/missing_image_fallback.png";
 
 const products = await getAllProducts();
@@ -22,10 +19,15 @@ const keywords = "art prints, digital art, paintings, shop, store";
             <h3>Check back soon for new products!</h3>
           </div>
         ) : (
-          <div class="container grid-4">
+          <div class="container grid-4" id="shop-grid" data-shop-grid>
             {products.map((product) => (
-              <a href={`/products/${product.slug}`}>
-                <div>
+              <a
+                href={`/products/${product.slug}`}
+                class="shop-card is-loading"
+                data-product-id={product._id}
+                data-shop-card
+              >
+                <div class="shop-card-image">
                   <img
                     src={
                       product.images?.[0]
@@ -37,13 +39,10 @@ const keywords = "art prints, digital art, paintings, shop, store";
                   />
                 </div>
 
-                <div>
+                <div class="shop-card-body">
                   <h4>{product.name}</h4>
+                  <span class="product-badge" data-shop-badge hidden></span>
                 </div>
-
-                {!product.inStock && (
-                  <span class="product-badge">Unavailable</span>
-                )}
               </a>
             ))}
           </div>
@@ -52,3 +51,12 @@ const keywords = "art prints, digital art, paintings, shop, store";
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  import { initShopPage } from "../scripts/shop.js";
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initShopPage);
+  } else {
+    initShopPage();
+  }
+</script>

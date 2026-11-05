@@ -26,9 +26,7 @@ export async function safeSanityFetch(query: string) {
 }
 
 export async function getAllProducts(): Promise<Product[]> {
-  const query = `*[_type == "product" && coalesce(archived, false) != true && (
-    _id match "prod_*" || defined(stripeProductId)
-  )]{
+  const query = `*[_type == "product" && _id match "prod_*"] | order(_createdAt desc){
         _id,
         name,
         "slug": slug.current,
@@ -36,20 +34,11 @@ export async function getAllProducts(): Promise<Product[]> {
         category,
         featured,
         "images": images[].asset->url,
-        // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - transitional alias during _id migration
-        "stripeProductId": select(
-          defined(stripeProductId) && !(_id match "prod_*") => stripeProductId,
-          _id match "prod_*" => _id,
-          stripeProductId
-        ),
         materials,
-        inStock,
-        "archived": coalesce(archived, false)
+        dimensions
       }`;
 
-  const products = await safeSanityFetch(query);
-  // TypeScript knows the return type from the function signature
-  return products;
+  return await safeSanityFetch(query);
 }
 
 export function getOptimizedImageUrl(
@@ -63,12 +52,11 @@ export function getOptimizedImageUrl(
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  const query = `*[_type == "product" && coalesce(archived, false) != true]{
+  const query = `*[_type == "product" && _id match "prod_*" && featured in ["landing", "shop", "both"]] | order(_createdAt desc){
         _id,
         name,
         "slug": slug.current,
-        "images": images[].asset->url,
-        "archived": coalesce(archived, false)
+        "images": images[].asset->url
       }`;
 
   return await safeSanityFetch(query);

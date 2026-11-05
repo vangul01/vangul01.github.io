@@ -6,26 +6,16 @@ import type { Product } from "../../types/sanity-schema";
 import missingImage from "../../assets/images/web/missing_image_fallback.png";
 
 export async function getStaticPaths() {
-  const query = `*[_type == "product" && coalesce(archived, false) != true && (
-    _id match "prod_*" || defined(stripeProductId)
-  )]{
+  const query = `*[_type == "product" && _id match "prod_*"]{
     _id,
     "slug": slug.current,
     name,
     description,
     materials,
     dimensions,
-    inStock,
-    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - transitional alias during _id migration
-    "stripeProductId": select(
-      defined(stripeProductId) && !(_id match "prod_*") => stripeProductId,
-      _id match "prod_*" => _id,
-      stripeProductId
-    ),
     "images": images[].asset->url,
     category,
-    featured,
-    "archived": coalesce(archived, false)
+    featured
   }`;
 
   const products = (await client.fetch(query)) as Product[];
@@ -48,8 +38,8 @@ const keywords = `vangular, ${product.name}, art, products`;
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
     <section class="section" id="product-page">
-      <div class="container grid-responsive">
-        <div class="container product-images">
+      <div class="container grid-responsive is-loading" data-product-root data-product-id={product._id}>
+        <div class="container product-images" data-product-images>
           <div class="product-image-stage">
             <img
               id="main-product-image"
@@ -79,72 +69,31 @@ const keywords = `vangular, ${product.name}, art, products`;
           }
         </div>
 
-        <div class="container product-text">
+        <div class="container product-text" data-product-details>
           <h3>{product.name}</h3>
 
-          {
-            product.inStock && (
-              <p
-                id="product-price"
-                class="product-price"
-                data-product-id={product.stripeProductId}
-              >
-                Loading price
-                <span class="dots" />
-              </p>
-            )
-          }
+          <p id="product-price" class="product-price skeleton-text" data-product-id={product._id} aria-busy="true">
+            &nbsp;
+          </p>
 
-          {
-            !product.inStock && (
-              <>
-                <span class="product-badge">Unavailable</span>
-                <p class="product-note">
-                  This item is currently out of stock and not available for
-                  purchase.
-                </p>
-              </>
-            )
-          }
+          <p class="product-status" data-availability-status hidden></p>
 
-          <div class="button-group">
-            {
-              product.inStock ? (
-                <button
-                  class="button button-disable button-check"
-                  id="add-to-cart"
-                  data-product-id={product.stripeProductId}
-                  data-name={product.name}
-                  data-image={product.images?.[0]}
-                  data-product-url={`${product.slug}`}
-                  data-instock="true"
-                  disabled
-                >
-                  <span class="button-label"> Checking Availability </span>
-                </button>
-              ) : (
-                <button
-                  class="button button-disable"
-                  id="add-to-cart"
-                  data-instock="false"
-                  disabled
-                >
-                  <span class="button-label"> Unavailable </span>
-                </button>
-              )
-            }
+          <div class="button-group" data-product-actions>
+            <button
+              class="button button-disable button-check skeleton-button"
+              id="add-to-cart"
+              data-product-id={product._id}
+              data-name={product.name}
+              data-image={product.images?.[0] || ""}
+              data-product-url={`${product.slug}`}
+              disabled
+              aria-busy="true"
+            >
+              <span class="button-label">&nbsp;</span>
+            </button>
           </div>
 
           <p class="product-description">{product.description}</p>
-
-          {
-            product.inStock && (
-              <p class="product-note">
-                Each print is made to order just for you! Printing and packing
-                takes approximately 1 week before shipping.
-              </p>
-            )
-          }
 
           {
             (product.materials || product.dimensions) && (
@@ -170,21 +119,25 @@ const keywords = `vangular, ${product.name}, art, products`;
         </div>
       </div>
 
+      <div class="container" data-product-unavailable hidden>
+        <h3>This piece is no longer available</h3>
+        <div class="button-group">
+          <a href="/shop" class="button button-primary">
+            <span class="button-label">Return to shop</span>
+          </a>
+        </div>
+      </div>
+
       <div class="container">
         <div class="button-group">
           <a href="/shop" onclick="event.preventDefault(); window.history.back()">
             <button class="button button-tertiary">
-              <span class="button-label"> Go Back </span>
+              <span class="button-label">Go Back</span>
             </button>
           </a>
           <a href="/shop">
             <button class="button button-secondary">
-              <span class="button-label"> Keep Shopping </span>
-            </button>
-          </a>
-          <a href="/cart">
-            <button class="button button-primary">
-              <span class="button-label"> Go To Cart </span>
+              <span class="button-label">Keep Shopping</span>
             </button>
           </a>
         </div>

@@ -169,3 +169,21 @@
   border-color: var(--color-brand-accent);
   opacity: 1;
 }
+
+[data-product-root].is-loading [data-product-images],
+[data-product-root].is-loading .product-text {
+  filter: brightness(0.2);
+  pointer-events: none;
+}
+
+.skeleton-text {
+  display: inline-block;
+  min-width: 8rem;
+  min-height: 1.2em;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.skeleton-button {
+  min-width: 10rem;
+}
