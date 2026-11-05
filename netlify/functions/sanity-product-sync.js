@@ -117,7 +117,6 @@ export async function handler(event) {
     `*[_id == $id][0]{
       _id,
       name,
-      stripeProductId,
       materials,
       dimensions,
       "images": images[].asset->url
@@ -130,22 +129,11 @@ export async function handler(event) {
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
-  let stripeProductId = null;
-  if (isStripeProductId(doc._id)) {
-    stripeProductId = doc._id;
-  } else {
-    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - fall back to stripeProductId field
-    // for legacy UUID docs during the _id -> Stripe ID migration. Remove once all docs
-    // use bare prod_X _ids.
-    if (doc.stripeProductId) {
-      stripeProductId = doc.stripeProductId;
-    }
-  }
-
-  if (!stripeProductId) {
+  if (!isStripeProductId(doc._id)) {
     console.log("skipped: not a Stripe product");
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
+  const stripeProductId = doc._id;
 
   const stripe = createStripeClient(stripeKey);
 

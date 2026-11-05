@@ -6,26 +6,16 @@ import type { Product } from "../../types/sanity-schema";
 import missingImage from "../../assets/images/web/missing_image_fallback.png";
 
 export async function getStaticPaths() {
-  const query = `*[_type == "product" && coalesce(archived, false) != true && (
-    _id match "prod_*" || defined(stripeProductId)
-  )]{
+  const query = `*[_type == "product" && _id match "prod_*"]{
     _id,
     "slug": slug.current,
     name,
     description,
     materials,
     dimensions,
-    inStock,
-    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - transitional alias during _id migration
-    "stripeProductId": select(
-      defined(stripeProductId) && !(_id match "prod_*") => stripeProductId,
-      _id match "prod_*" => _id,
-      stripeProductId
-    ),
     "images": images[].asset->url,
     category,
-    featured,
-    "archived": coalesce(archived, false)
+    featured
   }`;
 
   const products = (await client.fetch(query)) as Product[];
@@ -82,69 +72,30 @@ const keywords = `vangular, ${product.name}, art, products`;
         <div class="container product-text">
           <h3>{product.name}</h3>
 
-          {
-            product.inStock && (
-              <p
-                id="product-price"
-                class="product-price"
-                data-product-id={product.stripeProductId}
-              >
-                Loading price
-                <span class="dots" />
-              </p>
-            )
-          }
-
-          {
-            !product.inStock && (
-              <>
-                <span class="product-badge">Unavailable</span>
-                <p class="product-note">
-                  This item is currently out of stock and not available for
-                  purchase.
-                </p>
-              </>
-            )
-          }
+          <p
+            id="product-price"
+            class="product-price"
+            data-product-id={product._id}
+          >
+            Loading price
+            <span class="dots" />
+          </p>
 
           <div class="button-group">
-            {
-              product.inStock ? (
-                <button
-                  class="button button-disable button-check"
-                  id="add-to-cart"
-                  data-product-id={product.stripeProductId}
-                  data-name={product.name}
-                  data-image={product.images?.[0]}
-                  data-product-url={`${product.slug}`}
-                  data-instock="true"
-                  disabled
-                >
-                  <span class="button-label"> Checking Availability </span>
-                </button>
-              ) : (
-                <button
-                  class="button button-disable"
-                  id="add-to-cart"
-                  data-instock="false"
-                  disabled
-                >
-                  <span class="button-label"> Unavailable </span>
-                </button>
-              )
-            }
+            <button
+              class="button button-disable button-check"
+              id="add-to-cart"
+              data-product-id={product._id}
+              data-name={product.name}
+              data-image={product.images?.[0] || ""}
+              data-product-url={`${product.slug}`}
+              disabled
+            >
+              <span class="button-label">Checking Availability</span>
+            </button>
           </div>
 
           <p class="product-description">{product.description}</p>
-
-          {
-            product.inStock && (
-              <p class="product-note">
-                Each print is made to order just for you! Printing and packing
-                takes approximately 1 week before shipping.
-              </p>
-            )
-          }
 
           {
             (product.materials || product.dimensions) && (
