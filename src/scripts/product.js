@@ -1,6 +1,3 @@
-// For product image thumbnail interactions
-// Adding basic price fetching from Stripe for dynamic pricing display.
-
 import { getStripePrice } from "../lib/stripe-client";
 
 function initThumbnails() {
@@ -40,45 +37,80 @@ function initThumbnails() {
   });
 }
 
+function showUnavailableProduct(root) {
+  root?.classList.remove("is-loading");
+  if (root) root.hidden = true;
+  const fallback = document.querySelector("[data-product-unavailable]");
+  if (fallback) fallback.hidden = false;
+}
+
 export async function initProductPage() {
   initThumbnails();
 
+  const root = document.querySelector("[data-product-root]");
   const priceElement = document.getElementById("product-price");
   const addToCartBtn = document.getElementById("add-to-cart");
+  const statusEl = document.querySelector("[data-availability-status]");
+  if (!root || !priceElement || !addToCartBtn) return;
 
-  if (!priceElement || !addToCartBtn) return;
-
-  // If the button is already rendered as "Unavailable" by the server,
-  // skip the Stripe fetch entirely
-  const isInStock = addToCartBtn.dataset.instock !== "false";
-  if (!isInStock) return;
-
-  const productId = priceElement.dataset.productId;
-  if (!productId) return;
+  const productId = root.dataset.productId || priceElement.dataset.productId;
+  if (!productId) {
+    showUnavailableProduct(root);
+    return;
+  }
 
   try {
-    const price = await getStripePrice(productId);
+    const status = await getStripePrice(productId);
+    root.classList.remove("is-loading");
+    priceElement.classList.remove("skeleton-text");
+    priceElement.removeAttribute("aria-busy");
+    addToCartBtn.classList.remove("skeleton-button");
+    addToCartBtn.removeAttribute("aria-busy");
 
-    // Success! Update price and enable button
-    if (price) {
-      priceElement.textContent = `$${price.amount} ${price.currency.toUpperCase()}`;
-      addToCartBtn.dataset.price = String(price.amount);
+    if (!status || status.state === "not_found" || status.state === "inactive") {
+      showUnavailableProduct(root);
+      return;
+    }
+
+    if (status.state === "unavailable") {
+      priceElement.textContent = "";
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Currently unavailable";
+      }
+      addToCartBtn.disabled = true;
+      addToCartBtn.classList.remove("button-primary", "button-check");
+      addToCartBtn.classList.add("button-disable");
+      addToCartBtn.querySelector(".button-label").textContent = "Unavailable";
+      return;
+    }
+
+    if (status.state === "available" && status.amount != null && status.currency) {
+      priceElement.textContent = `$${status.amount} ${String(status.currency).toUpperCase()}`;
+      addToCartBtn.dataset.price = String(status.amount);
       addToCartBtn.disabled = false;
-      addToCartBtn.innerText = "Add to Cart";
       addToCartBtn.classList.remove("button-disable", "button-check");
       addToCartBtn.classList.add("button-primary");
-    } else {
-      console.error("Stripe price unfetcheded, add-to-cart button disabled.");
-      // Just throw an error to automatically trigger the catch block logic below
-      throw new Error("Price not found");
+      addToCartBtn.querySelector(".button-label").textContent = "Add to Cart";
+      return;
     }
-  } catch (err) {
-    console.error("Error loading price:", err);
-    priceElement.textContent = "Price currently unavailable";
-    // Disable add to cart button if price fetch fails
+
+    if (statusEl) {
+      statusEl.hidden = false;
+      statusEl.textContent = "Currently unavailable";
+    }
     addToCartBtn.disabled = true;
-    addToCartBtn.innerText = "Unavailable";
-    addToCartBtn.classList.remove("button-primary", "button-check");
-    addToCartBtn.classList.add("button-disable");
+    addToCartBtn.querySelector(".button-label").textContent = "Unavailable";
+  } catch (err) {
+    console.error("Error loading price/status:", err);
+    root.classList.remove("is-loading");
+    priceElement.classList.remove("skeleton-text");
+    addToCartBtn.classList.remove("skeleton-button");
+    if (statusEl) {
+      statusEl.hidden = false;
+      statusEl.textContent = "Currently unavailable";
+    }
+    addToCartBtn.disabled = true;
+    addToCartBtn.querySelector(".button-label").textContent = "Unavailable";
   }
 }

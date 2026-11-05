@@ -26,3 +26,12 @@
 /* Utils */
 @import url("./utils/_helpers.css");
 @import url("./utils/_media.css");
+
+.shop-card.is-loading {
+  filter: brightness(0.25);
+  pointer-events: none;
+}
+
+.shop-card.is-unavailable {
+  opacity: 0.85;
+}
