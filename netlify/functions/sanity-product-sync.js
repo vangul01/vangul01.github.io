@@ -44,9 +44,17 @@ async function triggerRebuild() {
   if (shouldRebuild && process.env.NETLIFY_BUILD_HOOK) {
     try {
       const res = await fetch(process.env.NETLIFY_BUILD_HOOK, { method: "POST" });
-      console.log(
-        `Netlify rebuild triggered (${res.status} ${res.statusText})`,
-      );
+      if (!res.ok) {
+        console.error(
+          "Netlify build hook returned",
+          res.status,
+          res.statusText,
+        );
+      } else {
+        console.log(
+          `Netlify rebuild triggered (${res.status} ${res.statusText})`,
+        );
+      }
     } catch (err) {
       console.error("Netlify build hook failed:", err.message);
     }

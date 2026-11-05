@@ -1,47 +1,37 @@
-interface StripePrice {
-  amount: number;
-  currency: string;
+export type ProductAvailabilityState =
+  | "available"
+  | "unavailable"
+  | "inactive"
+  | "not_found";
+
+export interface ProductStatus {
+  state: ProductAvailabilityState;
+  id?: string;
+  amount?: number;
+  currency?: string;
 }
 
-/**
- * Fetch one or more Stripe prices (by product id) from Netlify function
- */
+export type ProductStatusMap = Record<string, ProductStatus>;
+
 export async function getStripePrices(
   productIds: string[],
-): Promise<Record<string, StripePrice>> {
-  // Add debug logging
-  console.log("Requesting price(s) for:", productIds);
-
+): Promise<ProductStatusMap> {
   const url = "/.netlify/functions/get-stripe-prices";
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productIds }),
-    });
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ productIds }),
+  });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Stripe API Error:", errorText);
-
-      throw new Error(
-        `Failed to fetch prices: ${response.status} ${errorText}`,
-      );
-    }
-    const data = await response.json();
-    console.log("Stripe API Response:", data);
-    return data;
-  } catch (error) {
-    console.error("Stripe Client Error:", error);
-    throw error;
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to fetch prices: ${response.status} ${errorText}`);
   }
+  return await response.json();
 }
 
-/**
- * Fetch a single Stripe price by product id
- */
-export async function getStripePrice(productId: string): Promise<StripePrice> {
+export async function getStripePrice(productId: string): Promise<ProductStatus> {
   const prices = await getStripePrices([productId]);
-  return prices[productId];
+  return prices[productId] || { state: "not_found" };
 }
