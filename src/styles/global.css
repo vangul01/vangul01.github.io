@@ -28,8 +28,33 @@
 @import url("./utils/_media.css");
 
 .shop-card.is-loading {
-  filter: brightness(0.25);
+  position: relative;
+  overflow: hidden;
   pointer-events: none;
+}
+
+.shop-card.is-loading > * {
+  visibility: hidden;
+}
+
+.shop-card.is-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-md, 8px);
+  background: rgba(255, 255, 255, 0.08);
+  animation: shop-card-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes shop-card-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
 }
 
 .shop-card.is-unavailable {
