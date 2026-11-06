@@ -13,22 +13,32 @@ export interface ProductStatus {
 
 export type ProductStatusMap = Record<string, ProductStatus>;
 
+const MAX_IDS_PER_REQUEST = 50;
+
 export async function getStripePrices(
   productIds: string[],
 ): Promise<ProductStatusMap> {
   const url = "/.netlify/functions/get-stripe-prices";
+  const uniqueIds = [...new Set(productIds.filter(Boolean))];
+  const merged: ProductStatusMap = {};
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ productIds }),
-  });
+  for (let i = 0; i < uniqueIds.length; i += MAX_IDS_PER_REQUEST) {
+    const chunk = uniqueIds.slice(i, i + MAX_IDS_PER_REQUEST);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productIds: chunk }),
+    });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Failed to fetch prices: ${response.status} ${errorText}`);
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch prices: ${response.status} ${errorText}`);
+    }
+
+    Object.assign(merged, await response.json());
   }
-  return await response.json();
+
+  return merged;
 }
 
 export async function getStripePrice(productId: string): Promise<ProductStatus> {

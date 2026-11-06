@@ -2,7 +2,7 @@ import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
 import { requireEnv } from "./lib/env.js";
-import { getProductStatus } from "./lib/get-product-status.js";
+import { getProductStatuses } from "./lib/get-product-status.js";
 
 const secretKey = requireEnv("STRIPE_KEY");
 const siteUrl = requireEnv("SITE_URL");
@@ -40,20 +40,17 @@ export async function handler(event) {
       return { productId, quantity };
     });
 
-    const checked = await Promise.all(
-      sanitizedItems.map(async (item) => {
-        if (item.invalid) {
-          return {
-            item,
-            status: { state: "not_found" },
-          };
-        }
-        return {
-          item,
-          status: await getProductStatus(stripe, item.productId),
-        };
-      }),
+    const statusMap = await getProductStatuses(
+      stripe,
+      sanitizedItems.filter((item) => !item.invalid).map((item) => item.productId),
     );
+
+    const checked = sanitizedItems.map((item) => ({
+      item,
+      status: item.invalid
+        ? { state: "not_found" }
+        : statusMap[item.productId] || { state: "not_found" },
+    }));
 
     const available = [];
     const skipped = [];
