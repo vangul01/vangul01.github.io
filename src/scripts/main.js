@@ -73,8 +73,13 @@ if (typeof document !== "undefined") {
     });
   });
 
-  // Register service worker
-  if ("serviceWorker" in navigator) {
+  // Register service worker only on the production domain so testing
+  // deploys always load the newest assets.
+  const isProductionHost =
+    location.hostname === "vangular.com" ||
+    location.hostname === "www.vangular.com";
+
+  if ("serviceWorker" in navigator && isProductionHost) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
         .register("/sw.js")
