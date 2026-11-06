@@ -66,7 +66,7 @@ export async function handler(event) {
 
   try {
     // Creation is Stripe-first only. Provision an unpublished Sanity draft with
-    // bare Stripe product ID as _id (drafts.prod_X). No stripeProductId field.
+    // bare Stripe product ID as _id (drafts.prod_X). No extra ID field is written.
     const existing = await client.fetch(
       `*[_id in [$id, $draftId]]{_id}`,
       { id: docId, draftId },
@@ -79,19 +79,6 @@ export async function handler(event) {
         statusCode: 200,
         body: JSON.stringify({ received: true }),
       };
-    }
-
-    // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION - looks for a legacy product doc
-    // (UUID/_id != prod_X) that has stripeProductId matching this Stripe product. Used only
-    // to warn during the _id -> Stripe ID migration. Remove once all docs use bare prod_X _ids.
-    const legacyDoc = await client.fetch(
-      `*[_type == "product" && stripeProductId == $id && _id != $id && _id != $draftId][0]{_id}`,
-      { id: stripeProductId, draftId },
-    );
-    if (legacyDoc) {
-      console.log(
-        `warning: legacy doc ${legacyDoc._id} has stripeProductId == ${stripeProductId} under a different _id`,
-      );
     }
 
     await client.createIfNotExists({

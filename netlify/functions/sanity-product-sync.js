@@ -103,7 +103,15 @@ export async function handler(event) {
   }
 
   if (sanityOperation === "delete") {
-    console.log("delete payload", rawBody);
+    let deleted = {};
+    try {
+      deleted = JSON.parse(rawBody) || {};
+    } catch {
+      deleted = {};
+    }
+    const deletedId = deleted._id || "unknown";
+    const deletedName = deleted.name ? ` "${deleted.name}"` : "";
+    console.log(`delete: ${deletedId}${deletedName}`);
     await triggerRebuild();
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }

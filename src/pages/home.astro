@@ -17,6 +17,7 @@ const collabs = await getCollabs();
 const featuredSlides = featuredProducts
   .filter((p) => p.images?.[0])
   .map((p) => ({
+    productId: p._id,
     image: p.images[0],
     title: p.name,
     link: `/products/${p.slug}`,

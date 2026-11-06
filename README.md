@@ -144,7 +144,7 @@ stripe listen --forward-to localhost:8888/.netlify/functions/stripe-orders-webho
 # Product provisioning — run a SECOND listener in another terminal (full
 #    instructions in the product-provisioning section below):
 stripe listen --forward-to localhost:8888/.netlify/functions/stripe-product-sync \
-  --events product.created,product.updated,product.deleted
+  --events product.created
 
 # 3. EACH listener prints its own session signing secret (whsec_..., changes
 #    every run). Copy the orders one into local .env as
@@ -186,12 +186,10 @@ stripe listen --forward-to localhost:8888/.netlify/functions/stripe-product-sync
 stripe trigger product.created
 ```
 
-- `stripe trigger product.created` creates a Sanity **draft** `drafts.product.<id>`
+- `stripe trigger product.created` creates a Sanity **draft** `drafts.prod_<id>`
   in the **development** dataset — visible in Studio as "_DRAFT", invisible to
   the site until you publish it.
-- For `product.updated` / `product.deleted`: `stripe trigger` may not accept
-  those literals — instead edit / (hard) delete the test product in the Stripe
-  Dashboard **in test mode** while `stripe listen` is running.
+- Only `product.created` is handled; other Stripe product events are ignored.
 - The CLI secret is ephemeral and **local-only**; the **Netlify** secret must be
   the live endpoint's Dashboard secret. Mixing them up fails every delivery.
 - This exercises the same function code as production, but is **not** a test of
@@ -222,7 +220,7 @@ Note: Sanity files of interest for schema updates:
 ## 🔄 Catalog Sync (Stripe ↔ Sanity)
 
 Sanity owns all storefront content; Stripe owns identity, pricing and checkout.
-Two serverless webhooks keep them in sync. The **Sanity document `_id` is the Stripe product ID** (`prod_...`; drafts as `drafts.prod_...`). The `stripeProductId` field is legacy and being removed during migration.
+Two serverless webhooks keep them in sync. The **Sanity document `_id` is the Stripe product ID** (`prod_...`; drafts as `drafts.prod_...`).
 
 ### 1. Stripe → Sanity (provisioning drafts)
 
@@ -234,9 +232,9 @@ events (Phase 2).
   `production`. Stripe test webhooks point only at the testing deploy, so test
   products cannot leak into the live site.
 - `product.created` provisions an unpublished Sanity draft with `_id` `drafts.prod_<prodId>`
-  (bare Stripe product ID). No `stripeProductId` field is written. If a doc already
-  exists for that Stripe product, it logs and returns 200 (idempotent). Ensure-exists
-  only — it never overwrites authored content.
+  (bare Stripe product ID). If a doc already exists for that Stripe product, it
+  logs and returns 200 (idempotent). Ensure-exists only — it never overwrites
+  authored content.
 - Deletes/deactivations are not handled by this webhook in the new flow.
 
 ### 2. Sanity → Stripe (publish sync + rebuild)
@@ -250,16 +248,14 @@ events (Phase 2).
   the function logs a mismatch and returns `200 { sync: "skipped" }` with no rebuild.
 - Stripe updates use the deploy's single `STRIPE_KEY` (test on testing, live on
   production).
-- Stripe product ID is resolved from `doc._id` if it starts with `prod_`; during
-  migration only, falls back to legacy `stripeProductId`. Non-Stripe docs are
-  skipped with `skipped: not a Stripe product`.
+- Stripe product ID is resolved from `doc._id` when it starts with `prod_`.
+  Non-Stripe docs are skipped with `skipped: not a Stripe product`.
 - Updates the Stripe product: name (sent as-is), description built from
   `Materials`/`Dimensions` (e.g. `Materials: X | Dimensions: Y`), first image
   transformed to `w=1200&fit=max&fm=jpg&q=80`. Empty description/images are sent
   as `""` to clear stale values. No `active` or `metadata` is sent.
 - Delete/unpublish events arrive via `sanity-operation: delete` header → no Stripe
   writes, rebuild still triggered if configured.
-- `inStock`/`archived` are not used by the sync.
 
 ### Automatic Netlify rebuild
 
@@ -281,14 +277,12 @@ Sanity docs use the Stripe product ID as the document `_id`:
 - Published: `prod_<prodId>` (e.g. `prod_T4etzqd3uVerhv`)
 - Draft: `drafts.prod_<prodId>`
 
-`stripe-product-sync` provisions drafts with bare IDs and does **not** set
-`stripeProductId`. `catalog-reconcile` repair provisions drafts with bare IDs via
-the helpers. The site lists products where `_id` matches `prod_*` (with a
-transitional fallback to legacy `stripeProductId` during migration). `sanity-product-sync`
-resolves the Stripe ID from `_id` when it starts with `prod_`. Bare IDs avoid
-token-less read restrictions in Sanity. Docs with UUID/_id containing `.` are
-treated as non-Stripe and skipped. Legacy `stripeProductId` checks are marked
-with `#LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION` for easy cleanup.
+`stripe-product-sync` provisions drafts with bare IDs. `catalog-reconcile`
+repair provisions drafts with bare IDs via the helpers. The site lists products
+where `_id` matches `prod_*`. `sanity-product-sync` resolves the Stripe ID from
+`_id` when it starts with `prod_`. Bare IDs avoid token-less read restrictions
+in Sanity. Docs with a non-`prod_` `_id` are treated as non-Stripe and surfaced
+by reconcile as `unlinked`.
 
 ### 4. Reconciling the catalog (backfill / drift)
 
@@ -302,40 +296,36 @@ two sides and repairs them:
 #   URL:  http://localhost:8888/api/catalog-reconcile?repair=false
 #   Header: x-reconcile-key: <SECRET_CATALOG_KEY>
 
-# Apply repairs (provision missing drafts, archive orphans/deactivated):
+# Apply repairs (provision missing active drafts):
 #   .../catalog-reconcile?repair=true
 ```
 
 - The tool always uses the deploy's `SANITY_DATASET` + `STRIPE_KEY`; there is no
   dataset selector. `repair` defaults to `false` and the tool **never writes**
   otherwise.
-- `SANITY_WRITE_TOKEN` is required by this function and fails loudly if absent.
-  It is not set on staging or in the local `.env` by default.
+- `SANITY_WRITE_TOKEN` is required only when `repair=true`; report-only audits
+  work without it. It is not set on staging or in the local `.env` by default.
 - Report buckets in the JSON response:
   - `missing` — Stripe product with no Sanity doc/draft → repair creates
-    `drafts.product.<prodId>` (Stripe products with `active: false` are
-    reported but never drafted).
-  - `orphans` — Sanity doc whose `stripeProductId` no longer exists in Stripe →
-    repair archives it (`archived: true`, `inStock: false`).
-  - `deactivated` — Stripe `active: false` but the Sanity doc isn't archived →
-    repair archives the actual doc (`archived: true`, `inStock: false`).
-  - `duplicates` — **report-only; repair never touches it.** More than one
-    published doc sharing a `stripeProductId` (double listing on the shop), or
-    a draft whose id isn't the proper counterpart of the published doc (e.g. a
-    pre-fix canonical `drafts.product.<prodId>` sitting next to a legacy live
-    doc). Lists every doc so you can decide which is authoritative — merge/detach
-    the extras by hand (archive the one you don't keep).
+    `drafts.prod_<prodId>` for active products. Stripe products with
+    `active: false` are reported but never drafted.
+  - `orphans` — **report-only.** Sanity doc whose base `_id`
+    (`prod_<prodId>` or `drafts.prod_<prodId>`) no longer exists in Stripe.
+    Unpublish the published doc manually if you want it gone from the site.
+  - `deactivated` — **report-only.** Stripe `active: false` with a published
+    Sanity doc. The site hides inactive products live; unpublish manually if
+    you also want the Sanity doc removed.
   - `contentDrift` — **report-only; never writes either side.** Diff of the
     *published* doc against the Stripe product, using the same transform
-    `sanity-product-sync` applies on publish: `name` (minus ` _DRAFT`),
-    `active` (= `!archived`), and `description` (`Materials | Dimensions`).
-    Sanity is authoritative on publish, so these rows are informational —
-    they show what the next publish will write to Stripe (e.g. legacy `Test`
-    names in Stripe, or descriptions that were never pushed). Surfaces a
-    missed webhook delivery that would otherwise swallow the change.
-  - `unlinked` — **report-only; never writes.** Published docs with no
-    `stripeProductId` (can't be bought from the cart, which keys off it).
-    Rare since the field is required in the schema, but surfaced rather than
+    `sanity-product-sync` applies on publish: `name` and `description`
+    (`Materials | Dimensions`). Sanity is authoritative on publish, so these
+    rows are informational — they show what the next publish will write to
+    Stripe (e.g. names edited directly in Stripe, or descriptions that were
+    never pushed). Surfaces a missed webhook delivery that would otherwise
+    swallow the change.
+  - `unlinked` — **report-only; never writes.** Published docs whose `_id`
+    doesn't start with `prod_` (can't be bought from the cart, which keys off
+    it). Should be empty with the `_id`-based model, but surfaced rather than
     hidden.
 - Useful for initial backfill and post-deploy audits; also prints a one-line
   summary into the function logs.
@@ -411,7 +401,7 @@ Stripe **test mode** endpoints, both pointing at the testing deploy. Each has
 its own signing secret.
 
 1. `https://testing--voluble-mermaid-026727.netlify.app/.netlify/functions/stripe-product-sync`
-   - Events: `product.created`, `product.updated`, `product.deleted`
+   - Event: `product.created`
    - Secret → `STRIPE_PRODUCT_WEBHOOK_SECRET` on testing.
 2. `https://testing--voluble-mermaid-026727.netlify.app/.netlify/functions/stripe-orders-webhook`
    - Event: `checkout.session.completed`
