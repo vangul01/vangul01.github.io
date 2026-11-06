@@ -169,6 +169,19 @@ export async function handler(event) {
     await stripe.products.update(stripeProductId, update);
     console.log(`Synced Stripe product ${stripeProductId}`);
   } catch (err) {
+    const code = err?.code || err?.raw?.code || "";
+    if (code === "resource_missing") {
+      console.log(
+        `skipped: Stripe product ${stripeProductId} does not exist`,
+      );
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          sync: "skipped",
+          reason: "stripe_product_missing",
+        }),
+      };
+    }
     console.error("Stripe product update failed:", err.message);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
