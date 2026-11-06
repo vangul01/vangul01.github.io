@@ -84,7 +84,7 @@ model and per-context values are documented in
 ## 💳 Pricing Model (MVP: 1 price per product)
 
 - Each Sanity product has exactly **one price**, controlled entirely in Stripe.
-- `stripeProductId` (`prod_...`) is the required Sanity↔Stripe primary key.
+- The Sanity document `_id` (`prod_...`) is the Sanity↔Stripe primary key.
 - Stripe's **default price** on that product is the single source of truth for
   pricing. It is resolved live at render/checkout time and never stored in
   Sanity, so repointing the default (or editing a price) in the Dashboard
@@ -96,6 +96,11 @@ model and per-context values are documented in
 - **Do not create multiple prices per product yet** — the store only sells the
   product's default price. Add variant support before relying on multi-price
   products.
+- Availability is re-checked live in the cart and again when the Checkout
+  Session is created. Once Stripe's hosted checkout page is open, Stripe does
+  not re-validate product availability on refresh; an existing session stays
+  payable until it expires. Full enforcement would require a
+  `checkout.session.completed` follow-up (cancel/refund) and is out of scope.
 
 3. Start development server:
 
