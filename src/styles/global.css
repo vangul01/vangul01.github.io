@@ -42,7 +42,7 @@
   position: absolute;
   inset: 0;
   border-radius: var(--border-radius-md, 8px);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(255 255 255 / 8%);
   animation: shop-card-pulse 1.4s ease-in-out infinite;
 }
 
