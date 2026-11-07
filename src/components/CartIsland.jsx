@@ -9,7 +9,8 @@ import { getStripePrices } from "../lib/stripe-client.ts";
 import "../styles/global.css";
 
 function statusNote(state) {
-  if (state === "unavailable") return "Currently unavailable and excluded from checkout.";
+  if (state === "unavailable")
+    return "Currently unavailable and excluded from checkout.";
   if (state === "inactive" || state === "not_found")
     return "No longer available and excluded from checkout.";
   return "";
@@ -25,6 +26,12 @@ export default function CartIsland({ fallbackImage = "" }) {
     setCart(loadCart());
   }, []);
 
+  async function fetchStatuses(items) {
+    if (!items.length) return {};
+    const ids = [...new Set(items.map((i) => i.productId).filter(Boolean))];
+    return await getStripePrices(ids);
+  }
+
   useEffect(() => {
     let cancelled = false;
     async function run() {
@@ -35,8 +42,7 @@ export default function CartIsland({ fallbackImage = "" }) {
       }
       setChecking(true);
       try {
-        const ids = [...new Set(cart.map((i) => i.productId).filter(Boolean))];
-        const res = await getStripePrices(ids);
+        const res = await fetchStatuses(cart);
         if (!cancelled) setStatuses(res || {});
       } catch (err) {
         console.error("Cart status check failed:", err);
@@ -49,6 +55,18 @@ export default function CartIsland({ fallbackImage = "" }) {
     return () => {
       cancelled = true;
     };
+  }, [cart]);
+
+  useEffect(() => {
+    function onVisibilityChange() {
+      if (document.visibilityState !== "visible" || !cart.length) return;
+      fetchStatuses(cart)
+        .then((res) => setStatuses(res || {}))
+        .catch((err) => console.error("Cart status recheck failed:", err));
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", onVisibilityChange);
   }, [cart]);
 
   function updateQuantity(idx, delta) {
@@ -90,11 +108,39 @@ export default function CartIsland({ fallbackImage = "" }) {
 
   async function onCheckout() {
     setNotice("");
-    const result = await handleCheckout(purchasableItems.map((e) => e.item));
-    if (result?.skipped?.length) {
-      setNotice(
-        "Some items were removed from checkout because they are no longer available.",
+    setChecking(true);
+    try {
+      const fresh = await fetchStatuses(cart);
+      setStatuses(fresh || {});
+      const available = cart.filter(
+        (item) => fresh?.[item.productId]?.state === "available",
       );
+
+      if (!available.length) {
+        setNotice("None of the items in your cart are currently available.");
+        return;
+      }
+
+      const result = await handleCheckout(available);
+      if (!result.ok) {
+        setNotice(
+          result.skipped?.length
+            ? "Some items were removed from checkout because they are no longer available."
+            : result.error || "Unable to start checkout. Please try again.",
+        );
+        return;
+      }
+
+      if (result.skipped?.length) {
+        setNotice(
+          "Some items were removed from checkout because they are no longer available.",
+        );
+      }
+    } catch (err) {
+      console.error("Checkout status check failed:", err);
+      setNotice("Unable to check availability. Please try again.");
+    } finally {
+      setChecking(false);
     }
   }
 
@@ -110,6 +156,14 @@ export default function CartIsland({ fallbackImage = "" }) {
       </div>
     );
   }
+
+  const allUnavailable =
+    !checking && cart.length > 0 && purchasableItems.length === 0;
+  const displayNotice =
+    notice ||
+    (allUnavailable
+      ? "None of the items in your cart are currently available."
+      : "");
 
   return (
     <>
@@ -140,7 +194,9 @@ export default function CartIsland({ fallbackImage = "" }) {
               <div className="cart-product-details">
                 <p className="cart-item-name">{item.name}</p>
                 <p className="cart-item-price">
-                  {checking ? "Checking availability..." : `$${formatPrice(price)} per item`}
+                  {checking
+                    ? "Checking availability..."
+                    : `$${formatPrice(price)} per item`}
                 </p>
                 {!checking && !purchasable && (
                   <p className="cart-item-note">{statusNote(status.state)}</p>
@@ -185,7 +241,7 @@ export default function CartIsland({ fallbackImage = "" }) {
 
         <div className="all-products-total-price">
           <p>Subtotal ${formatPrice(finalPrice)} USD</p>
-          {notice && <p className="disclaimer">{notice}</p>}
+          {displayNotice && <p className="disclaimer">{displayNotice}</p>}
           <p className="disclaimer">
             Taxes and shipping calculated at checkout
           </p>
@@ -202,7 +258,11 @@ export default function CartIsland({ fallbackImage = "" }) {
             id="proceed-to-payment"
             disabled={checking || purchasableItems.length === 0}
           >
-            <span className="button-label"> Proceed to Checkout</span>
+            <span className="button-label">
+              {!checking && purchasableItems.length === 0
+                ? "No Available Items"
+                : "Proceed to Checkout"}
+            </span>
           </button>
         </div>
       </div>

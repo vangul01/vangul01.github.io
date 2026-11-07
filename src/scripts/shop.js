@@ -19,12 +19,13 @@ export async function initShopPage() {
       const status = statuses?.[id] || { state: "not_found" };
       const badgeEl = card.querySelector("[data-shop-badge]");
 
-      card.classList.remove("is-loading");
-
       if (status.state === "inactive" || status.state === "not_found") {
         card.remove();
         continue;
       }
+
+      card.classList.remove("is-loading");
+      card.removeAttribute("aria-busy");
 
       if (status.state === "unavailable") {
         if (badgeEl) {
@@ -41,6 +42,7 @@ export async function initShopPage() {
     console.error("Shop status load failed:", err);
     for (const card of cards) {
       card.classList.remove("is-loading");
+      card.removeAttribute("aria-busy");
     }
   }
 }

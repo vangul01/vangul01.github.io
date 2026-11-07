@@ -1,3 +1,5 @@
+import { getStripePrices } from "../lib/stripe-client";
+
 class Carousel {
   constructor(el) {
     this.slides = el.querySelectorAll(".carousel-slide");
@@ -52,6 +54,73 @@ class Carousel {
   }
 }
 
-export function initCarousels() {
-  document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
+function rebuildDots(el, slides) {
+  const dots = el.querySelector(".carousel-dots");
+  if (!dots) return;
+
+  dots.innerHTML = "";
+  slides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = `carousel-dot${i === 0 ? " active" : ""}`;
+    dot.dataset.index = String(i);
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+    dot.setAttribute("aria-selected", String(i === 0));
+    dots.appendChild(dot);
+  });
+}
+
+async function filterInactiveSlides(el) {
+  const slides = Array.from(
+    el.querySelectorAll(".carousel-slide[data-product-id]"),
+  );
+  if (slides.length === 0) return;
+
+  const ids = slides
+    .map((slide) => slide.dataset.productId)
+    .filter((id) => typeof id === "string" && id.startsWith("prod_"));
+  if (ids.length === 0) return;
+
+  let statuses;
+  try {
+    statuses = await getStripePrices(ids);
+  } catch (err) {
+    console.error("Carousel status load failed:", err);
+    return;
+  }
+
+  for (const slide of slides) {
+    const id = slide.dataset.productId;
+    const state = statuses?.[id]?.state || "not_found";
+    if (state === "inactive" || state === "not_found") {
+      slide.remove();
+    }
+  }
+
+  const remaining = Array.from(el.querySelectorAll(".carousel-slide"));
+  if (remaining.length === 0) {
+    el.dataset.slides = "0";
+    el.classList.add("is-empty");
+    return;
+  }
+
+  el.dataset.slides = String(remaining.length);
+  remaining.forEach((slide, i) => {
+    slide.classList.toggle("active", i === 0);
+  });
+
+  if (remaining.length < 2) {
+    el.querySelectorAll(".carousel-btn, .carousel-dots").forEach((node) => {
+      node.remove();
+    });
+    return;
+  }
+
+  rebuildDots(el, remaining);
+}
+
+export async function initCarousels() {
+  const carousels = Array.from(document.querySelectorAll(".carousel"));
+  await Promise.all(carousels.map(filterInactiveSlides));
+  carousels.forEach((el) => new Carousel(el));
 }

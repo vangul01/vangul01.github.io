@@ -8,9 +8,6 @@ export interface SanityProduct {
   description?: string;
   materials?: string;
   dimensions?: string;
-  inStock: boolean;
-  archived?: boolean;
-  stripeProductId: string;
   images: {
     asset: {
       url: string;
@@ -48,9 +45,6 @@ export interface Product {
   description?: string;
   materials?: string;
   dimensions?: string;
-  inStock: boolean;
-  archived: boolean;
-  stripeProductId: string;
   images: string[];
   category: SanityProduct["category"];
   featured?: SanityProduct["featured"];

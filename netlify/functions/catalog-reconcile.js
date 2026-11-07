@@ -9,7 +9,6 @@ import { productDraftId } from "./lib/sanity-ids.js";
 
 const projectId = requireEnv("PUBLIC_SANITY_PROJECT_ID");
 const reconcileKey = requireEnv("SECRET_CATALOG_KEY");
-const writeToken = requireEnv("SANITY_WRITE_TOKEN");
 const dataset = requireEnv("SANITY_DATASET");
 const stripeKey = requireEnv("STRIPE_KEY");
 
@@ -27,14 +26,6 @@ function parseBool(value) {
   return value === "true" || value === "1";
 }
 
-// #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION
-function stripDraftSuffix(name) {
-  if (typeof name === "string" && name.endsWith(" _DRAFT")) {
-    return name.slice(0, -" _DRAFT".length);
-  }
-  return name;
-}
-
 function buildDescription(doc) {
   const parts = [];
   if (doc.materials) parts.push(`Materials: ${doc.materials}`);
@@ -47,6 +38,13 @@ function secureEqual(a, b) {
   const bufA = Buffer.from(a);
   const bufB = Buffer.from(b);
   return bufA.length === bufB.length && timingSafeEqual(bufA, bufB);
+}
+
+function baseProductId(id) {
+  const value = String(id || "");
+  return value.startsWith("drafts.")
+    ? value.slice("drafts.".length)
+    : value;
 }
 
 async function listAllStripeProducts(stripe) {
@@ -66,82 +64,33 @@ async function listAllStripeProducts(stripe) {
 }
 
 async function fetchSanityProducts(client) {
-  const fields = `_id, stripeProductId, archived, inStock, name, materials, dimensions`;
+  const fields = `_id, name, materials, dimensions`;
   const [published, drafts] = await Promise.all([
     client.fetch(
       `*[_type == "product" && !(_id in path("drafts.**"))]{${fields}}`,
     ),
     client.fetch(`*[_type == "product" && _id in path("drafts.**")]{${fields}}`),
   ]);
+
   const byStripeId = new Map();
-  const docsByStripeId = new Map();
   const unlinked = [];
+
   for (const doc of [...published, ...drafts]) {
-    if (!doc.stripeProductId) {
-      // Published docs without a stripeProductId can't be bought (the cart
-      // keys off it); surface them but never touch them.
-      if (!String(doc._id).startsWith("drafts.")) {
-        unlinked.push({
-          _id: doc._id,
-          name: doc.name,
-          archived: doc.archived,
-          inStock: doc.inStock,
-        });
+    const isDraft = String(doc._id).startsWith("drafts.");
+    const stripeId = baseProductId(doc._id);
+    if (!stripeId.startsWith("prod_")) {
+      if (!isDraft) {
+        unlinked.push({ _id: doc._id, name: doc.name });
       }
       continue;
     }
-    const entry = byStripeId.get(doc.stripeProductId) || {};
-    if (String(doc._id).startsWith("drafts.")) entry.draft = doc;
+    const entry = byStripeId.get(stripeId) || {};
+    if (isDraft) entry.draft = doc;
     else entry.published = doc;
-    byStripeId.set(doc.stripeProductId, entry);
-    const list = docsByStripeId.get(doc.stripeProductId) || [];
-    list.push(doc);
-    docsByStripeId.set(doc.stripeProductId, list);
+    byStripeId.set(stripeId, entry);
   }
-  return { byStripeId, docsByStripeId, unlinked };
-}
 
-function computeDuplicates(docsByStripeId) {
-  const duplicates = [];
-  for (const [stripeProductId, docs] of docsByStripeId.entries()) {
-    const publishedDocs = docs.filter(
-      (d) => !String(d._id).startsWith("drafts."),
-    );
-    const draftDocs = docs.filter((d) => String(d._id).startsWith("drafts."));
-    const validDraftIds = new Set(
-      publishedDocs.map((d) => `drafts.${d._id}`),
-    );
-    const unpairedDrafts = draftDocs.filter(
-      (d) => !validDraftIds.has(d._id),
-    );
-    // A lone draft (or several) with no published doc is the normal
-    // post-provisioning state and can never create a second listing, so it
-    // is not a duplicate. Flag only when it would sit *alongside* a
-    // published doc or when two published docs already share the id.
-    if (publishedDocs.length < 1) continue;
-    if (publishedDocs.length === 1 && unpairedDrafts.length === 0) continue;
-    const items = [];
-    publishedDocs.forEach((d, i) => {
-      items.push({
-        _id: d._id,
-        archived: d.archived,
-        inStock: d.inStock,
-        ...(i > 0 ? { note: "extra published doc (duplicate listing)" } : {}),
-      });
-    });
-    draftDocs.forEach((d) => {
-      items.push({
-        _id: d._id,
-        archived: d.archived,
-        inStock: d.inStock,
-        ...(unpairedDrafts.includes(d)
-          ? { note: "unpaired draft" }
-          : {}),
-      });
-    });
-    duplicates.push({ stripeProductId, docs: items });
-  }
-  return duplicates;
+  return { byStripeId, unlinked };
 }
 
 function computeContentDrift(stripeProducts, byStripeId) {
@@ -152,14 +101,8 @@ function computeContentDrift(stripeProducts, byStripeId) {
     const checks = [
       {
         field: "name",
-        // #LEGACY CODE CHECK CAN BE DELETED AFTER MIGRATION
-        expected: stripDraftSuffix(published.name),
+        expected: published.name,
         actual: product.name,
-      },
-      {
-        field: "active",
-        expected: !published.archived,
-        actual: product.active,
       },
       {
         field: "description",
@@ -190,19 +133,17 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
     missing: [],
     orphans: [],
     deactivated: [],
-    duplicates: [],
     contentDrift: [],
     unlinked: [],
   };
   let provisioned = 0;
-  let archived = 0;
 
   const stripe = createStripeClient(stripeKey);
+  const writeToken = repair ? requireEnv("SANITY_WRITE_TOKEN") : undefined;
   const client = createSanityClient({ projectId, dataset, token: writeToken });
 
   const stripeProducts = await listAllStripeProducts(stripe);
-  const { byStripeId, docsByStripeId, unlinked } =
-    await fetchSanityProducts(client);
+  const { byStripeId, unlinked } = await fetchSanityProducts(client);
   const stripeIds = new Set(stripeProducts.map((p) => p.id));
 
   report.stripeProductCount = stripeProducts.length;
@@ -220,11 +161,7 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
       });
       continue;
     }
-    if (
-      product.active === false &&
-      entry.published &&
-      entry.published.archived !== true
-    ) {
+    if (product.active === false && entry.published) {
       deactivatedSource.push({
         stripeId: product.id,
         name: product.name,
@@ -235,19 +172,16 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
   }
 
   const orphansSource = [];
-  for (const [stripeProductId, entry] of byStripeId.entries()) {
-    if (!stripeIds.has(stripeProductId)) {
+  for (const [stripeId, entry] of byStripeId.entries()) {
+    if (!stripeIds.has(stripeId)) {
       orphansSource.push({
-        stripeProductId,
+        stripeId,
         publishedId: entry.published?._id,
         draftId: entry.draft?._id,
       });
     }
   }
 
-  // Report-only buckets — repair never touches these (re-publishing or
-  // merging docs is editorial judgement).
-  const duplicatesSource = computeDuplicates(docsByStripeId);
   const contentDriftSource = computeContentDrift(stripeProducts, byStripeId);
 
   if (repair) {
@@ -264,27 +198,11 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
       });
       provisioned += 1;
     }
-    const patch = { set: { archived: true, inStock: false } };
-    for (const item of orphansSource) {
-      const ids = [item.publishedId, item.draftId].filter(Boolean);
-      await Promise.allSettled(
-        ids.map((id) => client.patch(id, patch).commit()),
-      );
-      archived += ids.length;
-    }
-    for (const item of deactivatedSource) {
-      const ids = [item.publishedId, item.draftId].filter(Boolean);
-      await Promise.allSettled(
-        ids.map((id) => client.patch(id, patch).commit()),
-      );
-      archived += ids.length;
-    }
   }
 
   report.missing = missingSource;
   report.orphans = orphansSource;
   report.deactivated = deactivatedSource;
-  report.duplicates = duplicatesSource;
   report.contentDrift = contentDriftSource;
   report.unlinked = unlinked;
 
@@ -293,11 +211,11 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
       `${byStripeId.size} linked Sanity docs, ${unlinked.length} unlinked, ` +
       `${missingSource.length} missing, ` +
       `${orphansSource.length} orphans, ${deactivatedSource.length} deactivated, ` +
-      `${duplicatesSource.length} duplicate groups, ${contentDriftSource.length} content drift ` +
-      `(repair=${repair}: provisioned ${provisioned}, archived ${archived})`,
+      `${contentDriftSource.length} content drift ` +
+      `(repair=${repair}: provisioned ${provisioned})`,
   );
 
-  return { report, provisioned, archived };
+  return { report, provisioned };
 }
 
 export async function handler(event) {
@@ -312,18 +230,14 @@ export async function handler(event) {
   const repair = parseBool(params.get("repair"));
 
   try {
-    const { report, provisioned, archived } = await reconcileDataset(
+    const { report, provisioned } = await reconcileDataset(
       { dataset, stripeKey },
       repair,
     );
 
     return {
       statusCode: 200,
-      body: JSON.stringify(
-        { dataset, repair, provisioned, archived, report },
-        null,
-        2,
-      ),
+      body: JSON.stringify({ dataset, repair, provisioned, report }, null, 2),
     };
   } catch (err) {
     return {

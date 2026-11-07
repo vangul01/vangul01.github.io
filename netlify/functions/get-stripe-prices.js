@@ -2,7 +2,9 @@ import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
 import { requireEnv } from "./lib/env.js";
-import { getProductStatus } from "./lib/get-product-status.js";
+import { getProductStatuses } from "./lib/get-product-status.js";
+
+const MAX_IDS = 50;
 
 const secretKey = requireEnv("STRIPE_KEY");
 const stripe = createStripeClient(secretKey);
@@ -22,22 +24,16 @@ export async function handler(event) {
       };
     }
 
-    const uniqueIds = [...new Set(productIds.filter(Boolean))];
-    const results = await Promise.allSettled(
-      uniqueIds.map(async (id) => [id, await getProductStatus(stripe, id)]),
-    );
-
-    const statuses = {};
-    for (let i = 0; i < results.length; i++) {
-      const res = results[i];
-      const id = uniqueIds[i];
-      if (res.status === "fulfilled") {
-        statuses[res.value[0]] = res.value[1];
-      } else {
-        console.error("get-stripe-prices item error:", id, res.reason?.message || res.reason);
-        statuses[id] = { state: "not_found" };
-      }
+    if (productIds.length > MAX_IDS) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: `Too many productIds (max ${MAX_IDS})`,
+        }),
+      };
     }
+
+    const statuses = await getProductStatuses(stripe, productIds);
 
     return {
       statusCode: 200,

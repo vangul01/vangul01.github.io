@@ -5,6 +5,8 @@ import logoFallback from "../assets/images/web/logo_fallback.png";
 
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
+
+const showCheckoutDisabled = process.env.CONTEXT === "production";
 ---
 
 <!-- TO DO:
@@ -17,11 +19,17 @@ different colored dividers/other styling things, min width?
       <div class="container column flex-center">
         <h3>Your Cart</h3>
         <br />
-        <h6>Checkout is currently disabled.</h6>
-        <p>
-          Sign up for our newsletter below to get details on website launch
-          information!
-        </p>
+        {
+          showCheckoutDisabled && (
+            <>
+              <h6>Checkout is currently disabled.</h6>
+              <p>
+                Sign up for our newsletter below to get details on website
+                launch information!
+              </p>
+            </>
+          )
+        }
       </div>
 
       <CartIsland client:load fallbackImage={logoFallback.src} />

@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v3";
+const CACHE_VERSION = "v4";
 const CACHES = {
   pages: `pages-${CACHE_VERSION}`,
   assets: `assets-${CACHE_VERSION}`,

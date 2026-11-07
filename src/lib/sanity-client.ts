@@ -52,7 +52,7 @@ export function getOptimizedImageUrl(
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  const query = `*[_type == "product" && _id match "prod_*" && featured in ["landing", "shop", "both"]] | order(_createdAt desc){
+  const query = `*[_type == "product" && _id match "prod_*"] | order(_createdAt desc){
         _id,
         name,
         "slug": slug.current,

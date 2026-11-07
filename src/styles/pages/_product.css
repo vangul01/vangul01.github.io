@@ -180,7 +180,7 @@
   display: inline-block;
   min-width: 8rem;
   min-height: 1.2em;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(255 255 255 / 8%);
   border-radius: 4px;
 }
 

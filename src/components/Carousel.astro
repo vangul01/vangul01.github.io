@@ -2,6 +2,7 @@
 import { getOptimizedImageUrl } from "../lib/sanity-client";
 
 interface CarouselItem {
+  productId?: string;
   image: string;
   title?: string;
   link?: string;
@@ -39,6 +40,7 @@ const imgErrorHandler = fallback
           <div
             class={`carousel-slide${i === 0 ? " active" : ""}`}
             data-index={i}
+            data-product-id={item.productId}
           >
             {item.link ? (
               <a href={item.link} class="carousel-slide-link">
@@ -60,6 +62,10 @@ const imgErrorHandler = fallback
           </div>
         ))}
       </div>
+
+      {fallback && (
+        <img class="carousel-fallback" src={fallback} alt="" loading="lazy" />
+      )}
 
       {slides.length > 1 && (
         <>
