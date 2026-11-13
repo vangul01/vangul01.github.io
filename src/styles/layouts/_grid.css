@@ -98,22 +98,14 @@
   grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
 }
 
-/* .grid-4 a and .grid-4 a img rules to also target .grid-4 > div and .grid-4 > div img,
-so collab cards without links still get the same square image treatment. */
+/* .grid-4 a rules also target .grid-4 > div so collab cards without links
+still get the same layout. */
 .grid-4 a,
 .grid-4 > div {
   text-decoration: none;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-clamp-sm);
-}
-
-.grid-4 a img,
-.grid-4 > div img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 0;
 }
 
 .product-badge {
@@ -152,20 +144,6 @@ so collab cards without links still get the same square image treatment. */
   justify-content: center;
   align-items: center;
   gap: 2rem;
-}
-
-.image-grid img {
-  width: 20rem;
-  height: 20rem;
-  object-fit: cover;
-}
-
-.image-grid div {
-  width: 20rem;
-  height: 20rem;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 }
 
 /* ------------------- SHOPPING CART ----------------------- */

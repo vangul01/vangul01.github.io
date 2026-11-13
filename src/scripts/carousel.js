@@ -121,6 +121,14 @@ async function filterInactiveSlides(el) {
 
 export async function initCarousels() {
   const carousels = Array.from(document.querySelectorAll(".carousel"));
-  await Promise.all(carousels.map(filterInactiveSlides));
+
+  try {
+    await Promise.all(carousels.map(filterInactiveSlides));
+  } catch (err) {
+    console.error("Carousel initialization failed:", err);
+  } finally {
+    carousels.forEach((el) => el.removeAttribute("data-status-pending"));
+  }
+
   carousels.forEach((el) => new Carousel(el));
 }

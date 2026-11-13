@@ -1,3 +1,5 @@
+// Sanity writes back checkout data to Stripe (name, image, description)
+
 import "dotenv/config";
 
 import { isValidSignature } from "@sanity/webhook";
@@ -43,7 +45,9 @@ async function triggerRebuild() {
     process.env.SANITY_REBUILD_ON_PUBLISH !== "false";
   if (shouldRebuild && process.env.NETLIFY_BUILD_HOOK) {
     try {
-      const res = await fetch(process.env.NETLIFY_BUILD_HOOK, { method: "POST" });
+      const res = await fetch(process.env.NETLIFY_BUILD_HOOK, {
+        method: "POST",
+      });
       if (!res.ok) {
         console.error(
           "Netlify build hook returned",
@@ -123,7 +127,10 @@ export async function handler(event) {
     return { statusCode: 400, body: "Invalid JSON body" };
   }
 
-  if (payload._type !== "product" || String(payload._id || "").startsWith("drafts.")) {
+  if (
+    payload._type !== "product" ||
+    String(payload._id || "").startsWith("drafts.")
+  ) {
     return { statusCode: 200, body: JSON.stringify({ sync: "skipped" }) };
   }
 
@@ -179,9 +186,7 @@ export async function handler(event) {
   } catch (err) {
     const code = err?.code || err?.raw?.code || "";
     if (code === "resource_missing") {
-      console.log(
-        `skipped: Stripe product ${stripeProductId} does not exist`,
-      );
+      console.log(`skipped: Stripe product ${stripeProductId} does not exist`);
       return {
         statusCode: 200,
         body: JSON.stringify({

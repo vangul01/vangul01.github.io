@@ -1,3 +1,5 @@
+// Rechecks availability of a product and builds the Stripe session.
+
 import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
@@ -42,7 +44,9 @@ export async function handler(event) {
 
     const statusMap = await getProductStatuses(
       stripe,
-      sanitizedItems.filter((item) => !item.invalid).map((item) => item.productId),
+      sanitizedItems
+        .filter((item) => !item.invalid)
+        .map((item) => item.productId),
     );
 
     const checked = sanitizedItems.map((item) => ({

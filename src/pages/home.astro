@@ -6,7 +6,7 @@ import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import Carousel from "../components/Carousel.astro";
 
 import aboutMe from "../assets/images/web/about-home.png";
-import featuredArtFallback from "../assets/images/web/logo_fallback.png";
+import logoFallback from "../assets/images/web/logo_fallback.png";
 import collabFallback from "../assets/images/web/dreams.png";
 import footerImage from "../assets/images/web/Hero_Image.png";
 
@@ -39,12 +39,14 @@ const keywords =
   <main>
     <!-- Welcome/Hero Section -->
     <section class="section hero-section">
-      <div class="hero-image">
+      <div class="hero-image img-skeleton">
         <Image
           src={footerImage}
           alt="VANGULAR artwork"
           widths={[800, 1200, 1600]}
           sizes="100vw"
+          data-fallback={logoFallback.src}
+          data-img-fade
         />
       </div>
       <div class="overlay-text column flex-center">
@@ -58,20 +60,27 @@ const keywords =
 
     <section class="section">
       <div class="container grid-responsive">
-        <div class="image-container">
+        <div
+          class:list={[
+            "image-container",
+            featuredSlides.length === 0 && "img-skeleton",
+          ]}
+        >
           {
             featuredSlides.length > 0 ? (
               <Carousel
                 items={featuredSlides}
                 id="featured-art"
-                fallback={featuredArtFallback.src}
+                fallback={logoFallback.src}
               />
             ) : (
               <Image
-                src={featuredArtFallback}
+                src={logoFallback}
                 alt="Featured Artwork"
                 widths={[400, 600, 800]}
                 sizes="(max-width: 768px) 100vw, 50vw"
+                data-fallback={logoFallback.src}
+                data-img-fade
               />
             )
           }
@@ -99,12 +108,14 @@ const keywords =
       </div>
 
       <div class="container grid-responsive reverse-layout">
-        <div class="image-container image-container--bottom">
+        <div class="image-container image-container--bottom img-skeleton">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
             widths={[400, 600, 800]}
             sizes="(max-width: 768px) 100vw, 50vw"
+            data-fallback={logoFallback.src}
+            data-img-fade
           />
         </div>
 
@@ -130,13 +141,19 @@ const keywords =
       </div>
 
       <div class="container grid-responsive">
-        <div class="image-container">
+        <div
+          class:list={[
+            "image-container",
+            collabSlides.length === 0 && "img-skeleton",
+          ]}
+        >
           {
             collabSlides.length > 0 ? (
               <Carousel
                 items={collabSlides}
                 id="collabs"
                 fallback={collabFallback.src}
+                imageFallback={logoFallback.src}
               />
             ) : (
               <Image
@@ -144,6 +161,8 @@ const keywords =
                 alt="EmmaLee Collaboration"
                 widths={[400, 600, 800]}
                 sizes="(max-width: 768px) 100vw, 50vw"
+                data-fallback={logoFallback.src}
+                data-img-fade
               />
             )
           }

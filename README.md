@@ -88,7 +88,8 @@ model and per-context values are documented in
 - Stripe's **default price** on that product is the single source of truth for
   pricing. It is resolved live at render/checkout time and never stored in
   Sanity, so repointing the default (or editing a price) in the Dashboard
-  updates the store immediately.
+  updates the store immediately. A product is unavailable if it has no default
+  price, the default price is inactive, or the price data is invalid.
 - Checkout accepts only Stripe product ids (`prod_...`) and re-pulls each
   product's current default price from Stripe — client-supplied prices and
   explicit price ids (`price_...`) are rejected. Quantities are clamped to
@@ -323,6 +324,12 @@ two sides and repairs them:
     Stripe (e.g. names edited directly in Stripe, or descriptions that were
     never pushed). Surfaces a missed webhook delivery that would otherwise
     swallow the change.
+  - `noActiveDefaultPrice` — **report-only.** Active Stripe products whose
+    default price is missing, inactive, or invalid (`unit_amount` absent). The
+    store treats these as unavailable, so this usually indicates an accidental
+    deactivation or bad default-price pointer. Each entry includes `reason`
+    (`missing`, `inactive`, or `invalid`) and `defaultPrice`. Repoint the
+    product to an active price in Stripe.
   - `unlinked` — **report-only; never writes.** Published docs whose `_id`
     doesn't start with `prod_` (can't be bought from the cart, which keys off
     it). Should be empty with the `_id`-based model, but surfaced rather than

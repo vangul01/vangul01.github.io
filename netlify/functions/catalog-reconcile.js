@@ -1,3 +1,6 @@
+// Reports missing/orphan/deactivated/drift/unlinked docs and products without
+// an active default price; can provision missing active drafts with repair=true.
+
 import "dotenv/config";
 
 import { timingSafeEqual } from "node:crypto";
@@ -42,9 +45,7 @@ function secureEqual(a, b) {
 
 function baseProductId(id) {
   const value = String(id || "");
-  return value.startsWith("drafts.")
-    ? value.slice("drafts.".length)
-    : value;
+  return value.startsWith("drafts.") ? value.slice("drafts.".length) : value;
 }
 
 async function listAllStripeProducts(stripe) {
@@ -53,6 +54,7 @@ async function listAllStripeProducts(stripe) {
   do {
     const page = await stripe.products.list({
       limit: 100,
+      expand: ["data.default_price"],
       ...(startingAfter ? { starting_after: startingAfter } : {}),
     });
     products.push(...page.data);
@@ -63,13 +65,47 @@ async function listAllStripeProducts(stripe) {
   return products;
 }
 
+async function inspectDefaultPrice(stripe, product) {
+  const defaultPrice = product.default_price;
+  if (!defaultPrice) {
+    return { reason: "missing", defaultPrice: null };
+  }
+
+  let price = defaultPrice;
+  if (typeof defaultPrice === "string") {
+    try {
+      price = await stripe.prices.retrieve(defaultPrice);
+    } catch (err) {
+      return {
+        reason: "invalid",
+        defaultPrice,
+        error: err?.message || "price lookup failed",
+      };
+    }
+  }
+
+  const defaultPriceId =
+    typeof defaultPrice === "string" ? defaultPrice : defaultPrice?.id;
+  if (!price || typeof price.unit_amount !== "number") {
+    return { reason: "invalid", defaultPrice: defaultPriceId };
+  }
+
+  if (price.active === false) {
+    return { reason: "inactive", defaultPrice: price.id };
+  }
+
+  return null;
+}
+
 async function fetchSanityProducts(client) {
   const fields = `_id, name, materials, dimensions`;
   const [published, drafts] = await Promise.all([
     client.fetch(
       `*[_type == "product" && !(_id in path("drafts.**"))]{${fields}}`,
     ),
-    client.fetch(`*[_type == "product" && _id in path("drafts.**")]{${fields}}`),
+    client.fetch(
+      `*[_type == "product" && _id in path("drafts.**")]{${fields}}`,
+    ),
   ]);
 
   const byStripeId = new Map();
@@ -135,6 +171,7 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
     deactivated: [],
     contentDrift: [],
     unlinked: [],
+    noActiveDefaultPrice: [],
   };
   let provisioned = 0;
 
@@ -184,6 +221,19 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
 
   const contentDriftSource = computeContentDrift(stripeProducts, byStripeId);
 
+  const noActiveDefaultPriceSource = (
+    await Promise.all(
+      stripeProducts
+        .filter((product) => product.active !== false)
+        .map(async (product) => {
+          const issue = await inspectDefaultPrice(stripe, product);
+          return issue
+            ? { stripeId: product.id, name: product.name, ...issue }
+            : null;
+        }),
+    )
+  ).filter(Boolean);
+
   if (repair) {
     for (const item of missingSource) {
       // Never draft deactivated Stripe products. They stay reported (visible
@@ -205,13 +255,15 @@ async function reconcileDataset({ dataset, stripeKey }, repair) {
   report.deactivated = deactivatedSource;
   report.contentDrift = contentDriftSource;
   report.unlinked = unlinked;
+  report.noActiveDefaultPrice = noActiveDefaultPriceSource;
 
   console.log(
     `[catalog-reconcile] ${dataset}: ${stripeProducts.length} Stripe products, ` +
       `${byStripeId.size} linked Sanity docs, ${unlinked.length} unlinked, ` +
       `${missingSource.length} missing, ` +
       `${orphansSource.length} orphans, ${deactivatedSource.length} deactivated, ` +
-      `${contentDriftSource.length} content drift ` +
+      `${contentDriftSource.length} content drift, ` +
+      `${noActiveDefaultPriceSource.length} no active default price ` +
       `(repair=${repair}: provisioned ${provisioned})`,
   );
 

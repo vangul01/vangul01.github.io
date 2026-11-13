@@ -19,6 +19,24 @@
   height: 100%;
 }
 
+@media (scripting: enabled) {
+  .carousel[data-status-pending] .carousel-track,
+  .carousel[data-status-pending] .carousel-btn,
+  .carousel[data-status-pending] .carousel-dots {
+    visibility: hidden;
+  }
+
+  .carousel[data-status-pending]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: var(--color-skeleton);
+    animation: shop-card-pulse 1.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
 .carousel-fallback {
   grid-area: 1 / 1;
   display: none;
@@ -151,4 +169,10 @@
 
 .carousel-dot:hover {
   background: rgb(255 255 255 / 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel[data-status-pending]::after {
+    animation: none;
+  }
 }

@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { client, getOptimizedImageUrl } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
-import missingImage from "../../assets/images/web/missing_image_fallback.png";
+import missingProductFallback from "../../assets/images/web/missing_product_fallback.png";
 
 export async function getStaticPaths() {
   const query = `*[_type == "product" && _id match "prod_*"]{
@@ -40,14 +40,16 @@ const keywords = `vangular, ${product.name}, art, products`;
     <section class="section" id="product-page">
       <div class="container grid-responsive is-loading" data-product-root data-product-id={product._id}>
         <div class="container product-images" data-product-images>
-          <div class="product-image-stage">
+          <div class="product-image-stage img-skeleton">
             <img
               id="main-product-image"
               src={product.images?.[0]
                 ? getOptimizedImageUrl(product.images[0], 800)
-                : missingImage.src}
+                : missingProductFallback.src}
               alt={product.name}
               loading="eager"
+              data-fallback={missingProductFallback.src}
+              data-img-fade
             />
           </div>
 
@@ -62,6 +64,8 @@ const keywords = `vangular, ${product.name}, art, products`;
                     data-image-url={getOptimizedImageUrl(imageUrl, 800)}
                     data-index={index}
                     loading="lazy"
+                    data-fallback={missingProductFallback.src}
+                    data-img-fade
                   />
                 ))}
               </div>
@@ -133,7 +137,7 @@ const keywords = `vangular, ${product.name}, art, products`;
 
       <div class="container">
         <div class="button-group">
-          <a href="/shop" onclick="event.preventDefault(); window.history.back()">
+          <a href="/shop" data-back-link>
             <button class="button button-tertiary">
               <span class="button-label">Go Back</span>
             </button>

@@ -13,8 +13,13 @@ const keywords = "about, vangular, art, design";
   <main>
     <section class="section">
       <div class="container grid-responsive">
-        <div class="image-container">
-          <Image src={aboutVangular} alt="Image of rainbow eye Vangular logo" />
+        <div class="image-container img-skeleton">
+          <Image
+            src={aboutVangular}
+            alt="Image of rainbow eye Vangular logo"
+            data-fallback={aboutVangular.src}
+            data-img-fade
+          />
         </div>
 
         <div class="text-container">
@@ -34,10 +39,12 @@ const keywords = "about, vangular, art, design";
       </div>
 
       <div class="container grid-responsive reverse-layout">
-        <div class="image-container">
+        <div class="image-container img-skeleton">
           <Image
             src={aboutMe}
             alt="Image of the artist VANGULAR aka Valerie Angulo"
+            data-fallback={aboutVangular.src}
+            data-img-fade
           />
         </div>
 

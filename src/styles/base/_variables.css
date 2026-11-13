@@ -50,6 +50,7 @@
   --color-footer: rgb(23 23 41 / 16%);
   --color-overlay: rgb(0 0 0 / 85%);
   --color-input-bg: rgb(255 251 251 / 37.9%);
+  --color-skeleton: rgb(255 255 255 / 8%);
 
   /* Shadows */
   --color-shadow: rgb(0 0 32 / 10%);

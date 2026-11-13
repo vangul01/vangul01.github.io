@@ -182,13 +182,15 @@ export default function CartIsland({ fallbackImage = "" }) {
             <div className="cart-product-info">
               <a
                 href={`/products/${item.productUrl}`}
-                className="cart-product-link"
+                className="cart-product-link img-skeleton"
               >
                 <img
                   className="cart-product-thumbnail"
                   src={item.image || fallbackImage}
                   alt={item.name}
                   loading="lazy"
+                  data-fallback={fallbackImage || undefined}
+                  data-img-fade
                 />
               </a>
               <div className="cart-product-details">

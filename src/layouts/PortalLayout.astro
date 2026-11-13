@@ -18,5 +18,6 @@ const optimizedBgDark = await getImage({ src: bgImageDark, format: "webp", width
     style={`--bg-url: url("${optimizedBg.src}"); --bg-url-dark: url("${optimizedBgDark.src}");`}
   >
     <slot />
+    <script src="../scripts/image-handling.js"></script>
   </body>
 </html>

@@ -28,6 +28,22 @@ import { initNav } from "./nav.js";
 import { initContactForm, initNewsletterForm } from "./form-submission.js";
 import { initProductPage } from "./product.js";
 import { initCarousels } from "./carousel.js";
+import { initShopPage } from "./shop.js";
+import "./image-handling.js";
+
+function initStatusSuccess() {
+  if (
+    window.location.pathname.includes("/status/success") &&
+    window.location.search.includes("session_id")
+  ) {
+    localStorage.removeItem("cartItems");
+  }
+}
+
+function initOfflineRetry() {
+  const retryButton = document.getElementById("retry-offline");
+  retryButton?.addEventListener("click", () => location.reload());
+}
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -43,6 +59,9 @@ if (typeof document !== "undefined") {
 
     initProductPage();
     initCarousels();
+    initShopPage();
+    initStatusSuccess();
+    initOfflineRetry();
 
     // EDIT THIS!
     // Add-to cart-button data send. Needs product data from stripe to work

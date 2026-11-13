@@ -1,0 +1,32 @@
+.hero-section {
+  position: relative;
+  margin-block: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.overlay-text {
+  z-index: 2;
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
+}
+
+.title {
+  font-size: var(--font-size-clamp-3xl);
+  color: var(--color-brand-primary);
+  text-shadow: 3px 3px 6px rgb(125 70 106 / 56.9%);
+}
+
+.description {
+  font-size: var(--font-size-clamp-lg);
+  color: var(--color-brand-secondary);
+  text-shadow: 2px 2px 4px rgb(104 196 224 / 65%);
+}

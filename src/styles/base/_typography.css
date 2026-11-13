@@ -102,6 +102,10 @@ a {
   cursor: pointer;
 }
 
+.link {
+  color: var(--color-info);
+}
+
 a:hover {
   color: var(--color-text-light);
 

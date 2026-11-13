@@ -1,3 +1,5 @@
+// Creates draft in Sanity with newly created Stripe Product ID.
+
 import "dotenv/config";
 
 import { createStripeClient } from "./lib/stripe.js";
@@ -45,7 +47,10 @@ export async function handler(event) {
   try {
     stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
   } catch (err) {
-    console.error("Product webhook signature verification failed:", err.message);
+    console.error(
+      "Product webhook signature verification failed:",
+      err.message,
+    );
     return { statusCode: 400, body: `Webhook Error: ${err.message}` };
   }
 
@@ -67,10 +72,10 @@ export async function handler(event) {
   try {
     // Creation is Stripe-first only. Provision an unpublished Sanity draft with
     // bare Stripe product ID as _id (drafts.prod_X). No extra ID field is written.
-    const existing = await client.fetch(
-      `*[_id in [$id, $draftId]]{_id}`,
-      { id: docId, draftId },
-    );
+    const existing = await client.fetch(`*[_id in [$id, $draftId]]{_id}`, {
+      id: docId,
+      draftId,
+    });
     if (existing && existing.length > 0) {
       console.log(
         `duplicate: Sanity doc already exists for ${stripeProductId} (${existing[0]._id})`,

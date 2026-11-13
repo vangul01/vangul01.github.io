@@ -18,3 +18,39 @@
   background-color: var(--color-background-alt);
   box-shadow: var(--shadow-md);
 }
+
+.shop-card.is-unavailable {
+  opacity: 0.85;
+}
+
+@keyframes shop-card-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@media (scripting: enabled) {
+  .shop-card.is-loading {
+    position: relative;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .shop-card.is-loading > * {
+    visibility: hidden;
+  }
+
+  .shop-card.is-loading::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--border-radius-md, 8px);
+    background: var(--color-skeleton);
+    animation: shop-card-pulse 1.4s ease-in-out infinite;
+  }
+}

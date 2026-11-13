@@ -38,20 +38,13 @@
 }
 
 .cart-product-link {
+  display: inline-block;
   transition: opacity var(--transition-normal);
 }
 
 .cart-product-link:hover {
   opacity: 0.8;
   scale: 1.1;
-}
-
-.cart-product-thumbnail {
-  width: var(--thumbnail);
-  height: var(--thumbnail);
-  object-fit: cover;
-  border-radius: 0;
-  flex-shrink: 0;
 }
 
 .cart-product-details {

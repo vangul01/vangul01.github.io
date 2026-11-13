@@ -13,6 +13,7 @@ interface Props {
   id?: string;
   interval?: number;
   fallback?: string;
+  imageFallback?: string;
 }
 
 const {
@@ -20,11 +21,9 @@ const {
   id = "carousel",
   interval = 5000,
   fallback = "",
+  imageFallback = fallback,
 } = Astro.props;
 const slides = items.filter((item) => item.image);
-const imgErrorHandler = fallback
-  ? `this.onerror=null;this.src='${fallback}'`
-  : undefined;
 ---
 
 {
@@ -34,6 +33,7 @@ const imgErrorHandler = fallback
       data-carousel-id={id}
       data-interval={interval}
       data-slides={slides.length}
+      data-status-pending
     >
       <div class="carousel-track">
         {slides.map((item, i) => (
@@ -48,7 +48,8 @@ const imgErrorHandler = fallback
                   src={getOptimizedImageUrl(item.image, 600)}
                   alt={item.title || ""}
                   loading={i === 0 ? "eager" : "lazy"}
-                  onerror={imgErrorHandler}
+                  data-fallback={imageFallback || undefined}
+                  data-img-fade
                 />
               </a>
             ) : (
@@ -56,7 +57,8 @@ const imgErrorHandler = fallback
                 src={getOptimizedImageUrl(item.image, 600)}
                 alt={item.title || ""}
                 loading={i === 0 ? "eager" : "lazy"}
-                onerror={imgErrorHandler}
+                data-fallback={imageFallback || undefined}
+                data-img-fade
               />
             )}
           </div>

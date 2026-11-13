@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
-import missingImage from "../assets/images/web/missing_image_fallback.png";
+import missingProductFallback from "../assets/images/web/missing_product_fallback.png";
 
 const products = await getAllProducts();
 
@@ -28,15 +28,17 @@ const keywords = "art prints, digital art, paintings, shop, store";
                 data-shop-card
                 aria-busy="true"
               >
-                <div class="shop-card-image">
+                <div class="shop-card-image img-skeleton">
                   <img
                     src={
                       product.images?.[0]
                         ? getOptimizedImageUrl(product.images[0], 400)
-                        : missingImage.src
+                        : missingProductFallback.src
                     }
                     alt={product.name}
                     loading="lazy"
+                    data-fallback={missingProductFallback.src}
+                    data-img-fade
                   />
                 </div>
 
@@ -52,12 +54,3 @@ const keywords = "art prints, digital art, paintings, shop, store";
     </section>
   </main>
 </BaseLayout>
-
-<script>
-  import { initShopPage } from "../scripts/shop.js";
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initShopPage);
-  } else {
-    initShopPage();
-  }
-</script>

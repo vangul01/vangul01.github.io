@@ -1,5 +1,13 @@
 import { getStripePrice } from "../lib/stripe-client";
 
+function initBackLink() {
+  const backLink = document.querySelector("[data-back-link]");
+  backLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.history.back();
+  });
+}
+
 function initThumbnails() {
   const mainImage = document.getElementById("main-product-image");
   const thumbnails = Array.from(document.querySelectorAll(".thumbnail"));
@@ -11,7 +19,9 @@ function initThumbnails() {
     if (!thumbnail) return;
 
     const imageUrl = thumbnail.dataset.imageUrl;
-    if (imageUrl) {
+    if (imageUrl && mainImage.getAttribute("src") !== imageUrl) {
+      mainImage.classList.remove("is-loaded", "is-error");
+      mainImage.removeAttribute("data-fallback-tried");
       mainImage.src = imageUrl;
     }
 
@@ -45,6 +55,7 @@ function showUnavailableProduct(root) {
 }
 
 export async function initProductPage() {
+  initBackLink();
   initThumbnails();
 
   const root = document.querySelector("[data-product-root]");

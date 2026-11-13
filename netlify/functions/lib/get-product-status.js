@@ -1,3 +1,5 @@
+// Implements available | unavailable | inactive | not_found.
+
 const LIST_CHUNK_SIZE = 10;
 
 function logNotFound(id) {
@@ -6,6 +8,17 @@ function logNotFound(id) {
 
 function logNoDefaultPrice(id) {
   console.log("getProductStatus: unavailable reason=no_default_price", id);
+}
+
+function logInactiveDefaultPrice(id) {
+  console.log(
+    "getProductStatus: unavailable reason=inactive_default_price",
+    id,
+  );
+}
+
+function logInvalidDefaultPrice(id) {
+  console.log("getProductStatus: unavailable reason=invalid_default_price", id);
 }
 
 async function statusFromProduct(stripe, product) {
@@ -30,7 +43,12 @@ async function statusFromProduct(stripe, product) {
       : defaultPrice;
 
   if (!price || typeof price.unit_amount !== "number") {
-    logNoDefaultPrice(product.id);
+    logInvalidDefaultPrice(product.id);
+    return { state: "unavailable" };
+  }
+
+  if (price.active === false) {
+    logInactiveDefaultPrice(product.id);
     return { state: "unavailable" };
   }
 

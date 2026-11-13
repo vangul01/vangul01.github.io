@@ -26,11 +26,14 @@ export async function handleCheckout(itemsOverride) {
 
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
+      const isServerError = response.status >= 500;
       return {
         ok: false,
         status: response.status,
-        error:
-          data?.error || `Checkout failed (${response.status} ${response.statusText})`,
+        error: isServerError
+          ? "Checkout is temporarily unavailable. Please try again in a moment."
+          : data?.error ||
+            `Checkout failed (${response.status} ${response.statusText})`,
         skipped: data?.skipped || [],
       };
     }

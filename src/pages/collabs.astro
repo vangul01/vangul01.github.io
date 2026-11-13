@@ -29,7 +29,7 @@ const keywords =
             {collabs.map((collab) =>
               collab.clientLink ? (
                 <a class="link" href={collab.clientLink} target="_blank">
-                  <div>
+                  <div class="img-skeleton">
                     <img
                       src={
                         collab.images?.[0]
@@ -38,6 +38,8 @@ const keywords =
                       }
                       alt={collab.title}
                       loading="lazy"
+                      data-fallback={logoFallback.src}
+                      data-img-fade
                     />
                   </div>
 
@@ -47,7 +49,7 @@ const keywords =
                 </a>
               ) : (
                 <div>
-                  <div>
+                  <div class="img-skeleton">
                     <img
                       src={
                         collab.images?.[0]
@@ -56,6 +58,8 @@ const keywords =
                       }
                       alt={collab.title}
                       loading="lazy"
+                      data-fallback={logoFallback.src}
+                      data-img-fade
                     />
                   </div>
 

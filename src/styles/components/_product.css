@@ -123,64 +123,19 @@
   background: var(--color-brand-primary);
 }
 
-/* Fixed square stage — consistent footprint regardless of source image;
-   transparent so the purple panel shows through letterboxing */
-.product-image-stage {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  overflow: hidden;
-}
-
-#main-product-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.product-thumbnails {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 5rem);
-  gap: var(--spacing-clamp-sm);
-  justify-content: center;
-  width: 100%;
-  padding: var(--spacing-clamp-sm);
-}
-
-.thumbnail {
-  width: 5rem; /* 80px */
-  height: 5rem; /* 80px */
-  object-fit: cover;
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 0;
-  transition: all 0.2s ease;
-  opacity: 0.7;
-}
-
-.thumbnail:hover {
-  opacity: 1;
-  border-color: var(--color-border-light);
-}
-
-.thumbnail.active {
-  border-color: var(--color-brand-accent);
-  opacity: 1;
-}
-
-[data-product-root].is-loading [data-product-images],
-[data-product-root].is-loading .product-text {
-  filter: brightness(0.2);
-  pointer-events: none;
+@media (scripting: enabled) {
+  [data-product-root].is-loading [data-product-images],
+  [data-product-root].is-loading .product-text {
+    filter: brightness(0.2);
+    pointer-events: none;
+  }
 }
 
 .skeleton-text {
   display: inline-block;
   min-width: 8rem;
   min-height: 1.2em;
-  background: rgb(255 255 255 / 8%);
+  background: var(--color-skeleton);
   border-radius: 4px;
 }
 
