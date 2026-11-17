@@ -6,7 +6,7 @@ import missingProductFallback from "../assets/images/web/missing_product_fallbac
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
 
-const showCheckoutDisabled = process.env.CONTEXT === "production";
+const checkoutDisabled = process.env.CHECKOUT_DISABLED === "true";
 ---
 
 <!-- TO DO:
@@ -20,19 +20,26 @@ different colored dividers/other styling things, min width?
         <h3>Your Cart</h3>
         <br />
         {
-          showCheckoutDisabled && (
+          checkoutDisabled && (
             <>
-              <h6>Checkout is currently disabled.</h6>
+              <h6>Checkout is coming soon.</h6>
               <p>
-                Sign up for our newsletter below to get details on website
-                launch information!
+                We’re testing the shop before launch. Sign up for our newsletter
+                to be notified when we open.
               </p>
+              <a href="#newsletter-form" class="button button-secondary">
+                <span class="button-label">Get Launch Updates</span>
+              </a>
             </>
           )
         }
       </div>
 
-      <CartIsland client:load fallbackImage={missingProductFallback.src} />
+      <CartIsland
+        client:load
+        fallbackImage={missingProductFallback.src}
+        checkoutDisabled={checkoutDisabled}
+      />
     </section>
   </main>
 </BaseLayout>

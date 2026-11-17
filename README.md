@@ -102,6 +102,10 @@ model and per-context values are documented in
   not re-validate product availability on refresh; an existing session stays
   payable until it expires. Full enforcement would require a
   `checkout.session.completed` follow-up (cancel/refund) and is out of scope.
+- Pre-launch staging and production set `CHECKOUT_DISABLED=true`. This shows the
+  cart banner, disables the checkout button, and makes
+  `create-checkout-session` return `503`. Unset the flag and redeploy to enable
+  checkout. The source code is identical across branches; only env differs.
 
 3. Start development server:
 
@@ -188,7 +192,7 @@ stripe trigger product.created
 ```
 
 - `stripe trigger product.created` creates a Sanity **draft** `drafts.prod_<id>`
-  in the **development** dataset — visible in Studio as "_DRAFT", invisible to
+  in the **development** dataset — visible in Studio as "\_DRAFT", invisible to
   the site until you publish it.
 - Only `product.created` is handled; other Stripe product events are ignored.
 - The CLI secret is ephemeral and **local-only**; the **Netlify** secret must be
@@ -226,7 +230,7 @@ Two serverless webhooks keep them in sync. The **Sanity document `_id` is the St
 ### 1. Stripe → Sanity (provisioning drafts)
 
 `netlify/functions/stripe-product-sync.js` listens for Stripe `product.created`
-events (Phase 2). 
+events (Phase 2).
 
 - **One dataset per deploy**: `stripe-product-sync` writes to the deploy's
   `SANITY_DATASET`. The testing deploy uses `development`; production uses
@@ -287,7 +291,7 @@ by reconcile as `unlinked`.
 
 ### 4. Reconciling the catalog (backfill / drift)
 
-Webhooks only react to *future* events: any Stripe product that existed before
+Webhooks only react to _future_ events: any Stripe product that existed before
 the webhook endpoints were registered (or any one-sided change that missed a
 webhook) stays permanently out of sync, silently. `catalog-reconcile` diffs the
 two sides and repairs them:
@@ -317,7 +321,7 @@ two sides and repairs them:
     Sanity doc. The site hides inactive products live; unpublish manually if
     you also want the Sanity doc removed.
   - `contentDrift` — **report-only; never writes either side.** Diff of the
-    *published* doc against the Stripe product, using the same transform
+    _published_ doc against the Stripe product, using the same transform
     `sanity-product-sync` applies on publish: `name` and `description`
     (`Materials | Dimensions`). Sanity is authoritative on publish, so these
     rows are informational — they show what the next publish will write to
@@ -339,64 +343,70 @@ two sides and repairs them:
 
 ### Webhook registration
 
-| Webhook | Endpoint | Events | Signing secret |
-|---|---|---|---|
-| Stripe → Sanity (testing deploy) | `/.netlify/functions/stripe-product-sync` | `product.created` | `STRIPE_PRODUCT_WEBHOOK_SECRET` (from the Stripe Dashboard endpoint) |
-| Stripe checkout (testing deploy) | `/.netlify/functions/stripe-orders-webhook` | `checkout.session.completed` | `STRIPE_CHECKOUT_WEBHOOK_SECRET` |
-| Sanity dev (testing deploy, `development` dataset) | `/.netlify/functions/sanity-product-sync` | create/update/delete of product documents (filter `_type == "product" && !(_id in path("drafts.**"))`) | `SECRET_SANITY_WEBHOOK_KEY` |
-| Sanity prod (production deploy, `production` dataset) | `/.netlify/functions/sanity-product-sync` | create/update/delete of product documents (filter `_type == "product" && !(_id in path("drafts.**"))`) | `SECRET_SANITY_WEBHOOK_KEY` |
+| Webhook                                               | Endpoint                                    | Events                                                                                                 | Signing secret                                                       |
+| ----------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| Stripe → Sanity (testing deploy)                      | `/.netlify/functions/stripe-product-sync`   | `product.created`                                                                                      | `STRIPE_PRODUCT_WEBHOOK_SECRET` (from the Stripe Dashboard endpoint) |
+| Stripe checkout (testing deploy)                      | `/.netlify/functions/stripe-orders-webhook` | `checkout.session.completed`                                                                           | `STRIPE_CHECKOUT_WEBHOOK_SECRET`                                     |
+| Sanity dev (testing deploy, `development` dataset)    | `/.netlify/functions/sanity-product-sync`   | create/update/delete of product documents (filter `_type == "product" && !(_id in path("drafts.**"))`) | `SECRET_SANITY_WEBHOOK_KEY`                                          |
+| Sanity prod (production deploy, `production` dataset) | `/.netlify/functions/sanity-product-sync`   | create/update/delete of product documents (filter `_type == "product" && !(_id in path("drafts.**"))`) | `SECRET_SANITY_WEBHOOK_KEY`                                          |
 
 ### Catalog sync environment variables
 
-| Variable | Purpose |
-|---|---|
-| `PUBLIC_SANITY_PROJECT_ID` | Sanity project id (build + functions) |
-| `SANITY_DATASET` | The single dataset for this deploy: `development` or `production` |
-| `STRIPE_KEY` | Stripe key for this deploy: test on testing, live on production |
-| `SANITY_WRITE_TOKEN` | Sanity write token (Stripe→Sanity provisioning + reconcile repair) |
-| `STRIPE_PRODUCT_WEBHOOK_SECRET` | Stripe product webhook signing secret |
-| `STRIPE_CHECKOUT_WEBHOOK_SECRET` | Stripe checkout webhook signing secret |
-| `SECRET_SANITY_WEBHOOK_KEY` | Sanity webhook signing secret |
-| `NETLIFY_BUILD_HOOK` | Netlify build hook URL for auto-rebuild |
-| `SANITY_REBUILD_ON_PUBLISH` | `"false"` disables auto-rebuild (unset = enabled) |
-| `SECRET_CATALOG_KEY` | Token for the `x-reconcile-key` header of `/api/catalog-reconcile` |
+| Variable                         | Purpose                                                            |
+| -------------------------------- | ------------------------------------------------------------------ |
+| `PUBLIC_SANITY_PROJECT_ID`       | Sanity project id (build + functions)                              |
+| `SANITY_DATASET`                 | The single dataset for this deploy: `development` or `production`  |
+| `STRIPE_KEY`                     | Stripe key for this deploy: test on testing, live on production    |
+| `SANITY_WRITE_TOKEN`             | Sanity write token (Stripe→Sanity provisioning + reconcile repair) |
+| `STRIPE_PRODUCT_WEBHOOK_SECRET`  | Stripe product webhook signing secret                              |
+| `STRIPE_CHECKOUT_WEBHOOK_SECRET` | Stripe checkout webhook signing secret                             |
+| `SECRET_SANITY_WEBHOOK_KEY`      | Sanity webhook signing secret                                      |
+| `NETLIFY_BUILD_HOOK`             | Netlify build hook URL for auto-rebuild                            |
+| `SANITY_REBUILD_ON_PUBLISH`      | `"false"` disables auto-rebuild (unset = enabled)                  |
+| `SECRET_CATALOG_KEY`             | Token for the `x-reconcile-key` header of `/api/catalog-reconcile` |
 
 ### 🌿 Branch / deploy model
 
-| Branch | Purpose | Stripe | Sanity dataset | Webhooks | Build hook | Write token |
-|---|---|---|---|---|---|---|
-| `dev` | Local only (`netlify dev` + Stripe CLI) | test | `development` | local CLI | none | not set by default |
-| `testing` | Stable test deploy | test `sk_test` | `development` | Stripe test + Sanity dev | testing hook | test value |
-| `staging` | Browse-only production preview | restricted live `rk_live` | `production` | none | unset | unset |
-| `main` | Production | live `sk_live` | `production` | Stripe live + Sanity prod | live hook | live value |
+| Branch    | Purpose                                 | Stripe                    | Sanity dataset | Webhooks                  | Build hook   | Write token        |
+| --------- | --------------------------------------- | ------------------------- | -------------- | ------------------------- | ------------ | ------------------ |
+| `dev`     | Local only (`netlify dev` + Stripe CLI) | test                      | `development`  | local CLI                 | none         | not set by default |
+| `testing` | Stable test deploy                      | test `sk_test`            | `development`  | Stripe test + Sanity dev  | testing hook | test value         |
+| `staging` | Browse-only production preview          | restricted live `rk_live` | `production`   | none                      | unset        | unset              |
+| `main`    | Production                              | live `sk_live`            | `production`   | Stripe live + Sanity prod | live hook    | live value         |
 
 Merge order: `dev -> testing -> staging -> main`. Deploy Previews are not used.
 
 ### Per-context Netlify values
 
-| Variable | production (`main`) | testing | staging |
-|---|---|---|---|
-| `SITE_URL` | `https://www.vangular.com` | `https://testing--voluble-mermaid-026727.netlify.app` | `https://staging--voluble-mermaid-026727.netlify.app` |
-| `PUBLIC_SANITY_PROJECT_ID` | project id | project id | project id |
-| `SANITY_DATASET` | `production` | `development` | `production` |
-| `PUBLIC_STRIPE_KEY` | `pk_live` | `pk_test` | `pk_live` |
-| `STRIPE_KEY` | live `sk_live` | test `sk_test` | restricted live `rk_live` |
-| `NETLIFY_BUILD_HOOK` | live value | testing branch hook | unset |
-| `SANITY_WRITE_TOKEN` | live value | test value | unset |
-| `STRIPE_PRODUCT_WEBHOOK_SECRET` | live value | test value | unset |
-| `STRIPE_CHECKOUT_WEBHOOK_SECRET` | live value | test value | unset |
-| `SECRET_SANITY_WEBHOOK_KEY` | live value | test value | unset |
-| `SECRET_CATALOG_KEY` | value | value | unset |
-| `SANITY_REBUILD_ON_PUBLISH` | unset | unset | unset |
+| Variable                         | production (`main`)        | testing                                               | staging                                               |
+| -------------------------------- | -------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
+| `SITE_URL`                       | `https://www.vangular.com` | `https://testing--voluble-mermaid-026727.netlify.app` | `https://staging--voluble-mermaid-026727.netlify.app` |
+| `PUBLIC_SANITY_PROJECT_ID`       | project id                 | project id                                            | project id                                            |
+| `SANITY_DATASET`                 | `production`               | `development`                                         | `production`                                          |
+| `PUBLIC_STRIPE_KEY`              | `pk_live`                  | `pk_test`                                             | `pk_live`                                             |
+| `STRIPE_KEY`                     | live `sk_live`             | test `sk_test`                                        | restricted live `rk_live`                             |
+| `NETLIFY_BUILD_HOOK`             | live value                 | testing branch hook                                   | unset                                                 |
+| `SANITY_WRITE_TOKEN`             | live value                 | test value                                            | unset                                                 |
+| `STRIPE_PRODUCT_WEBHOOK_SECRET`  | live value                 | test value                                            | unset                                                 |
+| `STRIPE_CHECKOUT_WEBHOOK_SECRET` | live value                 | test value                                            | unset                                                 |
+| `SECRET_SANITY_WEBHOOK_KEY`      | live value                 | test value                                            | unset                                                 |
+| `SECRET_CATALOG_KEY`             | value                      | value                                                 | unset                                                 |
+| `SANITY_REBUILD_ON_PUBLISH`      | unset                      | unset                                                 | unset                                                 |
+| `CHECKOUT_DISABLED`              | `true` until launch        | unset                                                 | `true`                                                |
 
 Shipping-rate, Brevo, and `CLOUDFLARE_TOKEN` values stay per context as
 configured.
 
 Config notes:
+
 - `SITE_URL` is `https://` and has no trailing slash in every deployed context.
   Local development is `http://localhost:8888`.
 - `staging` is intentionally browse-only: the restricted live key cannot create
   checkouts, and no webhook/build/write secrets are set.
+- `CHECKOUT_DISABLED=true` on staging and production shows the pre-launch cart
+  banner, disables the checkout button, and returns `503` from the checkout
+  function. Remove it from production at launch and redeploy. Staging can keep
+  it set because it is browse-only.
 - Env changes only apply after a new deploy. Function code changes must be
   merged to `testing` and built before testing.
 - The `testing` branch must have a stable branch deploy URL enabled; do not use

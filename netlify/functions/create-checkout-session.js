@@ -19,6 +19,13 @@ export async function handler(event) {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
+  if (process.env.CHECKOUT_DISABLED === "true") {
+    return {
+      statusCode: 503,
+      body: JSON.stringify({ error: "Checkout is not available yet." }),
+    };
+  }
+
   try {
     const { items } = JSON.parse(event.body || "{}");
 

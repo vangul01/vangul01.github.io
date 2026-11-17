@@ -16,7 +16,10 @@ function statusNote(state) {
   return "";
 }
 
-export default function CartIsland({ fallbackImage = "" }) {
+export default function CartIsland({
+  fallbackImage = "",
+  checkoutDisabled = false,
+}) {
   const [cart, setCart] = useState([]);
   const [statuses, setStatuses] = useState({});
   const [checking, setChecking] = useState(true);
@@ -95,7 +98,9 @@ export default function CartIsland({ fallbackImage = "" }) {
         const status = statuses[item.productId] || { state: "not_found" };
         const purchasable = status.state === "available";
         const price =
-          purchasable && status.amount != null ? status.amount : item.price || 0;
+          purchasable && status.amount != null
+            ? status.amount
+            : item.price || 0;
         return { item, status, purchasable, price };
       }),
     [cart, statuses],
@@ -107,6 +112,7 @@ export default function CartIsland({ fallbackImage = "" }) {
   );
 
   async function onCheckout() {
+    if (checkoutDisabled) return;
     setNotice("");
     setChecking(true);
     try {
@@ -258,12 +264,16 @@ export default function CartIsland({ fallbackImage = "" }) {
             className="button button-primary"
             onClick={onCheckout}
             id="proceed-to-payment"
-            disabled={checking || purchasableItems.length === 0}
+            disabled={
+              checkoutDisabled || checking || purchasableItems.length === 0
+            }
           >
             <span className="button-label">
-              {!checking && purchasableItems.length === 0
-                ? "No Available Items"
-                : "Proceed to Checkout"}
+              {checkoutDisabled
+                ? "Checkout Coming Soon"
+                : !checking && purchasableItems.length === 0
+                  ? "No Available Items"
+                  : "Proceed to Checkout"}
             </span>
           </button>
         </div>
