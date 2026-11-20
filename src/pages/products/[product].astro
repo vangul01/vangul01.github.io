@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
+import { MAX_QUANTITY } from "../../lib/commerce-config";
 import { client, getOptimizedImageUrl } from "../../lib/sanity-client";
 import type { Product } from "../../types/sanity-schema";
 import missingProductFallback from "../../assets/images/web/missing_product_fallback.png";
@@ -33,18 +34,37 @@ interface Props {
 const { product } = Astro.props;
 const pageTitle = `${product.name} | VANGULAR`;
 const keywords = `vangular, ${product.name}, art, products`;
+
+const descriptionLines = (product.description || "")
+  .split(/\r?\n/)
+  .map((line) => line.trim())
+  .filter(Boolean);
+const descriptionParagraphs = descriptionLines.filter(
+  (line) => !/^[-*]\s+/.test(line),
+);
+const specBullets = [
+  ...descriptionLines
+    .filter((line) => /^[-*]\s+/.test(line))
+    .map((line) => line.replace(/^[-*]\s+/, "")),
+  product.materials ? `materials: ${product.materials}` : "",
+  product.dimensions ? `dimensions: ${product.dimensions}` : "",
+].filter(Boolean);
 ---
 
 <BaseLayout pageTitle={pageTitle} keywords={keywords}>
   <main>
     <section class="section" id="product-page">
-      <div class="container grid-responsive is-loading" data-product-root data-product-id={product._id}>
+      <div
+        class="container grid-responsive is-loading product-layout"
+        data-product-root
+        data-product-id={product._id}
+      >
         <div class="container product-images" data-product-images>
           <div class="product-image-stage img-skeleton">
             <img
               id="main-product-image"
               src={product.images?.[0]
-                ? getOptimizedImageUrl(product.images[0], 800)
+                ? getOptimizedImageUrl(product.images[0], 1200)
                 : missingProductFallback.src}
               alt={product.name}
               loading="eager"
@@ -55,18 +75,29 @@ const keywords = `vangular, ${product.name}, art, products`;
 
           {
             product.images?.length > 1 && (
-              <div class="product-thumbnails" role="list">
+              <div
+                class="product-thumbnails"
+                role="group"
+                aria-label="Product images"
+              >
                 {product.images.map((imageUrl, index) => (
-                  <img
-                    src={getOptimizedImageUrl(imageUrl, 150)}
-                    alt={`${product.name} view ${index + 1}`}
-                    class={`thumbnail ${index === 0 ? "active" : ""}`}
-                    data-image-url={getOptimizedImageUrl(imageUrl, 800)}
+                  <button
+                    type="button"
+                    class:list={["thumbnail-button", { active: index === 0 }]}
+                    aria-label={`Show image ${index + 1} of ${product.images.length}`}
+                    aria-pressed={index === 0}
                     data-index={index}
-                    loading="lazy"
-                    data-fallback={missingProductFallback.src}
-                    data-img-fade
-                  />
+                  >
+                    <img
+                      src={getOptimizedImageUrl(imageUrl, 200)}
+                      alt=""
+                      class="thumbnail"
+                      data-image-url={getOptimizedImageUrl(imageUrl, 1200)}
+                      loading="lazy"
+                      data-fallback={missingProductFallback.src}
+                      data-img-fade
+                    />
+                  </button>
                 ))}
               </div>
             )
@@ -76,11 +107,59 @@ const keywords = `vangular, ${product.name}, art, products`;
         <div class="container product-text" data-product-details>
           <h3>{product.name}</h3>
 
-          <p id="product-price" class="product-price skeleton-text" data-product-id={product._id} aria-busy="true">
+          <p
+            id="product-price"
+            class="product-price skeleton-text"
+            data-product-id={product._id}
+            aria-busy="true"
+          >
             &nbsp;
           </p>
 
-          <p class="product-status" data-availability-status hidden></p>
+          <p
+            class="product-badge product-status"
+            data-availability-status
+            hidden
+          >
+          </p>
+
+          <div class="product-quantity" data-product-quantity>
+            <span class="quantity-label" id="product-quantity-label"
+              >Quantity</span
+            >
+            <div class="quantity-controls">
+              <button
+                type="button"
+                class="quantity-btn"
+                data-quantity-change="-1"
+                aria-label="Decrease quantity"
+                disabled
+              >
+                −
+              </button>
+              <input
+                type="number"
+                class="quantity-value"
+                id="product-quantity"
+                data-quantity-input
+                min="1"
+                max={MAX_QUANTITY}
+                value="1"
+                inputmode="numeric"
+                aria-labelledby="product-quantity-label"
+                disabled
+              />
+              <button
+                type="button"
+                class="quantity-btn"
+                data-quantity-change="1"
+                aria-label="Increase quantity"
+                disabled
+              >
+                +
+              </button>
+            </div>
+          </div>
 
           <div class="button-group" data-product-actions>
             <button
@@ -97,31 +176,33 @@ const keywords = `vangular, ${product.name}, art, products`;
             </button>
           </div>
 
-          <p class="product-description">{product.description}</p>
+          <div class="product-description">
+            {descriptionParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            {
+              specBullets.length > 0 && (
+                <ul class="product-specs">
+                  {specBullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              )
+            }
+          </div>
 
-          {
-            (product.materials || product.dimensions) && (
-              <div class="product-details">
-                <h4>Details</h4>
-                <dl>
-                  {product.materials && (
-                    <div>
-                      <dt>Materials</dt>
-                      <dd>{product.materials}</dd>
-                    </div>
-                  )}
-                  {product.dimensions && (
-                    <div>
-                      <dt>Dimensions</dt>
-                      <dd>{product.dimensions}</dd>
-                    </div>
-                  )}
-                </dl>
-              </div>
-            )
-          }
+          <p class="product-note product-returns-note">
+            We offer free returns for a full refund within 30 days of when you
+            receive your package. <a href="/info/shipping">Learn more</a>
+          </p>
+
+          <p class="product-note">Tax and shipping calculated at checkout</p>
         </div>
       </div>
+
+      <span
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        data-product-feedback></span>
 
       <div class="container" data-product-unavailable hidden>
         <h3>This piece is no longer available</h3>
@@ -137,20 +218,14 @@ const keywords = `vangular, ${product.name}, art, products`;
 
       <div class="container">
         <div class="button-group">
-          <a href="/shop" data-back-link>
-            <button class="button button-tertiary">
-              <span class="button-label">Go Back</span>
-            </button>
+          <button type="button" class="button button-tertiary" data-back-link>
+            <span class="button-label">Go Back</span>
+          </button>
+          <a href="/shop" class="button button-secondary">
+            <span class="button-label">Keep Shopping</span>
           </a>
-          <a href="/shop">
-            <button class="button button-secondary">
-              <span class="button-label">Keep Shopping</span>
-            </button>
-          </a>
-          <a href="/cart">
-            <button class="button button-primary">
-              <span class="button-label">Go To Cart</span>
-            </button>
+          <a href="/cart" class="button button-primary">
+            <span class="button-label">Go To Cart</span>
           </a>
         </div>
       </div>

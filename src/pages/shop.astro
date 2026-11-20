@@ -44,7 +44,14 @@ const keywords = "art prints, digital art, paintings, shop, store";
 
                 <div class="shop-card-body">
                   <h4>{product.name}</h4>
-                  <span class="product-badge" data-shop-badge hidden></span>
+                  <p
+                    class="shop-card-price skeleton-text"
+                    data-shop-price
+                    aria-busy="true"
+                  >
+                    &nbsp;
+                  </p>
+                  <span class="product-badge" data-shop-badge hidden />
                 </div>
               </a>
             ))}

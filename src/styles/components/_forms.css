@@ -21,7 +21,6 @@
   width: 100%;
   padding: var(--spacing-clamp-sm);
   border: 1px solid var(--color-border-medium);
-  border-radius: var(--border-radius-md);
   font-size: var(--font-size-clamp-base);
   margin-bottom: var(--spacing-clamp-lg);
 }

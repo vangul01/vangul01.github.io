@@ -13,12 +13,13 @@
 .button {
   font-family: var(--font-secondary);
   font-size: var(--font-size-clamp-base);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
+  white-space: nowrap;
   width: var(--button-width);
   color: #000;
   border: 3px solid;
-  padding: var(--spacing-clamp-lg);
+  padding: var(--spacing-clamp-xs) var(--spacing-clamp-sm);
   box-shadow:
     1px 1px 0 0,
     2px 2px 0 0,

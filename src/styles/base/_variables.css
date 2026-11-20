@@ -38,6 +38,7 @@
   --color-text-secondary: var(--color-gray-600);
   --color-text-light: var(--color-light);
   --color-text-muted: var(--color-gray-400);
+  --color-notes: var(--color-text-muted);
 
   /* Button Colors */
   --color-button-primary: var(--color-success);
@@ -122,7 +123,7 @@
   --input-width-min: 4rem; /* 64px */
 
   /* Button Width */
-  --button-width: 12.5rem; /* 200px */
+  --button-width: 16rem; /* 256px */
 
   /* Container Widths */
   --container-width-max: 64rem; /* 1024px */

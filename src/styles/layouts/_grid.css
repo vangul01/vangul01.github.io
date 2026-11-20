@@ -10,13 +10,14 @@
   padding: var(--spacing-clamp-lg);
 
   /* background-color: var(--color-brand-light); */
+  background-color: var(--color-footer);
 
-  background: radial-gradient(
+  /* background: radial-gradient(
     ellipse at center,
     rgb(217 199 236 / 8%) 0%,
     rgb(217 199 236 / 25%) 70%,
     transparent 100%
-  );
+  ); */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgb(255 255 255 / 8%);

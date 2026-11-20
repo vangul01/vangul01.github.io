@@ -97,25 +97,10 @@
 .footer-newsletter {
   text-align: center;
   color: var(--color-brand-primary);
-
-  /* background-color: var(--color-footer); */
-  backdrop-filter: var(--blur-soft);
-  box-shadow: none;
-  border-radius: 0;
   padding: var(--spacing-clamp-lg);
   width: 100%;
-  background-color: var(--color-brand-light);
 
-  /* background: radial-gradient(
-    ellipse at center,
-    rgba(217, 199, 236, 0.08) 70%,
-    rgba(217, 199, 236, 0.25) 0%
-    transparent 100%
-  );
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--spacing-clamp-md); */
+  /* -webkit-backdrop-filter: blur(12px); */
 }
 
 /* Row 3: Links (2-column grid) */
@@ -124,10 +109,6 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-clamp-xs);
   width: 100%;
-  background-color: var(--color-footer);
-  backdrop-filter: var(--blur-soft);
-  box-shadow: none;
-  border-radius: 0;
   padding: var(--spacing-clamp-xl);
 }
 
@@ -136,11 +117,7 @@
   flex-direction: column;
   align-items: center;
 
-  /* background-color: var(--color-footer);
-  backdrop-filter: var(--blur-soft);
-  box-shadow: none;
-  border-radius: 0;
-  padding: var(--spacing-clamp-lg); */
+  /* padding: var(--spacing-clamp-lg); */
 }
 
 .copyright {

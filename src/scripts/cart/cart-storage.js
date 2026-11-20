@@ -1,3 +1,5 @@
+import { MAX_QUANTITY, MIN_QUANTITY } from "../../lib/commerce-config";
+
 ///////////////////////////// Core storage operations
 export function loadCart() {
   if (typeof window === "undefined") return [];
@@ -17,6 +19,11 @@ function getItemKey(item) {
   return item.productId;
 }
 
+function clampQuantity(quantity) {
+  const parsed = Math.round(Number(quantity)) || MIN_QUANTITY;
+  return Math.max(MIN_QUANTITY, Math.min(parsed, MAX_QUANTITY));
+}
+
 export function addToCart(product) {
   const cart = loadCart();
   const existingProduct = cart.find(
@@ -24,11 +31,14 @@ export function addToCart(product) {
   );
 
   if (existingProduct) {
-    existingProduct.quantity += product.quantity || 1;
+    existingProduct.quantity = clampQuantity(
+      Number(existingProduct.quantity) +
+        Number(product.quantity || MIN_QUANTITY),
+    );
   } else {
     cart.push({
       ...product,
-      quantity: product.quantity || 1,
+      quantity: clampQuantity(product.quantity),
     });
   }
 
@@ -43,6 +53,6 @@ export function calculateTotals(cart) {
       price: totals.price + (item.price || 0) * item.quantity,
       quantity: totals.quantity + item.quantity,
     }),
-    { price: 0, quantity: 0 }
+    { price: 0, quantity: 0 },
   );
 }

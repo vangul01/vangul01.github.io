@@ -22,6 +22,7 @@ Checkout page
 
 */
 
+import { MAX_QUANTITY, MIN_QUANTITY } from "../lib/commerce-config";
 import { updateCartCount } from "./cart/cart.js";
 import { addToCart } from "./cart/cart-storage.js";
 import { initNav } from "./nav.js";
@@ -63,8 +64,6 @@ if (typeof document !== "undefined") {
     initStatusSuccess();
     initOfflineRetry();
 
-    // EDIT THIS!
-    // Add-to cart-button data send. Needs product data from stripe to work
     document.querySelectorAll("#add-to-cart").forEach((button) => {
       button.addEventListener("click", function () {
         const price = parseFloat(this.dataset.price);
@@ -74,20 +73,32 @@ if (typeof document !== "undefined") {
           return;
         }
 
+        const quantityInput = document.querySelector("[data-quantity-input]");
+        const requested =
+          Math.round(Number(quantityInput?.value)) || MIN_QUANTITY;
+        const quantity = Math.max(
+          MIN_QUANTITY,
+          Math.min(requested, MAX_QUANTITY),
+        );
+
         const product = {
           productId: this.dataset.productId, // For Stripe Checkout
           name: this.dataset.name,
           price: price,
           image: this.dataset.image,
-          quantity: parseInt(this.dataset.quantity) || 1,
+          quantity,
           productUrl: this.dataset.productUrl,
         };
 
         addToCart(product);
 
-        // Visual feedback
-        this.textContent = "Item Added!";
-        setTimeout(() => (this.textContent = "Add to Cart"), 1000);
+        const label = this.querySelector(".button-label");
+        const feedback = document.querySelector("[data-product-feedback]");
+        if (label) label.textContent = "Item Added!";
+        if (feedback) feedback.textContent = `${quantity} added to cart.`;
+        setTimeout(() => {
+          if (label) label.textContent = "Add to Cart";
+        }, 1000);
       });
     });
   });

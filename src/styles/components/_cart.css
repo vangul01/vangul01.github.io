@@ -81,7 +81,7 @@
   align-items: center;
   gap: var(--spacing-clamp-sm);
   border: var(--border-tertiary);
-  border-radius: var(--border-radius-sm);
+  border-radius: 0;
   padding: var(--spacing-clamp-xs);
   font-size: var(--font-size-clamp-base);
   background-color: var(--color-text-light);
@@ -125,18 +125,28 @@
 .quantity-btn {
   background: none;
   border: none;
-  border-radius: var(--border-radius-circle);
-  color: var(--color-text-muted);
+  border-radius: 0;
+  padding: 0;
+  color: var(--color-text-secondary);
   width: var(--font-size-clamp-lg);
   height: var(--font-size-clamp-lg);
-  transition: all var(--transition-normal);
+  font-size: var(--font-size-clamp-lg);
+  line-height: 1;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
   text-align: center;
   justify-content: center;
 }
 
-.quantity-btn:hover {
-  color: var(--color-text-light);
-  background-color: var(--color-button-primary);
+.quantity-btn:hover:not(:disabled) {
+  color: var(--color-brand-primary);
+  background-color: transparent;
+}
+
+.quantity-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .cart-item-unavailable {
