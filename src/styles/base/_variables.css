@@ -76,9 +76,9 @@
   --border-tertiary: 0.0825rem solid var(--color-border-light);
 
   /* ------------------- Typography ------------------ */
-  --font-primary: "Russo One", sans-serif;
+  --font-primary: "Syne", sans-serif;
   --font-secondary: "Open Sans", sans-serif;
-  --letter-spacing: normal;
+  --letter-spacing-secondary: 1px;
   --line-height: 1.6;
 
   /* Font Sizes */

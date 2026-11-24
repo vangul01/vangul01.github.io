@@ -3,19 +3,30 @@
   background-image: var(--footer-bg-url);
   background-position: center bottom;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: max(100%, 72rem) auto;
   height: auto;
   width: 100%;
 }
 
+@media (width <= 768px) {
+  .footer {
+    background-size: max(160%, 56rem) auto;
+    background-position: center calc(100% - 1rem);
+  }
+
+  .footer-links-row {
+    grid-template-columns: 1fr 1fr;
+    padding: var(--spacing-clamp-lg) var(--spacing-clamp-md);
+  }
+}
+
 .footer-link {
-  color: var(--color-text-secondary);
+  color: var(--color-text-light);
   font-size: var(--font-size-clamp-base);
 }
 
 .footer-link:hover {
-  /* font-weight: bold; */
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
 }
 
 .footer-container {
@@ -24,11 +35,16 @@
   padding: var(--spacing-clamp-md);
   gap: var(--spacing-clamp-xl);
   align-items: center;
+
+  /* backdrop-filter: blur(0); */
+
+  /* -webkit-backdrop-filter: blur(0); */
+
+  /* background-color: white; */
 }
 
-.footer-title {
+.footer-newsletter h1 {
   font-size: var(--font-size-clamp-lg);
-  padding: var(--spacing-clamp-md);
 }
 
 .link-list {
@@ -68,45 +84,55 @@
   border-radius: var(--border-radius-circle);
   background: radial-gradient(
     ellipse at center,
-    rgb(217 199 236 / 15%) 0%,
-    rgb(60 45 73 / 40%) 100%
+    rgb(244 216 228 / 55.8%) 0%,
+    rgb(236 112 164 / 69.8%) 100%
   );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: var(--color-text-light);
-  border: 1px solid rgb(255 255 255 / 15%);
+
+  /* border: 3px solid rgb(238 146 16 / 52.2%); */
   transition:
     background var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    transform var(--transition-fast);
+
+  /* box-shadow var(--transition-fast); */
 }
 
 .social-link:hover {
-  background: radial-gradient(
+  /* background: radial-gradient(
     ellipse at center,
     rgb(217 199 236 / 25%) 0%,
     rgb(60 45 73 / 60%) 100%
+  ); */
+  background: radial-gradient(
+    ellipse at center,
+    rgb(248 221 164 / 55.8%) 0%,
+    rgb(244 189 71 / 69.8%) 100%
   );
+
+  /* border: 3px solid rgb(255 248 238 / 58.9%); */
   color: var(--color-text-light);
-  box-shadow: var(--shadow-md);
-  transform: scale(1.1);
-  border: 1px solid rgb(255 255 255 / 25%);
+
+  /* box-shadow: var(--shadow-md); */
+  transform: scale(1.4);
+
+  /* border: 1px solid rgb(255 255 255 / 25%); */
 }
 
 /* Row 2: Newsletter */
-.footer-newsletter {
+
+/* .footer-newsletter {
   text-align: center;
   color: var(--color-brand-primary);
   padding: var(--spacing-clamp-lg);
   width: 100%;
-
-  /* -webkit-backdrop-filter: blur(12px); */
-}
+} */
 
 /* Row 3: Links (2-column grid) */
 .footer-links-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: var(--spacing-clamp-xs);
   width: 100%;
   padding: var(--spacing-clamp-xl);

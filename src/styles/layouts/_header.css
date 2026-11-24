@@ -20,7 +20,9 @@
   justify-content: space-between;
   font-family: var(--font-primary);
   font-size: var(--font-size-clamp-lg);
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 1.15;
 }
 
 .logo-container img {
@@ -76,6 +78,8 @@
 /* Vangular */
 .header-title {
   font-size: var(--font-size-clamp-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* Used to be .nav-cart-button */
