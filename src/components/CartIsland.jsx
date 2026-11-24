@@ -159,7 +159,7 @@ export default function CartIsland({
         <h4>Your cart is empty!</h4>
         <div className="button-group">
           <a href="/shop" className="button button-primary">
-            Continue Shopping
+            Keep Shopping
           </a>
         </div>
       </div>
@@ -258,7 +258,7 @@ export default function CartIsland({
 
         <div className="button-group">
           <a href="/shop" className="button button-secondary">
-            <span className="button-label">Continue Shopping</span>
+            <span className="button-label">Keep Shopping</span>
           </a>
 
           <button
@@ -274,7 +274,7 @@ export default function CartIsland({
                 ? "Checkout Coming Soon"
                 : !checking && purchasableItems.length === 0
                   ? "No Available Items"
-                  : "Proceed to Checkout"}
+                  : "Checkout"}
             </span>
           </button>
         </div>

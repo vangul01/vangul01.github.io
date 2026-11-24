@@ -59,7 +59,20 @@
   /* cart.astro */
   .cart-products-grid,
   .cart-titles {
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: var(--spacing-clamp-md);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--spacing-clamp-sm);
+    padding: var(--spacing-clamp-sm);
+  }
+
+  .cart-titles {
+    display: none;
+  }
+
+  .cart-product-total-price {
+    display: none;
+  }
+
+  .cart-product-info {
+    gap: var(--spacing-clamp-sm);
   }
 }

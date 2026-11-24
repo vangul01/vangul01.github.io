@@ -119,6 +119,13 @@
   background: rgb(0 0 0 / 70%);
 }
 
+.carousel-btn:focus-visible,
+.carousel-dot:focus-visible {
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
 .carousel-prev {
   left: var(--spacing-clamp-sm);
 }
@@ -163,7 +170,7 @@
 }
 
 .carousel-dot.active {
-  background: var(--color-brand-secondary);
+  background: var(--color-brand-accent);
   transform: scale(1.25);
 }
 

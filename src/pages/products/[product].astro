@@ -59,7 +59,7 @@ const specBullets = [
         data-product-root
         data-product-id={product._id}
       >
-        <div class="container product-images" data-product-images>
+        <div class="container clear product-images" data-product-images>
           <div class="product-image-stage img-skeleton">
             <img
               id="main-product-image"
@@ -104,7 +104,7 @@ const specBullets = [
           }
         </div>
 
-        <div class="container product-text" data-product-details>
+        <div class="container clear product-text" data-product-details>
           <h3>{product.name}</h3>
 
           <p
@@ -210,25 +210,22 @@ const specBullets = [
           <a href="/shop" class="button button-primary">
             <span class="button-label">Return to shop</span>
           </a>
-          <a href="/cart" class="button button-secondary">
-            <span class="button-label">Go To Cart</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="button-group">
-          <button type="button" class="button button-tertiary" data-back-link>
-            <span class="button-label">Go Back</span>
-          </button>
-          <a href="/shop" class="button button-secondary">
-            <span class="button-label">Keep Shopping</span>
-          </a>
-          <a href="/cart" class="button button-primary">
-            <span class="button-label">Go To Cart</span>
-          </a>
         </div>
       </div>
     </section>
+
+    <div class="container clear">
+      <div class="button-group">
+        <button type="button" class="button button-tertiary" data-back-link>
+          <span class="button-label">Go Back</span>
+        </button>
+        <a href="/shop" class="button button-secondary">
+          <span class="button-label">Keep Shopping</span>
+        </a>
+        <a href="/cart" class="button button-primary">
+          <span class="button-label">View Cart</span>
+        </a>
+      </div>
+    </div>
   </main>
 </BaseLayout>

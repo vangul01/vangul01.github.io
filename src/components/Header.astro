@@ -12,9 +12,18 @@ const links = siteNavigation.headerLinks;
 <header>
   <nav class="header-nav">
     <div class="logo-container">
-      <img src={vangularLogo.src} alt="" />
-      <a href={links.logo[0].href} class="header-title header-link">
-        {links.logo[0].name}
+      <a
+        href={links.logo[0].href}
+        class="header-home-link header-link"
+        aria-label="Vangular home"
+      >
+        <img
+          src={vangularLogo.src}
+          alt=""
+          class="header-logo-eye"
+          aria-hidden="true"
+        />
+        <span class="header-title header-wordmark">{links.logo[0].name}</span>
       </a>
     </div>
 

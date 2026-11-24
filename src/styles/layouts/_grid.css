@@ -11,9 +11,15 @@
   background-color: var(--color-footer);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
-  /* border: 1px solid rgb(255 255 255 / 8%); */
   border-radius: 0;
+}
+
+@media (width <= 768px) {
+  .container {
+    width: min(100% - 0.75rem, var(--container-width-max));
+    margin-block: var(--spacing-clamp-md);
+    padding: var(--spacing-clamp-sm);
+  }
 }
 
 /* For containers that should have a clear background */
@@ -28,6 +34,13 @@
   margin-block: var(--spacing-clamp-xl);
   padding: var(--spacing-clamp-xl);
   overflow: hidden;
+}
+
+@media (width <= 768px) {
+  .section {
+    margin-block: var(--spacing-clamp-md);
+    padding: var(--spacing-clamp-sm);
+  }
 }
 
 /* ------------------------------------------------------------ */
@@ -114,11 +127,18 @@ still get the same layout. */
   margin-block-start: 0;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  background: var(--color-brand-light);
-  border: 1px solid var(--color-gray-400);
-  color: var(--color-text-secondary);
+  background:
+    var(--gloss-sheen),
+    linear-gradient(
+      180deg,
+      rgb(203 204 254 / 38%) 0%,
+      rgb(203 204 254 / 20%) 100%
+    );
+  border: 1px solid rgb(203 204 254 / 55%);
+  box-shadow: var(--gloss-highlight-soft);
+  color: var(--color-brand-primary);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: lowercase;
 }
@@ -152,7 +172,7 @@ still get the same layout. */
 .cart-products-grid {
   display: grid;
   grid-template-columns:
-    minmax(25rem, 3fr) minmax(var(--thumbnail), 1fr)
+    minmax(0, 3fr) minmax(var(--thumbnail), 1fr)
     minmax(var(--thumbnail), 1fr);
   gap: var(--spacing-clamp-xl);
   width: 100%;

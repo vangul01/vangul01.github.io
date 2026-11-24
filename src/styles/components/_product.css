@@ -42,6 +42,11 @@
   }
 }
 
+.product-text .product-badge {
+  align-self: flex-start;
+  margin: 0;
+}
+
 /* Price sits right under the title — no label, just the number */
 .product-price {
   font-family: var(--font-secondary);
@@ -91,7 +96,7 @@
   content: "☆";
   position: absolute;
   inset-inline-start: 0;
-  color: var(--color-brand-secondary);
+  color: var(--color-brand-accent);
 }
 
 .product-quantity {

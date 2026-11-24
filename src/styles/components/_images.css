@@ -91,7 +91,7 @@
   gap: var(--spacing-clamp-xs);
   max-width: calc(100% - (var(--spacing-clamp-sm) * 2));
   padding: var(--spacing-clamp-xs);
-  background: rgb(60 45 73 / 75%);
+  background: var(--color-brand-primary);
   border: 1px solid rgb(255 255 255 / 20%);
   backdrop-filter: var(--blur-soft);
 }
@@ -181,6 +181,12 @@
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 0;
+}
+
+/* Picture-frame treatment for shop/collab, not product pages */
+.shop-card-image,
+.grid-4 .img-skeleton {
+  border: var(--border-primary);
 }
 
 .image-grid img {

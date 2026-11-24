@@ -9,7 +9,8 @@ interface Props {
 
 const { pageTitle, keywords } = Astro.props;
 const font =
-  "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap";
+  "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap";
+// Syne (revert): "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap";
 const fontAwesome =
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 ---
@@ -72,7 +73,12 @@ const fontAwesome =
 
   <link href={font} rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href={font} rel="stylesheet" /></noscript>
-  <link href={fontAwesome} rel="stylesheet" media="print" onload="this.media='all'" />
+  <link
+    href={fontAwesome}
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
   <noscript><link href={fontAwesome} rel="stylesheet" /></noscript>
   <link href={favicon} rel="icon" type="image/x-icon" />
 
@@ -93,15 +99,17 @@ const fontAwesome =
   <title>{pageTitle}</title>
 
   <!-- Cloudflare Web Analytics -->
-  {process.env.CLOUDFLARE_TOKEN && (
-    <script
-      is:inline
-      type="module"
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon={JSON.stringify({
-        token: process.env.CLOUDFLARE_TOKEN,
-      })}
-    />
-  )}
+  {
+    process.env.CLOUDFLARE_TOKEN && (
+      <script
+        is:inline
+        type="module"
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({
+          token: process.env.CLOUDFLARE_TOKEN,
+        })}
+      />
+    )
+  }
   <!-- End Cloudflare Web Analytics -->
 </head>

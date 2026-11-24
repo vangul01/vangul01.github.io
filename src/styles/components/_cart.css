@@ -122,6 +122,12 @@
   transform: scale(1.1);
 }
 
+.delete-btn:focus-visible,
+.quantity-btn:focus-visible {
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 2px;
+}
+
 .quantity-btn {
   background: none;
   border: none;
