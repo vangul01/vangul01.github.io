@@ -6,16 +6,18 @@ styles, text-align */
 body {
   font-family: var(--font-secondary, Arial, sans-serif);
   font-size: var(--font-size-clamp-base, 1rem);
-  color: var(--color-text-muted);
+  font-weight: 400;
+  color: var(--color-text-secondary);
   background-color: #0d0a1a;
   background-image: var(--bg-url);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  letter-spacing: var(--letter-spacing);
+  letter-spacing: var(--letter-spacing-secondary);
   line-height: var(--line-height);
   display: grid;
   grid-template-rows: var(--height-header, 70px) 1fr auto;
+  min-height: 100dvh;
 }
 
 @media (width <= 768px) {
@@ -71,15 +73,28 @@ h4,
 h5,
 h6 {
   font-family: var(--font-primary, inherit);
+
+  /* font-weight: 400; */
+
+  /* Syne */
   color: var(--color-text-primary, inherit);
   text-transform: uppercase;
   text-align: center;
   text-wrap: balance;
-  line-height: 1;
+  letter-spacing: normal;
+  line-height: 1.15;
 }
 
 h1 {
   font-size: var(--font-size-clamp-2xl);
+
+  /* font-weight: 700; */
+
+  /* Syne */
+
+  /* letter-spacing: -0.02em; */
+
+  /* Syne */
 }
 
 h2 {
@@ -100,6 +115,14 @@ h6 {
 a {
   transition: var(--transition-normal);
   cursor: pointer;
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 .link {
@@ -123,7 +146,6 @@ textarea {
   min-width: var(--input-width-min);
   background-color: var(--color-input-bg);
   color: var(--color-text-secondary);
-  border-radius: var(--border-radius-md);
   padding: var(--spacing-clamp-sm) var(--spacing-clamp-sm);
   font-family: var(--font-secondary);
   font-size: var(--font-size-clamp-base);

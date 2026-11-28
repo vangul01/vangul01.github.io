@@ -32,3 +32,13 @@
   from = '/merch/*'
   to = '/shop/:splat'
   status = 301
+
+[[redirects]]
+  from = '/product'
+  to = '/shop'
+  status = 301
+
+[[redirects]]
+  from = '/product/*'
+  to = '/shop'
+  status = 301

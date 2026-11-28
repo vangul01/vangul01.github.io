@@ -1,4 +1,17 @@
+import { formatPrice } from "../lib/commerce-config";
 import { getStripePrices } from "../lib/stripe-client";
+
+function showPrice(card, status) {
+  const priceEl = card.querySelector("[data-shop-price]");
+  if (!priceEl) return;
+
+  priceEl.classList.remove("skeleton-text");
+  priceEl.removeAttribute("aria-busy");
+  priceEl.textContent =
+    status.state === "available" && status.amount != null && status.currency
+      ? formatPrice(status.amount, status.currency)
+      : "";
+}
 
 export async function initShopPage() {
   const grid = document.querySelector("[data-shop-grid]");
@@ -26,6 +39,7 @@ export async function initShopPage() {
 
       card.classList.remove("is-loading");
       card.removeAttribute("aria-busy");
+      showPrice(card, status);
 
       if (status.state === "unavailable") {
         if (badgeEl) {
@@ -43,6 +57,7 @@ export async function initShopPage() {
     for (const card of cards) {
       card.classList.remove("is-loading");
       card.removeAttribute("aria-busy");
+      showPrice(card, { state: "not_found" });
     }
   }
 }

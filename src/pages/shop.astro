@@ -2,15 +2,17 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getAllProducts, getOptimizedImageUrl } from "../lib/sanity-client";
-import missingProductFallback from "../assets/images/web/missing_product_fallback.png";
+import missingProductFallback from "../assets/images/web/missing-product-fallback.png";
 
 const products = await getAllProducts();
 
 const pageTitle = "Shop | VANGULAR";
 const keywords = "art prints, digital art, paintings, shop, store";
+const description =
+  "Shop original art, prints, and design goods by VANGULAR, made for lovers of color, curiosity, and the absurd.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       {
@@ -44,7 +46,14 @@ const keywords = "art prints, digital art, paintings, shop, store";
 
                 <div class="shop-card-body">
                   <h4>{product.name}</h4>
-                  <span class="product-badge" data-shop-badge hidden></span>
+                  <p
+                    class="shop-card-price skeleton-text"
+                    data-shop-price
+                    aria-busy="true"
+                  >
+                    &nbsp;
+                  </p>
+                  <span class="product-badge" data-shop-badge hidden />
                 </div>
               </a>
             ))}

@@ -4,9 +4,11 @@ import LastUpdated from "../../components/LastUpdated.astro";
 
 const pageTitle = "Contact | VANGULAR";
 const keywords = "Contact, Inquiry";
+const description =
+  "Contact VANGULAR for commissions, collaborations, product questions, or general inquiries.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       <div class="container column flex-center">
@@ -40,6 +42,7 @@ const keywords = "Contact, Inquiry";
               name="first-name"
               placeholder=" "
               autocomplete="given-name"
+              aria-describedby="contact-submit-message"
               required
             />
             <label for="contact-first-name">First Name</label>
@@ -52,6 +55,7 @@ const keywords = "Contact, Inquiry";
               name="last-name"
               placeholder=" "
               autocomplete="family-name"
+              aria-describedby="contact-submit-message"
               required
             />
             <label for="contact-last-name">Last Name</label>
@@ -64,6 +68,7 @@ const keywords = "Contact, Inquiry";
               name="email"
               placeholder=" "
               autocomplete="email"
+              aria-describedby="contact-submit-message"
               required
             />
             <label for="contact-email">Email</label>
@@ -76,18 +81,15 @@ const keywords = "Contact, Inquiry";
               placeholder=" "
               rows="5"
               cols="50"
+              aria-describedby="contact-submit-message"
               required></textarea>
             <label for="contact-message">Message</label>
           </div>
 
-          <button
-            type="submit"
-            class="button button-primary"
-            aria-label="Submit Contact Form"
-          >
-            <span class="button-label"> Submit </span>
+          <button type="submit" class="button button-primary">
+            <span class="button-label">Submit</span>
           </button>
-          <div id="contact-submit-message"></div>
+          <div id="contact-submit-message" role="status" aria-live="polite"></div>
         </form>
       </div>
     </section>

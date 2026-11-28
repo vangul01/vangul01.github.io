@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
-import logoFallback from "../assets/images/web/logo_fallback.png";
+import logoFallback from "../assets/images/web/logo-fallback.png";
 
 import { getCollabs, getOptimizedImageUrl } from "../lib/sanity-client";
 
@@ -11,9 +11,11 @@ const collabs = await getCollabs();
 const pageTitle = "Collabs | VANGULAR";
 const keywords =
   "art, design, past work, projects, commission, creative, logos, collaborations, cover art";
+const description =
+  "Browse VANGULAR collaborations, commissions, and creative projects across art, design, and visual storytelling.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       {
@@ -81,8 +83,9 @@ const keywords =
             class="link"
             href="mailto:contact@vangular.com">contact@vangular.com</a
           > or reach out via the
-          <a class="link" href="/info/contact" target="_blank"> contact page</a>.
-          Can't wait to hear about your project!
+          <a class="link" href="/info/contact" target="_blank">
+            contact page</a
+          >. Can't wait to hear about your project!
         </p>
       </div>
     </section>

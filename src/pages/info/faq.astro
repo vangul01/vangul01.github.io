@@ -4,9 +4,11 @@ import LastUpdated from "../../components/LastUpdated.astro";
 
 const pageTitle = "FAQ | VANGULAR";
 const keywords = "FAQ, VANGULAR, frequently asked questions";
+const description =
+  "Find answers to common questions about VANGULAR orders, products, shipping, and policies.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       <div class="container column flex-center">
@@ -159,8 +161,9 @@ const keywords = "FAQ, VANGULAR, frequently asked questions";
         <details class="faq-item">
           <summary><h4>What is your return policy?</h4></summary>
           <p>
-            We accept returns within 14 days of delivery for unused items in
-            original condition. Please see our Shipping page for full details.
+            We offer free returns for a full refund within 30 days of when you
+            receive your package for unused items in original condition. Please
+            see our Shipping page for full details.
           </p>
         </details>
 
