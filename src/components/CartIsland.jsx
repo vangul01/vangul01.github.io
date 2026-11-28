@@ -236,10 +236,10 @@ export default function CartIsland({
               </div>
               <button
                 className="delete-btn"
-                aria-label="Remove item"
+                aria-label={`Remove ${item.name || "item"}`}
                 onClick={() => removeItem(idx)}
               >
-                <i className="fa fa-trash"></i>
+                <i className="fa fa-trash" aria-hidden="true"></i>
               </button>
             </div>
             <div className="cart-product-total-price">

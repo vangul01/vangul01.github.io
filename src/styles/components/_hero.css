@@ -20,10 +20,15 @@
 .overlay-text {
   z-index: 2;
   position: absolute;
-  inset: 0;
+  top: 33%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--spacing-clamp-sm);
   padding: var(--spacing-clamp-lg);
   text-align: center;
   text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);

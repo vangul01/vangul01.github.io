@@ -4,13 +4,19 @@ import blinkingEyeVideo from "../assets/videos/blinking_eye.mp4";
 // import blinkingEyeWebm from "../assets/videos/blinking_eye.webm";
 
 import { Image } from "astro:assets";
-import eyeImage from "../assets/images/web/logo_eyewhites.png";
+import eyeImage from "../assets/images/web/logo-eyewhites.png";
 
 const pageTitle = "Welcome to VANGULAR!";
 const keywords = "Vangular, enter, portal";
+const description =
+  "Enter VANGULAR, an art and design world for vibrant, existential, and absurd original work.";
 ---
 
-<PortalLayout pageTitle={pageTitle} keywords={keywords}>
+<PortalLayout
+  pageTitle={pageTitle}
+  keywords={keywords}
+  description={description}
+>
   <main class="portal">
     <a href="/home" class="overlay-image">
       <Image

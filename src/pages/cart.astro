@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CartIsland from "../components/CartIsland.jsx";
-import missingProductFallback from "../assets/images/web/missing_product_fallback.png";
+import missingProductFallback from "../assets/images/web/missing-product-fallback.png";
 
 const pageTitle = "Cart | VANGULAR";
 const keywords = "Cart, Shopping Cart, Checkout";
+const description =
+  "Review your VANGULAR cart, check item availability, and get ready for checkout when the shop is open.";
 
 const checkoutDisabled = process.env.CHECKOUT_DISABLED === "true";
 ---
@@ -13,11 +15,11 @@ const checkoutDisabled = process.env.CHECKOUT_DISABLED === "true";
  on hover of image, have border change too
 different colored dividers/other styling things, min width?
 -->
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       <div class="container clear column flex-center">
-        <h2>Your Cart</h2>
+        <h1>Your Cart</h1>
         <br />
         {
           checkoutDisabled && (

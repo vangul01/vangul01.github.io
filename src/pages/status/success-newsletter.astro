@@ -3,11 +3,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pageTitle = "Newsletter Status| VANGULAR";
 const keywords = "subscription success, newsletter confirmation";
+const description =
+  "You have successfully subscribed to the VANGULAR newsletter.";
 ---
 
 <!-- I'd like to have a success footer here which highlights connecting
  on social media and signing up to newsletter -->
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout
+  pageTitle={pageTitle}
+  keywords={keywords}
+  description={description}
+  noindex={true}
+>
   <main>
     <div class="container column flex-center">
       <h3>Thanks for Subscribing!</h3>

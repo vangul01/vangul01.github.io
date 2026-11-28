@@ -8,7 +8,9 @@
   margin-inline: auto;
   margin-block: var(--spacing-clamp-lg);
   padding: var(--spacing-clamp-lg);
-  background-color: var(--color-footer);
+
+  /* background-color: var(--color-footer); */
+  background-color: var(--color-container);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 0;

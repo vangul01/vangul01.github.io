@@ -3,9 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pageTitle = "404 | VANGULAR";
 const keywords = "404 error";
+const description =
+  "The page you were looking for could not be found on VANGULAR.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout
+  pageTitle={pageTitle}
+  keywords={keywords}
+  description={description}
+  noindex={true}
+>
   <main>
     <section class="section">
       <div class="container column flex-center">

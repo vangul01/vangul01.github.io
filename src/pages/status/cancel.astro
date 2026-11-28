@@ -3,9 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pageTitle = "Order Cancelled | VANGULAR";
 const keywords = "order cancelled, payment failure";
+const description =
+  "Your VANGULAR checkout was canceled before payment was completed.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout
+  pageTitle={pageTitle}
+  keywords={keywords}
+  description={description}
+  noindex={true}
+>
   <main>
     <div class="container column flex-center">
       <h3>Payment Canceled</h3>

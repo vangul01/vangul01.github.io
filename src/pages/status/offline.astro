@@ -3,9 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pageTitle = "You're offline | VANGULAR";
 const keywords = "offline, no internet connection, PWA";
+const description =
+  "You appear to be offline. Reconnect to continue browsing VANGULAR.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout
+  pageTitle={pageTitle}
+  keywords={keywords}
+  description={description}
+  noindex={true}
+>
   <main>
     <div class="container column flex-center">
       <h3>You're offline</h3>

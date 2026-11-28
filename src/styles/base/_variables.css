@@ -34,7 +34,7 @@
   --color-text-primary: var(--color-dark);
   --color-text-secondary: var(--color-gray-600);
   --color-text-light: var(--color-light);
-  --color-text-muted: var(--color-gray-400);
+  --color-text-muted: var(--color-gray-500);
   --color-notes: var(--color-text-muted);
 
   /* Button Colors */
@@ -46,6 +46,7 @@
   /* Element Background Colors */
   --color-header: rgb(52 41 81 / 14%);
   --color-footer: rgb(28 22 45 / 18%);
+  --color-container: rgb(253 204 255 / 14%);
   --color-overlay: rgb(20 15 34 / 85%);
   --color-input-bg: rgb(247 245 251 / 72%);
   --color-skeleton: rgb(203 204 254 / 12%);

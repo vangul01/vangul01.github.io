@@ -4,23 +4,42 @@ import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-import bgImage from "../assets/images/web/holographic_background.webp";
-import bgImageDark from "../assets/images/web/holographic_background_darkmode.webp";
+import bgImage from "../assets/images/web/holographic-background.webp";
+import bgImageDark from "../assets/images/web/holographic-background-darkmode.webp";
 
-const { pageTitle, keywords } = Astro.props;
+const { pageTitle, keywords, description, ogImage, ogType, noindex } =
+  Astro.props;
 
-const optimizedBg = await getImage({ src: bgImage, format: "webp", widths: [1920] });
-const optimizedBgDark = await getImage({ src: bgImageDark, format: "webp", widths: [1920] });
+const optimizedBg = await getImage({
+  src: bgImage,
+  format: "webp",
+  widths: [1920],
+});
+const optimizedBgDark = await getImage({
+  src: bgImageDark,
+  format: "webp",
+  widths: [1920],
+});
 ---
 
 <!doctype html>
 <html lang="en">
-  <Head pageTitle={pageTitle} keywords={keywords} />
+  <Head
+    pageTitle={pageTitle}
+    keywords={keywords}
+    description={description}
+    ogImage={ogImage}
+    ogType={ogType}
+    noindex={noindex}
+  />
   <body
     style={`--bg-url: url("${optimizedBg.src}"); --bg-url-dark: url("${optimizedBgDark.src}");`}
   >
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <Header />
-    <slot />
+    <div id="main-content" tabindex="-1">
+      <slot />
+    </div>
     <Footer />
     <script src="../scripts/main.js"></script>
   </body>

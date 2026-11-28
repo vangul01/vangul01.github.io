@@ -6,9 +6,9 @@ import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import Carousel from "../components/Carousel.astro";
 
 import aboutMe from "../assets/images/web/about-home.png";
-import logoFallback from "../assets/images/web/logo_fallback.png";
+import logoFallback from "../assets/images/web/logo-fallback.png";
 import collabFallback from "../assets/images/web/dreams.png";
-import footerImage from "../assets/images/web/Hero_Image.png";
+import footerImage from "../assets/images/web/hero-image.png";
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
@@ -33,9 +33,11 @@ const collabSlides = collabs
 const pageTitle = "Home | VANGULAR";
 const keywords =
   "Vangular, home, welcome, art, design, portfolio, creative, vibrant, spiritual";
+const description =
+  "Explore VANGULAR for vibrant art and design inspired by the existential, absurd, and wonderfully strange.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <!-- Welcome/Hero Section -->
     <section class="section hero-section">
@@ -52,7 +54,7 @@ const keywords =
       <div class="overlay-text column flex-center">
         <h3>Welcome to</h3>
         <h1 class="title">Vangular</h1>
-        <h3>Art & Designs <br /> for the Existential & Absurd</h3>
+        <h3>Art & Designs for <br /> the Existential & Absurd</h3>
       </div>
     </section>
 
@@ -117,8 +119,8 @@ const keywords =
           <h3>About Vangular</h3>
           <br />
           <p>
-            Hey I'm Val and welcome to VANGULAR! Vangular is a space for art and
-            designs that I wish to share with the world :)
+            Hey I'm Val and welcome to Vangular! This is my online studio space,
+            check out my story below :)
           </p>
           <br />
           <div class="button-group">
