@@ -3,7 +3,6 @@
 /* universal */
 .product-card {
   border: var(--border-secondary);
-  border-radius: var(--border-radius-md);
   padding: var(--spacing-clamp-md);
   transition: transform var(--transition-normal);
   background-color: var(--color-background);
@@ -21,6 +20,25 @@
 
 .shop-card.is-unavailable {
   opacity: 0.85;
+}
+
+.shop-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.shop-card-price {
+  margin: 0;
+  font-size: var(--font-size-clamp-base);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.shop-card.is-unavailable .shop-card-price {
+  color: var(--color-text-secondary);
 }
 
 @keyframes shop-card-pulse {
@@ -49,7 +67,6 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: var(--border-radius-md, 8px);
     background: var(--color-skeleton);
     animation: shop-card-pulse 1.4s ease-in-out infinite;
   }

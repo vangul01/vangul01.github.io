@@ -6,9 +6,9 @@ import { getFeaturedProducts, getCollabs } from "../lib/sanity-client.ts";
 import Carousel from "../components/Carousel.astro";
 
 import aboutMe from "../assets/images/web/about-home.png";
-import logoFallback from "../assets/images/web/logo_fallback.png";
+import logoFallback from "../assets/images/web/logo-fallback.png";
 import collabFallback from "../assets/images/web/dreams.png";
-import footerImage from "../assets/images/web/Hero_Image.png";
+import footerImage from "../assets/images/web/hero-image.png";
 
 // Fetch featured products from Sanity
 const featuredProducts = await getFeaturedProducts();
@@ -33,9 +33,11 @@ const collabSlides = collabs
 const pageTitle = "Home | VANGULAR";
 const keywords =
   "Vangular, home, welcome, art, design, portfolio, creative, vibrant, spiritual";
+const description =
+  "Explore VANGULAR for vibrant art and design inspired by the existential, absurd, and wonderfully strange.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <!-- Welcome/Hero Section -->
     <section class="section hero-section">
@@ -50,11 +52,9 @@ const keywords =
         />
       </div>
       <div class="overlay-text column flex-center">
-        <p class="description">Welcome to</p>
+        <h3>Welcome to</h3>
         <h1 class="title">Vangular</h1>
-        <p class="description">
-          Art and Designs for the Existential and Absurd
-        </p>
+        <h3>Art & Designs for <br /> the Existential & Absurd</h3>
       </div>
     </section>
 
@@ -90,19 +90,15 @@ const keywords =
           <h3>Featured Artwork</h3>
           <br />
           <p>
-            I love creating art that is vibrant, colorful, and a little absurd.
-            My work is inspired by my experiences, dreams, and the world around
-            me. I hope my art brings a sense of joy and wonder to your life.
-            Each piece is a reflection of my journey, a snapshot of my thoughts
-            and feelings, and I hope you can find a connection to it.
+            Take a look at some of my featured artwork! I get inspiration from
+            nature and the world around me. I hope you find something that
+            inspires you too!
           </p>
           <br />
           <div class="button-group">
-            <a href="/shop"
-              ><button class="button button-secondary">
-                <span class="button-label"> View More </span>
-              </button></a
-            >
+            <a href="/shop" class="button button-secondary">
+              <span class="button-label">Shop Art</span>
+            </a>
           </div>
         </div>
       </div>
@@ -123,19 +119,14 @@ const keywords =
           <h3>About Vangular</h3>
           <br />
           <p>
-            Hey I'm Valerie and welcome to VANGULAR! Vangular was born out of a
-            desire to create a space for my art and designs that are fun,
-            vibrant, and a little absurd. I love using colors and designs to
-            ignite people's imaginations and create a sense of playfulness and
-            community.
+            Hey I'm Val and welcome to Vangular! This is my online studio space,
+            check out my story below :)
           </p>
           <br />
           <div class="button-group">
-            <a href="/about"
-              ><button class="button button-secondary">
-                <span class="button-label"> Learn More </span>
-              </button></a
-            >
+            <a href="/about" class="button button-secondary">
+              <span class="button-label">Learn More</span>
+            </a>
           </div>
         </div>
       </div>
@@ -172,20 +163,15 @@ const keywords =
           <h3>Collabs & Commissions</h3>
           <br />
           <p>
-            Collaborations are a big part of my creative process. I love working
-            with other artists and designers to create something new and
-            exciting. Whether it's a joint art piece, a design project, or a
-            community event, I believe that collaboration is a powerful way to
-            connect and create. If you're interested in collaborating, please
-            reach out! I'm always open to new ideas and projects.
+            I believe that collaborations are a powerful way to connect and
+            create together. If you're interested in collaborating, please reach
+            out!
           </p>
           <br />
           <div class="button-group">
-            <a href="/info/contact"
-              ><button class="button button-secondary">
-                <span class="button-label"> Let's Work Together! </span>
-              </button></a
-            >
+            <a href="/info/contact" class="button button-secondary">
+              <span class="button-label">Collaborate</span>
+            </a>
           </div>
         </div>
       </div>

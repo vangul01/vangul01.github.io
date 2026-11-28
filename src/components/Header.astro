@@ -1,7 +1,7 @@
 ---
 // make this a dynamic read of sanity data
 
-import vangularLogo from "/src/assets/images/web/logo_transparent.png";
+import vangularLogo from "/src/assets/images/web/logo-eyewhites.png";
 import { siteNavigation } from "../config/navigation";
 
 // Get the current path
@@ -12,20 +12,29 @@ const links = siteNavigation.headerLinks;
 <header>
   <nav class="header-nav">
     <div class="logo-container">
-      <img src={vangularLogo.src} alt="" />
-      <a href={links.logo[0].href} class="header-title header-link">
-        {links.logo[0].name}
+      <a
+        href={links.logo[0].href}
+        class="header-home-link header-link"
+        aria-label="Vangular home"
+      >
+        <img
+          src={vangularLogo.src}
+          alt=""
+          class="header-logo-eye"
+          aria-hidden="true"
+        />
+        <span class="header-title header-wordmark">{links.logo[0].name}</span>
       </a>
     </div>
 
-    <ul class="nav-links">
+    <ul id="site-nav-links" class="nav-links">
       {
         links.mainNav.map(({ name, href }) => (
           <li class="nav-item">
             <a
               href={href}
-              id="nav-link"
-              class={`header-link ${currentPath === href ? "active" : ""}`}
+              class={`header-link nav-link ${currentPath === href ? "active" : ""}`}
+              aria-current={currentPath === href ? "page" : undefined}
             >
               {name}
             </a>
@@ -38,13 +47,20 @@ const links = siteNavigation.headerLinks;
       <a
         href={links.cart[0].href}
         class={`header-link ${currentPath === links.cart[0].href ? "active" : ""}`}
+        aria-label="Cart"
+        aria-current={currentPath === links.cart[0].href ? "page" : undefined}
       >
-        <i class="fa fa-shopping-cart"></i>
-        <span id="cart-icon-count"></span>
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <span id="cart-icon-count" aria-live="polite"></span>
       </a>
 
-      <button class="nav-toggle" aria-label="toggle navigation">
-        <i class="fa fa-bars"></i>
+      <button
+        class="nav-toggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="site-nav-links"
+      >
+        <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
     </div>
   </nav>

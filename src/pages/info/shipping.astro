@@ -4,9 +4,11 @@ import LastUpdated from "../../components/LastUpdated.astro";
 
 const pageTitle = "Shipping & Returns | VANGULAR";
 const keywords = "Shipping, Returns, VANGULAR, delivery, exchange";
+const description =
+  "Review VANGULAR shipping, returns, and delivery details before placing an order.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       <div class="container column flex-center">
@@ -54,10 +56,9 @@ const keywords = "Shipping, Returns, VANGULAR, delivery, exchange";
 
         <h3>Returns & Exchanges</h3>
         <p>
-          We accept returns within 14 days of delivery. Items must be unused and
-          in original condition. To initiate a return, contact us with your
-          order number. Return shipping costs are the responsibility of the
-          buyer unless the item arrived damaged or incorrect.
+          We offer free returns for a full refund within 30 days of when you
+          receive your package. Items must be unused and in original condition.
+          To initiate a return, contact us with your order number.
         </p>
 
         <h3>Damaged or Incorrect Items</h3>

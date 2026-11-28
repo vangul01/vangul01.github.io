@@ -2,6 +2,7 @@
 
 import "dotenv/config";
 
+import { MAX_QUANTITY, MIN_QUANTITY } from "../../src/lib/commerce-config.js";
 import { createStripeClient } from "./lib/stripe.js";
 import { requireEnv } from "./lib/env.js";
 import { getProductStatuses } from "./lib/get-product-status.js";
@@ -43,8 +44,11 @@ export async function handler(event) {
         return { invalid: true, productId, index };
       }
       const quantity = Math.max(
-        1,
-        Math.min(Math.round(Number(item?.quantity)) || 1, 10),
+        MIN_QUANTITY,
+        Math.min(
+          Math.round(Number(item?.quantity)) || MIN_QUANTITY,
+          MAX_QUANTITY,
+        ),
       );
       return { productId, quantity };
     });

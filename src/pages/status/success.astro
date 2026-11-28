@@ -4,11 +4,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 const pageTitle = "Order Success | VANGULAR";
 const keywords =
   "order success, payment success, thank you, order confirmation";
+const description =
+  "Your VANGULAR order payment was successful and your confirmation is on the way.";
 ---
 
 <!-- I'd like to have a success footer here which highlights connecting
  on social media and signing up to newsletter -->
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout
+  pageTitle={pageTitle}
+  keywords={keywords}
+  description={description}
+  noindex={true}
+>
   <main>
     <div class="container column flex-center">
       <h3>Your payment was successful :)</h3>
@@ -18,11 +25,9 @@ const keywords =
       </h5>
     </div>
     <div class="button-group">
-      <a href="/home"
-        ><button class="button button-primary">
-          <span class="button-label"> Back to Vangular</span>
-        </button></a
-      >
+      <a href="/home" class="button button-primary">
+        <span class="button-label">Back to Vangular</span>
+      </a>
     </div>
   </main>
 </BaseLayout>

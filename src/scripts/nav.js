@@ -15,59 +15,64 @@ scrolling when overlay is on top, not able to deacitvate it???
 
 // Navigation functionality
 export function initNav() {
-  // Select elements
   const navToggle = document.querySelector(".nav-toggle");
   const navLinks = document.querySelector(".nav-links");
   const navOverlay = document.querySelector(".nav-overlay");
-  const minWindowWidth = 768;
+  const desktopNav = window.matchMedia("(min-width: 768px)");
+  if (!navToggle || !navLinks) return;
 
-  // Function to close the sidenav
-  function closeNav() {
+  function closeNav({ restoreFocus = false } = {}) {
     navLinks.classList.remove("show-nav-links");
-    navLinks.setAttribute("aria-hidden", "true");
     navToggle.classList.remove("vertical");
-    navOverlay.classList.remove("visible", "no-scroll");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open navigation menu");
+    navOverlay?.classList.remove("visible", "no-scroll");
     document.body.classList.remove("no-scroll");
+    if (!desktopNav.matches) navLinks.setAttribute("aria-hidden", "true");
+    if (restoreFocus) navToggle.focus();
   }
 
-  // Function to open the sidenav
   function openNav() {
     navLinks.classList.add("show-nav-links");
     navLinks.removeAttribute("aria-hidden");
     navToggle.classList.add("vertical");
-    navOverlay.classList.add("visible", "no-scroll");
+    navToggle.setAttribute("aria-expanded", "true");
+    navToggle.setAttribute("aria-label", "Close navigation menu");
+    navOverlay?.classList.add("visible", "no-scroll");
     document.body.classList.add("no-scroll");
   }
 
-  // Only open the nav when the toggle is clicked
-  navToggle?.addEventListener("click", () => {
-    const isNavOpen = navLinks.classList.contains("show-nav-links");
-    if (isNavOpen) {
-      closeNav();
-    } else {
-      openNav();
+  navToggle.addEventListener("click", () => {
+    navLinks.classList.contains("show-nav-links") ? closeNav() : openNav();
+  });
+
+  navLinks.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", () => closeNav());
+  });
+
+  navOverlay?.addEventListener("click", () => closeNav());
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navLinks.classList.contains("show-nav-links")) {
+      closeNav({ restoreFocus: true });
     }
   });
 
-  // Close the nav when a link is clicked
-  document.querySelectorAll("#nav-link").forEach((link) => {
-    link.addEventListener("click", closeNav);
-  });
-
-  //   Event listeners for closing the nav when clicking outside of it
-  navOverlay?.addEventListener("click", closeNav);
-
-  window.addEventListener("resize", () => {
-    // console.log("Window resized:", window.outerWidth);
-    if (window.outerWidth > minWindowWidth) {
-      //   console.log("Closing nav due to large window size");
-      closeNav();
-    } else {
-      if (navLinks.classList.contains("show-nav-links")) {
-        // console.log("Keeping no-scroll because nav is open");
-        navOverlay.classList.add("no-scroll");
-        document.body.classList.add("no-scroll");
-      }
+  function syncNavToViewport() {
+    if (desktopNav.matches) {
+      navLinks.removeAttribute("aria-hidden");
+      navToggle.classList.remove("vertical");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Open navigation menu");
+      navOverlay?.classList.remove("visible", "no-scroll");
+      document.body.classList.remove("no-scroll");
+      navLinks.classList.remove("show-nav-links");
+      return;
     }
-  });
+    if (!navLinks.classList.contains("show-nav-links")) {
+      navLinks.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  desktopNav.addEventListener("change", syncNavToViewport);
+  syncNavToViewport();
 }

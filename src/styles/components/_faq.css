@@ -51,7 +51,7 @@
 
 .last-updated {
   font-size: var(--font-size-clamp-sm);
-  color: var(--color-text-muted);
+  color: var(--color-notes);
   text-align: center;
   margin-top: var(--spacing-clamp-sm);
   opacity: 0.7;

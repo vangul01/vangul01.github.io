@@ -2,14 +2,16 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { Image } from "astro:assets";
-import aboutMe from "../assets/images/web/square_me.png";
-import aboutVangular from "../assets/images/web/logo_fallback.png";
+import aboutMe from "../assets/images/web/square-me.png";
+import aboutVangular from "../assets/images/web/logo-fallback.png";
 
 const pageTitle = "About | VANGULAR";
 const keywords = "about, vangular, art, design";
+const description =
+  "Learn about VANGULAR, Valerie Angulo's art and design practice rooted in vibrant, existential, and playful storytelling.";
 ---
 
-<BaseLayout pageTitle={pageTitle} keywords={keywords}>
+<BaseLayout pageTitle={pageTitle} keywords={keywords} description={description}>
   <main>
     <section class="section">
       <div class="container grid-responsive">
@@ -26,14 +28,14 @@ const keywords = "about, vangular, art, design";
           <h5>Welcome to Vangular!</h5>
           <br />
           <p>
-            Vangular is a New York-based creative studio by artist and designer
-            Val Angulo. Rooted in curiosity and play, the studio brings together
-            abstract art, colorful illustration, collage, poetry, and design,
-            combining beauty with functionality to invite connection, joy and
-            wonder. <br />
+            Vangular is artist and designer Val Angulo's creative brand. Rooted
+            in curiosity and play, this online space brings together abstract
+            art, colorful illustration, collage, poetry, and design, combining
+            beauty with functionality to invite connection, joy and wonder. <br
+            />
             <br />
-            Vangular collaborates with small businesses, fellow creatives, and organizations
-            on visual identities, logos, illustrations, and commissioned artwork.
+            Vangular also collaborates with small businesses, fellow creatives, and
+            organizations on visual identities, logos, and standalone pieces for individuals.
           </p>
         </div>
       </div>
