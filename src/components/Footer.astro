@@ -25,6 +25,27 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
 
   <!-- Row 3: Links (add clear after container so that its clear)-->
   <div class="container clear">
+    <div class="footer-container column">
+      <h2>Socials</h2>
+      <!-- Row 1: Social Links -->
+      <div class="footer-social">
+        <ul class="social-links">
+          {
+            footerLinks.social.map(({ name, href, icon }) => (
+              <a
+                href={href}
+                class="social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={name}
+              >
+                <i class={`fa fa-${icon}`} />
+              </a>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
     <h2>Links</h2>
     <div class="footer-links-row">
       <div class="footer-links-col">
@@ -49,27 +70,6 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
                   {name}
                 </a>
               </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-container column">
-      <!-- Row 1: Social Links -->
-      <div class="footer-social">
-        <ul class="social-links">
-          {
-            footerLinks.social.map(({ name, href, icon }) => (
-              <a
-                href={href}
-                class="social-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={name}
-              >
-                <i class={`fa fa-${icon}`} />
-              </a>
             ))
           }
         </ul>

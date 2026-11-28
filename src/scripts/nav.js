@@ -19,7 +19,7 @@ export function initNav() {
   const navToggle = document.querySelector(".nav-toggle");
   const navLinks = document.querySelector(".nav-links");
   const navOverlay = document.querySelector(".nav-overlay");
-  const minWindowWidth = 768;
+  const desktopNav = window.matchMedia("(min-width: 768px)");
 
   // Function to close the sidenav
   function closeNav() {
@@ -54,20 +54,21 @@ export function initNav() {
     link.addEventListener("click", closeNav);
   });
 
-  //   Event listeners for closing the nav when clicking outside of it
+  // Event listeners for closing the nav when clicking outside of it
   navOverlay?.addEventListener("click", closeNav);
 
-  window.addEventListener("resize", () => {
-    // console.log("Window resized:", window.outerWidth);
-    if (window.outerWidth > minWindowWidth) {
-      //   console.log("Closing nav due to large window size");
+  function syncNavToViewport() {
+    if (desktopNav.matches) {
       closeNav();
-    } else {
-      if (navLinks.classList.contains("show-nav-links")) {
-        // console.log("Keeping no-scroll because nav is open");
-        navOverlay.classList.add("no-scroll");
-        document.body.classList.add("no-scroll");
-      }
+      return;
     }
-  });
+
+    if (navLinks.classList.contains("show-nav-links")) {
+      navOverlay.classList.add("no-scroll");
+      document.body.classList.add("no-scroll");
+    }
+  }
+
+  desktopNav.addEventListener("change", syncNavToViewport);
+  window.addEventListener("resize", syncNavToViewport);
 }

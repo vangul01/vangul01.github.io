@@ -11,7 +11,7 @@
 @media (width <= 768px) {
   .footer {
     background-size: max(160%, 56rem) auto;
-    background-position: center calc(100% - 1rem);
+    background-position: center bottom;
   }
 
   .footer-links-row {
@@ -155,10 +155,12 @@
   font-size: var(--font-size-clamp-sm);
   color: var(--color-text-light);
   padding-inline: var(--spacing-clamp-sm);
+  margin: 0;
 }
 
 .footer-bottom {
   font-size: var(--font-size-clamp-sm);
   text-align: left;
   color: var(--color-text-light);
+  padding-bottom: var(--spacing-clamp-xs);
 }

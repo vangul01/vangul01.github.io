@@ -17,6 +17,7 @@ body {
   line-height: var(--line-height);
   display: grid;
   grid-template-rows: var(--height-header, 70px) 1fr auto;
+  min-height: 100dvh;
 }
 
 @media (width <= 768px) {
