@@ -3,7 +3,7 @@ import { getImage } from "astro:assets";
 import { siteNavigation } from "../config/navigation";
 import NewsletterForm from "./NewsletterForm.astro";
 
-import plantieFooter from "../assets/images/web/Footer_Image.png";
+import plantieFooter from "../assets/images/web/footer-image.png";
 
 const currentYear = new Date().getFullYear();
 const footerLinks = siteNavigation.footerLinks;
@@ -15,38 +15,40 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
   class="footer"
   style={`--footer-bg-url: url("${optimizedPlantie.src}");`}
 >
-  <div class="footer-container column">
-    <!-- Row 1: Social Links -->
-    <div class="footer-social">
-      <ul class="social-links">
-        {
-          footerLinks.social.map(({ name, href, icon }) => (
-            <a
-              href={href}
-              class="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={name}
-            >
-              <i class={`fa fa-${icon}`} />
-            </a>
-          ))
-        }
-      </ul>
-    </div>
-
-    <!-- Row 2: Newsletter -->
+  <!-- Row 2: Newsletter -->
+  <div class="container clear">
     <div class="footer-newsletter">
-      <h4 class="footer-title">Stay Updated</h4>
-      <p>Subscribe to get special offers and updates!</p>
+      <h2>Stay Updated!</h2>
       <NewsletterForm />
     </div>
+  </div>
 
-    <!-- Row 3: Links -->
-    <!-- <div class="container"> -->
+  <!-- Row 3: Links (add clear after container so that its clear)-->
+  <div class="container clear">
+    <div class="footer-container column">
+      <h2>Socials</h2>
+      <!-- Row 1: Social Links -->
+      <div class="footer-social">
+        <ul class="social-links">
+          {
+            footerLinks.social.map(({ name, href, icon }) => (
+              <a
+                href={href}
+                class="social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={name}
+              >
+                <i class={`fa fa-${icon}`} />
+              </a>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+    <h2>Links</h2>
     <div class="footer-links-row">
       <div class="footer-links-col">
-        <h4 class="footer-title">Quick Links</h4>
         <ul class="link-list">
           {
             footerLinks.quickLinks.map(({ name, href }) => (
@@ -60,7 +62,6 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
         </ul>
       </div>
       <div class="footer-links-col">
-        <h4 class="footer-title">Helpful Links</h4>
         <ul class="link-list">
           {
             footerLinks.help.map(({ name, href }) => (
@@ -74,7 +75,6 @@ const optimizedPlantie = await getImage({ src: plantieFooter, widths: [1600] });
         </ul>
       </div>
     </div>
-    <!-- </div> -->
   </div>
 
   <!-- Footer Bottom -->

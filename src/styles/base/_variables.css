@@ -4,59 +4,72 @@
 
 /* ----------- COLOR PALETTE ----------- */
 
-/* Primary Brand Colors - purple, pink, orange/yellow */
+/* Primary Brand Colors - dark purple anchor + pastel holographic accents */
 :root {
   color-scheme: light dark; /* Critical step to enable light-dark() */
 
-  /* Main brand colors (purple) */
-  --color-brand-primary: #3c2d49;
+  /* Main brand colors */
+  --color-brand-primary: rgb(52 41 81); /* dark purple anchor */
+  --color-brand-secondary: rgb(203 204 254); /* lavender - surfaces/support */
+  --color-brand-tertiary: rgb(254 190 158); /* peach-orange - warm pop/gloss */
+  --color-brand-accent: rgb(253 204 255); /* soft pink - spark/highlight */
+  --color-brand-light: rgb(203 204 254 / 18%); /* lavender tint for surfaces */
 
-  /* #372f49;  */
-  --color-brand-secondary: #ed8282;
-  --color-brand-accent: #f3d2c1;
-  --color-brand-light: rgb(217 199 236 / 29.2%);
+  /* Neutral Colors - cool purple-tinted grays */
+  --color-light: #f7f5fb;
+  --color-dark: #2b233d;
+  --color-gray-300: #d8d3e2;
+  --color-gray-400: #a9a0bc;
+  --color-gray-500: #7b7091;
+  --color-gray-600: #5a506f;
+  --color-gray-700: #3b324d;
 
-  /* Neutral Colors */
-  --color-light: #f8f9fa;
-  --color-dark: #372f49;
-  --color-gray-300: #d1d1d1;
-  --color-gray-400: #a3a3a3;
-  --color-gray-500: #6e6e6e;
-  --color-gray-600: #504646; /* #4c3e57 */
-  --color-gray-700: #333;
-
-  /* Alert Colors */
-  --color-error: #dd5d5d;
-
-  /* #dd5451; slightly darker */
-  --color-success: #a1d86a;
-  --color-warning: #eceb92;
-  --color-info: #00899e;
+  /* Alert Colors - muted to harmonize with pastel brand palette */
+  --color-error: #cf6f86;
+  --color-success: #7fb89a;
+  --color-warning: #e6c27a;
+  --color-info: #8aaee0;
 
   /* Text Colors */
   --color-text-primary: var(--color-dark);
   --color-text-secondary: var(--color-gray-600);
   --color-text-light: var(--color-light);
-  --color-text-muted: var(--color-gray-400);
+  --color-text-muted: var(--color-gray-500);
+  --color-notes: var(--color-text-muted);
 
   /* Button Colors */
-  --color-button-primary: var(--color-success);
-  --color-button-secondary: var(--color-brand-accent);
+  --color-button-primary: var(--color-brand-tertiary);
+  --color-button-secondary: var(--color-brand-secondary);
   --color-button-tertiary: var(--color-brand-light);
-  --color-button-hover: var(--color-brand-light);
+  --color-button-hover: var(--color-brand-accent);
 
   /* Element Background Colors */
-  --color-header: rgb(93 63 122 / 10.3%);
-  --color-footer: rgb(23 23 41 / 16%);
-  --color-overlay: rgb(0 0 0 / 85%);
-  --color-input-bg: rgb(255 251 251 / 37.9%);
-  --color-skeleton: rgb(255 255 255 / 8%);
+  --color-header: rgb(52 41 81 / 14%);
+  --color-footer: rgb(28 22 45 / 18%);
+  --color-container: rgb(253 204 255 / 14%);
+  --color-overlay: rgb(20 15 34 / 85%);
+  --color-input-bg: rgb(247 245 251 / 72%);
+  --color-skeleton: rgb(203 204 254 / 12%);
 
   /* Shadows */
-  --color-shadow: rgb(0 0 32 / 10%);
+  --color-shadow: rgb(28 22 45 / 12%);
   --shadow-sm: 0 1px 2px var(--color-shadow);
   --shadow-md: 0 4px 6px var(--color-shadow);
   --shadow-lg: 0 10px 15px var(--color-shadow);
+
+  /* Gloss / Artifact Accents */
+  --gloss-highlight: inset 0 1px 0 rgb(255 255 255 / 55%);
+  --gloss-highlight-soft: inset 0 1px 0 rgb(255 255 255 / 35%);
+  --gloss-edge: 1px solid rgb(255 255 255 / 35%);
+  --gloss-shadow: 0 8px 20px rgb(28 22 45 / 16%);
+  --gloss-shadow-hover: 0 12px 28px rgb(28 22 45 / 22%);
+  --gloss-sheen: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 42%) 0%,
+    rgb(255 255 255 / 12%) 34%,
+    rgb(255 255 255 / 0%) 60%,
+    rgb(52 41 81 / 6%) 100%
+  );
 
   /* Blur */
   --blur: blur(10px);
@@ -75,9 +88,11 @@
   --border-tertiary: 0.0825rem solid var(--color-border-light);
 
   /* ------------------- Typography ------------------ */
-  --font-primary: "Russo One", sans-serif;
+  --font-primary: "Archivo Black", sans-serif;
+
+  /* --font-primary: "Syne", sans-serif; */
   --font-secondary: "Open Sans", sans-serif;
-  --letter-spacing: normal;
+  --letter-spacing-secondary: 1px;
   --line-height: 1.6;
 
   /* Font Sizes */
@@ -122,7 +137,7 @@
   --input-width-min: 4rem; /* 64px */
 
   /* Button Width */
-  --button-width: 12.5rem; /* 200px */
+  --button-width: 16rem; /* 256px */
 
   /* Container Widths */
   --container-width-max: 64rem; /* 1024px */

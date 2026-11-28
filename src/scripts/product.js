@@ -1,3 +1,8 @@
+import {
+  formatPrice,
+  MAX_QUANTITY,
+  MIN_QUANTITY,
+} from "../lib/commerce-config";
 import { getStripePrice } from "../lib/stripe-client";
 
 function initBackLink() {
@@ -10,7 +15,7 @@ function initBackLink() {
 
 function initThumbnails() {
   const mainImage = document.getElementById("main-product-image");
-  const thumbnails = Array.from(document.querySelectorAll(".thumbnail"));
+  const thumbnails = Array.from(document.querySelectorAll(".thumbnail-button"));
 
   if (!mainImage || thumbnails.length === 0) return;
 
@@ -18,15 +23,19 @@ function initThumbnails() {
     const thumbnail = thumbnails[index];
     if (!thumbnail) return;
 
-    const imageUrl = thumbnail.dataset.imageUrl;
+    const image = thumbnail.querySelector("img");
+    const imageUrl = image?.dataset.imageUrl;
     if (imageUrl && mainImage.getAttribute("src") !== imageUrl) {
       mainImage.classList.remove("is-loaded", "is-error");
       mainImage.removeAttribute("data-fallback-tried");
       mainImage.src = imageUrl;
     }
 
-    thumbnails.forEach((thumb) => thumb.classList.remove("active"));
-    thumbnail.classList.add("active");
+    thumbnails.forEach((thumb) => {
+      const isActive = thumb === thumbnail;
+      thumb.classList.toggle("active", isActive);
+      thumb.setAttribute("aria-pressed", String(isActive));
+    });
   }
 
   thumbnails.forEach((thumbnail, index) => {
@@ -34,6 +43,9 @@ function initThumbnails() {
   });
 
   document.addEventListener("keydown", (event) => {
+    const tag = document.activeElement?.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+
     const activeIndex = thumbnails.findIndex((thumb) =>
       thumb.classList.contains("active"),
     );
@@ -47,11 +59,62 @@ function initThumbnails() {
   });
 }
 
-function showUnavailableProduct(root) {
+function clampQuantity(value) {
+  const parsed = Math.round(Number(value)) || MIN_QUANTITY;
+  return Math.max(MIN_QUANTITY, Math.min(parsed, MAX_QUANTITY));
+}
+
+function initQuantityControls() {
+  const wrapper = document.querySelector("[data-product-quantity]");
+  const input = document.querySelector("[data-quantity-input]");
+  if (!wrapper || !input) return null;
+
+  const buttons = Array.from(
+    wrapper.querySelectorAll("[data-quantity-change]"),
+  );
+  let enabled = false;
+
+  function syncButtons() {
+    const value = clampQuantity(input.value);
+    buttons.forEach((button) => {
+      const delta = Number(button.dataset.quantityChange);
+      button.disabled =
+        !enabled ||
+        (delta < 0 && value <= MIN_QUANTITY) ||
+        (delta > 0 && value >= MAX_QUANTITY);
+    });
+  }
+
+  function setQuantity(value) {
+    input.value = String(clampQuantity(value));
+    syncButtons();
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const delta = Number(button.dataset.quantityChange) || 0;
+      setQuantity(Number(input.value) + delta);
+    });
+  });
+
+  input.addEventListener("change", () => setQuantity(input.value));
+  syncButtons();
+
+  return {
+    setEnabled(isEnabled) {
+      enabled = isEnabled;
+      input.disabled = !enabled;
+      syncButtons();
+    },
+  };
+}
+
+function showUnavailableProduct(root, announce) {
   root?.classList.remove("is-loading");
   if (root) root.hidden = true;
   const fallback = document.querySelector("[data-product-unavailable]");
   if (fallback) fallback.hidden = false;
+  announce("This piece is no longer available.");
 }
 
 export async function initProductPage() {
@@ -62,11 +125,18 @@ export async function initProductPage() {
   const priceElement = document.getElementById("product-price");
   const addToCartBtn = document.getElementById("add-to-cart");
   const statusEl = document.querySelector("[data-availability-status]");
+  const feedback = document.querySelector("[data-product-feedback]");
+  const quantityControls = initQuantityControls();
+
   if (!root || !priceElement || !addToCartBtn) return;
+
+  function announce(message) {
+    if (feedback) feedback.textContent = message;
+  }
 
   const productId = root.dataset.productId || priceElement.dataset.productId;
   if (!productId) {
-    showUnavailableProduct(root);
+    showUnavailableProduct(root, announce);
     return;
   }
 
@@ -78,8 +148,12 @@ export async function initProductPage() {
     addToCartBtn.classList.remove("skeleton-button");
     addToCartBtn.removeAttribute("aria-busy");
 
-    if (!status || status.state === "not_found" || status.state === "inactive") {
-      showUnavailableProduct(root);
+    if (
+      !status ||
+      status.state === "not_found" ||
+      status.state === "inactive"
+    ) {
+      showUnavailableProduct(root, announce);
       return;
     }
 
@@ -93,16 +167,25 @@ export async function initProductPage() {
       addToCartBtn.classList.remove("button-primary", "button-check");
       addToCartBtn.classList.add("button-disable");
       addToCartBtn.querySelector(".button-label").textContent = "Unavailable";
+      quantityControls?.setEnabled(false);
+      announce("Currently unavailable.");
       return;
     }
 
-    if (status.state === "available" && status.amount != null && status.currency) {
-      priceElement.textContent = `$${status.amount} ${String(status.currency).toUpperCase()}`;
+    if (
+      status.state === "available" &&
+      status.amount != null &&
+      status.currency
+    ) {
+      const price = formatPrice(status.amount, status.currency);
+      priceElement.textContent = price;
       addToCartBtn.dataset.price = String(status.amount);
       addToCartBtn.disabled = false;
       addToCartBtn.classList.remove("button-disable", "button-check");
       addToCartBtn.classList.add("button-primary");
       addToCartBtn.querySelector(".button-label").textContent = "Add to Cart";
+      quantityControls?.setEnabled(true);
+      announce(`Price ${price}. Available to add to cart.`);
       return;
     }
 
@@ -112,6 +195,8 @@ export async function initProductPage() {
     }
     addToCartBtn.disabled = true;
     addToCartBtn.querySelector(".button-label").textContent = "Unavailable";
+    quantityControls?.setEnabled(false);
+    announce("Currently unavailable.");
   } catch (err) {
     console.error("Error loading price/status:", err);
     root.classList.remove("is-loading");
@@ -123,5 +208,7 @@ export async function initProductPage() {
     }
     addToCartBtn.disabled = true;
     addToCartBtn.querySelector(".button-label").textContent = "Unavailable";
+    quantityControls?.setEnabled(false);
+    announce("Price and availability could not be loaded.");
   }
 }

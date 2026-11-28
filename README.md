@@ -51,6 +51,8 @@ SITE_URL="http://localhost:8888"
 PUBLIC_SANITY_PROJECT_ID="your_project_id"
 SANITY_DATASET="development"
 PUBLIC_STRIPE_KEY="pk_test_..."
+PUBLIC_UMAMI_WEBSITE_ID="your_umami_website_id"
+# PUBLIC_UMAMI_SCRIPT_URL="https://cloud.umami.is/script.js"
 STRIPE_KEY="sk_test_..."
 STRIPE_CHECKOUT_WEBHOOK_SECRET="whsec_..."
 STRIPE_PRODUCT_WEBHOOK_SECRET="whsec_..."
@@ -394,7 +396,7 @@ Merge order: `dev -> testing -> staging -> main`. Deploy Previews are not used.
 | `SANITY_REBUILD_ON_PUBLISH`      | unset                      | unset                                                 | unset                                                 |
 | `CHECKOUT_DISABLED`              | `true` until launch        | unset                                                 | `true`                                                |
 
-Shipping-rate, Brevo, and `CLOUDFLARE_TOKEN` values stay per context as
+Shipping-rate, Brevo, and Umami analytics values stay per context as
 configured.
 
 Config notes:

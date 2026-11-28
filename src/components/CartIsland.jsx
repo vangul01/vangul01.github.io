@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  formatAmount,
+  formatPrice,
+  MAX_QUANTITY,
+  MIN_QUANTITY,
+} from "../lib/commerce-config";
+import {
   loadCart,
   saveCart,
   calculateTotals,
@@ -74,7 +80,11 @@ export default function CartIsland({
 
   function updateQuantity(idx, delta) {
     const newCart = [...cart];
-    newCart[idx].quantity = Math.max(1, newCart[idx].quantity + delta);
+    const current = Math.round(Number(newCart[idx].quantity)) || MIN_QUANTITY;
+    newCart[idx].quantity = Math.max(
+      MIN_QUANTITY,
+      Math.min(current + delta, MAX_QUANTITY),
+    );
     setCart(newCart);
     saveCart(newCart);
   }
@@ -83,13 +93,6 @@ export default function CartIsland({
     const newCart = cart.filter((_, i) => i !== idx);
     setCart(newCart);
     saveCart(newCart);
-  }
-
-  function formatPrice(price) {
-    return new Intl.NumberFormat("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(price);
   }
 
   const enriched = useMemo(
@@ -156,7 +159,7 @@ export default function CartIsland({
         <h4>Your cart is empty!</h4>
         <div className="button-group">
           <a href="/shop" className="button button-primary">
-            Continue Shopping
+            Keep Shopping
           </a>
         </div>
       </div>
@@ -204,7 +207,7 @@ export default function CartIsland({
                 <p className="cart-item-price">
                   {checking
                     ? "Checking availability..."
-                    : `$${formatPrice(price)} per item`}
+                    : `${formatAmount(price)} per item`}
                 </p>
                 {!checking && !purchasable && (
                   <p className="cart-item-note">{statusNote(status.state)}</p>
@@ -226,29 +229,27 @@ export default function CartIsland({
                   className="quantity-btn"
                   aria-label="Increase quantity"
                   onClick={() => updateQuantity(idx, 1)}
-                  disabled={!purchasable}
+                  disabled={!purchasable || item.quantity >= MAX_QUANTITY}
                 >
                   +
                 </button>
               </div>
               <button
                 className="delete-btn"
-                aria-label="Remove item"
+                aria-label={`Remove ${item.name || "item"}`}
                 onClick={() => removeItem(idx)}
               >
-                <i className="fa fa-trash"></i>
+                <i className="fa fa-trash" aria-hidden="true"></i>
               </button>
             </div>
             <div className="cart-product-total-price">
-              <p>
-                {purchasable ? `$${formatPrice(price * item.quantity)}` : "—"}
-              </p>
+              <p>{purchasable ? formatAmount(price * item.quantity) : "—"}</p>
             </div>
           </div>
         ))}
 
         <div className="all-products-total-price">
-          <p>Subtotal ${formatPrice(finalPrice)} USD</p>
+          <p>Subtotal {formatPrice(finalPrice)}</p>
           {displayNotice && <p className="disclaimer">{displayNotice}</p>}
           <p className="disclaimer">
             Taxes and shipping calculated at checkout
@@ -257,7 +258,7 @@ export default function CartIsland({
 
         <div className="button-group">
           <a href="/shop" className="button button-secondary">
-            <span className="button-label">Continue Shopping</span>
+            <span className="button-label">Keep Shopping</span>
           </a>
 
           <button
@@ -273,7 +274,7 @@ export default function CartIsland({
                 ? "Checkout Coming Soon"
                 : !checking && purchasableItems.length === 0
                   ? "No Available Items"
-                  : "Proceed to Checkout"}
+                  : "Checkout"}
             </span>
           </button>
         </div>

@@ -5,11 +5,25 @@ import favicon from "/favicon.ico";
 interface Props {
   pageTitle: string;
   keywords: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: string;
+  noindex?: boolean;
 }
 
-const { pageTitle, keywords } = Astro.props;
+const {
+  pageTitle,
+  keywords,
+  description = "Vangular is an art and design shop for vibrant, existential, and absurd original work, prints, and collaborations.",
+  ogImage = "/images/preview-image.png",
+  ogType = "website",
+  noindex = false,
+} = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
 const font =
-  "https://fonts.googleapis.com/css2?family=Russo+One&display=swap";
+  "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap";
+// Syne (revert): "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap";
 const fontAwesome =
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 ---
@@ -36,7 +50,7 @@ const fontAwesome =
   <meta name="apple-mobile-web-app-title" content="Vangular" />
   <meta name="application-name" content="Vangular" />
   <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="/images/logo_eyewhites.png" />
+  <link rel="apple-touch-icon" href="/images/logo-eyewhites.png" />
   <!-- Manifest -->
   <link rel="manifest" href="/manifest.json" />
 
@@ -44,35 +58,37 @@ const fontAwesome =
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- Opt out of Bing AI training -->
-  <meta name="robots" content="noarchive" />
+  <meta name="robots" content={noindex ? "noindex, nofollow" : "noarchive"} />
 
   <!-- Social media meta tags -->
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="/icons/logo_eyewhites.png" />
-  <meta property="og:url" content="https://vangular.com" />
-  <meta property="og:site_name" content="Vangular" />
   <meta property="og:title" content={pageTitle} />
-  <meta
-    property="og:description"
-    content="Vangular: Art and design brand for the existential and absurd."
-  />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content="Vangular" />
+
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
-  <meta
-    name="twitter:description"
-    content="Vangular: Art and design brand for the existential and absurd."
-  />
-  <meta name="twitter:image" content="/icons/logo.png" />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://vangular.com" />
+  <link rel="canonical" href={canonicalUrl} />
 
   <link href={font} rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href={font} rel="stylesheet" /></noscript>
-  <link href={fontAwesome} rel="stylesheet" media="print" onload="this.media='all'" />
+  <link
+    href={fontAwesome}
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
   <noscript><link href={fontAwesome} rel="stylesheet" /></noscript>
   <link href={favicon} rel="icon" type="image/x-icon" />
 
@@ -81,27 +97,25 @@ const fontAwesome =
     rel="icon"
     type="image/png"
     sizes="192x192"
-    href="/images/logo_eyewhites.png"
+    href="/images/logo-eyewhites.png"
   />
 
   <meta name="author" content="Valerie Angulo" />
-  <meta
-    name="description"
-    content="Vangular: Art and design brand for the existential and absurd."
-  />
+  <meta name="description" content={description} />
   <meta name="keywords" content={keywords} />
   <title>{pageTitle}</title>
 
-  <!-- Cloudflare Web Analytics -->
-  {process.env.CLOUDFLARE_TOKEN && (
-    <script
-      is:inline
-      type="module"
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon={JSON.stringify({
-        token: process.env.CLOUDFLARE_TOKEN,
-      })}
-    />
-  )}
-  <!-- End Cloudflare Web Analytics -->
+  {
+    import.meta.env.PUBLIC_UMAMI_WEBSITE_ID && (
+      <script
+        is:inline
+        defer
+        src={
+          import.meta.env.PUBLIC_UMAMI_SCRIPT_URL ||
+          "https://cloud.umami.is/script.js"
+        }
+        data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID}
+      />
+    )
+  }
 </head>
