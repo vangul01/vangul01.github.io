@@ -89,10 +89,8 @@
 
   /* ------------------- Typography ------------------ */
   --font-primary: "Archivo Black", sans-serif;
-
-  /* --font-primary: "Syne", sans-serif; */
-  --font-secondary: "Open Sans", sans-serif;
-  --letter-spacing-secondary: 1px;
+  --font-secondary: "Jost", sans-serif;
+  --letter-spacing-secondary: 0.015em;
   --line-height: 1.6;
 
   /* Font Sizes */
@@ -100,8 +98,8 @@
   /* 12.8px - 14px */
   --font-size-clamp-sm: clamp(0.8rem, 0.25vw + 0.75rem, 0.875rem);
 
-  /* 16px - 18px */
-  --font-size-clamp-base: clamp(1rem, 0.5vw + 0.9rem, 1.125rem);
+  /* 16px - 19px */
+  --font-size-clamp-base: clamp(1rem, 0.5vw + 0.925rem, 1.1875rem);
 
   /* 18px - 24px */
   --font-size-clamp-lg: clamp(1.125rem, 0.75vw + 1rem, 1.5rem);

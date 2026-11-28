@@ -13,6 +13,12 @@
 .cart-titles {
   text-align: left;
   border-bottom: var(--border-tertiary);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-clamp-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
 }
 
 .cart-titles > div:nth-child(2),

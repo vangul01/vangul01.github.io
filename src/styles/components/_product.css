@@ -62,7 +62,7 @@
 .product-note {
   font-size: var(--font-size-clamp-sm);
   color: var(--color-notes);
-  font-style: italic;
+  font-weight: 400;
   margin: 0;
 }
 

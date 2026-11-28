@@ -8,7 +8,7 @@ body {
   font-size: var(--font-size-clamp-base, 1rem);
   font-weight: 400;
   color: var(--color-text-secondary);
-  background-color: #0d0a1a;
+  background-color: var(--color-brand-primary);
   background-image: var(--bg-url);
   background-size: cover;
   background-repeat: no-repeat;
@@ -27,9 +27,15 @@ body {
   }
 }
 
+@supports (-webkit-touch-callout: none) or (hover: none) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #05030d;
+    background-color: var(--color-brand-primary);
     background-image: var(--bg-url-dark);
   }
 }
@@ -72,29 +78,22 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-primary, inherit);
-
-  /* font-weight: 400; */
-
-  /* Syne */
   color: var(--color-text-primary, inherit);
   text-transform: uppercase;
   text-align: center;
   text-wrap: balance;
-  letter-spacing: normal;
   line-height: 1.15;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-primary, inherit);
+  letter-spacing: normal;
 }
 
 h1 {
   font-size: var(--font-size-clamp-2xl);
-
-  /* font-weight: 700; */
-
-  /* Syne */
-
-  /* letter-spacing: -0.02em; */
-
-  /* Syne */
 }
 
 h2 {
@@ -108,11 +107,15 @@ h3 {
 h4,
 h5,
 h6 {
+  font-family: var(--font-secondary, inherit);
   font-size: var(--font-size-clamp-base);
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 /* ------------------- Links and Buttons ------------------- */
 a {
+  font-weight: 500;
   transition: var(--transition-normal);
   cursor: pointer;
 }
@@ -127,12 +130,12 @@ select {
 
 .link {
   color: var(--color-info);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 a:hover {
   color: var(--color-text-light);
-
-  /* transition: var(--transition-normal); */
 }
 
 button {

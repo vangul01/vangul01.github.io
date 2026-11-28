@@ -96,6 +96,13 @@
   margin: 2rem 0;
 }
 
+.nav-links .header-link {
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 /* javascript */
 .show-nav-links {
   right: 0;
@@ -115,14 +122,6 @@
 /* Vangular */
 .header-title {
   font-size: var(--font-size-clamp-xl);
-
-  /* font-weight: 700; */
-
-  /* Syne */
-
-  /* letter-spacing: -0.02em; */
-
-  /* Syne */
 }
 
 /* Used to be .nav-cart-button */

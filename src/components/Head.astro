@@ -22,8 +22,7 @@ const {
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageUrl = new URL(ogImage, Astro.site).toString();
 const font =
-  "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap";
-// Syne (revert): "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap";
+  "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Jost:wght@400;500;600;700&display=swap";
 const fontAwesome =
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 ---
@@ -32,9 +31,7 @@ const fontAwesome =
   <meta charset="utf-8" />
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
-    ,
-    viewport-fit='cover"'
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   />
   <meta name="color-scheme" content="dark light" />
   <meta name="generator" content={Astro.generator} />
